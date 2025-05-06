@@ -9,7 +9,7 @@ static var sanity: float = 100
 static var adrenaline: float = 0
 
 # ---- ----
-static var def_emote := preload("res://src/player/madotsuki/emotes/tres/sit_down.tres")
+static var def_emote
 
 # ---- ----
 static var curr_data: Dictionary

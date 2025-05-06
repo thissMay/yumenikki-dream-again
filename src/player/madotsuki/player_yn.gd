@@ -33,7 +33,7 @@ var effect_equip_anim: AnimationPlayer
 
 var components: SBComponentReceiver
 
-var action: PlayerAction = load("res://src/player/madotsuki/emotes/tres/pinch.tres")
+var action: PlayerAction 
 
 # ----> controller
 var input_controller := InputController.new()

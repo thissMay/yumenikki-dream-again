@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="PlayerEmote" load_steps=2 format=3 uid="uid://k741wx0qi6p4"]
-
-[ext_resource type="Script" uid="uid://48y120qdeepc" path="res://src/player/scripts/pl_emote.gd" id="1_qusug"]
-
-[resource]
-script = ExtResource("1_qusug")
-emote_enter_anim = "sit_down"
-emote_exit_anim = "stand_up"
-emote_speed = 1.0
