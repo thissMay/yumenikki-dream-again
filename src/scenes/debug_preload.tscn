@@ -1,0 +1,180 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmqk3r16dhi7n"]
+
+[ext_resource type="Texture2D" uid="uid://dj68nb6nuamgi" path="res://src/images/loading.png" id="2_nlmqr"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/spritesheet_formatter_animated.gd" id="3_d62i2"]
+
+[sub_resource type="GDScript" id="GDScript_isd0w"]
+resource_name = "preload_scene"
+script/source = "extends SceneNode
+
+var garbage_placeholder: Node2D
+
+const SHADERS_PATH := \"res://src/shaders/\"
+const SCENES_PATH := \"res://src/levels/dream/sane/\"
+
+const CACHED_SHADER_FILE_PATH := \"cached_shader.json\"
+const CACHED_SCENES_FILE_PATH := \"cached_scenes.json\"
+
+const MAX_SCENES_TO_LOAD := 3
+
+var shaders: PackedStringArray
+var scenes: PackedStringArray
+
+var user_cached_shader_file: FileAccess
+var user_cached_scenes_file: FileAccess
+var res_cached_shader_file: FileAccess
+var res_cached_scenes_file: FileAccess
+
+func _ready() -> void:
+	super()
+	
+	garbage_placeholder = Sprite2D.new()
+	garbage_placeholder.material = ShaderMaterial.new()
+	garbage_placeholder.texture = preload(\"res://game_icon.png\")
+	
+	if !FileAccess.file_exists(\"user://\" + CACHED_SHADER_FILE_PATH):
+		print(\"CREATING SHADER CACHE FILE\")
+		var f = FileAccess.open(\"user://\" + CACHED_SHADER_FILE_PATH, FileAccess.WRITE)
+		f.store_string(FileAccess.open(\"res://\" + CACHED_SHADER_FILE_PATH, FileAccess.READ).get_as_text())
+		f.close()
+		
+	if !FileAccess.file_exists(\"user://\" + CACHED_SCENES_FILE_PATH):
+		print(\"CREATING SCENE CACHE FILE\")
+		var f = FileAccess.open(\"user://\" + CACHED_SCENES_FILE_PATH, FileAccess.WRITE)
+		f.store_string(FileAccess.open(\"res://\" + CACHED_SCENES_FILE_PATH, FileAccess.READ).get_as_text())
+		f.close()
+	
+	if OS.is_debug_build():
+		gather_all_shaders()
+		gather_all_scenes()
+	
+	add_child(garbage_placeholder)
+	
+	await handle_shader_precompile()
+	await handle_scenes_precompile()
+	
+
+	GameManager.change_to_state(\"pregame\")
+	if Game.Save.read_data_value(\"read_warning\"): GameManager.change_scene_to(preload(\"res://src/scenes/menu/menu.tscn\"))
+	else: GameManager.change_scene_to(preload(\"res://src/scenes/pre_menu.tscn\"))
+
+
+func compile_shader_material(_shader: Shader) -> void: 
+	garbage_placeholder.material.shader = _shader
+
+func gather_all_shaders() -> void:
+	user_cached_shader_file = FileAccess.open(\"user://\" + CACHED_SHADER_FILE_PATH, FileAccess.WRITE)
+	res_cached_shader_file = FileAccess.open(\"res://\" + CACHED_SHADER_FILE_PATH, FileAccess.WRITE)
+	
+	for i in DirAccess.get_files_at(SHADERS_PATH):
+		await Game.main_tree.process_frame
+		if (i.ends_with(\".gdshader\")): 
+			shaders.append(SHADERS_PATH + i)
+			user_cached_shader_file.store_line(JSON.stringify(SHADERS_PATH + i))
+			res_cached_shader_file.store_line(JSON.stringify(SHADERS_PATH + i))
+	
+	for i in DirAccess.get_directories_at(SHADERS_PATH):
+		await Game.main_tree.process_frame
+		for j in DirAccess.get_files_at(SHADERS_PATH + i):
+			if (j.ends_with(\".gdshader\")): 
+				shaders.append(SHADERS_PATH + i + \"/\" + j)
+				user_cached_shader_file.store_line(JSON.stringify(SHADERS_PATH + i + \"/\" + j))
+				res_cached_shader_file.store_line(JSON.stringify(SHADERS_PATH + i + \"/\" + j))
+				
+	user_cached_shader_file.close()
+	res_cached_shader_file.close()
+func gather_all_scenes() -> void:
+	user_cached_scenes_file = FileAccess.open(\"user://\" + CACHED_SCENES_FILE_PATH, FileAccess.WRITE)
+	res_cached_scenes_file = FileAccess.open(\"res://\" + CACHED_SCENES_FILE_PATH, FileAccess.WRITE)
+		
+	for i in DirAccess.get_directories_at(SCENES_PATH):
+		for j in DirAccess.get_files_at(SCENES_PATH + i): 
+			if (j.ends_with(\"level.tscn\")): 
+				scenes.append(SCENES_PATH + i + \"/\" + j)
+				user_cached_scenes_file.store_line(JSON.stringify(SCENES_PATH + i + \"/\" + j))
+				res_cached_scenes_file.store_line(JSON.stringify(SCENES_PATH + i + \"/\" + j))
+
+	user_cached_scenes_file.close()
+	res_cached_scenes_file.close()
+
+func gather_scene_descendants(_scene: PackedScene) -> void:
+	var instantiated_scene
+	
+	if _scene.can_instantiate() and ResourceLoader.exists(_scene.resource_path):
+		instantiated_scene = _scene.instantiate()
+	else:
+		instantiated_scene = null
+		
+	for i in instantiated_scene.get_children(true):
+		print(i)
+		
+		if (
+			(i is Node2D or i is Control or i is GPUParticles2D or i is CPUParticles2D)): 
+				i.reparent(self)
+				i.free()
+				print(\"true\")
+		else:
+			print(\"false\")
+
+func handle_shader_precompile() -> void:
+	user_cached_shader_file = FileAccess.open(\"user://\" + CACHED_SHADER_FILE_PATH, FileAccess.READ)
+	var curr_shader_line: String = user_cached_shader_file.get_line()
+	var json_content: String = \"\"
+	
+	while !(curr_shader_line.is_empty()):
+		await Game.main_tree.process_frame
+		json_content = JSON.parse_string(curr_shader_line)
+		
+		if load(json_content): 
+			compile_shader_material(load(json_content))
+			print(json_content)
+			
+		curr_shader_line = user_cached_shader_file.get_line()
+	
+	user_cached_shader_file.close()
+func handle_scenes_precompile() -> void: 
+	user_cached_scenes_file = FileAccess.open(\"user://\" + CACHED_SCENES_FILE_PATH, FileAccess.READ)
+	var curr_scenes_line: String = user_cached_scenes_file.get_line()
+	var json_content: String = \"\"
+	
+	while !(curr_scenes_line.is_empty()):
+		await Game.main_tree.process_frame
+		json_content = JSON.parse_string(curr_scenes_line)
+		
+		if load(json_content): 
+			gather_scene_descendants(load(json_content))
+			print(json_content)
+		
+		curr_scenes_line = user_cached_scenes_file.get_line()
+		
+	user_cached_scenes_file.close()
+"
+
+[node name="preload" type="Node"]
+script = SubResource("GDScript_isd0w")
+metadata/_custom_type_script = "uid://dcos3dvfrola8"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="SpriteSheetFormatterAnimated" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(240, 196)
+texture = ExtResource("2_nlmqr")
+hframes = 4
+frame = 1
+script = ExtResource("3_d62i2")
+autoplay = true
+playing = true
+loop = true
+fps = 5.0
+frame_dimensions = Vector2i(16, 16)
+frame_h_count = 4
+progress = 1
+metadata/_custom_type_script = "uid://cdjphp77kgyqr"

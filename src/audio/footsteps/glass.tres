@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FootstepSet" load_steps=5 format=3 uid="uid://bnpua8g3lcpki"]
+
+[ext_resource type="AudioStream" uid="uid://cfij0fdaj2bnh" path="res://src/audio/se/footstep_glass-1.wav" id="1_afnpu"]
+[ext_resource type="Script" uid="uid://dl740w6e37l11" path="res://src/audio/footsteps/footstep_set.gd" id="1_aob7u"]
+[ext_resource type="AudioStream" uid="uid://dj23d4usak6et" path="res://src/audio/se/footstep_glass-2.wav" id="2_4b1ov"]
+[ext_resource type="AudioStream" uid="uid://4g370jbps5ew" path="res://src/audio/se/footstep_glass-3.wav" id="3_81563"]
+
+[resource]
+script = ExtResource("1_aob7u")
+arr = [ExtResource("1_afnpu"), ExtResource("2_4b1ov"), ExtResource("3_81563")]
+metadata/_custom_type_script = "uid://dl740w6e37l11"

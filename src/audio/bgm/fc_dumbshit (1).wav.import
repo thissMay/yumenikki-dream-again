@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ctr7qvdbygdbb"
+path="res://.godot/imported/fc_dumbshit (1).wav-b9edeb6db5a180ee39bd8e433230f753.sample"
+
+[deps]
+
+source_file="res://src/audio/bgm/fc_dumbshit (1).wav"
+dest_files=["res://.godot/imported/fc_dumbshit (1).wav-b9edeb6db5a180ee39bd8e433230f753.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

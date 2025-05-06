@@ -1,0 +1,226 @@
+[gd_scene load_steps=24 format=3 uid="uid://k0r37x5yx1f0"]
+
+[ext_resource type="Shader" uid="uid://dm0qed8urnrei" path="res://src/shaders/masks/bw_invert.gdshader" id="1_s7tfc"]
+[ext_resource type="Texture2D" uid="uid://dimaunlaflwh4" path="res://src/scenes/player_menu/menu_psyche/sfw_sally_thighup_shot.png" id="2_s7tfc"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/spritesheet_formatter_animated.gd" id="3_0dq67"]
+[ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="4_jgdoc"]
+[ext_resource type="Texture2D" uid="uid://dov56ro2eo80d" path="res://src/scenes/player_menu/menu_psyche/sanity_bar.png" id="5_wrvky"]
+[ext_resource type="Texture2D" uid="uid://b65w6tflehx5b" path="res://src/scenes/player_menu/menu_psyche/adrenalne_bar.png" id="6_8prel"]
+[ext_resource type="Texture2D" uid="uid://b1qbf6vhd00py" path="res://src/scenes/player_menu/menu_psyche/separator.png" id="7_3tcjh"]
+[ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="8_x2hnh"]
+[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="9_1y434"]
+
+[sub_resource type="GDScript" id="GDScript_phy5m"]
+resource_name = "psyche_menu"
+script/source = "extends Node
+
+var sanity_bar: ColorRect
+var adrenaline_bar: ColorRect
+
+@onready var pl_sanity_change := EventListener.new([\"PLAYER_SANITY_CHANGE\"], false, self)
+@onready var pl_adrenaline_change := EventListener.new([\"PLAYER_ADRENALINE_CHANGE\"], false, self)
+
+func _ready() -> void:
+	var max_san_bar_x: int
+	var max_adr_bar_x: int
+	
+	sanity_bar = get_node(\"bar_container/stats/sanity/bar\")
+	adrenaline_bar = get_node(\"bar_container/stats/adrenaline/bar\")
+	
+	max_san_bar_x = sanity_bar.size.x
+	max_adr_bar_x = adrenaline_bar.size.x
+	
+	pl_sanity_change.do_on_notify(
+		func(): sanity_bar.size.x = max_san_bar_x * (PLInstance.sanity / Player.MAX_SANITY))	
+	pl_adrenaline_change.do_on_notify(
+		func(): adrenaline_bar.size.x = max_adr_bar_x * (PLInstance.adrenaline / Player.MAX_SANITY))
+	
+	pl_sanity_change.on_notify()
+	pl_adrenaline_change.on_notify()
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g06l6"]
+shader = ExtResource("1_s7tfc")
+shader_parameter/invert = true
+shader_parameter/contrast = 1.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_a47ku"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_inmk4"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_itw78"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_otaev"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_h6imp"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_8abqh"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_k06q6"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_dp3gw"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_bqv18"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_rh0ts"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_y8gec"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_wbnj2"]
+
+[node name="psyche_menu" type="Node2D"]
+script = SubResource("GDScript_phy5m")
+
+[node name="sally" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_g06l6")
+position = Vector2(28, 24)
+texture = ExtResource("2_s7tfc")
+centered = false
+hframes = 8
+frame = 7
+script = ExtResource("3_0dq67")
+autoplay = true
+playing = true
+loop = true
+fps = 12.0
+frame_dimensions = Vector2i(137, 252)
+frame_h_count = 8
+progress = 7
+metadata/_custom_type_script = "uid://cdjphp77kgyqr"
+
+[node name="bar_container" type="VBoxContainer" parent="."]
+offset_left = 176.0
+offset_top = 53.0
+offset_right = 403.0
+offset_bottom = 209.0
+theme = ExtResource("4_jgdoc")
+
+[node name="stats" type="VBoxContainer" parent="bar_container"]
+layout_mode = 2
+
+[node name="sanity" type="TextureRect" parent="bar_container/stats"]
+layout_mode = 2
+texture = ExtResource("5_wrvky")
+stretch_mode = 2
+
+[node name="bar" type="ColorRect" parent="bar_container/stats/sanity"]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 106.0
+offset_right = 227.0
+offset_bottom = 21.0
+color = Color(0.999419, 0.666363, 0.427044, 1)
+
+[node name="adrenaline" type="TextureRect" parent="bar_container/stats"]
+layout_mode = 2
+texture = ExtResource("6_8prel")
+stretch_mode = 2
+
+[node name="bar" type="ColorRect" parent="bar_container/stats/adrenaline"]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 106.0
+offset_right = 226.0
+offset_bottom = 13.0
+color = Color(0.567548, 0, 0.124948, 1)
+
+[node name="seperator" type="NinePatchRect" parent="bar_container"]
+layout_mode = 2
+texture = ExtResource("7_3tcjh")
+region_rect = Rect2(0, 10, 20, 10)
+patch_margin_left = 5
+patch_margin_top = 10
+patch_margin_right = 5
+
+[node name="items_label" type="Label" parent="bar_container"]
+layout_mode = 2
+theme = ExtResource("4_jgdoc")
+text = "Items."
+
+[node name="items" type="GridContainer" parent="bar_container"]
+layout_mode = 2
+columns = 3
+
+[node name="item_1" type="Control" parent="bar_container/items"]
+modulate = Color(0.35, 0.35, 0.45, 1)
+custom_minimum_size = Vector2(72, 40)
+layout_mode = 2
+theme = ExtResource("8_x2hnh")
+script = ExtResource("9_1y434")
+button_display_texture = SubResource("CanvasTexture_a47ku")
+disabled = true
+min_size = Vector2(72, 40)
+true_size = Vector2(72, 40)
+text = "Empty!"
+panel_display_texture = SubResource("CanvasTexture_inmk4")
+panel_display_color = Color(1, 1, 1, 1)
+
+[node name="item_2" type="Control" parent="bar_container/items"]
+modulate = Color(0.35, 0.35, 0.45, 1)
+custom_minimum_size = Vector2(72, 40)
+layout_mode = 2
+theme = ExtResource("8_x2hnh")
+script = ExtResource("9_1y434")
+button_display_texture = SubResource("CanvasTexture_itw78")
+disabled = true
+min_size = Vector2(72, 40)
+true_size = Vector2(72, 40)
+text = "Empty!"
+panel_display_texture = SubResource("CanvasTexture_otaev")
+panel_display_color = Color(1, 1, 1, 1)
+
+[node name="item_3" type="Control" parent="bar_container/items"]
+modulate = Color(0.35, 0.35, 0.45, 1)
+custom_minimum_size = Vector2(72, 40)
+layout_mode = 2
+theme = ExtResource("8_x2hnh")
+script = ExtResource("9_1y434")
+button_display_texture = SubResource("CanvasTexture_h6imp")
+disabled = true
+min_size = Vector2(72, 40)
+true_size = Vector2(72, 40)
+text = "Empty!"
+panel_display_texture = SubResource("CanvasTexture_8abqh")
+panel_display_color = Color(1, 1, 1, 1)
+
+[node name="item_4" type="Control" parent="bar_container/items"]
+modulate = Color(0.35, 0.35, 0.45, 1)
+custom_minimum_size = Vector2(72, 40)
+layout_mode = 2
+theme = ExtResource("8_x2hnh")
+script = ExtResource("9_1y434")
+button_display_texture = SubResource("CanvasTexture_k06q6")
+disabled = true
+min_size = Vector2(72, 40)
+true_size = Vector2(72, 40)
+text = "Empty!"
+panel_display_texture = SubResource("CanvasTexture_dp3gw")
+panel_display_color = Color(1, 1, 1, 1)
+
+[node name="item_5" type="Control" parent="bar_container/items"]
+modulate = Color(0.35, 0.35, 0.45, 1)
+custom_minimum_size = Vector2(72, 40)
+layout_mode = 2
+theme = ExtResource("8_x2hnh")
+script = ExtResource("9_1y434")
+button_display_texture = SubResource("CanvasTexture_bqv18")
+disabled = true
+min_size = Vector2(72, 40)
+true_size = Vector2(72, 40)
+text = "Empty!"
+panel_display_texture = SubResource("CanvasTexture_rh0ts")
+panel_display_color = Color(1, 1, 1, 1)
+
+[node name="item_6" type="Control" parent="bar_container/items"]
+modulate = Color(0.35, 0.35, 0.45, 1)
+custom_minimum_size = Vector2(72, 40)
+layout_mode = 2
+theme = ExtResource("8_x2hnh")
+script = ExtResource("9_1y434")
+button_display_texture = SubResource("CanvasTexture_y8gec")
+disabled = true
+min_size = Vector2(72, 40)
+true_size = Vector2(72, 40)
+text = "Empty!"
+panel_display_texture = SubResource("CanvasTexture_wbnj2")
+panel_display_color = Color(1, 1, 1, 1)

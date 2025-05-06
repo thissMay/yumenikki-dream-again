@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FootstepSet" load_steps=3 format=3 uid="uid://dbtrq2i18yt2n"]
+
+[ext_resource type="AudioStream" uid="uid://chhyso2721cs7" path="res://src/audio/se/footstep_snow-1.wav" id="1_q2ee2"]
+[ext_resource type="Script" uid="uid://dl740w6e37l11" path="res://src/audio/footsteps/footstep_set.gd" id="1_y7yer"]
+
+[resource]
+script = ExtResource("1_y7yer")
+arr = [ExtResource("1_q2ee2")]
+metadata/_custom_type_script = "uid://dl740w6e37l11"

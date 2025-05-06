@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bbm2vcixqf0gs"]
+
+[ext_resource type="FontFile" uid="uid://c8odrwluisrlk" path="res://fonts/FIRACODE-VARIABLEFONT_WGHT.TTF" id="1_8sl0k"]
+
+[resource]
+default_font = ExtResource("1_8sl0k")
+default_font_size = 6

@@ -1,0 +1,14 @@
+[gd_resource type="GradientTexture2D" load_steps=2 format=3 uid="uid://co64pugf2as81"]
+
+[sub_resource type="Gradient" id="Gradient_snaxq"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.09375, 0.90625)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 32
+
+[resource]
+gradient = SubResource("Gradient_snaxq")
+width = 480
+height = 270
+fill_from = Vector2(1, 1)

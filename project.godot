@@ -1,0 +1,80 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Yume Nikki 21st Anniversary"
+config/features=PackedStringArray("4.4", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[audio]
+
+general/2d_panning_strength=1.0
+general/3d_panning_strength=1.0
+
+[autoload]
+
+Game="*res://src/game/game.gd"
+GlobalPanoramaManager="*res://src/autoloads/panorama_system.gd"
+Global="*res://src/autoloads/global.gd"
+Music="*res://src/autoloads/bgm_player_music.gd"
+Ambience="*res://src/autoloads/bgm_player_amb.gd"
+AudioService="*res://src/autoloads/audio_service.gd"
+ScreenTransition="*res://src/autoloads/autoload_screentrans.tscn"
+
+[display]
+
+window/size/viewport_width=480
+window/size/viewport_height=270
+window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/autoload_setup/plugin.cfg", "res://addons/canvas_layer_preset/plugin.cfg", "res://addons/miscallenous/plugin.cfg")
+
+[layer_names]
+
+2d_render/layer_1="Everything"
+2d_render/layer_2="Tiles"
+2d_render/layer_3="Entities"
+2d_render/layer_4="Obstacles"
+2d_render/layer_20="UI"
+2d_physics/layer_1="Everything / All"
+2d_physics/layer_2="Interactable"
+2d_physics/layer_3="Entity"
+2d_physics/layer_4="Tile"
+2d_physics/layer_32="Warp Effectors"
+
+[physics]
+
+2d/default_gravity=0.0
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+textures/canvas_textures/default_texture_repeat=2
+renderer/rendering_method="mobile"
+textures/lossless_compression/force_png=true
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
+textures/default_filters/anisotropic_filtering_level=0
+environment/ssao/quality=0
+environment/ssil/quality=0
+anti_aliasing/screen_space_roughness_limiter/enabled=false
+environment/screen_space_reflection/roughness_quality=0
+environment/subsurface_scattering/subsurface_scattering_quality=0
+environment/defaults/default_clear_color=Color(0.18359, 0.18359, 0.18359, 1)
+
+[shader_globals]
+
+uv_offset={
+"type": "vec2",
+"value": Vector2(0, 0)
+}

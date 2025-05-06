@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://dya5bb04bykk4"]
+
+[ext_resource type="Theme" uid="uid://befb0b4la106s" path="res://src/global_theme_3.tres" id="1_voxw8"]
+[ext_resource type="Script" uid="uid://dk81btxcpwmaw" path="res://src/ui/message_display/message_display.gd" id="2_idwpd"]
+[ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="4_5mqx8"]
+
+[node name="message_display" type="PanelContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -135.0
+offset_right = 47.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_voxw8")
+script = ExtResource("2_idwpd")
+
+[node name="margin_container" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="v_box_container" type="VSplitContainer" parent="margin_container"]
+layout_mode = 2
+theme_override_constants/separation = 5
+split_offset = 75
+dragger_visibility = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="margin_container/v_box_container"]
+layout_mode = 2
+text = "placeholder text."
+scroll_active = false
+
+[node name="button_container" type="HBoxContainer" parent="margin_container/v_box_container"]
+layout_mode = 2
+
+[node name="type_writer" type="Timer" parent="."]
+
+[node name="sound_player" type="AudioStreamPlayer" parent="."]
+script = ExtResource("4_5mqx8")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2

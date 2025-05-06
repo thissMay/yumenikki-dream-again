@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://df7m8fcyd86qp"]
+
+[ext_resource type="FontFile" uid="uid://c8odrwluisrlk" path="res://fonts/FIRACODE-VARIABLEFONT_WGHT.TTF" id="1_dojyt"]
+[ext_resource type="StyleBox" uid="uid://b5iytu8tgolen" path="res://src/ui/panel_underline.tres" id="5_dnxcn"]
+
+[resource]
+default_font = ExtResource("1_dojyt")
+default_font_size = 6
+PanelContainer/styles/panel = ExtResource("5_dnxcn")

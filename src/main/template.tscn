@@ -1,0 +1,117 @@
+[gd_scene load_steps=16 format=3 uid="uid://ra24ysq2f70c"]
+
+[ext_resource type="Script" uid="uid://b2yjestmw6ux7" path="res://src/game/game_manager.gd" id="1_1weyd"]
+[ext_resource type="Environment" uid="uid://be4tedt15qnrp" path="res://src/main/environment_2d.tres" id="2_nfr70"]
+[ext_resource type="Script" uid="uid://bot0qrhchjod5" path="res://src/main/time/time_manager.gd" id="2_yhp8d"]
+[ext_resource type="Script" uid="uid://6jmuo8r04t1" path="res://src/systems/behaviour/strat_fsm_hyb.gd" id="6_n5e32"]
+[ext_resource type="Script" uid="uid://bkcfhq2u2bvbg" path="res://src/game/states/pregame.gd" id="7_pptqv"]
+[ext_resource type="Script" uid="uid://drsdf6evorx0v" path="res://src/game/states/active.gd" id="8_j3xcn"]
+[ext_resource type="AudioStream" uid="uid://dcqheuccc0ijo" path="res://src/audio/bgm/aztec_rave.WAV" id="9_00sxe"]
+[ext_resource type="Script" uid="uid://drtlglqkjepmq" path="res://src/game/states/pause.gd" id="9_uggay"]
+[ext_resource type="PackedScene" uid="uid://c2sv1637gh6ub" path="res://src/ui/pause_menu/pause_menu.tscn" id="10_kqpe4"]
+[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="11_bn1po"]
+[ext_resource type="Script" uid="uid://cwsl1s56sohmv" path="res://src/game/states/special_invert_cutscene.gd" id="12_yj2j8"]
+[ext_resource type="PackedScene" uid="uid://q5moiijg0b7a" path="res://src/player/hud/pl_hud.tscn" id="15_f8vi8"]
+[ext_resource type="Texture2D" uid="uid://co64pugf2as81" path="res://src/shaders/ui/cinematic_bars_grad.tres" id="16_v4uq4"]
+
+[sub_resource type="Resource" id="Resource_n1fgk"]
+metadata/__load_path__ = "res://src/audio/bgm/madoxy_cu_g.ogg"
+
+[sub_resource type="GDScript" id="GDScript_nfr70"]
+script/source = "extends Label
+
+func _process(delta: float) -> void:
+	text = str(\"FPS:: \", Engine.get_frames_per_second())
+"
+
+[node name="game_manager" type="Node"]
+process_mode = 3
+script = ExtResource("1_1weyd")
+
+[node name="global_screen_effect" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_nfr70")
+
+[node name="time_manager" type="Node" parent="."]
+script = ExtResource("2_yhp8d")
+
+[node name="fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("6_n5e32")
+initial_state = NodePath("PREGAME")
+
+[node name="PREGAME" type="Node" parent="fsm"]
+script = ExtResource("7_pptqv")
+
+[node name="ACTIVE" type="Node" parent="fsm"]
+script = ExtResource("8_j3xcn")
+
+[node name="PAUSE" type="Node" parent="fsm" node_paths=PackedStringArray("pause_menu", "pause_bgm")]
+script = ExtResource("9_uggay")
+pause_menu = NodePath("../../always/pause")
+pause_bgm = NodePath("BGM")
+
+[node name="BGM" type="Node" parent="fsm/PAUSE"]
+script = ExtResource("11_bn1po")
+stream = ExtResource("9_00sxe")
+pitch = 0.5
+autoplay = false
+metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
+
+[node name="SPECIAL_INVERT_CUTSCENE" type="Node" parent="fsm" node_paths=PackedStringArray("pause_bgm")]
+script = ExtResource("12_yj2j8")
+pause_bgm = NodePath("BGM")
+
+[node name="BGM" type="Node" parent="fsm/SPECIAL_INVERT_CUTSCENE"]
+script = ExtResource("11_bn1po")
+stream = SubResource("Resource_n1fgk")
+pitch = 0.9
+autoplay = false
+metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
+
+[node name="pausable" type="CanvasLayer" parent="."]
+process_mode = 1
+layer = 0
+follow_viewport_enabled = true
+
+[node name="always" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 25
+
+[node name="pause" parent="always" instance=ExtResource("10_kqpe4")]
+visible = false
+
+[node name="ui" type="CanvasLayer" parent="always"]
+layer = 30
+
+[node name="message_display_manager" type="Node" parent="always/ui"]
+
+[node name="hud" parent="always/ui" instance=ExtResource("15_f8vi8")]
+
+[node name="ColorRect" type="ColorRect" parent="always/ui"]
+visible = false
+offset_right = 56.0
+offset_bottom = 24.0
+color = Color(0.0745098, 0.0745098, 0.0745098, 0.207843)
+
+[node name="Label" type="Label" parent="always/ui/ColorRect"]
+z_index = 50
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "FPS:: XX"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_nfr70")
+
+[node name="cinematic" type="CanvasLayer" parent="always"]
+layer = 20
+visible = false
+
+[node name="cinematic_bars" type="TextureRect" parent="always/cinematic"]
+offset_right = 480.0
+offset_bottom = 270.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("16_v4uq4")

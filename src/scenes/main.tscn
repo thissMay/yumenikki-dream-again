@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://l5hlafq1udx4"]
+
+[ext_resource type="Script" uid="uid://b5svmingexajf" path="res://src/main/main.gd" id="1_32aa5"]
+[ext_resource type="PackedScene" uid="uid://ra24ysq2f70c" path="res://src/main/template.tscn" id="2_5dlwx"]
+[ext_resource type="PackedScene" uid="uid://bmqk3r16dhi7n" path="res://src/scenes/debug_preload.tscn" id="3_32aa5"]
+
+[node name="main" type="Control"]
+process_mode = 3
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_32aa5")
+
+[node name="game_manager" parent="." instance=ExtResource("2_5dlwx")]
+
+[node name="preload" parent="game_manager/pausable" index="0" instance=ExtResource("3_32aa5")]
+
+[editable path="game_manager"]

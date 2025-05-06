@@ -1,0 +1,246 @@
+[gd_scene load_steps=24 format=3 uid="uid://c2sv1637gh6ub"]
+
+[ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_fn14o"]
+[ext_resource type="Texture2D" uid="uid://cqg1xufl2vdws" path="res://src/images/ui/pause_menu_audio_label.png" id="1_t1lch"]
+[ext_resource type="Script" uid="uid://cfsgaybsbxwt1" path="res://src/game/game_settings.gd" id="1_yxvds"]
+[ext_resource type="Shader" uid="uid://dhvgpadvrk0e2" path="res://src/shaders/screen_overlay/vignette_blur.gdshader" id="2_bagrl"]
+[ext_resource type="Texture2D" uid="uid://dbtgevi5exa0i" path="res://src/images/ui/pause_menu_music.png" id="2_qcpkw"]
+[ext_resource type="Texture2D" uid="uid://cyql400iwya6g" path="res://src/images/ui/pause_menu_amb.png" id="3_0nd4i"]
+[ext_resource type="Texture2D" uid="uid://0tpg2oc0kgm4" path="res://src/images/ui/pause_menu_sfx.png" id="4_d4hwy"]
+[ext_resource type="Script" uid="uid://d3r72epfndsge" path="res://src/autoloads/panorama_system.gd" id="4_l8f81"]
+[ext_resource type="Texture2D" uid="uid://blvyuf03e1vtu" path="res://src/images/ui/pause_menu_graphics_label.png" id="5_miamw"]
+[ext_resource type="Texture2D" uid="uid://ughikbo5ohj1" path="res://src/images/ui/pause_menu_brdrless.png" id="7_ru7ox"]
+[ext_resource type="Texture2D" uid="uid://cw6tqhm75cps5" path="res://src/images/ui/pause_menu_fll_screen.png" id="8_3ybno"]
+[ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="11_4sckj"]
+[ext_resource type="Texture2D" uid="uid://c2ayjno1f8c0e" path="res://src/images/ui/cam_reduction.png" id="12_co110"]
+[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="12_ukw3d"]
+[ext_resource type="Texture2D" uid="uid://bdynsmwkraqma" path="res://src/images/ui/bloom.png" id="13_co110"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_644m3"]
+shader = ExtResource("2_bagrl")
+shader_parameter/blur_radius = 0.0
+shader_parameter/blur_amount = 2.575
+shader_parameter/blur_inner = 0.0
+shader_parameter/blur_outer = 0.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_iqcri"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_onin4"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_4sckj"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_spgs3"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ahd7c"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_l17fe"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_fn14o"]
+
+[node name="pause_menu" type="Control" node_paths=PackedStringArray("music_slider", "amb_slider", "sfx_slider", "borderless", "full_screen", "cam_reduction", "bloom", "resume", "quit_to_menu", "quit_to_desktop")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_fn14o")
+script = ExtResource("1_yxvds")
+music_slider = NodePath("VBoxContainer/_c/hbox/audio/music/HSlider")
+amb_slider = NodePath("VBoxContainer/_c/hbox/audio/amb/HSlider")
+sfx_slider = NodePath("VBoxContainer/_c/hbox/audio/sfx/HSlider")
+borderless = NodePath("VBoxContainer/_c/hbox/graphics/borderless/check")
+full_screen = NodePath("VBoxContainer/_c/hbox/graphics/fullscreen/check")
+cam_reduction = NodePath("VBoxContainer/_c/hbox/graphics/cam_reduction/check")
+bloom = NodePath("VBoxContainer/_c/hbox/graphics/bloom/check")
+resume = NodePath("VBoxContainer/_e/VBoxContainer/resume")
+quit_to_menu = NodePath("VBoxContainer/_e/VBoxContainer/quit_to_menu")
+quit_to_desktop = NodePath("VBoxContainer/_e/VBoxContainer/quit_to_desktop")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.152941)
+
+[node name="blur" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_644m3")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("PlaceholderTexture2D_iqcri")
+script = ExtResource("4_l8f81")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="_c" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 5
+
+[node name="hbox" type="HBoxContainer" parent="VBoxContainer/_c"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="audio" type="VBoxContainer" parent="VBoxContainer/_c/hbox"]
+layout_mode = 2
+
+[node name="ui_audio" type="TextureRect" parent="VBoxContainer/_c/hbox/audio"]
+layout_mode = 2
+texture = ExtResource("1_t1lch")
+stretch_mode = 2
+
+[node name="music" type="HBoxContainer" parent="VBoxContainer/_c/hbox/audio"]
+layout_mode = 2
+
+[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/audio/music"]
+layout_mode = 2
+texture = ExtResource("2_qcpkw")
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/_c/hbox/audio/music"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+min_value = -50.0
+max_value = 0.0
+
+[node name="amb" type="HBoxContainer" parent="VBoxContainer/_c/hbox/audio"]
+layout_mode = 2
+
+[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/audio/amb"]
+layout_mode = 2
+texture = ExtResource("3_0nd4i")
+stretch_mode = 2
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/_c/hbox/audio/amb"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+min_value = -50.0
+max_value = 0.0
+
+[node name="sfx" type="HBoxContainer" parent="VBoxContainer/_c/hbox/audio"]
+layout_mode = 2
+
+[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/audio/sfx"]
+layout_mode = 2
+texture = ExtResource("4_d4hwy")
+stretch_mode = 2
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/_c/hbox/audio/sfx"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+min_value = -50.0
+max_value = 0.0
+
+[node name="graphics" type="VBoxContainer" parent="VBoxContainer/_c/hbox"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ui_graphics" type="TextureRect" parent="VBoxContainer/_c/hbox/graphics"]
+layout_mode = 2
+texture = ExtResource("5_miamw")
+stretch_mode = 2
+
+[node name="borderless" type="HBoxContainer" parent="VBoxContainer/_c/hbox/graphics"]
+layout_mode = 2
+
+[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/graphics/borderless"]
+layout_mode = 2
+texture = ExtResource("7_ru7ox")
+stretch_mode = 3
+
+[node name="check" type="CheckBox" parent="VBoxContainer/_c/hbox/graphics/borderless"]
+layout_mode = 2
+
+[node name="fullscreen" type="HBoxContainer" parent="VBoxContainer/_c/hbox/graphics"]
+layout_mode = 2
+
+[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/graphics/fullscreen"]
+layout_mode = 2
+texture = ExtResource("8_3ybno")
+stretch_mode = 3
+
+[node name="check" type="CheckBox" parent="VBoxContainer/_c/hbox/graphics/fullscreen"]
+layout_mode = 2
+
+[node name="cam_reduction" type="HBoxContainer" parent="VBoxContainer/_c/hbox/graphics"]
+layout_mode = 2
+
+[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/graphics/cam_reduction"]
+layout_mode = 2
+texture = ExtResource("12_co110")
+stretch_mode = 3
+
+[node name="check" type="CheckBox" parent="VBoxContainer/_c/hbox/graphics/cam_reduction"]
+layout_mode = 2
+
+[node name="bloom" type="HBoxContainer" parent="VBoxContainer/_c/hbox/graphics"]
+layout_mode = 2
+
+[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/graphics/bloom"]
+layout_mode = 2
+texture = ExtResource("13_co110")
+stretch_mode = 3
+
+[node name="check" type="CheckBox" parent="VBoxContainer/_c/hbox/graphics/bloom"]
+layout_mode = 2
+
+[node name="_e" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 295
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/_e"]
+layout_mode = 2
+
+[node name="resume" type="Container" parent="VBoxContainer/_e/VBoxContainer"]
+custom_minimum_size = Vector2(145, 25)
+layout_mode = 2
+theme = ExtResource("11_4sckj")
+script = ExtResource("12_ukw3d")
+button_display_texture = SubResource("CanvasTexture_onin4")
+min_size = Vector2(145, 25)
+true_size = Vector2(145, 25)
+text = "Resume + Save Settings"
+panel_display_texture = SubResource("CanvasTexture_4sckj")
+panel_display_color = Color(1, 1, 1, 1)
+
+[node name="quit_to_menu" type="Container" parent="VBoxContainer/_e/VBoxContainer"]
+custom_minimum_size = Vector2(145, 25)
+layout_mode = 2
+theme = ExtResource("11_4sckj")
+script = ExtResource("12_ukw3d")
+button_display_texture = SubResource("CanvasTexture_spgs3")
+min_size = Vector2(145, 25)
+true_size = Vector2(145, 25)
+text = "Quit to Menu"
+panel_display_texture = SubResource("CanvasTexture_ahd7c")
+panel_display_color = Color(1, 1, 1, 1)
+
+[node name="quit_to_desktop" type="Container" parent="VBoxContainer/_e/VBoxContainer"]
+custom_minimum_size = Vector2(145, 25)
+layout_mode = 2
+theme = ExtResource("11_4sckj")
+script = ExtResource("12_ukw3d")
+button_display_texture = SubResource("CanvasTexture_l17fe")
+min_size = Vector2(145, 25)
+true_size = Vector2(145, 25)
+text = "Quit to Desktop"
+panel_display_texture = SubResource("CanvasTexture_fn14o")
+panel_display_color = Color(1, 1, 1, 1)

@@ -1,0 +1,340 @@
+[gd_scene load_steps=43 format=3 uid="uid://ryhx8o46er7i"]
+
+[ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/madotsuki/player_yn.gd" id="1_wub1p"]
+[ext_resource type="Script" uid="uid://32q36bskoln0" path="res://src/systems/behaviour/strategist.gd" id="2_c8hmm"]
+[ext_resource type="Script" uid="uid://cpc216jqo5itw" path="res://src/player/scripts/directional_poi/input.gd" id="3_kx4hk"]
+[ext_resource type="PackedScene" uid="uid://ofaon5xd4n4l" path="res://src/player/madotsuki/emotes/animations/effect_equip_anim.tscn" id="4_icf81"]
+[ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="5_xe7mj"]
+[ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_3hhoi"]
+[ext_resource type="Script" uid="uid://dd0qxrsakskma" path="res://src/entities/component/sb_component_receiver.gd" id="7_ps2wd"]
+[ext_resource type="Script" uid="uid://cb08xjc16uxc7" path="res://src/player/scripts/managers/pl_equip_manager.gd" id="9_y4vx3"]
+[ext_resource type="Script" uid="uid://ce1ox7oil4djt" path="res://src/player/scripts/managers/pl_action_manager.gd" id="10_rhwps"]
+[ext_resource type="Script" uid="uid://dh7dintxcyffh" path="res://src/player/scripts/managers/pl_interact_manager.gd" id="11_bof2k"]
+[ext_resource type="Script" uid="uid://bxdr1wekbu7uu" path="res://src/player/scripts/managers/pl_animator_manager.gd" id="12_ukmoe"]
+[ext_resource type="Texture2D" uid="uid://51l0bvgjidxn" path="res://src/player/madotsuki/display/default/_RESET.png" id="13_p1bbc"]
+[ext_resource type="AnimationLibrary" uid="uid://dogeudjptgsrc" path="res://src/player/madotsuki/actions/dictionary.tres" id="14_srowa"]
+[ext_resource type="AnimationLibrary" uid="uid://bdtg83ri5fiie" path="res://src/player/madotsuki/emotes/dictionary.tres" id="15_6ao3k"]
+[ext_resource type="Texture2D" uid="uid://bd57ui48qj2ao" path="res://src/player/madotsuki/display/default/pinchh.png" id="17_c81qx"]
+[ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/player/states/sentient_fsm.gd" id="18_rujao"]
+[ext_resource type="Script" uid="uid://co5edhtkgx3g8" path="res://src/systems/behaviour/fsm.gd" id="19_hy2th"]
+[ext_resource type="Script" uid="uid://bcy41p4huaij7" path="res://src/player/states/yn style/stamina/normal.gd" id="20_fr82v"]
+[ext_resource type="Script" uid="uid://bk7ea81npilfk" path="res://src/player/states/yn style/stamina/exhausted.gd" id="21_5r1vc"]
+[ext_resource type="Script" uid="uid://copf228upsgds" path="res://src/player/states/yn style/idle.gd" id="22_e8irh"]
+[ext_resource type="Resource" uid="uid://b8uscq8rapl7o" path="res://src/player/madotsuki/emotes/tres/pinch.tres" id="23_kysy1"]
+[ext_resource type="Script" uid="uid://mw73mitc7ufu" path="res://src/player/states/yn style/walk.gd" id="24_ydgy1"]
+[ext_resource type="Script" uid="uid://ybbhtmvclmcj" path="res://src/player/states/yn style/run.gd" id="25_fc8o1"]
+[ext_resource type="Script" uid="uid://0gg3uqjct50j" path="res://src/player/states/yn style/sneak.gd" id="26_naf4t"]
+[ext_resource type="Script" uid="uid://bmml0v7khpsyf" path="res://src/player/states/yn style/climb.gd" id="27_xcxb0"]
+[ext_resource type="Script" uid="uid://s2qduwa65o" path="res://src/player/states/yn style/action.gd" id="28_4wyx3"]
+[ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="29_1qwjo"]
+[ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/spritesheet_formatter.gd" id="30_kknx7"]
+
+[sub_resource type="Resource" id="Resource_gmp5c"]
+script = ExtResource("3_kx4hk")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4moul"]
+size = Vector2(6, 3)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_riukl"]
+radius = 11.0
+height = 34.0
+
+[sub_resource type="Animation" id="Animation_t6ff3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../sprite_renderer:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../sprite_renderer:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("13_p1bbc")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rf2ln"]
+_data = {
+&"RESET": SubResource("Animation_t6ff3")
+}
+
+[sub_resource type="Animation" id="Animation_7d6fd"]
+resource_name = "idle_down"
+length = 0.1
+
+[sub_resource type="Resource" id="Resource_mbimu"]
+metadata/__load_path__ = "res://audio/se/se_pinch.wav"
+
+[sub_resource type="Animation" id="Animation_0xmvy"]
+length = 1.35
+step = 0.05
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../sound_player")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.95),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [SubResource("Resource_mbimu")],
+"method": &"play_sound"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../sprite_renderer:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("17_c81qx")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../sprite_renderer:progress")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.55, 0.95, 1.05, 1.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_efc3o"]
+resource_name = "run"
+length = 0.56
+loop_mode = 1
+step = 0.035
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../footstep_manager")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.206897, 0.482759),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"initate_footstep"
+}, {
+"args": [],
+"method": &"initate_footstep"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../sprite_renderer:progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0689655, 0.137931, 0.206897, 0.275862, 0.344828, 0.413793, 0.482759),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_8ji2c"]
+resource_name = "walk"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../footstep_manager")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"initate_footstep"
+}, {
+"args": [],
+"method": &"initate_footstep"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../sprite_renderer:progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bchnx"]
+_data = {
+&"idle": SubResource("Animation_7d6fd"),
+&"pinch": SubResource("Animation_0xmvy"),
+&"run": SubResource("Animation_efc3o"),
+&"walk": SubResource("Animation_8ji2c")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7co0"]
+size = Vector2(10, 4)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qcosp"]
+blend_mode = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r8oc4"]
+size = Vector2(2, 2)
+
+[node name="Madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("fsm")]
+script = ExtResource("1_wub1p")
+fsm = NodePath("fsm")
+
+[node name="look_at" type="Marker2D" parent="."]
+visible = false
+script = ExtResource("2_c8hmm")
+initial_strat = SubResource("Resource_gmp5c")
+
+[node name="effect_equip_anim" parent="." instance=ExtResource("4_icf81")]
+process_mode = 3
+z_index = 1
+
+[node name="footstep_manager" type="Node2D" parent="."]
+script = ExtResource("5_xe7mj")
+
+[node name="sound_player" type="AudioStreamPlayer" parent="footstep_manager"]
+script = ExtResource("6_3hhoi")
+
+[node name="terrain_detector" type="Area2D" parent="footstep_manager"]
+collision_layer = 8
+collision_mask = 9
+
+[node name="col" type="CollisionShape2D" parent="footstep_manager/terrain_detector"]
+position = Vector2(0, 13.5)
+shape = SubResource("RectangleShape2D_4moul")
+debug_color = Color(0.845999, 0.0997133, 0.874914, 0.42)
+
+[node name="sb_components" type="Node2D" parent="."]
+script = ExtResource("7_ps2wd")
+
+[node name="equip_manager" type="Node" parent="sb_components"]
+script = ExtResource("9_y4vx3")
+
+[node name="action_manager" type="Node" parent="sb_components"]
+script = ExtResource("10_rhwps")
+
+[node name="timer" type="Timer" parent="sb_components/action_manager"]
+
+[node name="interaction_manager" type="Node2D" parent="sb_components"]
+process_mode = 1
+script = ExtResource("11_bof2k")
+
+[node name="field" type="Area2D" parent="sb_components/interaction_manager"]
+rotation = 1.5708
+collision_layer = 2
+collision_mask = 2
+
+[node name="shape" type="CollisionShape2D" parent="sb_components/interaction_manager/field"]
+position = Vector2(17, -7.43094e-07)
+shape = SubResource("CapsuleShape2D_riukl")
+
+[node name="animation_manager" type="Node" parent="."]
+script = ExtResource("12_ukmoe")
+
+[node name="animation_player" type="AnimationPlayer" parent="animation_manager"]
+libraries = {
+&"": SubResource("AnimationLibrary_rf2ln"),
+&"action": ExtResource("14_srowa"),
+&"emote": ExtResource("15_6ao3k"),
+&"normal": SubResource("AnimationLibrary_bchnx")
+}
+playback_auto_capture = false
+
+[node name="fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("18_rujao")
+initial_state = NodePath("IDLE")
+
+[node name="stamina_fsm" type="Node" parent="fsm" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("19_hy2th")
+initial_state = NodePath("NORMAL")
+
+[node name="NORMAL" type="Node" parent="fsm/stamina_fsm"]
+script = ExtResource("20_fr82v")
+
+[node name="EXHAUSTED" type="Node" parent="fsm/stamina_fsm"]
+script = ExtResource("21_5r1vc")
+
+[node name="IDLE" type="Node" parent="fsm"]
+script = ExtResource("22_e8irh")
+pinch = ExtResource("23_kysy1")
+
+[node name="WALK" type="Node" parent="fsm"]
+script = ExtResource("24_ydgy1")
+
+[node name="RUN" type="Node" parent="fsm"]
+script = ExtResource("25_fc8o1")
+transitionable = false
+
+[node name="SNEAK" type="Node" parent="fsm"]
+script = ExtResource("26_naf4t")
+
+[node name="CLIMB" type="Node" parent="fsm"]
+script = ExtResource("27_xcxb0")
+
+[node name="ACTION" type="Node" parent="fsm"]
+script = ExtResource("28_4wyx3")
+
+[node name="audio_listener" type="AudioListener2D" parent="."]
+
+[node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 13)
+shape = SubResource("RectangleShape2D_w7co0")
+
+[node name="shadow_renderer" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_qcosp")
+position = Vector2(0, -8)
+texture = ExtResource("29_1qwjo")
+
+[node name="sprite_renderer" type="Sprite2D" parent="."]
+use_parent_material = true
+position = Vector2(0, 14)
+texture = ExtResource("13_p1bbc")
+offset = Vector2(0, -24)
+script = ExtResource("30_kknx7")
+frame_dimensions = Vector2i(48, 48)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="sprite_renderer"]
+position = Vector2(0, -10)
+
+[node name="world_warp" type="Area2D" parent="."]
+collision_layer = 2147483648
+collision_mask = 2147483648
+
+[node name="_" type="CollisionShape2D" parent="world_warp"]
+shape = SubResource("RectangleShape2D_r8oc4")
+
+[node name="sound_player" type="AudioStreamPlayer" parent="."]
+script = ExtResource("6_3hhoi")
+
+[editable path="effect_equip_anim"]

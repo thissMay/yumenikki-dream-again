@@ -1,0 +1,309 @@
+[gd_scene load_steps=41 format=3 uid="uid://du2ph3le71hf0"]
+
+[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_7evs1"]
+[ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_m4s6v"]
+[ext_resource type="AudioStream" uid="uid://bln5lg4s8lohd" path="res://src/audio/bgm/luff_yta_title.ogg" id="3_l2viy"]
+[ext_resource type="Shader" uid="uid://bjc3g4hpc28r1" path="res://src/shaders/screen_overlay/ocean_lights.gdshader" id="6_x0re4"]
+[ext_resource type="Shader" uid="uid://20gve0q01un3" path="res://src/shaders/screen_overlay/distortion_waves.gdshader" id="7_tc2ff"]
+[ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="8_x0re4"]
+[ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="10_pi5a7"]
+[ext_resource type="Texture2D" uid="uid://b42quafasabjn" path="res://src/scenes/menu/sprites/menu_bg_galaxy.png" id="11_y38rf"]
+[ext_resource type="Texture2D" uid="uid://dd78tgl6xcf6u" path="res://src/scenes/menu/sprites/menu_bg_buildings.png" id="12_ccncn"]
+[ext_resource type="Texture2D" uid="uid://bou005stcbra6" path="res://src/images/ui/menu_game_start.png" id="12_x0re4"]
+[ext_resource type="Texture2D" uid="uid://4qsqbq1mc6vx" path="res://src/scenes/menu/sprites/balcony.png" id="13_2cdnh"]
+[ext_resource type="Texture2D" uid="uid://dc6yjc3nroaj7" path="res://src/scenes/menu/sprites/menu_title.png" id="13_mwihm"]
+[ext_resource type="Texture2D" uid="uid://bnhc6qe0cfq5v" path="res://src/images/ui/menu_game_settings.png" id="13_tc2ff"]
+[ext_resource type="Texture2D" uid="uid://bu6rhvlkeswa6" path="res://src/images/ui/menu_game_quit.png" id="14_kjaty"]
+[ext_resource type="Texture2D" uid="uid://d3w274mddfvtd" path="res://src/images/ui/menu_credits.png" id="14_tc2ff"]
+[ext_resource type="Texture2D" uid="uid://cpp4m734aujdf" path="res://src/scenes/menu/menu_sats_shadows.png" id="14_twarc"]
+[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="15_3j6wv"]
+[ext_resource type="PackedScene" uid="uid://di4ihq7ahrytt" path="res://src/scenes/credits.tscn" id="15_tc2ff"]
+[ext_resource type="Texture2D" uid="uid://b8bauav6aamdk" path="res://src/scenes/menu/sprites/balcony_fans.png" id="15_x0re4"]
+[ext_resource type="Texture2D" uid="uid://blkxd5n6kobo" path="res://src/scenes/menu/sprites/sally.png" id="16_tc2ff"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/spritesheet_formatter_animated.gd" id="17_kjaty"]
+[ext_resource type="Texture2D" uid="uid://cix5egsemavwc" path="res://src/scenes/menu/sprites/menu_balcony_rails.png" id="18_pv488"]
+[ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="28_e2c2u"]
+
+[sub_resource type="GDScript" id="GDScript_5hdr5"]
+resource_name = "menu_scene"
+script/source = "extends SceneNode
+
+@export_file() var new_game_scene: String
+
+@export var play: 		GUIPanelButton
+@export var options: 	GUIPanelButton
+@export var exit: 		GUIPanelButton
+@export var credits: 	GUIPanelButton
+
+@export var credits_scene: Control
+@export var selection: Control
+@export var credits_go_back: 	GUIPanelButton
+
+@export var game_ver: Label
+
+func _ready() -> void:
+	super()
+	game_ver.text = str(\"VERSION: \", ProjectSettings.get_setting(\"application/config/version\"))
+
+	if GameManager.instance: GameManager.change_to_state(\"pregame\")
+	
+	play.pressed.connect(func(): 
+		GameManager.change_scene_to(load(new_game_scene))
+		Music.stop()
+		Ambience.stop()
+		)
+	options.pressed.connect(func(): GameManager.pause_options(true))
+	exit.pressed.connect(func(): Game.Application.quit())
+	credits.pressed.connect(func(): 
+		selection.visible = false
+		credits_scene.visible = true)
+	credits_go_back.pressed.connect(func(): 
+		selection.visible = true
+		credits_scene.visible = false)
+
+func _on_unload() -> void: 
+	super()
+	GameManager.change_to_state(\"active\")
+"
+
+[sub_resource type="Gradient" id="Gradient_x0re4"]
+offsets = PackedFloat32Array(0, 0.789644, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.547969, 0.265493, 0.778216, 1, 0.910111, 0.734727, 0.861916, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tc2ff"]
+gradient = SubResource("Gradient_x0re4")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gxbyo"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3t7rp"]
+noise = SubResource("FastNoiseLite_gxbyo")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0sumi"]
+shader = ExtResource("6_x0re4")
+shader_parameter/opacity = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_3t7rp")
+shader_parameter/scroll_speed = 0.085
+shader_parameter/offset_strength = 0.005
+shader_parameter/uv_offset = Vector2(0, 0)
+shader_parameter/gradient = SubResource("GradientTexture2D_tc2ff")
+shader_parameter/ray_strength = 0.49
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_q7q7r"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rgfkw"]
+seamless = true
+noise = SubResource("FastNoiseLite_q7q7r")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_te2f1"]
+shader = ExtResource("7_tc2ff")
+shader_parameter/transparency = 0.0
+shader_parameter/dirX = 1.0
+shader_parameter/dirY = 1.0
+shader_parameter/scroll_speed = 0.405
+shader_parameter/noise_strength = 0.085
+shader_parameter/noise_fwd = SubResource("NoiseTexture2D_rgfkw")
+shader_parameter/uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 1.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_5hdr5"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_pi5a7"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_l2viy"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_aa16i"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_kjaty"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_pv488"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_15cho"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_wxbwc"]
+
+[node name="menu" type="Node" node_paths=PackedStringArray("play", "options", "exit", "credits", "credits_scene", "selection", "credits_go_back", "game_ver")]
+script = SubResource("GDScript_5hdr5")
+new_game_scene = "uid://he4hpqrfbk5w"
+play = NodePath("normal/selection/select/start")
+options = NodePath("normal/selection/select/options")
+exit = NodePath("normal/selection/select/exit")
+credits = NodePath("normal/selection/select/credits")
+credits_scene = NodePath("normal/credits_view")
+selection = NodePath("normal/selection")
+credits_go_back = NodePath("normal/credits_view/PanelContainer/MarginContainer/VBoxContainer/go_back")
+game_ver = NodePath("normal/selection/select/game_version")
+
+[node name="BGM" type="Node" parent="."]
+script = ExtResource("2_7evs1")
+stream = ExtResource("3_l2viy")
+
+[node name="camera" parent="." instance=ExtResource("2_m4s6v")]
+
+[node name="camera_handler" parent="camera" index="0"]
+position = Vector2(240, 135)
+
+[node name="Wiggle" type="Node" parent="camera/camera_handler/marker/camera/components_receiver" index="0"]
+script = ExtResource("28_e2c2u")
+wig_rot_strn = 0.2
+wig_rot_speed = 0.5
+wig_x_strn = 5.0
+wig_y_strn = 3.745
+wig_pos_speed = 2.0
+
+[node name="overlay_1" parent="camera/camera_handler/camera_overlay" index="0"]
+material = SubResource("ShaderMaterial_0sumi")
+
+[node name="overlay_2" parent="camera/camera_handler/camera_overlay" index="1"]
+material = SubResource("ShaderMaterial_te2f1")
+
+[node name="normal" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="selection" type="Control" parent="normal"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="title" type="TextureRect" parent="normal/selection"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 145.0
+offset_bottom = 120.0
+mouse_filter = 2
+texture = ExtResource("13_mwihm")
+stretch_mode = 2
+
+[node name="select" type="VBoxContainer" parent="normal/selection"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 24.0
+offset_top = 100.0
+offset_right = 145.0
+offset_bottom = 230.0
+grow_vertical = 2
+theme = ExtResource("8_x0re4")
+
+[node name="start" type="Control" parent="normal/selection/select"]
+custom_minimum_size = Vector2(121, 24)
+layout_mode = 2
+theme = ExtResource("10_pi5a7")
+script = ExtResource("15_3j6wv")
+button_display_texture = SubResource("CanvasTexture_5hdr5")
+min_size = Vector2(121, 24)
+true_size = Vector2(121, 24)
+text = "Start"
+icon = ExtResource("12_x0re4")
+panel_display_texture = SubResource("CanvasTexture_pi5a7")
+panel_display_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="options" type="Control" parent="normal/selection/select"]
+custom_minimum_size = Vector2(121, 24)
+layout_mode = 2
+theme = ExtResource("10_pi5a7")
+script = ExtResource("15_3j6wv")
+button_display_texture = SubResource("CanvasTexture_l2viy")
+min_size = Vector2(121, 24)
+true_size = Vector2(121, 24)
+text = "Options"
+icon = ExtResource("13_tc2ff")
+panel_display_texture = SubResource("CanvasTexture_aa16i")
+panel_display_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="credits" type="Control" parent="normal/selection/select"]
+custom_minimum_size = Vector2(121, 25)
+layout_mode = 2
+theme = ExtResource("10_pi5a7")
+script = ExtResource("15_3j6wv")
+button_display_texture = SubResource("CanvasTexture_kjaty")
+min_size = Vector2(121, 25)
+true_size = Vector2(121, 25)
+text = "Credits"
+icon = ExtResource("14_tc2ff")
+panel_display_texture = SubResource("CanvasTexture_pv488")
+panel_display_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="exit" type="Control" parent="normal/selection/select"]
+custom_minimum_size = Vector2(121, 24)
+layout_mode = 2
+theme = ExtResource("10_pi5a7")
+script = ExtResource("15_3j6wv")
+button_display_texture = SubResource("CanvasTexture_15cho")
+min_size = Vector2(121, 24)
+true_size = Vector2(121, 24)
+text = "Exit"
+icon = ExtResource("14_kjaty")
+panel_display_texture = SubResource("CanvasTexture_wxbwc")
+panel_display_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="HSeparator" type="HSeparator" parent="normal/selection/select"]
+layout_mode = 2
+
+[node name="game_version" type="Label" parent="normal/selection/select"]
+layout_mode = 2
+text = "version: PREV.0"
+
+[node name="credits_view" parent="normal" instance=ExtResource("15_tc2ff")]
+visible = false
+
+[node name="visuals" type="CanvasGroup" parent="."]
+
+[node name="galaxy" type="Sprite2D" parent="visuals"]
+texture = ExtResource("11_y38rf")
+centered = false
+
+[node name="parallax_buildings" type="Parallax2D" parent="visuals"]
+scroll_scale = Vector2(-0.9, -0.9)
+
+[node name="buildings" type="Sprite2D" parent="visuals/parallax_buildings"]
+texture = ExtResource("12_ccncn")
+centered = false
+
+[node name="walls" type="Sprite2D" parent="visuals"]
+position = Vector2(-12, 0)
+texture = ExtResource("13_2cdnh")
+centered = false
+
+[node name="parallax_fans" type="Parallax2D" parent="visuals"]
+scroll_scale = Vector2(0.8, 0.8)
+
+[node name="shadows" type="Sprite2D" parent="visuals/parallax_fans"]
+texture = ExtResource("14_twarc")
+centered = false
+
+[node name="fans" type="Sprite2D" parent="visuals/parallax_fans"]
+texture = ExtResource("15_x0re4")
+centered = false
+
+[node name="sally" type="Sprite2D" parent="visuals"]
+position = Vector2(420, 188)
+texture = ExtResource("16_tc2ff")
+hframes = 4
+frame = 1
+script = ExtResource("17_kjaty")
+autoplay = true
+playing = true
+loop = true
+fps = 10.0
+frame_dimensions = Vector2i(77, 148)
+frame_h_count = 4
+metadata/_custom_type_script = "uid://cdjphp77kgyqr"
+
+[node name="rail_parallax" type="Parallax2D" parent="visuals"]
+scroll_scale = Vector2(3, 3)
+
+[node name="rails" type="Sprite2D" parent="visuals/rail_parallax"]
+position = Vector2(-12, -24)
+texture = ExtResource("18_pv488")
+centered = false
+
+[editable path="camera"]
+[editable path="normal/credits_view"]

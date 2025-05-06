@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://buaywea4yxggu"]
+
+[ext_resource type="Texture2D" uid="uid://ddomvski7rl7" path="res://src/ui/overrides_panel/nine_patch_invisible.png" id="1_stakd"]
+
+[resource]
+texture = ExtResource("1_stakd")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
