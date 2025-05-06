@@ -1,14 +1,13 @@
 shader_type canvas_item;
+#include "res://src/shaders/panorama/linear_base.gdshaderinc"
 
-void vertex() {
-	// Called for every vertex the material is visible on.
+void vertex()
+{
+	_vertex(UV, TEXTURE_PIXEL_SIZE, MODEL_MATRIX);
 }
 
-void fragment() {
-	// Called for every pixel the material is visible on.
+void fragment()
+{
+	_fragment(UV, TEXTURE, COLOR);
 }
 
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}

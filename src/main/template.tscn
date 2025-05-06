@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ra24ysq2f70c"]
+[gd_scene load_steps=14 format=3 uid="uid://ra24ysq2f70c"]
 
 [ext_resource type="Script" uid="uid://b2yjestmw6ux7" path="res://src/game/game_manager.gd" id="1_1weyd"]
 [ext_resource type="Environment" uid="uid://be4tedt15qnrp" path="res://src/main/environment_2d.tres" id="2_nfr70"]
@@ -10,12 +10,8 @@
 [ext_resource type="Script" uid="uid://drtlglqkjepmq" path="res://src/game/states/pause.gd" id="9_uggay"]
 [ext_resource type="PackedScene" uid="uid://c2sv1637gh6ub" path="res://src/ui/pause_menu/pause_menu.tscn" id="10_kqpe4"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="11_bn1po"]
-[ext_resource type="Script" uid="uid://cwsl1s56sohmv" path="res://src/game/states/special_invert_cutscene.gd" id="12_yj2j8"]
 [ext_resource type="PackedScene" uid="uid://q5moiijg0b7a" path="res://src/player/hud/pl_hud.tscn" id="15_f8vi8"]
 [ext_resource type="Texture2D" uid="uid://co64pugf2as81" path="res://src/shaders/ui/cinematic_bars_grad.tres" id="16_v4uq4"]
-
-[sub_resource type="Resource" id="Resource_n1fgk"]
-metadata/__load_path__ = "res://src/audio/bgm/madoxy_cu_g.ogg"
 
 [sub_resource type="GDScript" id="GDScript_nfr70"]
 script/source = "extends Label
@@ -53,17 +49,6 @@ pause_bgm = NodePath("BGM")
 script = ExtResource("11_bn1po")
 stream = ExtResource("9_00sxe")
 pitch = 0.5
-autoplay = false
-metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
-
-[node name="SPECIAL_INVERT_CUTSCENE" type="Node" parent="fsm" node_paths=PackedStringArray("pause_bgm")]
-script = ExtResource("12_yj2j8")
-pause_bgm = NodePath("BGM")
-
-[node name="BGM" type="Node" parent="fsm/SPECIAL_INVERT_CUTSCENE"]
-script = ExtResource("11_bn1po")
-stream = SubResource("Resource_n1fgk")
-pitch = 0.9
 autoplay = false
 metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 

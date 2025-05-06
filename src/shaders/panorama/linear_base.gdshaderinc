@@ -15,8 +15,9 @@ void _vertex(vec2 uv, vec2 _pixel_size, mat4 _mat)
 	uv.y = ((_mat * vec4(uv, _pixel_size)).xy + (uv_offset * (offset_strength * offset_strength_y_influence))).y;
 }
 
-void _fragment(vec2 uv, sampler2D _texture)
+void _fragment(vec2 uv, sampler2D _texture, vec4 _col)
 {
 	vec2 scroll_dir = -vec2(dirX, dirY) * (TIME * scroll_speed / 2.) + (uv_offset * offset_strength) + initial_uv_offset;
 	vec4 panorama = texture(_texture, uv + scroll_dir);
+	_col = panorama;
 }

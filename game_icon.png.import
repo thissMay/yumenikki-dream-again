@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ch204o8lqrc8w"
-path="res://.godot/imported/hover.png-07f39990549cd577027eadbbe9e5c60a.ctex"
+uid="uid://dmp6kq3mp7d78"
+path="res://.godot/imported/game_icon.png-389b50e564fffef90defc972f4d00b12.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/scenes/player_menu/sprites/hud_global/hover.png"
-dest_files=["res://.godot/imported/hover.png-07f39990549cd577027eadbbe9e5c60a.ctex"]
+source_file="res://game_icon.png"
+dest_files=["res://.godot/imported/game_icon.png-389b50e564fffef90defc972f4d00b12.ctex"]
 
 [params]
 

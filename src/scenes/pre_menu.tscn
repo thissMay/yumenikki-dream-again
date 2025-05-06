@@ -1,13 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://c30tca8ol6ugo"]
+[gd_scene load_steps=13 format=3 uid="uid://c30tca8ol6ugo"]
 
+[ext_resource type="Texture2D" uid="uid://jyyt5bquldaa" path="res://src/images/panorama/glow_sea.png" id="2_juckd"]
 [ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="2_k0aey"]
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="2_o2rco"]
 [ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="3_juckd"]
-[ext_resource type="Shader" uid="uid://cvj01sy4a1r7b" path="res://src/shaders/panorama/linear.gdshader" id="4_tcehx"]
-[ext_resource type="Texture2D" uid="uid://btlafmy6pq5vq" path="res://src/images/panorama/sea_galaxy.png" id="5_qwet7"]
+[ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="4_tcehx"]
 [ext_resource type="Script" uid="uid://d3r72epfndsge" path="res://src/autoloads/panorama_system.gd" id="6_v2jl3"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="7_tcehx"]
-[ext_resource type="AudioStream" uid="uid://b8kmeeo6esw54" path="res://src/audio/bgm/may_yta_hmm.ogg" id="8_qwet7"]
 
 [sub_resource type="GDScript" id="GDScript_x008i"]
 resource_name = "premenu"
@@ -26,13 +24,14 @@ func _ready() -> void:
 	
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ognos"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k0aey"]
 shader = ExtResource("4_tcehx")
 shader_parameter/transparency = 0.0
 shader_parameter/dirX = 1.0
-shader_parameter/dirY = -1.0
-shader_parameter/scroll_speed = 0.03
-shader_parameter/offset_strength = 0.1
+shader_parameter/dirY = 1.0
+shader_parameter/scroll_speed = 0.21
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
 
@@ -57,11 +56,11 @@ metadata/_custom_type_script = "uid://dcos3dvfrola8"
 layer = -20
 
 [node name="TextureRect" type="TextureRect" parent="panorama (top_layer)"]
-material = SubResource("ShaderMaterial_ognos")
+material = SubResource("ShaderMaterial_k0aey")
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
-texture = ExtResource("5_qwet7")
+texture = ExtResource("2_juckd")
 script = ExtResource("6_v2jl3")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="panorama (top_layer)"]
@@ -141,10 +140,3 @@ text = "I understand and wish to proceed."
 panel_display_texture = SubResource("CanvasTexture_wghfn")
 panel_display_color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://dhvrb58iweuo0"
-
-[node name="BGM" type="Node" parent="."]
-script = ExtResource("7_tcehx")
-stream = ExtResource("8_qwet7")
-vol = 8.0
-pitch = 0.29
-metadata/_custom_type_script = "uid://b4b3kjcm65mv6"

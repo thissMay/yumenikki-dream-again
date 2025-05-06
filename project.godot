@@ -11,8 +11,10 @@ config_version=5
 [application]
 
 config/name="Yume Nikki 21st Anniversary"
+run/main_scene="uid://l5hlafq1udx4"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+config/macos_native_icon="uid://dmp6kq3mp7d78"
 
 [audio]
 

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SerializableDict" load_steps=4 format=3 uid="uid://cvowf83xfm3jk"]
+
+[ext_resource type="Texture2D" uid="uid://dn7i7qo1mn4v4" path="res://src/player/madotsuki/display/default/idle_.png" id="1_6ee5v"]
+[ext_resource type="Script" uid="uid://cfypg0cq51xei" path="res://src/systems/utils/serializable_dict.gd" id="1_18qdd"]
+[ext_resource type="Texture2D" uid="uid://blto2c1fpbhei" path="res://src/player/madotsuki/display/default/walk.png" id="2_fcclq"]
+
+[resource]
+script = ExtResource("1_18qdd")
+dict = {
+"idle": ExtResource("1_6ee5v"),
+"walk": ExtResource("2_fcclq")
+}
+metadata/_custom_type_script = "uid://cfypg0cq51xei"

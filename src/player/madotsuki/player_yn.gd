@@ -7,8 +7,8 @@ var sound_player: AudioStreamPlayer
 var animation_manager: PLAnimationManager
 var footstep_manager: Node
 @export var fsm: SentientFSM
-
-var DEFAULT_DISPLAY := preload("res://src/player/madotsuki/sprite_sheets/default.tres")
+ 	
+var DEFAULT_DISPLAY := load("res://src/player/madotsuki/sprite_sheets/no_effect.tres") as SerializableDict
 var DEFAULT_BEHAVIOUR := PlayerBehaviour.new()
 var DEFAULT_STATS := PlayerStats.new()
 
@@ -29,7 +29,7 @@ var effect_equip_anim: AnimationPlayer
 
 @export var effect: PlayerEffect
 @export var memoriam: PlayerEffect
-@export var sprite_sheet: SerializableDict = DEFAULT_DISPLAY
+@export var sprite_sheet: SerializableDict
 
 var components: SBComponentReceiver
 
@@ -153,9 +153,10 @@ func play_sound(_sound: AudioStreamWAV, _vol: float, _pitch: float) -> void:
 	if sound_player != null: (sound_player as SoundPlayer).play_sound(_sound, _vol, _pitch)
 func set_texture_using_sprite_sheet(_sprite_id: String) -> void:
 	sprite_renderer.texture = (
-	(sprite_sheet.dict[_sprite_id] if 
-	sprite_sheet.dict.has(_sprite_id) else 
-	preload("res://src/images/missing.png")))
+			(sprite_sheet.dict[_sprite_id] if 
+			sprite_sheet.dict.has(_sprite_id) else 
+			preload("res://src/images/missing.png"))
+		)
 func set_sprite_sheet(_new_sheet: SerializableDict) -> void:
 	sprite_sheet = _new_sheet
 	set_texture_using_sprite_sheet(get_state_name())

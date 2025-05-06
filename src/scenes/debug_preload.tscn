@@ -10,7 +10,7 @@ script/source = "extends SceneNode
 var garbage_placeholder: Node2D
 
 const SHADERS_PATH := \"res://src/shaders/\"
-const SCENES_PATH := \"res://src/levels/dream/sane/\"
+const SCENES_PATH := \"res://src/levels/\"
 
 const CACHED_SHADER_FILE_PATH := \"cached_shader.json\"
 const CACHED_SCENES_FILE_PATH := \"cached_scenes.json\"
@@ -55,7 +55,7 @@ func _ready() -> void:
 	
 
 	GameManager.change_to_state(\"pregame\")
-	if Game.Save.read_data_value(\"read_warning\"): GameManager.change_scene_to(preload(\"res://src/scenes/menu/menu.tscn\"))
+	if Game.Save.read_data_value(\"read_warning\"): GameManager.change_scene_to(preload(\"res://src/levels/menu/level.tscn\"))
 	else: GameManager.change_scene_to(preload(\"res://src/scenes/pre_menu.tscn\"))
 
 
@@ -168,7 +168,7 @@ color = Color(0, 0, 0, 1)
 position = Vector2(240, 196)
 texture = ExtResource("2_nlmqr")
 hframes = 4
-frame = 1
+frame = 3
 script = ExtResource("3_d62i2")
 autoplay = true
 playing = true
@@ -176,5 +176,5 @@ loop = true
 fps = 5.0
 frame_dimensions = Vector2i(16, 16)
 frame_h_count = 4
-progress = 1
+progress = 3
 metadata/_custom_type_script = "uid://cdjphp77kgyqr"

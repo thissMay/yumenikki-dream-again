@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://di4ihq7ahrytt"]
+[gd_scene load_steps=10 format=3 uid="uid://7gkxfsran1js"]
 
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_vfw02"]
 [ext_resource type="Shader" uid="uid://hsx1wbnb1rif" path="res://src/shaders/screen_overlay/bw_invert_blur.gdshader" id="2_pi7e3"]
