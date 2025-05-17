@@ -13,7 +13,7 @@ mat2 get2dRotationMatrix(float angleRadians)
 {
     float s = sin(angleRadians);
     float c = cos(angleRadians);
-    return mat2(vec2(c, s), vec2(-s, c));
+    return mat2(vec2(c, s), vec2(s, -c));
 }
 
 void fragment()

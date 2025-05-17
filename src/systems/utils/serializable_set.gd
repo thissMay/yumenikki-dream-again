@@ -18,3 +18,16 @@ func size() -> int:
 func verify_resource_validity(_res: Variant) -> bool: 
 	return _res is Resource and !_res.resource_path.is_empty()
 	
+func append(_elem: Variant) -> void:
+	if !_elem in arr: arr.append(_elem)
+		
+
+func find(_elem: Variant) -> int:
+	if _elem in arr:
+		return arr.find(_elem)
+	return -1
+func remove_at(_index: int) -> void:
+	_index = clampi(_index, 0, arr.size() - 1)
+	arr.remove_at(_index)
+func is_empty() -> bool:
+	return arr.is_empty()

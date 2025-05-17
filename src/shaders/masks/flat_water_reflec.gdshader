@@ -1,6 +1,7 @@
 // https://godotshaders.com/shader/water-2d-reflection-4-x/
-
 shader_type canvas_item;
+
+#include "res://src/shaders/panorama/depth_base.gdshaderinc"
 
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, repeat_enable, filter_nearest;
 

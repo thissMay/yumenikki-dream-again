@@ -5,6 +5,21 @@ extends SBComponent
 # one more thing: make a ground_material resource that holds a list
 # of all random sound effects for the ground.
 
+static var default_footstep: mat = mat.NULL
+@export var transparent_surfaces := {
+	mat.NULL 		: true,
+	mat.CONCRETE 	: false,
+	mat.WOOD		: false,
+	mat.SNOW 		: false,
+	mat.GRASS 		: false,
+	mat.MUD 		: false,
+	mat.BLOOD 		: false,
+	mat.WATER 		: true,
+	mat.CLOTH 		: false,
+	mat.GLASS 		: true,
+	mat.DIRT_FLESH 	: false,
+}
+
 enum mat {
 	NULL 		= 0,
 	CONCRETE 	= 1,
@@ -25,20 +40,24 @@ const GROUND_MAT_DICT := {
 	mat.WOOD		: preload("res://src/audio/footsteps/wood.tres"),
 	mat.SNOW 		: preload("res://src/audio/footsteps/snow.tres"),
 	mat.GRASS 		: preload("res://src/audio/footsteps/grass.tres"),
-	mat.MUD 		: null,
+	mat.MUD 		: preload("res://src/audio/footsteps/blood.tres"),
 	mat.BLOOD 		: preload("res://src/audio/footsteps/blood.tres"),
-	mat.WATER 		: null,
+	mat.WATER 		: preload("res://src/audio/footsteps/water.tres"),
 	mat.CLOTH 		: preload("res://src/audio/footsteps/cloth.tres"),
 	mat.GLASS 		: preload("res://src/audio/footsteps/glass.tres"),
 	mat.DIRT_FLESH 	: preload("res://src/audio/footsteps/dirt_flesh.tres"),
 	}
 
 var DEFAULT_FOOTSTEP: AudioStreamWAV = preload("res://src/audio/se/footstep_null-1.wav")
-var se: AudioStreamWAV = preload("res://src/audio/se/footstep_null-1.wav")
 var curr_anim: CompressedTexture2D = preload("res://src/entities/footsteps/default.png")
 
 var footstep_se_player: SoundPlayer
 var area: Area2D
+
+var floor_priority: TileMapLayer
+var greatest_index: int = -50
+
+@onready var multiple_floors := SerializableSet.new()
 
 func _setup(_sentient: SentientBase) -> void:
 	super(_sentient)
@@ -50,11 +69,14 @@ func _setup(_sentient: SentientBase) -> void:
 	area.monitoring 	= true
 	area.input_pickable = false
 	
-	area.body_shape_entered.connect(_on_body_shape_entered)
+	await Game.main_tree.process_frame
 	area.body_shape_exited.connect(_on_body_shape_exited)
+	area.body_shape_entered.connect(_on_body_shape_entered)
+	
+	curr_material = default_footstep
 
 func initate_footstep() -> void:  
-	var sounds_set: FootstepSet = GROUND_MAT_DICT[curr_material]
+	var sounds_set: SerializableSet = GROUND_MAT_DICT[curr_material]
 	
 	spawn_footstep_fx()
 	footstep_se_player.play_sound(
@@ -72,22 +94,43 @@ func _on_body_shape_entered(
 	body: Node2D, 
 	body_shape_index: int, 
 	local_shape_index: int) -> void:
+		
 		if body is TileMapLayer:
-			#var atlas: Vector2i = body.get_cell_atlas_coords(tile_coords)
-			var tile_coords: Vector2i = body.get_coords_for_body_rid(body_rid)
-			var material_id: int = body.get_cell_tile_data(tile_coords).get_custom_data("material")
+			multiple_floors.append(body)
+			
+			for floors: TileMapLayer in multiple_floors.arr:
+				if floors.z_index > greatest_index: 
+					greatest_index = floors.z_index
+					floor_priority = floors
+					break
+				
+			var tile_coords: Vector2i = floor_priority.get_coords_for_body_rid(body_rid)
+			var material_id: int = floor_priority.get_cell_tile_data(tile_coords).get_custom_data("material")
 			curr_material = material_id
 			
-			if curr_material == mat.NULL: sentient.shadow_renderer.visible = false
+			if transparent_surfaces[curr_material]: sentient.shadow_renderer.visible = false
 			else: sentient.shadow_renderer.visible = true
+		else:
+			sentient.shadow_renderer.visible = false
+		
 func _on_body_shape_exited(
 	body_rid: RID, 
 	body: Node2D, 
 	body_shape_index: int, 
 	local_shape_index: int) -> void:
-		if !area.overlaps_body(body): curr_material = mat.NULL
-		if curr_material == mat.NULL: sentient.shadow_renderer.visible = false
-		else: sentient.shadow_renderer.visible = true
+		if body is TileMapLayer:
+			
+			if !area.overlaps_body(body):
+				print(body ,": yo")
+				multiple_floors.remove_at(multiple_floors.find(body)) 
+				greatest_index = -50
+				
+				if  multiple_floors.is_empty():
+					curr_material = default_footstep
+					floor_priority = null
+					greatest_index = -50
+		
+		
 class FootstepDust:
 	extends SpriteSheetFormatterAnimated
 
@@ -102,8 +145,6 @@ class FootstepDust:
 		self.offset.y = -10
 		self.top_level = true
 		
-		self.material = ShaderMaterial.new()
-		self.material.shader = preload("res://src/shaders/masks/additive.gdshader")
 		
 		set_sprite(_anim)	
 		

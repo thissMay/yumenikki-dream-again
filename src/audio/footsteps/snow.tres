@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="FootstepSet" load_steps=3 format=3 uid="uid://dbtrq2i18yt2n"]
+[gd_resource type="Resource" script_class="FootstepSet" load_steps=5 format=3 uid="uid://dbtrq2i18yt2n"]
 
 [ext_resource type="AudioStream" uid="uid://chhyso2721cs7" path="res://src/audio/se/footstep_snow-1.wav" id="1_q2ee2"]
 [ext_resource type="Script" uid="uid://dl740w6e37l11" path="res://src/audio/footsteps/footstep_set.gd" id="1_y7yer"]
+[ext_resource type="AudioStream" uid="uid://byuhypreh0j31" path="res://src/audio/se/footstep_snow-2.wav" id="2_ak5a4"]
+[ext_resource type="AudioStream" uid="uid://peum0isaarol" path="res://src/audio/se/footstep_snow-3.wav" id="3_mcys4"]
 
 [resource]
 script = ExtResource("1_y7yer")
-arr = [ExtResource("1_q2ee2")]
+arr = [ExtResource("1_q2ee2"), ExtResource("2_ak5a4"), ExtResource("3_mcys4")]
 metadata/_custom_type_script = "uid://dl740w6e37l11"

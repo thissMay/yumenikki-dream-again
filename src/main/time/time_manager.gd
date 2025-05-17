@@ -1,6 +1,8 @@
 class_name TimeManager
 extends Node
 
+static var instance
+
 const TIME_DREAM_ACCEL: int = 10
 const TIME_REAL_ACCEL: int = 1
 var acceleration: float = TIME_REAL_ACCEL
@@ -9,41 +11,35 @@ var acceleration: float = TIME_REAL_ACCEL
 var time_hour: int = 0
 var time_minute: int = 0
 
-var minute_every_x_seconds = 15
-var hour_every_x_minutes = 15
+var minute_every_x_seconds: int = 10
+var hour_every_x_minutes: int = 6
 
 var time_elapsed_until_minute_increment: float
 
 var total_seconds: int
-var real_time_seconds_until_minute_increment: int = 5
 
 func _ready() -> void:
+	instance = self
 	set_physics_process(false)
 
 func setup() -> void: 
-	time_hour = Time.get_time_dict_from_system().get("hour")
-	time_minute = Time.get_time_dict_from_system().get("minute")
-	total_seconds = (time_minute * 60) + (time_hour * 3600)
+	var real_global_hour = Time.get_time_dict_from_system().get("hour")
+	var real_global_minute = Time.get_time_dict_from_system().get("minute")
 	
+	total_seconds = (
+		(real_global_minute * minute_every_x_seconds) + 
+		(real_global_hour * hour_every_x_minutes))
+	
+	time_minute = floori(total_seconds / minute_every_x_seconds)
+	time_minute = floori(total_seconds / minute_every_x_seconds)
+		
 	set_physics_process(true)
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	time_elapsed_until_minute_increment += delta
-	
-	if ((roundi(time_elapsed_until_minute_increment) % real_time_seconds_until_minute_increment) == 0 
-		&& roundi(time_elapsed_until_minute_increment) != 0): 
-		time_minute += 1
-		total_seconds += 60
-		time_elapsed_until_minute_increment = 0
+	update_minute(time_elapsed_until_minute_increment)
 
-		if (time_minute % 60) == 0:
-			time_minute = 0
-			time_hour += 1
-			
-			if time_hour > 24: 
-				time_hour = 0
-				total_seconds = 0
 
-		
-	#print("TIME (HH, MM): ", time_hour, " : ", time_minute)
-	#print("TIME (SECONDS): ", total_seconds)
+func update_minute(_elapsed: float) -> void:
+	if roundi(_elapsed) > minute_every_x_seconds: 
+		_elapsed = 0

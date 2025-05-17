@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkpwf0m2skd6f"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_lu1jh"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="2_hs5ie"]
+[ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="3_hs5ie"]
+
+[node name="1" type="Node"]
+script = ExtResource("1_lu1jh")
+metadata/_custom_type_script = "uid://b1ofr4umso5jf"
+
+[node name="Madotsuki" parent="." instance=ExtResource("2_hs5ie")]
+position = Vector2(80, 104)
+
+[node name="camera" parent="." instance=ExtResource("3_hs5ie")]
+
+[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
+zoom = 1.2
+target = NodePath("../../Madotsuki")
+
+[editable path="Madotsuki"]
+[editable path="camera"]

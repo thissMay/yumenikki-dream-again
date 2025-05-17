@@ -40,17 +40,16 @@ var input_controller := InputController.new()
 
 func _ready() -> void:
 	super()
-
+	
+	components = $sb_components
+	
 	mandatory_components()
 	dependency_components()
 
 func dependency_components() -> void:
-	components = $sb_components
-	footstep_manager = $footstep_manager
-		
-	animation_manager._setup(self)
-	footstep_manager._setup(self)
+
 	set_controller(input_controller)
+	components._setup(self)
 	
 	marker_look_at._setup()			# --- fsm; not player dependency but required
 	stamina_fsm._setup(self) 	# --- fsm; not player dependency but required
@@ -61,12 +60,11 @@ func dependency_components() -> void:
 			func(_dmg: float):
 				GameManager.EventManager.invoke_event("PLAYER_HURT", [_dmg]))
 	
-	components._setup(self)
 func mandatory_components() -> void:
+	animation_manager = components.get_component_by_name("animation_manager")
+	
 	audio_listener = $audio_listener
 	sound_player = $sound_player
-	
-	animation_manager = $animation_manager
 	
 	world_warp = $world_warp	
 	marker_look_at = $look_at
@@ -104,7 +102,6 @@ func _input(event: InputEvent) -> void:
 				get_behaviour()._interact(self, components.get_component_by_name("interaction_manager").curr_interactable)
 
 func dependency_update(_delta: float) -> void:
-	animation_manager.update(_delta)
 	if components: components._update(_delta)
 func dependency_physics_update(_delta: float) -> void:
 	if components: components._physics_update(_delta)

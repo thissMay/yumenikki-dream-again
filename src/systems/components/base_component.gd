@@ -13,15 +13,18 @@ class_name Component extends Node
 	-that the component works with certain types of nodes.
 '''
 @export var receiver: ComponentReceiver
-@export var active: bool = true
+@export var active: bool = true:
+	set(_a): 
+		active = _a
+		set_active(_a)
 
 func _enter_tree() -> void: setup()
 
 # ---- component functions ----
 func set_active(_active: bool = true) -> void:
 	match _active:
-		true: process_mode = Node.PROCESS_MODE_ALWAYS
 		false: process_mode = Node.PROCESS_MODE_DISABLED
+		true: process_mode = Node.PROCESS_MODE_INHERIT
 
 # ---- node functions ----
 func setup() -> void:
@@ -42,10 +45,10 @@ func _physics_update(_delta: float) -> void: pass
 
 # ---- INDEPENDENT INSTANCE PROCESS ----
 func _process(delta: float) -> void: 
-	if receiver != null and !receiver.bypass:
+	if active and receiver != null and !receiver.bypass:
 		_update(delta)
 func _physics_process(delta: float) -> void: 
-	if receiver != null and !receiver.bypass:
+	if active and receiver != null and !receiver.bypass:
 		_physics_update(delta)
 
 # ---- ON RECIEVER BYPASS ----

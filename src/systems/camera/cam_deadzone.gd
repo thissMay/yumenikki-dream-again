@@ -3,6 +3,7 @@ extends CamRegion
 
 var in_deadzone: bool = false
 
+
 func _ready() -> void:
 	set_collision_layer_value(32, true)
 	set_collision_mask_value(32, true)

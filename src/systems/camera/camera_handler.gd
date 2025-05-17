@@ -126,16 +126,16 @@ func _physics_process(_delta: float) -> void:
 		
 	
 	if !Engine.is_editor_hint():
-		if switching_to_target: 
-			switching_time_elapsed += _delta
-			self.global_position = self.global_position.lerp(target.global_position, 0.2)
-	
-			if switching_time_elapsed > switching_duration:
-				switching_to_target = false
-				switching_time_elapsed = 0
-		
-		elif curr_follow_strat: 
-			curr_follow_strat._follow(self, self.global_position, target.global_position)
+		#if switching_to_target: 
+			#switching_time_elapsed += _delta
+			#self.global_position = self.global_position.lerp(target.global_position, 0.2)
+	#
+			#if switching_time_elapsed > switching_duration:
+				#switching_to_target = false
+				#switching_time_elapsed = 0
+		#
+		#elif curr_follow_strat: 
+		curr_follow_strat._follow(self, self.global_position, target.global_position)
 
 # ========== getters. ==========
 func get_velocity() -> Vector2: return vel
@@ -162,17 +162,20 @@ func set_cam_limit(_up: float, _down: float, _right: float, _left: float) -> voi
 func set_offset(_offset: Vector2) -> void: 
 	offset = _offset
 	marker.position = _offset
-func set_target(_target: Node) -> void:
+func set_target(_target: Node, _instant: bool = false) -> void:
 	switching_time_elapsed = 0
 	switching_to_target = true
 	
 	if _target:
 		target = _target
+		
 		if target is Node2D: set_follow_strategy(follow_lerp if !motion_reduction else default)
 		if target is SentientBase: set_follow_strategy(follow_player if !motion_reduction else default)
 		
 		if curr_target: prev_target = curr_target
 		curr_target = _target
+		
+		if _instant: self.global_position = target.global_position
 		
 func set_override_flag(_override: bool) -> void:
 	cam.top_level = _override

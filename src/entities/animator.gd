@@ -1,12 +1,10 @@
 class_name SentientAnimator
-extends Node
+extends SBComponent
 
-var sentient: SentientBase
 var can_play: bool = true
 
 # --- components ---
 var animation_player: AnimationPlayer
-var animation_tree: AnimationTree
 var sprite_renderer: Sprite2D
 
 # --- gimmicks ---
@@ -17,14 +15,16 @@ var dynamic_rot_multi: float = DEFAULT_DYNAMIC_ROT_MULTI
 
 # --- setup functions --- 
 func _setup(_sentient: SentientBase) -> void:
-	animation_player = get_node_or_null("animation_player")
-	animation_tree = get_node_or_null("animation_tree")
+	animation_player = get_node("animation_player")
 	
 	sentient = _sentient 
 	sprite_renderer = sentient.sprite_renderer	
-func update(_delta: float) -> void:
+	
+	(sentient.sprite_renderer as SpriteSheetFormatter).set_row(sentient.heading)
+func _update(_delta: float) -> void:
 	handle_sprite_flip(sentient)
 	handle_sprite_subtle_rotation(sentient)		
+	handle_sprite_direction(sentient)
 		
 # --- handler functions ---
 func handle_sprite_subtle_rotation(_sentient: SentientBase) -> void:
@@ -37,7 +37,11 @@ func handle_sprite_flip(_sentient: SentientBase) -> void:
 	if _sentient != null:
 		if _sentient.get_lerped_dir().x < 0: _sentient.sprite_renderer.flip_h = true
 		else: _sentient.sprite_renderer.flip_h = false
-
+func handle_sprite_direction(_sentient: SentientBase) -> void:
+	_sentient.sprite_renderer.set_row(lerpf(
+	_sentient.sprite_renderer.row, _sentient.heading, 
+	0.3))
+	
 func set_dynamic_rot_multi(_multi: float) -> void:
 	dynamic_rot_multi = _multi
 

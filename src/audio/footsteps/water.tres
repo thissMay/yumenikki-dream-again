@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SerializableSet" load_steps=5 format=3 uid="uid://gtmkqev742a6"]
+
+[ext_resource type="AudioStream" uid="uid://dfmqoio3lj4o6" path="res://src/audio/se/footstep_water-1.wav" id="1_auly3"]
+[ext_resource type="Script" uid="uid://c7ut813ov3pxi" path="res://src/systems/utils/serializable_set.gd" id="1_wpfrv"]
+[ext_resource type="AudioStream" uid="uid://nq0ufn7vcng4" path="res://src/audio/se/footstep_water-2.wav" id="2_rtgle"]
+[ext_resource type="AudioStream" uid="uid://cdmji04elfgey" path="res://src/audio/se/footstep_water-3.wav" id="3_u3cya"]
+
+[resource]
+script = ExtResource("1_wpfrv")
+arr = [ExtResource("1_auly3"), ExtResource("2_rtgle"), ExtResource("3_u3cya")]
+metadata/_custom_type_script = "uid://c7ut813ov3pxi"

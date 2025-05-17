@@ -1,7 +1,7 @@
 class_name GameScene
 extends SceneNode
 
-@export var rules: Array[GDScript]
+@export var rules: Array[Resource]
 
 @onready var save_invoker := EventListener.new(["SCENE_CHANGE_REQUEST"], false, self)
 @export var load_transition: Shader = preload("res://src/shaders/transition/tr_fade.gdshader"):
@@ -19,7 +19,7 @@ func _ready() -> void:
 	ScreenTransition.set_fade_out_shader(load_transition)
 	ScreenTransition.set_fade_in_shader(unload_transition)
 	
-	save_invoker.do_on_notify(save_scene)
+	save_invoker.do_on_notify("SCENE_CHANGE_REQUEST", save_scene)
 
 func _on_load() -> void: 
 	load_scene()

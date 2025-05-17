@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://blvfuo72u6lrh"
+path="res://.godot/imported/-1 - Drifting Thoughts.ogg-ab5c7ee88de500fb8929280f4922f0c3.oggvorbisstr"
+
+[deps]
+
+source_file="res://src/audio/bgm/-1 - Drifting Thoughts.ogg"
+dest_files=["res://.godot/imported/-1 - Drifting Thoughts.ogg-ab5c7ee88de500fb8929280f4922f0c3.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -10,6 +10,8 @@ func _setup(_sb: SentientBase) -> void:
 	for component in components: 
 		if component and component is SBComponent: 
 			component.sentient = _sb
+			component._setup(_sb)
+
 func _update(_delta: float) -> void:
 	for component in components: 
 		if component: component._update(_delta)

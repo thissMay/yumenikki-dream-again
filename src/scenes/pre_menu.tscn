@@ -29,7 +29,7 @@ shader = ExtResource("4_tcehx")
 shader_parameter/transparency = 0.0
 shader_parameter/dirX = 1.0
 shader_parameter/dirY = 1.0
-shader_parameter/scroll_speed = 0.21
+shader_parameter/scroll_speed = 0.02
 shader_parameter/initial_uv_offset = Vector2(0, 0)
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_x_influence = 1.0
@@ -48,7 +48,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="pre_menu" type="Node" node_paths=PackedStringArray("proceed")]
 script = SubResource("GDScript_x008i")
-scene_path = "uid://du2ph3le71hf0"
+scene_path = "uid://c04slc7ycspa5"
 proceed = NodePath("warning/Control/VBoxContainer/proceed")
 metadata/_custom_type_script = "uid://dcos3dvfrola8"
 
@@ -103,7 +103,7 @@ theme_override_constants/separation = 12
 layout_mode = 2
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 10
-text = "Warning! Please read before proceeding."
+text = "Please read before proceeding."
 fit_content = true
 scroll_active = false
 
@@ -111,32 +111,25 @@ scroll_active = false
 layout_mode = 2
 mouse_filter = 2
 bbcode_enabled = true
-text = "This project is unfinished and is merely a prototype. Try it out and play around with this however you like,
-just bear in mind that its still incomplete and that you might encounter mild or severe flaws.
+text = "This project is just a tribute to Kikiyama's original Yume Nikki project. This is NOT the original Yume Nikki.
+The project  at its current state does not contain all [color=yellow]events, effects and worlds[/color].
 
-This game contains content that might not be suitable for certain audiences, including you. 
-This is intended for audiences aged 18 or above, at the moment there are no displays of explicit content. 
-This is only to ensure safety.
-
-This game contains elements such as:
--> [color=red]blood and gore[/color],
--> [color=red]body nudity[/color],
--> [color=red]profane language[/color].
-
-You have been warned. Please proceed with discretion... and have fun!"
+More updates may be added to compensate for any missing world, effect, events, etc. 
+Thank you for your understanding!
+"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
 [node name="proceed" type="Control" parent="warning/Control/VBoxContainer"]
-custom_minimum_size = Vector2(432, 25)
+custom_minimum_size = Vector2(421, 25)
 layout_mode = 2
 theme = ExtResource("2_k0aey")
 script = ExtResource("3_juckd")
 button_display_texture = SubResource("CanvasTexture_kfffw")
-min_size = Vector2(432, 25)
-true_size = Vector2(432, 25)
-text = "I understand and wish to proceed."
+min_size = Vector2(421, 25)
+true_size = Vector2(421, 25)
+text = "Continue"
 panel_display_texture = SubResource("CanvasTexture_wghfn")
 panel_display_color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://dhvrb58iweuo0"

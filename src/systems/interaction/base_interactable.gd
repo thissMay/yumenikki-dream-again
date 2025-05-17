@@ -19,7 +19,7 @@ extends Area2D
 @export var omni_dir: bool = true
 
 @export_group("Misc.")
-@export var trigger: Sequence
+signal interacted
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
@@ -28,12 +28,14 @@ func _ready() -> void:
 
 func _interact() -> void: pass
 func interact() -> void:
-	if only_once:
+	if only_once and can_interact:
 		can_interact = false
-		return
-	if can_interact:
-		if trigger: trigger.execute()	
 		_interact()
+		interacted.emit()
+		
+	elif can_interact:
+		_interact()
+		interacted.emit()
 
 func set_area_mode(_area: bool, _include_detection: bool = true) -> void: 
 	match _area:

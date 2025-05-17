@@ -19,8 +19,7 @@ static var inventory: Array
 static var memoriams: Array
 static var effects: Array
 
-static var door_went_listener: EventListener
-static var door_went_effector: EventListener
+static var door_listener: EventListener
 static var door_went_flag: bool = false
 
 static var equipment_auto_apply: EventListener 
@@ -29,11 +28,9 @@ static var equipment_pending: PlayerEffect
 static var item_pending: ItemData
 
 static func setup() -> void: 	
-	door_went_listener = EventListener.new(["PLAYER_DOOR_USED"], true)
-	door_went_effector = EventListener.new(["SCENE_CHANGE_SUCCESS"], true)
-
-	door_went_listener.do_on_notify(func(): door_went_flag = true)
-	door_went_effector.do_on_notify(func(): 
+	door_listener = EventListener.new(["PLAYER_DOOR_USED", "SCENE_CHANGE_SUCCESS"], true)
+	door_listener.do_on_notify("PLAYER_DOOR_USED", func(): door_went_flag = true)
+	door_listener.do_on_notify("SCENE_CHANGE_SUCCESS", func(): 
 		for d : SceneDoor in Game.get_group_arr("doors"):
 			if (
 				load(d.scene_path) == Game.scene_manager.prev_scene_ps and 
@@ -47,6 +44,7 @@ static func setup() -> void:
 	equipment_auto_apply = EventListener.new(["SCENE_CHANGE_SUCCESS"], true)
 	
 	equipment_auto_apply.do_on_notify(
+		"SCENE_CHANGE_SUCCESS",
 		func(): 
 			if get_pl():
 				(get_pl() as Player_YN).equip(equipment_pending, true)
@@ -70,7 +68,7 @@ static func is_moving() -> bool:
 	if player != null: return player.is_moving
 	return false
 
-static func teleport_player(_pos: Vector2, _dir: Vector2, w_camera: bool) -> void:
+static func teleport_player(_pos: Vector2, _dir: Vector2, w_camera: bool = false) -> void:
 	if PLInstance.get_pl():
 		PLInstance.get_pl().global_position = _pos
 		PLInstance.get_pl().set_dir(_dir)

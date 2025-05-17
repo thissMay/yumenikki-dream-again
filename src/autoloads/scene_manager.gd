@@ -98,6 +98,7 @@ func load_scene(scene: PackedScene, root_node: Node, backup_root_node: Node = nu
 
 	else: scene_node_packed = null
 
+func get_curr_scene() -> SceneNode: return scene_node
 
 func get_curr_packed_scene() -> PackedScene: return null
 func get_prev_packed_scene() -> PackedScene: return null

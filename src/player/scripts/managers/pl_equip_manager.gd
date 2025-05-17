@@ -6,8 +6,7 @@ var curr_stats: PlayerStats
 @export var memoriam: PLPhysicalEff
 @export var effect: PLPhysicalEff
 
-@onready var effect_equip_anim_end := EventListener.new(["PLAYER_EFFECT_EQUIP_ANIM"], false, self)
-@onready var effect_deequip_anim_end := EventListener.new(["PLAYER_EFFECT_DEEQUIP_ANIM"], false, self)
+@onready var effect_anim := EventListener.new(["PLAYER_EFFECT_EQUIP_ANIM", "PLAYER_EFFECT_DEEQUIP_ANIM"], false, self)
 
 # ----> equip / de-equip.
 func equip(_ef: PlayerEffect, _pl: Player, _skip_anim: bool = false) -> void:
@@ -17,7 +16,8 @@ func equip(_ef: PlayerEffect, _pl: Player, _skip_anim: bool = false) -> void:
 			PlayerEffect.type.EFFECT: if _ef != _pl.effect: deequip(_pl.effect, _pl, true)
 			PlayerEffect.type.MEMORIAM: if _ef != _pl.memoriam: deequip(_pl.memoriam, _pl, true)
 		
-		effect_equip_anim_end.do_on_notify(
+		effect_anim.do_on_notify(
+			"PLAYER_EFFECT_EQUIP_ANIM",
 			func():
 				# --- if the effect has an exclusive prefab
 				if 	( 

@@ -1,5 +1,5 @@
 class_name MessageTrigger
-extends ResourceCommand
+extends ResourceEvent
 
 @export var interruptive: bool = false
 @export var messages: Array[MessageData]

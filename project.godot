@@ -10,11 +10,12 @@ config_version=5
 
 [application]
 
-config/name="Yume Nikki 21st Anniversary"
+config/name="YUME NIKKI - demake"
 run/main_scene="uid://l5hlafq1udx4"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://dmp6kq3mp7d78"
 config/macos_native_icon="uid://dmp6kq3mp7d78"
+config/windows_native_icon="uid://dmp6kq3mp7d78"
 
 [audio]
 
@@ -40,6 +41,15 @@ window/stretch/mode="canvas_items"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/autoload_setup/plugin.cfg", "res://addons/canvas_layer_preset/plugin.cfg", "res://addons/miscallenous/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://src/entities/toringens/": "red",
+"res://src/levels/_ignore/": "gray",
+"res://src/player/hud/": "gray",
+"res://src/player/inventory/": "gray"
+}
 
 [layer_names]
 

@@ -88,11 +88,12 @@ func gather_all_scenes() -> void:
 	res_cached_scenes_file = FileAccess.open(\"res://\" + CACHED_SCENES_FILE_PATH, FileAccess.WRITE)
 		
 	for i in DirAccess.get_directories_at(SCENES_PATH):
-		for j in DirAccess.get_files_at(SCENES_PATH + i): 
-			if (j.ends_with(\"level.tscn\")): 
-				scenes.append(SCENES_PATH + i + \"/\" + j)
-				user_cached_scenes_file.store_line(JSON.stringify(SCENES_PATH + i + \"/\" + j))
-				res_cached_scenes_file.store_line(JSON.stringify(SCENES_PATH + i + \"/\" + j))
+		if i != \"_ignore\":
+			for j in DirAccess.get_files_at(SCENES_PATH + i): 
+				if (j.ends_with(\"level.tscn\")): 
+					scenes.append(SCENES_PATH + i + \"/\" + j)
+					user_cached_scenes_file.store_line(JSON.stringify(SCENES_PATH + i + \"/\" + j))
+					res_cached_scenes_file.store_line(JSON.stringify(SCENES_PATH + i + \"/\" + j))
 
 	user_cached_scenes_file.close()
 	res_cached_scenes_file.close()
@@ -168,7 +169,6 @@ color = Color(0, 0, 0, 1)
 position = Vector2(240, 196)
 texture = ExtResource("2_nlmqr")
 hframes = 4
-frame = 3
 script = ExtResource("3_d62i2")
 autoplay = true
 playing = true
@@ -176,5 +176,4 @@ loop = true
 fps = 5.0
 frame_dimensions = Vector2i(16, 16)
 frame_h_count = 4
-progress = 3
 metadata/_custom_type_script = "uid://cdjphp77kgyqr"

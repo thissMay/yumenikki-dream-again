@@ -1,12 +1,16 @@
 [gd_scene load_steps=16 format=3 uid="uid://btg3e240ltjxx"]
 
-[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_vax4x"]
 [ext_resource type="Texture2D" uid="uid://dgilrv0qps4ve" path="res://src/levels/menu/title.png" id="2_ipbrq"]
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="3_gou46"]
 [ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="4_6k242"]
 [ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="6_ff2iu"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="7_0jjhx"]
 [ext_resource type="AudioStream" uid="uid://c2l2mic8iusdu" path="res://src/audio/bgm/title.WAV" id="8_a3bug"]
+
+[sub_resource type="GDScript" id="GDScript_h18ho"]
+resource_name = "menu"
+script/source = "extends GameScene
+"
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_sei71"]
 
@@ -25,7 +29,7 @@
 [sub_resource type="CanvasTexture" id="CanvasTexture_uocsa"]
 
 [node name="menu" type="Node2D"]
-script = ExtResource("1_vax4x")
+script = SubResource("GDScript_h18ho")
 
 [node name="BGM" type="Node" parent="."]
 script = ExtResource("7_0jjhx")
@@ -39,7 +43,7 @@ layer = 20
 position = Vector2(230, 72)
 texture = ExtResource("2_ipbrq")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ui"]
+[node name="menu_buttons" type="VBoxContainer" parent="ui"]
 offset_left = 184.0
 offset_top = 128.0
 offset_right = 284.0
@@ -47,7 +51,7 @@ offset_bottom = 232.0
 mouse_filter = 2
 theme = ExtResource("3_gou46")
 
-[node name="new_game" type="Control" parent="ui/VBoxContainer"]
+[node name="new_game" type="Control" parent="ui/menu_buttons"]
 custom_minimum_size = Vector2(100, 22)
 layout_mode = 2
 theme = ExtResource("6_ff2iu")
@@ -55,11 +59,12 @@ script = ExtResource("4_6k242")
 button_display_texture = SubResource("CanvasTexture_sei71")
 min_size = Vector2(100, 22)
 true_size = Vector2(100, 22)
+text = "New Game"
 panel_display_texture = SubResource("CanvasTexture_rkpo7")
 panel_display_color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://dhvrb58iweuo0"
 
-[node name="dream_diary" type="Control" parent="ui/VBoxContainer"]
+[node name="dream_diary" type="Control" parent="ui/menu_buttons"]
 custom_minimum_size = Vector2(100, 22)
 layout_mode = 2
 theme = ExtResource("6_ff2iu")
@@ -67,11 +72,12 @@ script = ExtResource("4_6k242")
 button_display_texture = SubResource("CanvasTexture_s5fon")
 min_size = Vector2(100, 22)
 true_size = Vector2(100, 22)
+text = "Dream Diary"
 panel_display_texture = SubResource("CanvasTexture_ec13o")
 panel_display_color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://dhvrb58iweuo0"
 
-[node name="options" type="Control" parent="ui/VBoxContainer"]
+[node name="options" type="Control" parent="ui/menu_buttons"]
 custom_minimum_size = Vector2(100, 22)
 layout_mode = 2
 theme = ExtResource("6_ff2iu")
@@ -79,11 +85,12 @@ script = ExtResource("4_6k242")
 button_display_texture = SubResource("CanvasTexture_6p2qj")
 min_size = Vector2(100, 22)
 true_size = Vector2(100, 22)
+text = "Settings"
 panel_display_texture = SubResource("CanvasTexture_nvx5g")
 panel_display_color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://dhvrb58iweuo0"
 
-[node name="exit" type="Control" parent="ui/VBoxContainer"]
+[node name="exit" type="Control" parent="ui/menu_buttons"]
 custom_minimum_size = Vector2(100, 22)
 layout_mode = 2
 theme = ExtResource("6_ff2iu")
@@ -91,6 +98,7 @@ script = ExtResource("4_6k242")
 button_display_texture = SubResource("CanvasTexture_km2j4")
 min_size = Vector2(100, 22)
 true_size = Vector2(100, 22)
+text = "Quit Game"
 panel_display_texture = SubResource("CanvasTexture_uocsa")
 panel_display_color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://dhvrb58iweuo0"

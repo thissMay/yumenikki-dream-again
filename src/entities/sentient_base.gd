@@ -60,7 +60,6 @@ func _process(_delta: float) -> void:
 func handle_velocity(_dir: Vector2, _mult: float = 1) -> void:
 	desired_vel = ((_dir.normalized() * initial_speed) * _mult) + external_velocity
 	self.velocity = desired_vel
-
 	
 
 #endregion

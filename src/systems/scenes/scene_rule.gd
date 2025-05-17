@@ -1,6 +1,6 @@
 class_name SceneRule
-extends Script
+extends Resource
 
 # ---- virtual ----
-static func apply_on_scene_load() -> void: pass
-static func unapply_on_scene_unload() -> void: pass
+func apply_on_scene_load() -> void: pass
+func unapply_on_scene_unload() -> void: pass

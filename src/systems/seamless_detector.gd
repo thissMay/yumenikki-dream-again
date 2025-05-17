@@ -159,7 +159,7 @@ func player_entered_setup() -> void:
 	left.area_entered.connect(func(_p): player_hit_border(_p, bound_side.LEFT))	
 	
 func player_hit_border(_player: Area2D, _bound_side: bound_side) -> void: 
-	if is_instance_valid(_player):
+	if is_instance_valid(_player) and PLInstance.get_pl() != null:
 		if _player == PLInstance.get_pl().world_warp:
 			GameManager.EventManager.invoke_event("WORLD_LOOP")
 

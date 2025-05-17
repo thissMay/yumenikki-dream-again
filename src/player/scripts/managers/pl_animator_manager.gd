@@ -6,16 +6,9 @@ var emote_enter_anim_node: AnimationNodeAnimation
 var emote_exit_anim_node: AnimationNodeAnimation 
 
 # --- setup functions --- 
-func _setup(_sentient: SentientBase) -> void:
-	super(_sentient)
-	(sentient.sprite_renderer as SpriteSheetFormatter).set_row(sentient.heading)
-
-func update(_delta: float) -> void:
+func _update(_delta: float) -> void:
 	super(_delta)
-	
-	sentient.sprite_renderer.set_row(lerpf(
-		sentient.sprite_renderer.row, sentient.heading, 
-		0.3))
+
 	if sentient.is_moving: 
 		animation_player.speed_scale = clamp(.21 * log(sentient.speed / sentient.MAX_SPEED) + 1, 0, INF)
 	else: animation_player.speed_scale = 1

@@ -31,6 +31,7 @@ static var cb_tween: Tween
 
 # ---- components
 static var game_fsm: StrategistFSM
+static var time_manager: Node
 
 # ---- internal setup ----
 func _ready() -> void:
@@ -54,6 +55,7 @@ func setup() -> void:
 	cinematic_ui = $always/cinematic
 	cinematic_bars = $always/cinematic/cinematic_bars
 
+	time_manager = TimeManager.instance
 
 	game_fsm._setup()
 	
@@ -69,6 +71,7 @@ func setup() -> void:
 	
 	global_screen_effect.environment.glow_enabled = bloom
 	PLInstance.setup()
+	time_manager.setup()
 
 # ---- game functionality ----
 static func pause_options(_pause: bool = true) -> void:
@@ -155,7 +158,7 @@ class EventManager:
 
 		for i in range((GameManager.event_ids[_id]["subscribers"] as Array[EventListener]).size()):
 			if GameManager.event_ids[_id]["subscribers"][i].is_valid_listener: 
-				GameManager.event_ids[_id]["subscribers"][i].on_notify.call_deferred()
+				GameManager.event_ids[_id]["subscribers"][i].on_notify.call_deferred(_id)
 			else: 
 				remove_listener(GameManager.event_ids[_id]["subscribers"][i], _id)
 	static func get_event_param(_id: String) -> Array[Variant]:

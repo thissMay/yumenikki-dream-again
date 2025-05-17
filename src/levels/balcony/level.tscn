@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c04slc7ycspa5"]
+[gd_scene load_steps=22 format=3 uid="uid://c04slc7ycspa5"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_othni"]
 [ext_resource type="Texture2D" uid="uid://emb20h3qe8rj" path="res://src/levels/balcony/balcony_base.png" id="2_aysb6"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="4_on5c0"]
 [ext_resource type="Shader" uid="uid://bqp8m8worpqyn" path="res://src/shaders/panorama/linear_fog.gdshader" id="5_6jswv"]
 [ext_resource type="Shader" uid="uid://bjc3g4hpc28r1" path="res://src/shaders/screen_overlay/ocean_lights.gdshader" id="5_qjc4v"]
-[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="6_8udg0"]
 [ext_resource type="Texture2D" uid="uid://c8k1sxkde80gi" path="res://src/images/panorama/clouds.png" id="6_rho35"]
 [ext_resource type="Texture2D" uid="uid://6hbdjnabl7un" path="res://src/images/panorama/hills.png" id="8_8cbwq"]
 [ext_resource type="Texture2D" uid="uid://bcaws1jajinjy" path="res://src/levels/balcony/coat_hander.png" id="11_6jswv"]
@@ -126,9 +125,6 @@ texture = ExtResource("11_6jswv")
 [node name="rails" type="Sprite2D" parent="Node2D/CanvasGroup"]
 position = Vector2(248, 180)
 texture = ExtResource("12_8cbwq")
-
-[node name="Madotsuki" parent="Node2D" instance=ExtResource("6_8udg0")]
-position = Vector2(216, 144)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Node2D"]
 color = Color(0.524543, 0.418031, 0.402895, 1)

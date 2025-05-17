@@ -1,7 +1,7 @@
 class_name FSM 
 extends Node
 
-signal state_changed
+signal state_changed(_new_state)
 
 var state_dict: Dictionary
 var curr_state: State
@@ -30,7 +30,7 @@ func _change_to_state(new_state: StringName, s = null) -> void:
 			curr_state = newstate
 			curr_state.enter_state(s)
 			
-			state_changed.emit()	
+			state_changed.emit(newstate)	
 
 # --- state checks + getter --- 
 func _has_state(state_name: StringName) -> bool:

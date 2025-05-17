@@ -1,3 +1,5 @@
+@tool
+
 class_name AbstractButton
 extends Control
 
@@ -33,6 +35,7 @@ func _ready() -> void:
 	self.mouse_filter = Control.MOUSE_FILTER_PASS
 	set_button_toggle_mode(is_togglable)
 	button.pressed.connect(func(): pressed.emit())
+	button.size = self.size
 	
 func _setup() -> void:
 	_components_setup_instantiation()
