@@ -249,10 +249,10 @@ static var event_ids := {
 		"subscribers" : [],
 		"params" : []},
 		
-	"PLAYER_PRE_EQUIP" : {
+	"PLAYER_EQUIP" : {
 		"subscribers" : [],
 		"params" : []},
-	"PLAYER_PRE_DEEQUIP" : {
+	"PLAYER_DEEQUIP" : {
 		"subscribers" : [],
 		"params" : []},
 		

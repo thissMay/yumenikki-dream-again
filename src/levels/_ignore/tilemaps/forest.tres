@@ -1,0 +1,18 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dco2oteu0g2q1"]
+
+[ext_resource type="Texture2D" uid="uid://datbhgmjkhyyj" path="res://src/levels/_ignore/tilemaps/forest_world.png" id="1_k4rq6"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lp2cu"]
+texture = ExtResource("1_k4rq6")
+0:0/size_in_atlas = Vector2i(3, 3)
+0:0/0 = 0
+0:3/size_in_atlas = Vector2i(3, 3)
+0:3/0 = 0
+0:6/0 = 0
+7:0/size_in_atlas = Vector2i(4, 6)
+7:0/0 = 0
+3:0/size_in_atlas = Vector2i(4, 6)
+3:0/0 = 0
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_lp2cu")

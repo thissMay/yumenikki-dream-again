@@ -1,15 +1,21 @@
-[gd_scene load_steps=13 format=3 uid="uid://q5moiijg0b7a"]
+[gd_scene load_steps=17 format=3 uid="uid://q5moiijg0b7a"]
 
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_jajjr"]
 [ext_resource type="Script" uid="uid://d3yuvhq7nx0we" path="res://src/player/hud/pl_hud_manager.gd" id="1_o4eow"]
 [ext_resource type="Script" uid="uid://cfcnsb8jk2ag5" path="res://src/player/hud/pl_hud_indicators.gd" id="2_ir6k4"]
 [ext_resource type="PackedScene" uid="uid://bl24ldxfxb508" path="res://src/player/inventory/inventory.tscn" id="2_ufr4o"]
+[ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="3_wbmf2"]
+[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="4_0t386"]
 [ext_resource type="Texture2D" uid="uid://cgctf7npty6c7" path="res://src/player/hud/stamina_fill.png" id="4_hogqo"]
 [ext_resource type="Texture2D" uid="uid://bvnkp5b7jvick" path="res://src/player/hud/stamina_indicator.png" id="6_2qcr0"]
 [ext_resource type="Script" uid="uid://dx7ortt8nl3ne" path="res://src/systems/utils/sequence_caller.gd" id="9_wbmf2"]
 [ext_resource type="Script" uid="uid://0v2nidb8jsha" path="res://src/systems/event/event_resource.gd" id="10_0t386"]
 [ext_resource type="Script" uid="uid://d01atxbr8elfs" path="res://src/systems/event/obj_independent/camera/shake_cam.gd" id="11_a8b7g"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/utils/sequence.gd" id="12_a4iu7"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_a8b7g"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_a4iu7"]
 
 [sub_resource type="Resource" id="Resource_oo0xh"]
 script = ExtResource("11_a8b7g")
@@ -23,7 +29,7 @@ script = ExtResource("12_a4iu7")
 order = Array[ExtResource("10_0t386")]([SubResource("Resource_oo0xh")])
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="ui" type="Control" node_paths=PackedStringArray("save_icon", "save_icon_timer")]
+[node name="ui" type="Control" node_paths=PackedStringArray("hide_on_inv", "save_icon", "save_icon_timer", "inv_toggle", "inv")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,10 +38,33 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_jajjr")
 script = ExtResource("1_o4eow")
+hide_on_inv = NodePath("hide_on_inventory")
 save_icon = NodePath("hide_on_inventory/icon")
 save_icon_timer = NodePath("hide_on_inventory/icon/Timer")
+inv_toggle = NodePath("inventory_toggle")
+inv = NodePath("inventory")
 
-[node name="inventory" parent="." instance=ExtResource("2_ufr4o")]
+[node name="inventory" parent="." node_paths=PackedStringArray("inventory_toggle") instance=ExtResource("2_ufr4o")]
+visible = false
+layout_mode = 1
+inventory_toggle = NodePath("../inventory_toggle")
+
+[node name="inventory_toggle" type="Control" parent="."]
+custom_minimum_size = Vector2(70, 25)
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 216.0
+offset_right = 86.0
+offset_bottom = 241.0
+theme = ExtResource("3_wbmf2")
+script = ExtResource("4_0t386")
+button_display_texture = SubResource("CanvasTexture_a8b7g")
+is_togglable = true
+true_size = Vector2(70, 25)
+text = "toggle"
+panel_display_texture = SubResource("CanvasTexture_a4iu7")
+panel_display_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
 
 [node name="hide_on_inventory" type="Control" parent="."]
 layout_mode = 1
@@ -98,3 +127,5 @@ ignore_time_scale = true
 script = ExtResource("9_wbmf2")
 sequence = SubResource("Resource_njkuo")
 metadata/_custom_type_script = "uid://dx7ortt8nl3ne"
+
+[editable path="inventory"]

@@ -15,7 +15,7 @@ func _init(_id: Array[String] = [""], _static: bool = false, _owner: Node = null
 
 func on_notify(_id: String) -> void: # --- called from the event_manager.
 	if _id in GameManager.event_ids:
-		if actions[_id] and (is_instance_valid(node_owner) or is_static): 
+		if _id in actions and actions[_id] and (is_instance_valid(node_owner) or is_static): 
 			actions[_id].call_deferred()
 		
 func do_on_notify(_event_id: String, _do := Callable()) -> void: 

@@ -37,7 +37,7 @@ var curr_color = Color.WHITE
 
 # ---- signals ----
 signal pressed
-signal toggled
+signal toggled(_truth)
 
 # ---- inner button components ---- 
 var button: BaseButton
@@ -46,14 +46,11 @@ var disp_tw: Tween
 
 # ---- flags ---- 
 @export_group("Flags")
-var is_toggled: bool = false:
-	get: 
-		if button.button_pressed and button.toggle_mode: _on_press()
-		return (button.button_pressed and button.toggle_mode)
+var is_toggled: bool = false
 @export var is_togglable: bool = false:
 	set(_tog):
 		is_togglable = _tog
-		set_button_toggle_mode(_tog)
+		if Engine.is_editor_hint(): set_button_toggle_mode(_tog)
 @export var disabled: bool = false
 
 func _init() -> void:
@@ -62,6 +59,7 @@ func _init() -> void:
 func _ready() -> void: 
 	super()
 	set_active(!disabled)
+	set_button_toggle_mode(is_togglable)
 	panel_display_color = normal_color
 	visibility_changed.connect(
 		func():
@@ -110,8 +108,13 @@ func _on_press() -> void:
 		pressed.emit.call_deferred()
 
 		if is_togglable:
-			if button.button_pressed: _on_toggle()
+			is_toggled = !is_toggled
+			
+			if is_toggled: _on_toggle()
 			else: _on_untoggle() 
+			
+			print("TOGGLED??: ", is_toggled)
+			toggled.emit(is_toggled)
 	
 func _on_toggle() -> void: 
 	button.mouse_entered.disconnect(_on_hover)

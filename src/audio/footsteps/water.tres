@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="SerializableSet" load_steps=5 format=3 uid="uid://gtmkqev742a6"]
+[gd_resource type="Resource" script_class="FootstepSet" load_steps=6 format=3 uid="uid://gtmkqev742a6"]
 
 [ext_resource type="AudioStream" uid="uid://dfmqoio3lj4o6" path="res://src/audio/se/footstep_water-1.wav" id="1_auly3"]
-[ext_resource type="Script" uid="uid://c7ut813ov3pxi" path="res://src/systems/utils/serializable_set.gd" id="1_wpfrv"]
 [ext_resource type="AudioStream" uid="uid://nq0ufn7vcng4" path="res://src/audio/se/footstep_water-2.wav" id="2_rtgle"]
 [ext_resource type="AudioStream" uid="uid://cdmji04elfgey" path="res://src/audio/se/footstep_water-3.wav" id="3_u3cya"]
+[ext_resource type="Texture2D" uid="uid://bhbrygxxfaqa3" path="res://src/entities/footsteps/water.png" id="4_rtgle"]
+[ext_resource type="Script" uid="uid://dl740w6e37l11" path="res://src/audio/footsteps/footstep_set.gd" id="5_u3cya"]
 
 [resource]
-script = ExtResource("1_wpfrv")
+script = ExtResource("5_u3cya")
+footstep_anim = ExtResource("4_rtgle")
 arr = [ExtResource("1_auly3"), ExtResource("2_rtgle"), ExtResource("3_u3cya")]
 metadata/_custom_type_script = "uid://c7ut813ov3pxi"

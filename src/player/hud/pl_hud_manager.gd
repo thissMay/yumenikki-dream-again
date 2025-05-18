@@ -3,7 +3,7 @@ extends Control
 
 static var instance
 
-var hide_on_pbmenu: Control
+@export var hide_on_inv: Control
 var ui_tween: Tween
 
 @export var save_icon: TextureRect
@@ -11,59 +11,25 @@ var ui_tween: Tween
 
 # ---- listeners ----
 var hud_disable: EventListener
-var hud_enable: EventListener
+var hud_activate: EventListener
+var hud_fade: EventListener
 
-var hud_fade_out: EventListener
-var hud_fade_in: EventListener
+var on_invert: EventListener
+var game_save: EventListener
 
-var invert_on_begin: EventListener
-var invert_on_end: EventListener
-
-var game_file_save: EventListener
-var game_config_save: EventListener
+@export var inv_toggle: GUIPanelButton
+@export var inv: FSM
 
 func _ready() -> void:
-	hide_on_pbmenu = get_node("hide_on_pbmenu")
-	
-	hud_fade_out = EventListener.new(["SCENE_CHANGE_REQUEST"], false, self)
-	hud_disable = EventListener.new(["PLAYER_PRE_EQUIP", "PLAYER_PRE_DEEQUIP"], false, self)
-	
-	hud_fade_in = EventListener.new(["SCENE_CHANGE_SUCCESS"], false, self)
-	hud_enable = EventListener.new(["PLAYER_EFFECT_EQUIP", "PLAYER_EFFECT_DEEQUIP"], false, self)
-
-	invert_on_begin = EventListener.new(["SPECIAL_INVERT_CUTSCENE_BEGIN"], false, self)
-	invert_on_end = EventListener.new(["SPECIAL_INVERT_CUTSCENE_END"], false, self)
-	
-	game_file_save = EventListener.new(["GAME_FILE_SAVE"], false, self)
-	game_config_save = EventListener.new(["GAME_CONFIG_SAVE"], false, self)
-	
-	hud_fade_out.do_on_notify(func(): show_ui(self, false))
-	hud_fade_in.do_on_notify(func(): show_ui(self, true))
-	
-
-	invert_on_begin.do_on_notify(func(): show_ui(hide_on_pbmenu, false))
-	invert_on_end.do_on_notify(func(): show_ui(hide_on_pbmenu, true))
-	
-	game_config_save.do_on_notify(
-		func(): 
-			save_icon.texture = preload("res://src/images/config_save.png")
-			show_ui(save_icon, true)
-			save_icon_timer.wait_time = 1
-			save_icon_timer.start()
-			await save_icon_timer.timeout
-			show_ui(save_icon, false)
-			)	
-	game_file_save.do_on_notify(
-		func(): 
-			save_icon.texture = preload("res://src/images/save.png")
-			show_ui(save_icon, true)
-			save_icon_timer.wait_time = 1
-			save_icon_timer.start()
-			await save_icon_timer.timeout
-			show_ui(save_icon, false)
-			)
-	
 	instance = self
+	events_setup()
+	inv._setup()
+	
+	inv_toggle.toggled.connect(
+		func(_toggled: bool): 
+			if _toggled: GameManager.change_to_state("special_invert_scene")
+			else: GameManager.change_to_state(GameManager.game_fsm._get_prev_state_name())
+			inv.visible = _toggled)
 	
 func show_ui(_ui: Node, _show: bool) -> void:	
 	if ui_tween: ui_tween.kill()
@@ -77,4 +43,40 @@ func show_ui(_ui: Node, _show: bool) -> void:
 		false: 
 			await ui_tween.tween_property(_ui, "modulate:a", 0, .5).finished
 			_ui.visible = _show
+func events_setup() -> void:
+	hud_fade = EventListener.new(["SCENE_CHANGE_REQUEST", "SCENE_CHANGE_SUCCESS"], false, self)
+	hud_fade.do_on_notify("SCENE_CHANGE_REQUEST", func(): show_ui(self, false))
+	hud_fade.do_on_notify("SCENE_CHANGE_SUCCESS", func(): show_ui(self, true))
+
+	hud_disable = EventListener.new(["PLAYER_PRE_EQUIP", "PLAYER_PRE_DEEQUIP"], false, self)
+	hud_activate = EventListener.new(
+		["PLAYER_EFFECT_EQUIP", "PLAYER_EFFECT_DEEQUIP",
+		"PLAYER_PRE_EQUIP", "PLAYER_PRE_DEEQUIP"], 
+		false, self)
+
+	on_invert = EventListener.new(["SPECIAL_INVERT_CUTSCENE_BEGIN", "SPECIAL_INVERT_CUTSCENE_END"], false, self)
+	on_invert.do_on_notify("SPECIAL_INVERT_CUTSCENE_BEGIN", func(): if hide_on_inv: show_ui(hide_on_inv, false))
+	on_invert.do_on_notify("SPECIAL_INVERT_CUTSCENE_END", func(): if hide_on_inv: show_ui(hide_on_inv, true))
+	
+	game_save = EventListener.new(["GAME_FILE_SAVE", "GAME_CONFIG_SAVE"], false, self)
+	game_save.do_on_notify(
+		"GAME_CONFIG_SAVE",
+		func(): 
+			save_icon.texture = preload("res://src/images/config_save.png")
+			show_ui(save_icon, true)
+			save_icon_timer.wait_time = 1
+			save_icon_timer.start()
+			await save_icon_timer.timeout
+			show_ui(save_icon, false)
+			)	
+	game_save.do_on_notify(
+		'GAME_FILE_SAVE',
+		func(): 
+			save_icon.texture = preload("res://src/images/save.png")
+			show_ui(save_icon, true)
+			save_icon_timer.wait_time = 1
+			save_icon_timer.start()
+			await save_icon_timer.timeout
+			show_ui(save_icon, false)
+			)
 	

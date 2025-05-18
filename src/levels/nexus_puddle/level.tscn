@@ -1,7 +1,101 @@
-[gd_scene load_steps=2 format=3 uid="uid://4qtk6nnecrel"]
+[gd_scene load_steps=12 format=4 uid="uid://4qtk6nnecrel"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_7eh56"]
+[ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_61b85"]
+[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_j13fa"]
+[ext_resource type="AudioStream" uid="uid://c73s1pvspdp5w" path="res://src/audio/bgm/world_puddle.ogg" id="4_0jnag"]
+[ext_resource type="Shader" uid="uid://bwrguqumtsyrq" path="res://src/shaders/masks/sprite.gdshader" id="4_61b85"]
+[ext_resource type="Texture2D" uid="uid://bkgaaykhefp0d" path="res://src/levels/_ignore/tilemaps/puddle_world.png" id="4_73ufu"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="4_a2suj"]
+[ext_resource type="Texture2D" uid="uid://d21ss1ocopvp0" path="res://src/images/panorama/puddle_panorama.png" id="4_d3qgj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0jnag"]
+shader = ExtResource("4_61b85")
+shader_parameter/transparency = 0.0
+shader_parameter/dirX = 1.0
+shader_parameter/dirY = 0.9
+shader_parameter/scroll_speed = 0.03
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/world_texture = ExtResource("4_d3qgj")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_61b85"]
+texture = ExtResource("4_73ufu")
+texture_region_size = Vector2i(48, 32)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -16, 0, -16, 24, -8, 24, 8, -16, 8, -16, -8)
+2:2/0/custom_data_0 = 7
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(16, -8, 16, 8, -8, 16, -16, 8, -16, -8, 8, -16)
+2:3/0/custom_data_0 = 7
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(16, -8, 16, 8, -16, 8, -16, -8)
+3:3/0/custom_data_0 = 7
+2:4/size_in_atlas = Vector2i(2, 3)
+2:4/0 = 0
+2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(40, -24, 40, 8, 40, 24, 32, 32, -8, 40, -40, 24, -24, 8, -40, -8, -16, -24, 16, -40)
+2:4/0/custom_data_0 = 7
+4:4/size_in_atlas = Vector2i(2, 2)
+4:4/0 = 0
+4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(40, -24, 40, 8, 16, 24, -16, 24, -40, 24, -24, 8, -40, -8, -16, -24, 16, -32)
+4:4/0/custom_data_0 = 7
+4:2/size_in_atlas = Vector2i(2, 2)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(40, 8, 16, 24, -16, 24, -24, 8, -40, -8, -16, -24)
+4:2/0/custom_data_0 = 7
+0:2/size_in_atlas = Vector2i(2, 2)
+0:2/0 = 0
+0:0/size_in_atlas = Vector2i(2, 2)
+0:0/0 = 0
+2:0/size_in_atlas = Vector2i(1, 2)
+2:0/0 = 0
+3:0/size_in_atlas = Vector2i(1, 2)
+3:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_0jnag"]
+physics_layer_0/collision_layer = 8
+physics_layer_0/collision_mask = 9
+custom_data_layer_0/name = "material"
+custom_data_layer_0/type = 2
+sources/0 = SubResource("TileSetAtlasSource_61b85")
 
 [node name="puddle_world" type="Node"]
 script = ExtResource("1_7eh56")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
+
+[node name="camera" parent="." instance=ExtResource("2_61b85")]
+
+[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../Madotsuki")
+
+[node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
+layer = -30
+
+[node name="ColorRect" type="ColorRect" parent="panorama (bottom_layer)"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BGM" type="Node" parent="."]
+script = ExtResource("2_j13fa")
+stream = ExtResource("4_0jnag")
+metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
+
+[node name="puddle" type="TileMapLayer" parent="."]
+clip_children = 2
+z_index = -1
+material = SubResource("ShaderMaterial_0jnag")
+tile_map_data = PackedByteArray("AAAJAAUAAAACAAIAAAAYAAsAAAACAAIAAAAaAAYAAAACAAIAAAAUAAgAAAACAAIAAAASAAoAAAACAAIAAAAXABAAAAAEAAIAAAAhAA4AAAACAAMAAAAiABIAAAAEAAQAAAADABQAAAACAAMAAAAIABMAAAAEAAIAAAAFABEAAAAEAAIAAAAEAAgAAAACAAQAAAARAAIAAAACAAMAAAADAP7/AAACAAQAAAD7/w0AAAADAAMAAAAlACEAAAAEAAQAAAA1ABQAAAACAAQAAAA0ABoAAAAEAAIAAAATABkAAAACAAMAAAAaACoAAAACAAMAAAAWACkAAAACAAMAAAAHACIAAAACAAMAAAA6AAcAAAADAAMAAAA3AAUAAAAEAAIAAABJACoAAAACAAIAAABHACgAAAACAAIAAABMACAAAAACAAQAAABDAA0AAAAEAAIAAAA5AB8AAAACAAIAAAAtAC0AAAACAAQAAAApACkAAAAEAAIAAAAzACMAAAAEAAIAAAAuAAIAAAACAAIAAABbAAcAAAAEAAIAAABUABQAAAADAAMAAAAPADYAAAAEAAQAAAAMADIAAAAEAAIAAAA5ADoAAAADAAMAAABDADIAAAADAAMAAABJADYAAAACAAQAAABKADYAAAAEAAIAAAAiADMAAAADAAMAAAA9ACkAAAACAAQAAABWAC0AAAAEAAIAAABXAC0AAAACAAMAAABZACUAAAADAAMAAABRACkAAAACAAMAAABZAB0AAAAEAAIAAABlABIAAAACAAMAAABkABIAAAACAAQAAAAGACAAAAACAAQAAAABACsAAAADAAMAAAA=")
+tile_set = SubResource("TileSet_0jnag")
+
+[node name="lamp" type="TileMapLayer" parent="."]
+
+[node name="Madotsuki" parent="." instance=ExtResource("4_a2suj")]
+position = Vector2(210, 120)
+
+[editable path="camera"]

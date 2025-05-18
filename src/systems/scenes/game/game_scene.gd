@@ -1,7 +1,7 @@
 class_name GameScene
 extends SceneNode
 
-@export var rules: Array[Resource]
+@export var rules: Array[SceneRule]
 
 @onready var save_invoker := EventListener.new(["SCENE_CHANGE_REQUEST"], false, self)
 @export var load_transition: Shader = preload("res://src/shaders/transition/tr_fade.gdshader"):

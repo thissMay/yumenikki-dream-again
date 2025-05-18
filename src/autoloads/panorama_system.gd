@@ -13,7 +13,7 @@ var total_uv_offset := Vector2()
 
 func setup() -> void:
 	warp_listener = EventListener.new(["WORLD_LOOP"], false, self)
-	warp_listener.do_on_notify(func(): warp_check = true)
+	warp_listener.do_on_notify("WORLD_LOOP", func(): warp_check = true)
 	
 	initial_screen_centre = (
 		Game.main_viewport.get_camera_2d().get_screen_center_position()

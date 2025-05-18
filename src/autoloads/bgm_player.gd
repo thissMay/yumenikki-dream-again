@@ -18,7 +18,7 @@ func _ready() -> void:
 	self.autoplay = false
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	scene_change_request_listener.do_on_notify(func(): fade_out())
+	scene_change_request_listener.do_on_notify("SCENE_CHANGE_REQUEST" ,func(): fade_out())
 
 func play_sound(
 	_stream: AudioStream, 

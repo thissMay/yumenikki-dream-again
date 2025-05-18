@@ -1,11 +1,10 @@
-[gd_scene load_steps=28 format=4 uid="uid://b1cl2pgrbvduk"]
+[gd_scene load_steps=27 format=4 uid="uid://b1cl2pgrbvduk"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_cjh53"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_nk2mx"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="3_6f7a5"]
 [ext_resource type="AudioStream" uid="uid://b8n3oeuudnpvm" path="res://src/audio/bgm/world_snow.ogg" id="3_8mlla"]
 [ext_resource type="PackedScene" uid="uid://djnomncx1otsq" path="res://src/systems/seamless_detector.tscn" id="4_8mlla"]
-[ext_resource type="Shader" uid="uid://hg6wywtqrlha" path="res://src/shaders/masks/additive.gdshader" id="5_fc1vl"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="6_d44x6"]
 [ext_resource type="Texture2D" uid="uid://bsq21xlxdo1a3" path="res://src/levels/nexus_snow/snow.png" id="6_qohse"]
 [ext_resource type="Shader" uid="uid://cn0lcr1ewi4gp" path="res://src/shaders/masks/distortion_waves.gdshader" id="7_for1j"]
@@ -74,8 +73,6 @@ shader_parameter/gradient = SubResource("GradientTexture2D_qohse")
 shader_parameter/ray_strength = 1.225
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_for1j"]
-shader = ExtResource("5_fc1vl")
-shader_parameter/transparency = 0.5
 
 [sub_resource type="Curve" id="Curve_ssvrw"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.536667, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -142,7 +139,7 @@ material = SubResource("ShaderMaterial_for1j")
 position = Vector2(240, 112)
 amount = 36
 texture = ExtResource("6_qohse")
-lifetime = 2.0
+lifetime = 3.0
 preprocess = 5.0
 process_material = SubResource("ParticleProcessMaterial_d44x6")
 

@@ -19,7 +19,7 @@ var is_toggled: bool = false:
 
 # ---- signals ----
 signal pressed
-signal toggled
+signal toggled(_truth)
 
 # ---- instantiation ----
 func _components_setup_instantiation() -> void:

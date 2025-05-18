@@ -57,7 +57,7 @@ var area: Area2D
 var floor_priority: TileMapLayer
 var greatest_index: int = -50
 
-@onready var multiple_floors := SerializableSet.new()
+@onready var multiple_floors := FootstepSet.new()
 
 func _setup(_sentient: SentientBase) -> void:
 	super(_sentient)
@@ -76,8 +76,9 @@ func _setup(_sentient: SentientBase) -> void:
 	curr_material = default_footstep
 
 func initate_footstep() -> void:  
-	var sounds_set: SerializableSet = GROUND_MAT_DICT[curr_material]
+	var sounds_set: FootstepSet = GROUND_MAT_DICT[curr_material]
 	
+	curr_anim = sounds_set.footstep_anim
 	spawn_footstep_fx()
 	footstep_se_player.play_sound(
 		sounds_set.pick_random() if sounds_set.size() > 0 else DEFAULT_FOOTSTEP, 

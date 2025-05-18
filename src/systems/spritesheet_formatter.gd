@@ -2,6 +2,9 @@
 class_name SpriteSheetFormatter
 extends Sprite2D
 
+enum style {HORIZONTAL, VERTICAL}
+@export var strip_style: style = style.HORIZONTAL
+
 # helpful if you wanna format it on the fly
 @export_tool_button("Format") var formatter = refresh_frame_splitting
 
@@ -11,10 +14,18 @@ extends Sprite2D
 @export var frame_v_count	: int = 1
 
 @export var progress: int = 0:
-	set(p): progress = wrap(p, 0 , frame_h_count)
+	set(p): 
+		match strip_style:
+			style.HORIZONTAL: 	progress = wrap(p, 0 , frame_h_count)
+			style.VERTICAL: 	progress = wrap(p, 0 , frame_v_count)
+
+var column: float
+var cached_column: float
+var column_within_bounds: bool = false
+
 var row: float = 0
 var cached_row: float = 0
-var within_bounds: bool = false
+var row_within_bounds: bool = false
 
 func _ready() -> void: 
 	texture_changed.connect(format)
@@ -43,7 +54,7 @@ func set_row(_r: float) -> void:
 	if row <= frame_v_count - 1: row = clamp(_r, 0, frame_v_count - 1)
 	else: row = frame_v_count - 1
 	
-	if within_bounds: cached_row = row
+	if row_within_bounds: cached_row = row
 	else: cached_row = _r
 
 func check_row() -> void:
@@ -53,6 +64,12 @@ func attempt_row() -> void:
 	row = cached_row if cached_row <= frame_v_count - 1 else row
 
 func _process(delta: float) -> void:
-	frame_coords.x = clamp(round(progress), 0, frame_h_count)
-	frame_coords.y = clamp(round(row), 		0, frame_v_count)
-	within_bounds = cached_row <= frame_v_count - 1
+	match strip_style:
+		style.HORIZONTAL:
+			frame_coords.x = clamp(round(progress), 0, frame_h_count)
+			frame_coords.y = clamp(round(row), 		0, frame_v_count)
+			row_within_bounds = cached_row <= frame_v_count - 1
+		style.VERTICAL:
+			frame_coords.x = clamp(round(column), 	0, frame_h_count)
+			frame_coords.y = clamp(round(progress),	0, frame_v_count)
+			column_within_bounds = cached_column <= frame_h_count - 1

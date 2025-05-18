@@ -16,7 +16,7 @@
 [ext_resource type="AnimationLibrary" uid="uid://jmtvl5nfo2wn" path="res://src/player/madotsuki/animation_dicts/reset.tres" id="11_wc1wu"]
 [ext_resource type="Script" uid="uid://bxdr1wekbu7uu" path="res://src/player/scripts/managers/pl_animator_manager.gd" id="12_ukmoe"]
 [ext_resource type="Texture2D" uid="uid://51l0bvgjidxn" path="res://src/player/madotsuki/display/default/_RESET.png" id="13_p1bbc"]
-[ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/player/states/sentient_fsm.gd" id="18_rujao"]
+[ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/entities/sentient_fsm.gd" id="18_rujao"]
 [ext_resource type="Script" uid="uid://co5edhtkgx3g8" path="res://src/systems/behaviour/fsm.gd" id="19_hy2th"]
 [ext_resource type="Script" uid="uid://bcy41p4huaij7" path="res://src/player/states/yn style/stamina/normal.gd" id="20_fr82v"]
 [ext_resource type="Script" uid="uid://bk7ea81npilfk" path="res://src/player/states/yn style/stamina/exhausted.gd" id="21_5r1vc"]

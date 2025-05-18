@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ra24ysq2f70c"]
+[gd_scene load_steps=19 format=3 uid="uid://ra24ysq2f70c"]
 
 [ext_resource type="Script" uid="uid://b2yjestmw6ux7" path="res://src/game/game_manager.gd" id="1_1weyd"]
 [ext_resource type="Environment" uid="uid://be4tedt15qnrp" path="res://src/main/environment_2d.tres" id="2_nfr70"]
@@ -14,13 +14,14 @@
 [ext_resource type="PackedScene" uid="uid://c2sv1637gh6ub" path="res://src/ui/pause_menu/pause_menu.tscn" id="10_kqpe4"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="11_bn1po"]
 [ext_resource type="Script" uid="uid://cwsl1s56sohmv" path="res://src/game/states/special_invert_cutscene.gd" id="13_bn1po"]
+[ext_resource type="AudioStream" uid="uid://cjs57vjoi1p2s" path="res://src/audio/bgm/madoxy_63.wav" id="14_73454"]
 [ext_resource type="PackedScene" uid="uid://q5moiijg0b7a" path="res://src/player/hud/pl_hud.tscn" id="15_f8vi8"]
 [ext_resource type="Texture2D" uid="uid://co64pugf2as81" path="res://src/shaders/ui/cinematic_bars_grad.tres" id="16_v4uq4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_73454"]
 shader = ExtResource("5_n1fgk")
 shader_parameter/blur_radius = 0.7
-shader_parameter/blur_amount = 3.446
+shader_parameter/blur_amount = 0.0
 shader_parameter/blur_inner = 0.6
 shader_parameter/blur_outer = 0.75
 
@@ -75,8 +76,16 @@ pitch = 0.5
 autoplay = false
 metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 
-[node name="SPECIAL_INVERT_SCENE" type="Node" parent="fsm"]
+[node name="SPECIAL_INVERT_SCENE" type="Node" parent="fsm" node_paths=PackedStringArray("bgm")]
 script = ExtResource("13_bn1po")
+bgm = NodePath("BGM")
+
+[node name="BGM" type="Node" parent="fsm/SPECIAL_INVERT_SCENE"]
+script = ExtResource("11_bn1po")
+stream = ExtResource("14_73454")
+pitch = 0.8
+autoplay = false
+metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 
 [node name="pausable" type="CanvasLayer" parent="."]
 process_mode = 1

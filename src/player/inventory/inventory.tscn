@@ -1,21 +1,24 @@
-[gd_scene load_steps=29 format=3 uid="uid://bl24ldxfxb508"]
+[gd_scene load_steps=37 format=3 uid="uid://bl24ldxfxb508"]
 
-[ext_resource type="Texture2D" uid="uid://bthqacspvj0dv" path="res://src/player/inventory/petal_pink.png" id="1_1btln"]
-[ext_resource type="Texture2D" uid="uid://x8um7uotrwnv" path="res://src/player/inventory/what.png" id="1_hnmhd"]
+[ext_resource type="Texture2D" uid="uid://bthqacspvj0dv" path="res://src/player/inventory/menu/petal_pink.png" id="1_1btln"]
+[ext_resource type="Texture2D" uid="uid://x8um7uotrwnv" path="res://src/player/inventory/menu/what.png" id="1_hnmhd"]
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_jwvlf"]
-[ext_resource type="Texture2D" uid="uid://cs08f133r86y2" path="res://src/player/inventory/mado.png" id="2_3hyeo"]
+[ext_resource type="Texture2D" uid="uid://cs08f133r86y2" path="res://src/player/inventory/menu/mado.png" id="2_3hyeo"]
 [ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="2_f6805"]
-[ext_resource type="Texture2D" uid="uid://m68cqpctvey4" path="res://src/player/inventory/petal_white.png" id="2_q6odh"]
+[ext_resource type="Texture2D" uid="uid://m68cqpctvey4" path="res://src/player/inventory/menu/petal_white.png" id="2_q6odh"]
 [ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="2_qqfc2"]
 [ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="3_1btln"]
-[ext_resource type="Texture2D" uid="uid://c6ybhwpcy6a4b" path="res://src/player/inventory/inv_eff.png" id="3_qqfc2"]
-[ext_resource type="Script" uid="uid://sptd6yjcf24k" path="res://src/ui/abstract_button.gd" id="3_ssbrt"]
-[ext_resource type="Texture2D" uid="uid://c4ttx5tl8lyso" path="res://src/player/inventory/inventory_toggle.png" id="4_8vhxa"]
+[ext_resource type="Texture2D" uid="uid://c6ybhwpcy6a4b" path="res://src/player/inventory/menu/inv_eff.png" id="3_qqfc2"]
 [ext_resource type="Shader" uid="uid://hsx1wbnb1rif" path="res://src/shaders/screen_overlay/bw_invert_blur.gdshader" id="4_f6805"]
+[ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="5_2m1ok"]
+[ext_resource type="Texture2D" uid="uid://c0pf76njxs5ss" path="res://src/images/panorama/inv_petal_pink.jpeg" id="6_l1wax"]
+[ext_resource type="Texture2D" uid="uid://drhfxkok0x64j" path="res://src/images/panorama/inv_petal_white.jpeg" id="8_im28w"]
 [ext_resource type="Texture2D" uid="uid://641771i2v7id" path="res://src/player/hud/stats_mobility.png" id="12_f6805"]
-[ext_resource type="Texture2D" uid="uid://bwu4uvhnwkx8j" path="res://src/player/inventory/white_petal_stats.png" id="12_tlelv"]
-[ext_resource type="Texture2D" uid="uid://4hm3ms1l4bg" path="res://src/player/inventory/inv_stats.png" id="13_jwvlf"]
+[ext_resource type="Texture2D" uid="uid://bwu4uvhnwkx8j" path="res://src/player/inventory/menu/white_petal_stats.png" id="12_tlelv"]
+[ext_resource type="Texture2D" uid="uid://4hm3ms1l4bg" path="res://src/player/inventory/menu/inv_stats.png" id="13_jwvlf"]
 [ext_resource type="Texture2D" uid="uid://qb3b0xt471r1" path="res://src/player/hud/stam_mobility.png" id="13_ssbrt"]
+[ext_resource type="Script" uid="uid://bqp8xu5yrv1tn" path="res://src/ui/gui/texture_button.gd" id="17_2m1ok"]
+[ext_resource type="Texture2D" uid="uid://c4n8hvjbra1w" path="res://src/player/inventory/menu/select_white_petal.png" id="17_qtnvx"]
 
 [sub_resource type="GDScript" id="GDScript_jwvlf"]
 resource_name = "inventory"
@@ -24,106 +27,165 @@ script/source = "extends FSM
 var invert_cutscene_listener: EventListener
 
 @export var display: Control
+
 @export var white_petal: Control
 @export var pink_petal: Control
 
-@export var inventory_toggle: AbstractButton
-@export var spr_white_petal: Sprite2D
-@export var spr_pink_petal: Sprite2D
+@export var inventory_toggle: Control
+@export var white_petal_button: GUIPanelButton
+@export var pink_petal_button: GUIPanelButton
 
 var inventory_open: bool
 var petal_tween: Tween
 
-func _ready() -> void:
-	spr_white_petal.rotation_degrees = 0 if curr_state.get_state_str() == \"white_petal\" else -90
-	spr_pink_petal.rotation_degrees = 0 if curr_state.get_state_str() == \"pink_petal\" else -90
+func _setup(s = null) -> void:
+	super(s)
 	
 	invert_cutscene_listener = EventListener.new([\"SPECIAL_INVERT_CUTSCENE_BEGIN\", \"SPECIAL_INVERT_CUTSCENE_END\"], false, self)
-	state_changed.connect(func(_state):
-		petal_tween = create_tween().chain().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-		petal_tween.tween_property(spr_white_petal, \"rotation_degrees\", spr_white_petal.rotation_degrees + 90, 0.2)
-		petal_tween.tween_property(spr_pink_petal, \"rotation_degrees\", spr_pink_petal.rotation_degrees + 90, 0.2)
-		
-		await petal_tween.finished
-		
-		if spr_white_petal.rotation_degrees == 90: spr_white_petal.rotation_degrees = -90
-		if spr_pink_petal.rotation_degrees == 90: spr_pink_petal.rotation_degrees = -90
-		)
-	
-	display.visible = false
 	inventory_toggle.pressed.connect(func(): 
 		inventory_open = !inventory_open
 		if inventory_open: GameManager.EventManager.invoke_event(\"SPECIAL_INVERT_CUTSCENE_BEGIN\")
 		else: GameManager.EventManager.invoke_event(\"SPECIAL_INVERT_CUTSCENE_END\")
 		)
+
+	white_petal_button.pressed.connect(func(): _change_to_state(\"white_petal\"))
+	pink_petal_button.pressed.connect(func(): _change_to_state(\"pink_petal\"))
 "
 
 [sub_resource type="GDScript" id="GDScript_8vhxa"]
 resource_name = "pink_petal"
 script/source = "extends State
 
+@export var section: Control
 @export var mado: Sprite2D
 @export var effects: Sprite2D
 @export var container: Control
 
-var tween: Tween
+@export var spr_white_petal: Sprite2D
+@export var spr_pink_petal: Sprite2D
 
 @export var overlay_modulate: ColorRect
 
+var tween: Tween
+
+
 func enter_state(s = null) -> void: 
+	section.visible = true
+	
 	mado.position.x -= 10
 	effects.position.x -= 20
 	container.position.x -= 35
 	
 	if tween != null: tween.kill()
 	tween = self.create_tween()
+	
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	tween.chain()
+	tween.set_parallel()
+	
+	tween.tween_property(mado, \"modulate:a\", 1, 0.5)
+	tween.tween_property(effects, \"modulate:a\", 1, 0.5)
+	tween.tween_property(container, \"modulate:a\", 1, 0.5)
 	
 	tween.tween_property(mado, \"position:x\", 96, 0.5)
 	tween.tween_property(effects, \"position:x\", 192, 0.5)
-	tween.tween_property(container, \"position:x\", 264, 0.5)
+	tween.tween_property(container, \"position:x\", 184, 0.5)
+	
+	tween.tween_property(overlay_modulate, \"modulate\", Color(\"f996d8\"), 0.5)
+	
+	handle_animation_enter()
 	
 func exit_state(s = null) -> void:
-	tween.tween_property(mado, \"position:x\", 96 - 10, 0.5)
-	tween.tween_property(effects, \"position:x\", 192 - 15, 0.5)
-	tween.tween_property(container, \"position:x\", 264 - 35, 0.5)
-	
 	if tween != null: tween.kill()
+	tween = self.create_tween()
+	
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	tween.set_parallel()	
+	
+	tween.tween_property(mado, \"modulate:a\", 0, 0.5)
+	tween.tween_property(effects, \"modulate:a\", 0, 0.5)
+	tween.tween_property(container, \"modulate:a\", 0, 0.5)
+	
+	tween.tween_property(mado, \"position:x\", 96 - 10, 0.5)
+	tween.tween_property(effects, \"position:x\", 192 - 20, 0.5)
+	tween.tween_property(container, \"position:x\", 184 - 35, 0.5)
+	
+	handle_animation_exit()
+	await tween.finished
+	
+	section.visible = false
+
+func handle_animation_enter() -> void:
+	spr_pink_petal.rotation_degrees = -90
+	
+	tween.tween_property(spr_pink_petal, \"rotation_degrees\", 0, 0.5)
+func handle_animation_exit() -> void: 
+	tween.tween_property(spr_pink_petal, \"rotation_degrees\", 90, 0.5)
+	
 "
 
 [sub_resource type="GDScript" id="GDScript_ssbrt"]
 resource_name = "white_petal"
 script/source = "extends State
 
+@export var section: Control
 @export var mado: Sprite2D
 @export var stats: Sprite2D
 @export var container: Control
+
+@export var spr_white_petal: Sprite2D
+@export var spr_pink_petal: Sprite2D
 
 var tween: Tween
 
 @export var overlay_modulate: ColorRect
 
 func enter_state(s = null) -> void: 
-	mado.position.x -= 10
-	stats.position.x -= 20
-	container.position.x -= 35
+	section.visible = true
+	mado.position.x += 10
+	stats.position.x += 20
+	container.position.x += 35
 	
 	if tween != null: tween.kill()
 	tween = self.create_tween()
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	tween.chain()
+	tween.set_parallel()
 	
-	tween.tween_property(mado, \"position:x\", 96, 0.5)
-	tween.tween_property(stats, \"position:x\", 192, 0.5)
-	tween.tween_property(container, \"position:x\", 264, 0.5)
+	tween.tween_property(mado, \"position:x\", 385, 0.5)
+	tween.tween_property(stats, \"position:x\", 42, 0.5)
+	tween.tween_property(container, \"position:x\", 48, 0.5)
+	
+	tween.tween_property(mado, \"modulate:a\", 1, 0.5)
+	tween.tween_property(stats, \"modulate:a\", 1, 0.5)
+	tween.tween_property(container, \"modulate:a\", 1, 0.5)
+	
+	tween.tween_property(overlay_modulate, \"modulate\", Color(\"fae4ee\"), 0.5)
+	
+	handle_animation_enter()
 	
 func exit_state(s = null) -> void:
-	tween.tween_property(mado, \"position:x\", 96 - 10, 0.5)
-	tween.tween_property(stats, \"position:x\", 192 - 15, 0.5)
-	tween.tween_property(container, \"position:x\", 264 - 35, 0.5)
-	
 	if tween != null: tween.kill()
+	tween = self.create_tween()
+	
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	tween.set_parallel()	
+	
+	tween.tween_property(mado, \"position:x\", 385 + 10, 0.5)
+	tween.tween_property(stats, \"position:x\", 42 + 15, 0.5)
+	tween.tween_property(container, \"position:x\", 48 + 35, 0.5)
+	
+	tween.tween_property(mado, \"modulate:a\", 0, 0.5)
+	tween.tween_property(stats, \"modulate:a\", 0, 0.5)
+	tween.tween_property(container, \"modulate:a\", 0, 0.5)
+	handle_animation_exit()
+	await tween.finished
+	
+	section.visible = false
+
+func handle_animation_enter() -> void:
+	spr_white_petal.rotation_degrees = -90
+	tween.tween_property(spr_white_petal, \"rotation_degrees\", 0, 0.5)
+func handle_animation_exit() -> void: 
+	tween.tween_property(spr_white_petal, \"rotation_degrees\", 90, 0.5)
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8vhxa"]
@@ -139,6 +201,17 @@ shader = ExtResource("2_f6805")
 shader_parameter/transparency = 0.0
 shader_parameter/optional_grad = false
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kisvh"]
+shader = ExtResource("5_2m1ok")
+shader_parameter/transparency = 0.0
+shader_parameter/dirX = 1.0
+shader_parameter/dirY = 1.0
+shader_parameter/scroll_speed = 0.05
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+
 [sub_resource type="CanvasTexture" id="CanvasTexture_dy1qg"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_xcy70"]
@@ -151,46 +224,65 @@ shader_parameter/optional_grad = false
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_tlelv"]
 
-[node name="inventory" type="Control" node_paths=PackedStringArray("display", "white_petal", "pink_petal", "inventory_toggle", "initial_state")]
+[sub_resource type="CanvasTexture" id="CanvasTexture_ssbrt"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_8vhxa"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_qtnvx"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_2m1ok"]
+
+[node name="inventory" type="Control" node_paths=PackedStringArray("white_petal", "pink_petal", "white_petal_button", "pink_petal_button", "initial_state")]
+clip_contents = true
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_jwvlf")
 script = SubResource("GDScript_jwvlf")
-display = NodePath("display")
 white_petal = NodePath("display/white_petal_stats")
 pink_petal = NodePath("display/pink_petal_effects")
-inventory_toggle = NodePath("toggle")
+white_petal_button = NodePath("select_rough/separator/white")
+pink_petal_button = NodePath("select_rough/separator/pink")
 initial_state = NodePath("PINK_PETAL")
 
-[node name="PINK_PETAL" type="Node" parent="."]
+[node name="PINK_PETAL" type="Node" parent="." node_paths=PackedStringArray("section", "mado", "effects", "container", "spr_white_petal", "spr_pink_petal", "overlay_modulate")]
 script = SubResource("GDScript_8vhxa")
+section = NodePath("../display/pink_petal_effects")
+mado = NodePath("../display/pink_petal_effects/mado")
+effects = NodePath("../display/pink_petal_effects/effects")
+container = NodePath("../display/pink_petal_effects/inv_container")
+spr_white_petal = NodePath("../display/spr_white_petal")
+spr_pink_petal = NodePath("../display/spr_pink_petal")
+overlay_modulate = NodePath("../display/multiply_modulate")
 metadata/_custom_type_script = "uid://r0etyaq71dla"
 
-[node name="WHITE_PETAL" type="Node" parent="." node_paths=PackedStringArray("mado", "stats", "container", "overlay_modulate")]
+[node name="WHITE_PETAL" type="Node" parent="." node_paths=PackedStringArray("section", "mado", "stats", "container", "spr_white_petal", "spr_pink_petal", "overlay_modulate")]
 script = SubResource("GDScript_ssbrt")
+section = NodePath("../display/white_petal_stats")
 mado = NodePath("../display/white_petal_stats/mado")
 stats = NodePath("../display/white_petal_stats/stats")
 container = NodePath("../display/white_petal_stats/stats_container")
+spr_white_petal = NodePath("../display/spr_white_petal")
+spr_pink_petal = NodePath("../display/spr_pink_petal")
 overlay_modulate = NodePath("../display/multiply_modulate")
 metadata/_custom_type_script = "uid://r0etyaq71dla"
 
 [node name="display" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 480.0
-offset_bottom = 270.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 
-[node name="distortion_effect" type="TextureRect" parent="display"]
+[node name="bw_invert" type="TextureRect" parent="display"]
 material = SubResource("ShaderMaterial_8vhxa")
 clip_contents = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 480.0
+offset_bottom = 270.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("PlaceholderTexture2D_qtnvx")
@@ -208,16 +300,35 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.975233, 0.589056, 0.846138, 1)
 
-[node name="effects_petal_pink" type="Sprite2D" parent="display"]
-position = Vector2(0, -16)
-texture = ExtResource("1_1btln")
-centered = false
-
-[node name="stats_petal_white" type="Sprite2D" parent="display"]
-position = Vector2(0, -16)
+[node name="spr_white_petal" type="Sprite2D" parent="display"]
+clip_children = 2
+position = Vector2(0, 134)
 rotation = -1.5708
 texture = ExtResource("2_q6odh")
 centered = false
+offset = Vector2(-389, -130)
+
+[node name="parallax" type="Sprite2D" parent="display/spr_white_petal"]
+material = SubResource("ShaderMaterial_kisvh")
+position = Vector2(1.25002, 6.03217e-06)
+scale = Vector2(1.53945, 1)
+texture = ExtResource("8_im28w")
+
+[node name="spr_pink_petal" type="Sprite2D" parent="display"]
+clip_children = 2
+position = Vector2(0, 134)
+texture = ExtResource("1_1btln")
+centered = false
+offset = Vector2(-389, -130)
+
+[node name="parallax" type="Sprite2D" parent="display/spr_pink_petal"]
+material = SubResource("ShaderMaterial_kisvh")
+position = Vector2(1.00001, 2)
+scale = Vector2(1.5415, 1)
+texture = ExtResource("6_l1wax")
+
+[node name="petals" type="CanvasGroup" parent="display"]
+clip_children = 2
 
 [node name="pink_petal_effects" type="Control" parent="display"]
 layout_mode = 1
@@ -362,7 +473,7 @@ text = "Stamina Regen: xx / s
 Stamina Drain: xx/s"
 
 [node name="mado" type="Sprite2D" parent="display/white_petal_stats"]
-position = Vector2(384.5, 151)
+position = Vector2(385, 150)
 texture = ExtResource("12_tlelv")
 
 [node name="stats" type="Sprite2D" parent="display/white_petal_stats"]
@@ -370,27 +481,63 @@ position = Vector2(42, 32)
 texture = ExtResource("13_jwvlf")
 centered = false
 
-[node name="toggle" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 24.0
-offset_top = 224.0
-offset_right = 72.0
-offset_bottom = 256.0
-mouse_filter = 1
-script = ExtResource("3_ssbrt")
-metadata/_custom_type_script = "uid://sptd6yjcf24k"
+[node name="select_rough" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 20.0
+grow_horizontal = 2
 
-[node name="sprite" type="Sprite2D" parent="toggle"]
-texture = ExtResource("4_8vhxa")
-centered = false
+[node name="separator" type="HBoxContainer" parent="select_rough"]
+layout_mode = 2
 
-[node name="Control" type="Control" parent="."]
+[node name="pink" type="Control" parent="select_rough/separator"]
+custom_minimum_size = Vector2(52, 20)
+layout_mode = 2
+theme = ExtResource("2_qqfc2")
+script = ExtResource("3_1btln")
+button_display_texture = SubResource("CanvasTexture_ssbrt")
+min_size = Vector2(52, 20)
+true_size = Vector2(52, 20)
+text = "pink"
+panel_display_texture = SubResource("CanvasTexture_8vhxa")
+panel_display_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="white" type="Control" parent="select_rough/separator"]
+custom_minimum_size = Vector2(52, 20)
+layout_mode = 2
+theme = ExtResource("2_qqfc2")
+script = ExtResource("3_1btln")
+button_display_texture = SubResource("CanvasTexture_qtnvx")
+min_size = Vector2(52, 20)
+true_size = Vector2(52, 20)
+text = "white"
+panel_display_texture = SubResource("CanvasTexture_2m1ok")
+panel_display_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="select2" type="CenterContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -8.0
 offset_right = 480.0
-offset_bottom = 25.0
+offset_bottom = 34.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="separator" type="HBoxContainer" parent="select2"]
+layout_mode = 2
+
+[node name="GUITextureButton" type="Control" parent="select2/separator"]
+custom_minimum_size = Vector2(27, 14)
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("17_2m1ok")
+texture = ExtResource("17_qtnvx")
+frame_dimensions = Vector2i(27, 14)
+style = 1
+metadata/_custom_type_script = "uid://bqp8xu5yrv1tn"

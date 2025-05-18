@@ -9,9 +9,6 @@ extends Component
 @export var max_pos_clamp: Vector2 = Vector2(1, 1)
 
 
-func setup() -> void:
-	receiver = get_parent()
-	
 func _physics_update(delta: float) -> void:
 	var i = -1 if invert else 1
 

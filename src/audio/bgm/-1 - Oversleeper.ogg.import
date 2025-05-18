@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://7yxwy44qshom"
+path="res://.godot/imported/-1 - Oversleeper.ogg-7ea0b58affb96a341c1fb669e42a807a.oggvorbisstr"
+
+[deps]
+
+source_file="res://src/audio/bgm/-1 - Oversleeper.ogg"
+dest_files=["res://.godot/imported/-1 - Oversleeper.ogg-7ea0b58affb96a341c1fb669e42a807a.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

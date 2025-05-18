@@ -1,13 +1,9 @@
 class_name PlayerEffect
 extends Resource
 
-enum type {EFFECT, MEMORIAM}
 
 @export_group("Information")
-@export var icon: Texture2D
 @export var name: String = ""
-@export var alt_name: String = ""
-@export var eff_type: type = type.EFFECT
 
 var use_times: int = 0
 
@@ -46,6 +42,3 @@ func _use(_pl: Player) -> void:
 
 # ---- misc. getters.
 func get_eff_name() -> String: return name
-func get_eff_alt_name() -> String: 
-	if alt_name.is_empty(): return name
-	return alt_name

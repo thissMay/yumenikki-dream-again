@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=4 uid="uid://j0sat4n1ufx1"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_c40ge"]
+[ext_resource type="TileSet" uid="uid://dco2oteu0g2q1" path="res://src/levels/_ignore/tilemaps/forest.tres" id="2_srpg1"]
+
+[node name="forest_world" type="Node"]
+script = ExtResource("1_c40ge")
+metadata/_custom_type_script = "uid://b1ofr4umso5jf"
+
+[node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
+layer = -30
+
+[node name="parallax" type="TextureRect" parent="panorama (bottom_layer)"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="tree" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAACAAgAAAADAAAAAAADAAgAAAADAAAAAAADAAkAAAADAAAAAAADAAoAAAADAAAAAAAEAAoAAAADAAAAAAAFAAoAAAADAAAAAAAFAAkAAAADAAAAAAAFAAgAAAADAAAAAAA=")
+tile_set = ExtResource("2_srpg1")
+
+[node name="purple_monster" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAHAAMAAAAAAAAAAAAIAAQAAAAAAAAAAAAcAAUAAAAAAAAAAAA=")
+tile_set = ExtResource("2_srpg1")
+
+[node name="pink_monster" type="TileMapLayer" parent="."]
+tile_set = ExtResource("2_srpg1")
