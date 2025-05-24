@@ -8,7 +8,7 @@ var animation_manager: PLAnimationManager
 var footstep_manager: Node
 @export var fsm: SentientFSM
  	
-var DEFAULT_DISPLAY := load("res://src/player/madotsuki/sprite_sheets/no_effect.tres") as SerializableDict
+const DEFAULT_DISPLAY := preload("res://src/player/madotsuki/sprite_sheets/no_effect.tres") as SerializableDict
 var DEFAULT_BEHAVIOUR := PlayerBehaviour.new()
 var DEFAULT_STATS := PlayerStats.new()
 
@@ -23,15 +23,9 @@ var stamina_fsm: FSM
 
 var mental_status: SBComponent
 
-# ----> miscallenous 
-var effect_equip_node: Node2D
-var effect_equip_anim: AnimationPlayer
-
+@onready var emote: PlayerEmote = PLInstance.def_emote
 @export var effect: PlayerEffect
-@export var memoriam: PlayerEffect
 @export var sprite_sheet: SerializableDict
-
-var components: SBComponentReceiver
 
 var action: PlayerAction 
 
@@ -40,16 +34,12 @@ var input_controller := InputController.new()
 
 func _ready() -> void:
 	super()
-	
-	components = $sb_components
-	
 	mandatory_components()
 	dependency_components()
 
 func dependency_components() -> void:
 
 	set_controller(input_controller)
-	components._setup(self)
 	
 	marker_look_at._setup()			# --- fsm; not player dependency but required
 	stamina_fsm._setup(self) 	# --- fsm; not player dependency but required
@@ -92,11 +82,17 @@ func _physics_process(_delta: float) -> void:
 	stamina_fsm._physics_update(_delta)
 	if behaviour: behaviour._physics_update(self, _delta)
 	if fsm: fsm._physics_update(_delta, self)
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	dependency_input(event)
+
+			
 	if event is InputEventKey && Global.input:
 		if fsm: fsm._input_pass(event, self)
-
+	
+		if (Global.input["key_pressed"] == KEY_SPACE and
+			Global.input["held_down"]):
+				perform_action(components.get_component_by_name("action_manager").action)
+		
 		if (Global.input["key_pressed"] == KEY_E &&
 			Global.input["pressed_once"]) and components.get_component_by_name("interaction_manager"): 
 				get_behaviour()._interact(self, components.get_component_by_name("interaction_manager").curr_interactable)
@@ -107,10 +103,11 @@ func dependency_physics_update(_delta: float) -> void:
 	if components: components._physics_update(_delta)
 func dependency_input(event: InputEvent) -> void:
 	if event is InputEventKey && Global.input:
-		if components.get_component_by_name("equip_manager"):
-			components.get_component_by_name("equip_manager")._input_effect(event, self)
-		if components.get_component_by_name("equip_manager"):
-			components.get_component_by_name("equip_manager")._input_memoriam(event, self)
+		if components: 
+			components._input_pass(event)
+			if components.get_component_by_name("equip_manager"):
+				components.get_component_by_name("equip_manager")._input_effect(event, self)
+
 #endregion
 
 #region EMOTES, UNIQUE, BEHAVIOUR
@@ -133,8 +130,6 @@ func equip(_effect: PlayerEffect, _skip_anim: bool = false) -> void:
 func deequip_effect(_skip_anim: bool = false) -> void: 
 	components.get_component_by_name("equip_manager").deequip(effect, self, _skip_anim)
 	set_sprite_sheet(DEFAULT_DISPLAY)
-func deequip_memoriam(_skip_anim: bool = false) -> void: 
-	components.get_component_by_name("equip_manager").deequip(memoriam, self, _skip_anim)
 
 func set_behaviour(_beh: PlayerBehaviour) -> void:
 	behaviour = _beh

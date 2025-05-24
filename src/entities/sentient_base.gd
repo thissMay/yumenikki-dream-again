@@ -6,10 +6,11 @@
 class_name SentientBase
 extends Entity.SentientEntity
 
+var components: SBComponentReceiver
 const TRANS_WEIGHT := 0.225
 
-const BASE_SPEED: float = 25
-const MAX_SPEED: float = 30
+const BASE_SPEED: float = 27.5
+const MAX_SPEED: float = 35
 
 @export_category("Base Entity Behaviour")
 
@@ -24,7 +25,6 @@ var trans_weight: float = TRANS_WEIGHT
 
 #region ---- mobility and velocity properties ----
 @export_group("Mobility Values")
-@export var max_velocity: Vector2 = Vector2(45, 45)
 
 var speed: float = 0
 var speed_multiplier: float = 1
@@ -42,7 +42,10 @@ var noise_multi: float = 1
 func _ready() -> void:
 	sprite_renderer = get_node_or_null("sprite_renderer")
 	shadow_renderer = get_node_or_null("shadow_renderer")
-	
+
+	components = $sb_components
+	components._setup(self)
+		
 	await self.ready
 	self.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 

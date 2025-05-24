@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PlayerEffect" load_steps=4 format=3 uid="uid://b3ej66fhp7a0e"]
+
+[ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_5bfqw"]
+[ext_resource type="Resource" uid="uid://b35fjlqpm7n5k" path="res://src/player/madotsuki/emotes/cat.tres" id="1_jr6q7"]
+[ext_resource type="Resource" uid="uid://t640tko80xou" path="res://src/player/madotsuki/sprite_sheets/cat.tres" id="2_628jq"]
+
+[resource]
+script = ExtResource("1_5bfqw")
+name = "Cat"
+sprite_override = ExtResource("2_628jq")
+emote = ExtResource("1_jr6q7")
+player_component_prefab = ""
+metadata/_custom_type_script = "uid://cycsi2jsiuie0"

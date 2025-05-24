@@ -1,0 +1,36 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://2yegmxnc57fl"]
+
+[ext_resource type="Texture2D" uid="uid://bqwoor7kjj7bh" path="res://src/levels/_ignore/tilemaps/shield-folk.png" id="1_fpx0h"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n1qxh"]
+texture = ExtResource("1_fpx0h")
+0:1/animation_speed = 10.0
+0:1/animation_frame_0/duration = 1.0
+0:1/animation_frame_1/duration = 1.0
+0:1/animation_frame_2/duration = 1.0
+0:1/animation_frame_3/duration = 1.0
+0:1/0 = 0
+0:0/animation_speed = 8.0
+0:0/animation_mode = 1
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/0 = 0
+4:0/0 = 0
+4:1/0 = 0
+0:2/size_in_atlas = Vector2i(3, 3)
+0:2/0 = 0
+3:2/size_in_atlas = Vector2i(3, 3)
+3:2/0 = 0
+6:2/size_in_atlas = Vector2i(3, 3)
+6:2/0 = 0
+9:2/size_in_atlas = Vector2i(3, 3)
+9:2/0 = 0
+3:5/size_in_atlas = Vector2i(3, 3)
+3:5/0 = 0
+0:5/size_in_atlas = Vector2i(3, 3)
+0:5/0 = 0
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_n1qxh")

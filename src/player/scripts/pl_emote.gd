@@ -6,6 +6,7 @@ const EMOTE_PATH := "emote/"
 @export var emote_enter_anim: String
 @export var emote_exit_anim: String
 @export var emote_speed: float = 1
+@export var auto_exit: bool = false
 
 func _perform(_pl: Player) -> void:
 	(_pl as Player_YN).force_change_state("action")
@@ -23,7 +24,7 @@ func _exit(_pl: Player) -> void:
 
 func _input(_pl: Player, _input: InputEvent) -> void: 
 	if ((Global.input["key_pressed"] == KEY_G and
-		Global.input["held_down"])) or SentientController.get_input_vectors().abs().length() > 0:
+		Global.input["held_down"])) or SentientController.get_input_vectors().abs().length() > 0 or auto_exit:
 		(_pl as Player_YN).cancel_action(self)
 
 # -------------------

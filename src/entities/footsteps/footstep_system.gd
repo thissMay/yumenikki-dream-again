@@ -56,6 +56,7 @@ var area: Area2D
 
 var floor_priority: TileMapLayer
 var greatest_index: int = -50
+var material_id: int = 0
 
 @onready var multiple_floors := FootstepSet.new()
 
@@ -104,9 +105,13 @@ func _on_body_shape_entered(
 					greatest_index = floors.z_index
 					floor_priority = floors
 					break
-				
+						
 			var tile_coords: Vector2i = floor_priority.get_coords_for_body_rid(body_rid)
-			var material_id: int = floor_priority.get_cell_tile_data(tile_coords).get_custom_data("material")
+			var cell_tile_data: TileData = floor_priority.get_cell_tile_data(tile_coords)
+
+			if cell_tile_data:
+				material_id = cell_tile_data.get_custom_data("material")
+			
 			curr_material = material_id
 			
 			if transparent_surfaces[curr_material]: sentient.shadow_renderer.visible = false

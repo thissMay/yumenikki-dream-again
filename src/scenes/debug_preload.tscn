@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bmqk3r16dhi7n"]
 
 [ext_resource type="Texture2D" uid="uid://dj68nb6nuamgi" path="res://src/images/loading.png" id="2_nlmqr"]
-[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/spritesheet_formatter_animated.gd" id="3_d62i2"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="3_d62i2"]
 
 [sub_resource type="GDScript" id="GDScript_isd0w"]
 resource_name = "preload_scene"

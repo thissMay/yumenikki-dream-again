@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://q3h1rxmfopt5"]
+
+[ext_resource type="Script" uid="uid://6l8vtn40yvbc" path="res://src/player/madotsuki/effects/bike/play_sound.gd" id="1_p8ep6"]
+[ext_resource type="AudioStream" uid="uid://c2dacbpogk88t" path="res://src/audio/se/se_bike-bell.wav" id="2_gdyhu"]
+
+[resource]
+script = ExtResource("1_p8ep6")
+sound = ExtResource("2_gdyhu")
+metadata/_custom_type_script = "uid://gqxupngqpt0n"

@@ -5,7 +5,4 @@
 [resource]
 script = ExtResource("1_bnso0")
 name = "Sally's Earring"
-stats_override = false
-behaviour_override = false
-action_override = false
 player_component_prefab = "uid://cyclhtxv2hj8w"

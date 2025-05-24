@@ -38,6 +38,9 @@ var curr_color = Color.WHITE
 # ---- signals ----
 signal pressed
 signal toggled(_truth)
+signal hover_entered
+signal hover_exited
+
 
 # ---- inner button components ---- 
 var button: BaseButton
@@ -92,11 +95,13 @@ func _setup() -> void:
 # --- visual & general behaviour functions ---
 func _on_hover() -> void: 
 	if !disabled:
+		hover_entered.emit()
 		AudioService.play_sound(preload("res://src/audio/ui/ui_button_hover.wav"))
 		hover_animation()
 		set_button_modulate(hover_color)
 func _on_unhover() -> void: 
 	if !disabled:
+		hover_exited.emit()
 		AudioService.play_sound(preload("res://src/audio/ui/ui_button_unhover.wav"))
 		unhover_animation()
 		set_button_modulate(normal_color)
@@ -113,7 +118,6 @@ func _on_press() -> void:
 			if is_toggled: _on_toggle()
 			else: _on_untoggle() 
 			
-			print("TOGGLED??: ", is_toggled)
 			toggled.emit(is_toggled)
 	
 func _on_toggle() -> void: 

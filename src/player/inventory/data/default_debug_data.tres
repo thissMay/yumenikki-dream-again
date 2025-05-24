@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PLInventoryData" load_steps=9 format=3 uid="uid://ch0qrr4kjrx0v"]
+
+[ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_yvyko"]
+[ext_resource type="Resource" uid="uid://c7vdqqrvfrv78" path="res://src/player/madotsuki/effects/sally_pendant/earring.tres" id="2_ykqh4"]
+[ext_resource type="Script" uid="uid://bub475hm2s16o" path="res://src/player/inventory/data/pl_inventory_data.gd" id="3_23tt1"]
+[ext_resource type="Resource" uid="uid://w1ycqdwy7pk8" path="res://src/player/madotsuki/effects/bike/bike.tres" id="3_ykqh4"]
+[ext_resource type="Resource" uid="uid://b3ej66fhp7a0e" path="res://src/player/madotsuki/effects/cat/cat.tres" id="4_mbmuv"]
+[ext_resource type="Resource" uid="uid://bi65brqjolfb" path="res://src/player/madotsuki/effects/hand/hand.tres" id="5_x21cx"]
+[ext_resource type="Resource" uid="uid://caen3plrw7hok" path="res://src/player/madotsuki/effects/knife/knife.tres" id="7_0rrti"]
+[ext_resource type="Resource" uid="uid://dtb7ixtykb6a0" path="res://src/player/madotsuki/effects/lamp/lamp.tres" id="7_mbmuv"]
+
+[resource]
+script = ExtResource("3_23tt1")
+effects = Array[ExtResource("1_yvyko")]([ExtResource("2_ykqh4"), ExtResource("3_ykqh4"), ExtResource("4_mbmuv"), ExtResource("5_x21cx"), ExtResource("7_0rrti"), ExtResource("7_mbmuv")])
+metadata/_custom_type_script = "uid://bub475hm2s16o"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://dl25joalnmaxt"]
+[gd_scene load_steps=32 format=4 uid="uid://dl25joalnmaxt"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_3mtus"]
 [ext_resource type="Shader" uid="uid://dhykg54peq185" path="res://src/shaders/panorama/radial.gdshader" id="2_m8kvq"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="6_xra6u"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="7_a0y8n"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="7_rdda4"]
+[ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="9_ka1fq"]
 [ext_resource type="TileSet" uid="uid://crsr3gx0s6ht5" path="res://src/levels/_ignore/tilemaps/apartment.tres" id="10_5gu3d"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="10_qtvl2"]
 [ext_resource type="PackedScene" uid="uid://crej0xx7uj05p" path="res://src/levels/_ignore/door.tscn" id="11_8ehf7"]
@@ -122,8 +123,14 @@ texture = SubResource("ViewportTexture_rdda4")
 
 [node name="camera" parent="." instance=ExtResource("7_a0y8n")]
 
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../y_order/Madotsuki")
+[node name="camera_handler" parent="camera" index="0"]
+position = Vector2(240, 135)
+
+[node name="Wiggle" type="Node" parent="camera/camera_handler/marker/camera/components_receiver" index="0"]
+script = ExtResource("9_ka1fq")
+wig_x_strn = 6.0
+wig_y_strn = 5.0
+metadata/_custom_type_script = "uid://bptlrkdn0tpua"
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="camera/camera_handler/camera_overlay" index="3"]
 position = Vector2(240, 135)
@@ -143,6 +150,7 @@ y_sort_enabled = true
 
 [node name="Madotsuki" parent="y_order" instance=ExtResource("6_xra6u")]
 position = Vector2(240, 124)
+stamina_drain = 0.0
 
 [node name="nexus_floor" type="TileMapLayer" parent="y_order"]
 z_index = -1
@@ -268,8 +276,6 @@ metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 position = Vector2(-320, -272)
 expansion = Vector2i(40, 37)
 boundary_size = Vector2i(1120, 848)
-min_bound_size_multiplier = Vector2i(30, 16)
-min_boundary_size = Vector2i(480, 256)
 
 [editable path="camera"]
 [editable path="y_order/doors/world_block"]

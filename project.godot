@@ -45,7 +45,7 @@ enabled=PackedStringArray("res://addons/autoload_setup/plugin.cfg", "res://addon
 [file_customization]
 
 folder_colors={
-"res://src/entities/toringens/": "red",
+"res://src/entities/hostile/": "red",
 "res://src/levels/_ignore/": "gray",
 "res://src/player/hud/": "gray",
 "res://src/player/inventory/": "gray"

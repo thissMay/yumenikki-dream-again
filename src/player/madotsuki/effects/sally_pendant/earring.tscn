@@ -14,8 +14,12 @@ radius = 100.0
 shader = ExtResource("2_mvjnb")
 shader_parameter/transparency = 0.0
 
-[node name="lin_earring" type="Node2D"]
+[node name="lin_earring" type="Node2D" node_paths=PackedStringArray("sound_player", "field", "glow", "arrow")]
 script = ExtResource("1_sjmey")
+sound_player = NodePath("noise")
+field = NodePath("field")
+glow = NodePath("glow")
+arrow = NodePath("glow/arrow")
 
 [node name="field" type="Area2D" parent="."]
 

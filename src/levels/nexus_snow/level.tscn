@@ -156,8 +156,6 @@ texture = ExtResource("8_ssvrw")
 position = Vector2(-32, -16)
 expansion = Vector2i(90, 70)
 boundary_size = Vector2i(1920, 1376)
-min_bound_size_multiplier = Vector2i(30, 16)
-min_boundary_size = Vector2i(480, 256)
 
 [node name="y_order" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -186,3 +184,4 @@ tile_set = ExtResource("10_for1j")
 position = Vector2(208, 160)
 
 [editable path="camera"]
+[editable path="y_order/Madotsuki"]

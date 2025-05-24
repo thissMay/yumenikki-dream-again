@@ -19,7 +19,7 @@ func physics_update(_delta: float, s = null) -> void:
 func input(event: InputEvent, s = null) -> void: 
 	if (Global.input["key_pressed"] == KEY_G and
 		Global.input["held_down"]):
-			player.perform_emote(PLInstance.def_emote)
+			player.perform_emote(player.emote)
 	if (Global.input["key_pressed"] == KEY_Q and
 		Global.input["held_down"]):
 			player.perform_action(pinch)

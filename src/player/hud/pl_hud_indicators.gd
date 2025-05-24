@@ -1,15 +1,15 @@
 extends Control
 
-@export var effect_ind: Control
+@export var effect_ind: SpriteSheetFormatter
 @export var stamina_bar: ColorRect
 
 var effect_equip: EventListener
 var pl_stamina_change: EventListener
 
 func _ready() -> void:
-	effect_equip = EventListener.new(["PLAYER_EFFECT_EQUIP", "PLAYER_EFFECT_DEEQUIP"], false, self)
-	effect_equip.do_on_notify("PLAYER_EFFECT_EQUIP", func(): effect_ind.visible = true)
-	effect_equip.do_on_notify("PLAYER_EFFECT_DEEQUIP", func(): effect_ind.visible = false)
+	effect_equip = EventListener.new(["PLAYER_EQUIP", "PLAYER_DEEQUIP"], false, self)
+	effect_equip.do_on_notify("PLAYER_EQUIP", func(): effect_ind.progress = 1)
+	effect_equip.do_on_notify("PLAYER_DEEQUIP", func(): effect_ind.progress = 0)
 	
 	# ----
 	

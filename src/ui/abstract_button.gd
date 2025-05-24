@@ -12,7 +12,10 @@ var is_toggled: bool = false:
 	set(_tog):
 		is_togglable = _tog
 		set_button_toggle_mode(_tog)
-@export var disabled: bool = false
+@export var active: bool = true:
+	set(_a): 
+		active = _a
+		if Engine.is_editor_hint(): set_active(active)
 
 @export_group("Unique Data")
 @export var unique_data: Resource
@@ -37,6 +40,8 @@ func _ready() -> void:
 	button.pressed.connect(func(): pressed.emit())
 	button.size = self.size
 	
+	set_active(active)
+	
 func _setup() -> void:
 	_components_setup_instantiation()
 	_components_setup_children()
@@ -55,7 +60,6 @@ func _on_untoggle() -> void: pass
 
 func set_active(_active: bool) -> void:
 	button.disabled = !_active
-	self.disabled = !_active
 func set_button_toggle_mode(_toggle: bool) -> void:
 	if button: button.toggle_mode = _toggle
 

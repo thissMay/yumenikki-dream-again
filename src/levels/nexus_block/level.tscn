@@ -1,13 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://dqrruiyb4a7wn"]
+[gd_scene load_steps=3 format=4 uid="uid://dqrruiyb4a7wn"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_o2siv"]
+[ext_resource type="TileSet" uid="uid://syfectda645u" path="res://src/levels/_ignore/tilemaps/block_world.tres" id="2_a47ba"]
 
 [node name="block_world" type="Node"]
 script = ExtResource("1_o2siv")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
-[node name="blocks_white" type="TileMapLayer" parent="."]
+[node name="blocks_cyan" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAVAAcAAAACAAUAAAAVAAkAAAAFAAYAAAAVAAsAAAAKAAQAAAAWAAkAAAAKAAUAAAAWAAsAAAAKAAYAAAAWAA0AAAACAAgAAAAXAAwAAAAKAAUAAAAXAA4AAAACAAgAAAARAAcAAAACAAMAAAARAAkAAAACAAoAAAARAAsAAAACAAwAAAATAAcAAAACAAQAAAATAAkAAAACAAIAAAATAAsAAAAFAAkAAAA=")
+tile_set = ExtResource("2_a47ba")
 
 [node name="blocks_purple" type="TileMapLayer" parent="."]
 
 [node name="blocks_cloud" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAIAAYAAAAAAAIAAAAJAAYAAAADAAYAAAAIAAcAAAADAAkAAAAJAAcAAAAIAAMAAAAKAAcAAAAAAAYAAAAKAAkAAAADAAkAAAALAAkAAAAAAAYAAAAKAAgAAAADAAIAAAALAAgAAAADAAEAAAAJAAgAAAADAAcAAAAIAAgAAAAAAAcAAAA=")
+tile_set = ExtResource("2_a47ba")

@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/world_puddle.ogg-c615297296e3e2b3d9eaac5dac27
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

@@ -1,7 +1,68 @@
-[gd_scene load_steps=2 format=3 uid="uid://d0sdg4uow1xul"]
+[gd_scene load_steps=10 format=4 uid="uid://d0sdg4uow1xul"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ku5ii"]
+[ext_resource type="Texture2D" uid="uid://dpneh20wgfr56" path="res://src/images/panorama/panorama_folk.png" id="2_2lxk3"]
+[ext_resource type="TileSet" uid="uid://2yegmxnc57fl" path="res://src/levels/_ignore/tilemaps/shieldfolk.tres" id="2_oi6n0"]
+[ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="2_qg8hg"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="2_yqpiu"]
+[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="3_5def8"]
+[ext_resource type="AudioStream" uid="uid://breccbd84casl" path="res://src/audio/bgm/world_folk.ogg" id="4_mb7v3"]
+[ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="6_2lxk3"]
 
-[node name="sheid-folk_world" type="Node"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o4x2n"]
+shader = ExtResource("2_qg8hg")
+shader_parameter/transparency = 0.0
+shader_parameter/dirX = -1.0
+shader_parameter/dirY = 1.0
+shader_parameter/scroll_speed = 0.04
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 0.1
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+
+[node name="shield-folk_world" type="Node"]
 script = ExtResource("1_ku5ii")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
+
+[node name="BGM" type="Node" parent="."]
+script = ExtResource("3_5def8")
+stream = ExtResource("4_mb7v3")
+metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
+
+[node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
+layer = -30
+
+[node name="TextureRect" type="TextureRect" parent="panorama (bottom_layer)"]
+material = SubResource("ShaderMaterial_o4x2n")
+offset_right = 484.0
+offset_bottom = 274.0
+texture = ExtResource("2_2lxk3")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="camera" parent="." instance=ExtResource("6_2lxk3")]
+
+[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../y_order/Madotsuki")
+
+[node name="y_order" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Madotsuki" parent="y_order" instance=ExtResource("2_yqpiu")]
+position = Vector2(536, 372)
+
+[node name="folk" type="TileMapLayer" parent="y_order"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAARAAwAAAADAAIAABACAAYAAAAAAAIAAAAEAAgAAAAJAAIAAAAzAB4AAAAAAAIAAABEAAsAAAAGAAIAAAANAC4AAAAJAAIAAAAPAC8AAAAJAAIAAAATAC4AAAAJAAIAABAVAC0AAAAGAAIAABAWAC8AAAAAAAIAABAbAC4AAAADAAIAAAAeAC4AAAADAAIAAAAZADAAAAAJAAIAAABYAAUAAAAAAAIAABBgABsAAAADAAIAABBfAC4AAAAAAAIAABBTAEAAAAAJAAIAABBQAEAAAAADAAIAAABTAEMAAAAGAAIAABAoAEAAAAADAAIAAAA3AEYAAAAAAAIAAAA6AEYAAAAGAAIAABBSAFMAAAAGAAIAABBUAFIAAAAAAAIAABBXAFMAAAADAAIAABBVAFUAAAAGAAIAABBbAFAAAAAAAAIAABBbAFQAAAAAAAIAABBdAFIAAAAJAAIAABBgAFoAAAAGAAIAABBfAFcAAAAGAAIAABBhAFQAAAAGAAIAABBhAF8AAAAGAAIAABBcAGEAAAAAAAIAABBcAF0AAAAGAAIAABBeAF4AAAAJAAIAABBXAGAAAAAGAAIAABBYAF0AAAAJAAIAABBUAF4AAAAAAAIAABBUAGAAAAAGAAIAABBQAF4AAAADAAIAABALAEgAAAADAAIAABArAF4AAAAAAAIAAABAADEAAAADAAIAABAfAE4AAAAJAAIAABAIABsAAAAJAAIAAABNADcAAAAJAAIAABBQADcAAAAJAAIAABBTADcAAAAJAAIAABBWADcAAAAAAAIAABBZADcAAAAJAAIAABBcADcAAAAAAAIAABBfADcAAAADAAIAABBtACcAAAAGAAIAAABqACcAAAAJAAIAAABnACcAAAAAAAIAAABkACcAAAAAAAIAAABbACcAAAAJAAIAAABdACUAAAAAAAIAABBjACUAAAAGAAIAABBmACUAAAADAAIAABBpACUAAAADAAIAABBwACMAAAAJAAIAAABqACMAAAAJAAIAAABnACMAAAADAAIAAABkACMAAAAAAAIAAABhACMAAAAGAAIAAABeACMAAAADAAIAAABgACEAAAAAAAIAABBjACEAAAADAAIAABBmACEAAAAAAAIAABBpACEAAAAJAAIAABBsACEAAAAJAAIAABBvACEAAAAJAAIAABByACEAAAAGAAIAABB5ACcAAAAJAAIAAAB2ACcAAAAGAAIAAABzACcAAAADAAIAAABwACcAAAAAAAIAAAB7ACUAAAAAAAIAABB1ACUAAAAGAAIAABByACUAAAAJAAIAABB8ACMAAAAJAAIAAAB2ACMAAAADAAIAAABzACMAAAAAAAIAAAB+ACEAAAAAAAIAABB7ACEAAAADAAIAABB4ACEAAAAGAAIAABB1ACEAAAAJAAIAABA=")
+tile_set = ExtResource("2_oi6n0")
+
+[node name="blob_static" type="TileMapLayer" parent="y_order"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAJABMAAAAAAAEAABALABUAAAAAAAAAAAAVAAQAAAAAAAEAAAAWAAYAAAAAAAEAABBJABcAAAAAAAEAABA4ABIAAAAAAAEAABAzAAwAAAAAAAEAAAAwAC0AAAAAAAEAAAAjACQAAAAAAAEAAABcAAwAAAAAAAEAABBaAC0AAAAAAAEAABASADsAAAAAAAEAABARADsAAAAAAAEAABAKADUAAAAAAAEAABA6AE8AAAAAAAEAAAAvAEwAAAAAAAEAAABMAEkAAAAAAAEAAABgAD4AAAAAAAEAAABpACkAAAAAAAEAAABpACoAAAAAAAEAAABrACoAAAAAAAEAAABsACwAAAAAAAEAAAB9ACcAAAAAAAEAAAB+ACcAAAAAAAEAAAB/ACYAAAAAAAEAAAB4ABsAAAAAAAEAAAB0ABwAAAAAAAEAAABaACAAAAAAAAEAAABaACMAAAAAAAEAAABZACMAAAAAAAEAAABeACcAAAAAAAEAAABfACYAAAAAAAEAAABgACYAAAAAAAEAAABiACcAAAAAAAEAAABuACQAAAAAAAEAAAB4ACQAAAAAAAEAAABnABoAAAAAAAEAABB4ADgAAAAAAAEAABA0ADgAAAAAAAEAABBEACIAAAAAAAEAABAVAF4AAAAAAAEAABASAFgAAAAAAAEAABATAFgAAAAAAAEAABBPAFIAAAAAAAEAAABOAFMAAAAAAAEAAABZAFMAAAAAAAEAAABYAFEAAAAAAAEAAABeAFQAAAAAAAEAAABiAFwAAAAAAAEAAABaAF8AAAAAAAEAAABZAGEAAAAAAAEAAABLAF8AAAAAAAEAAABKAF0AAAAAAAAAAABRAGEAAAAAAAAAAABiAGIAAAAAAAAAAABlAFkAAAAAAAAAAABVAE4AAAAAAAAAAAA8AE0AAAAAAAAAAAAuAE0AAAAAAAAAAAAsAEwAAAAAAAAAAAArAE0AAAAAAAAAAAAqAE0AAAAAAAAAAAATAFoAAAAAAAAAAAALAD8AAAAAAAAAAABfACkAAAAAAAAAAABYACYAAAAAAAAAAABXACMAAAAAAAAAAABsABkAAAAAAAAAAABtABkAAAAAAAAAAABtABgAAAAAAAAAAABsABcAAAAAAAAAAABsABYAAAAAAAAAAABsABUAAAAAAAAAAABrABUAAAAAAAAAAABrABYAAAAAAAAAAAA9AB8AAAAAAAAAAAAoAB4AAAAAAAAAAAAgABwAAAAAAAAAAAAhABoAAAAAAAAAAAA5AAgAAAAAAAAAAAA6AAgAAAAAAAAAAABLAAUAAAAAAAAAAABPAA8AAAAAAAAAAAASACEAAAAAAAAAAAATACEAAAAAAAAAAAAeACcAAAAAAAAAAAAnADUAAAAAAAAAAAAnADYAAAAAAAAAAABGACkAAAAAAAAAAABHACkAAAAAAAAAAAA=")
+tile_set = ExtResource("2_oi6n0")
+
+[node name="gates" type="TileMapLayer" parent="y_order"]
+y_sort_enabled = true
+tile_set = ExtResource("2_oi6n0")
+
+[editable path="camera"]

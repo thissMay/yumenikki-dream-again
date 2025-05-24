@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="FootstepSet" load_steps=6 format=3 uid="uid://d00wteppboqwj"]
+[gd_resource type="Resource" script_class="FootstepSet" load_steps=7 format=3 uid="uid://d00wteppboqwj"]
 
 [ext_resource type="Script" uid="uid://dl740w6e37l11" path="res://src/audio/footsteps/footstep_set.gd" id="1_pcbh0"]
 [ext_resource type="AudioStream" uid="uid://oqlb7hcujn32" path="res://src/audio/se/footstep_dirt-1.wav" id="2_qcriu"]
 [ext_resource type="AudioStream" uid="uid://dfvyanhixs6lg" path="res://src/audio/se/footstep_dirt-2.wav" id="3_i82g1"]
 [ext_resource type="AudioStream" uid="uid://dim8v2lfhb6pl" path="res://src/audio/se/footstep_dirt-3.wav" id="4_8iptj"]
 [ext_resource type="AudioStream" uid="uid://b8vj4n15eyxad" path="res://src/audio/se/footstep_dirt-4.wav" id="5_gl70w"]
+[ext_resource type="Texture2D" uid="uid://b3ubvq54l072p" path="res://src/entities/footsteps/default.png" id="5_i82g1"]
 
 [resource]
 script = ExtResource("1_pcbh0")
+footstep_anim = ExtResource("5_i82g1")
 arr = [ExtResource("2_qcriu"), ExtResource("3_i82g1"), ExtResource("4_8iptj"), ExtResource("5_gl70w")]
 metadata/_custom_type_script = "uid://dl740w6e37l11"

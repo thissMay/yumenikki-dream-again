@@ -27,7 +27,7 @@
 [ext_resource type="Script" uid="uid://bmml0v7khpsyf" path="res://src/player/states/yn style/climb.gd" id="27_xcxb0"]
 [ext_resource type="Script" uid="uid://s2qduwa65o" path="res://src/player/states/yn style/action.gd" id="28_4wyx3"]
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="29_1qwjo"]
-[ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/spritesheet_formatter.gd" id="30_kknx7"]
+[ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="30_kknx7"]
 
 [sub_resource type="Resource" id="Resource_gmp5c"]
 script = ExtResource("3_kx4hk")
@@ -45,6 +45,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../sprite_renderer:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("13_p1bbc")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m68sj"]
@@ -84,6 +96,7 @@ path = "normal/"
 emote_enter_anim = "pinch"
 emote_exit_anim = ""
 emote_speed = 1.0
+auto_exit = false
 metadata/_custom_type_script = "uid://48y120qdeepc"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7co0"]
@@ -101,7 +114,6 @@ fsm = NodePath("fsm")
 sprite_sheet = ExtResource("2_mbimu")
 
 [node name="look_at" type="Marker2D" parent="."]
-visible = false
 script = ExtResource("2_c8hmm")
 initial_strat = SubResource("Resource_gmp5c")
 
@@ -206,15 +218,23 @@ position = Vector2(0, -8)
 texture = ExtResource("29_1qwjo")
 
 [node name="sprite_renderer" type="Sprite2D" parent="."]
+clip_children = 2
 use_parent_material = true
 position = Vector2(0, 14)
 texture = ExtResource("13_p1bbc")
 offset = Vector2(0, -24)
 script = ExtResource("30_kknx7")
 frame_dimensions = Vector2i(48, 48)
+frame_v_count = 0
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="sprite_renderer"]
 position = Vector2(0, -10)
+
+[node name="shader" type="ColorRect" parent="sprite_renderer"]
+offset_left = -24.0
+offset_top = -48.0
+offset_right = 24.0
+color = Color(1, 1, 1, 0)
 
 [node name="world_warp" type="Area2D" parent="."]
 disable_mode = 1

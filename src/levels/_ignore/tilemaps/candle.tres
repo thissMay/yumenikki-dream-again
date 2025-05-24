@@ -1,0 +1,37 @@
+[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://dqn55e6ldvawb"]
+
+[ext_resource type="Texture2D" uid="uid://p1gljgekn5pb" path="res://src/levels/_ignore/tilemaps/candle_world.png" id="1_wg2rt"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_pf0t7"]
+tile_data = PackedInt32Array(0, 0, 3, 65536, 0, 1)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_owe3b"]
+tile_data = PackedInt32Array(0, 0, 3, 65536, 131072, 1, 131072, 131072, 2)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_u625o"]
+tile_data = PackedInt32Array(0, 0, 3, 65536, 65536, 1)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3cbfc"]
+texture = ExtResource("1_wg2rt")
+0:3/animation_speed = 4.0
+0:3/animation_mode = 1
+0:3/animation_frame_0/duration = 1.0
+0:3/animation_frame_1/duration = 1.0
+0:3/animation_frame_2/duration = 1.0
+0:3/animation_frame_3/duration = 1.0
+0:3/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+2:2/0 = 0
+3:0/size_in_atlas = Vector2i(2, 3)
+3:0/0 = 0
+5:0/size_in_atlas = Vector2i(3, 3)
+5:0/0 = 0
+
+[resource]
+tile_size = Vector2i(8, 16)
+sources/0 = SubResource("TileSetAtlasSource_3cbfc")
+pattern_0 = SubResource("TileMapPattern_pf0t7")
+pattern_1 = SubResource("TileMapPattern_owe3b")
+pattern_2 = SubResource("TileMapPattern_u625o")

@@ -5,7 +5,7 @@ extends Resource
 func _enter(_pl: Player) -> void: pass
 func _exit(_pl: Player) -> void: pass
 func _perform(_pl: Player) -> void: 
-	if is_instance_of(_pl, Player_YN): (_pl as Player_YN).action_manager.did_something.emit()
+	if is_instance_of(_pl, Player_YN): (_pl as Player_YN).components.get_component_by_name("action_managerss").did_something.emit()
 
 # ---- essentials
 func _update(_pl: Player, _delta: float) -> void: pass

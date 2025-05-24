@@ -22,7 +22,15 @@ func _enter_tree() -> void:
 		preload("res://src/images/editor/sentient_base.png")
 		)
 		
+	add_custom_type(
+		"TeleportationDoor", 
+		"Area2D", 
+		preload("res://src/systems/interaction/door_inscene.gd"), 
+		preload("res://src/images/editor/inscene_door.png")
+		)
+		
 func _exit_tree() -> void:
 	remove_custom_type("GameScene")
 	remove_custom_type("CameraRegion")
 	remove_custom_type("SentientBase")
+	remove_custom_type("TeleportationDoor")

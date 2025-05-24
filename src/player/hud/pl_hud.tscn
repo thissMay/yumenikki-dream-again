@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://q5moiijg0b7a"]
+[gd_scene load_steps=19 format=3 uid="uid://q5moiijg0b7a"]
 
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_jajjr"]
 [ext_resource type="Script" uid="uid://d3yuvhq7nx0we" path="res://src/player/hud/pl_hud_manager.gd" id="1_o4eow"]
@@ -8,8 +8,10 @@
 [ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="4_0t386"]
 [ext_resource type="Texture2D" uid="uid://cgctf7npty6c7" path="res://src/player/hud/stamina_fill.png" id="4_hogqo"]
 [ext_resource type="Texture2D" uid="uid://bvnkp5b7jvick" path="res://src/player/hud/stamina_indicator.png" id="6_2qcr0"]
+[ext_resource type="Texture2D" uid="uid://h7wmglg415a4" path="res://src/player/inventory/effects_indicator.png" id="9_a8b7g"]
 [ext_resource type="Script" uid="uid://dx7ortt8nl3ne" path="res://src/systems/utils/sequence_caller.gd" id="9_wbmf2"]
 [ext_resource type="Script" uid="uid://0v2nidb8jsha" path="res://src/systems/event/event_resource.gd" id="10_0t386"]
+[ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="10_a4iu7"]
 [ext_resource type="Script" uid="uid://d01atxbr8elfs" path="res://src/systems/event/obj_independent/camera/shake_cam.gd" id="11_a8b7g"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/utils/sequence.gd" id="12_a4iu7"]
 
@@ -53,9 +55,9 @@ inventory_toggle = NodePath("../inventory_toggle")
 custom_minimum_size = Vector2(70, 25)
 anchors_preset = 0
 offset_left = 16.0
-offset_top = 216.0
+offset_top = 208.0
 offset_right = 86.0
-offset_bottom = 241.0
+offset_bottom = 233.0
 theme = ExtResource("3_wbmf2")
 script = ExtResource("4_0t386")
 button_display_texture = SubResource("CanvasTexture_a8b7g")
@@ -75,7 +77,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="indicators" type="Control" parent="hide_on_inventory" node_paths=PackedStringArray("stamina_bar")]
+[node name="indicators" type="Control" parent="hide_on_inventory" node_paths=PackedStringArray("effect_ind", "stamina_bar")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -84,15 +86,16 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2_ir6k4")
+effect_ind = NodePath("effect_indicator")
 stamina_bar = NodePath("stamina/w/value")
 
 [node name="stamina" type="TextureRect" parent="hide_on_inventory/indicators"]
 y_sort_enabled = true
 layout_mode = 0
-offset_left = 24.0
+offset_left = 32.0
 offset_top = 248.0
-offset_right = 67.0
-offset_bottom = 256.0
+offset_right = 76.0
+offset_bottom = 257.0
 mouse_filter = 2
 texture = ExtResource("6_2qcr0")
 
@@ -110,6 +113,15 @@ layout_mode = 0
 offset_left = 13.0
 offset_right = 42.0
 offset_bottom = 9.0
+
+[node name="effect_indicator" type="Sprite2D" parent="hide_on_inventory/indicators"]
+position = Vector2(88, 248)
+texture = ExtResource("9_a8b7g")
+hframes = 2
+script = ExtResource("10_a4iu7")
+frame_dimensions = Vector2i(17, 20)
+frame_h_count = 2
+metadata/_custom_type_script = "uid://dlvvx5cthl4bp"
 
 [node name="icon" type="TextureRect" parent="hide_on_inventory"]
 modulate = Color(1, 1, 1, 0)

@@ -8,13 +8,15 @@ var controller: SentientController
 
 #region ---- data variables ----
 
+@export_group("Mobility Multiplier")
 @export var walk_multiplier: float = WALK_MULTI
 @export var sneak_multiplier: float = SNEAK_MULTI
 @export var sprint_multiplier: float = SPRINT_MULTI
 @export var exhaust_multiplier: float = EXHAUST_MULTI
 
-var stamina_drain: float = STAMINA_DRAIN
-var stamina_regen: float = STAMINA_REGEN
+@export_group("Stamina Modifier")
+@export var stamina_drain: float = STAMINA_DRAIN
+@export var stamina_regen: float = STAMINA_REGEN
 var stamina: float = MAX_STAMINA:
 	set(_stam):
 		stamina = _stam
