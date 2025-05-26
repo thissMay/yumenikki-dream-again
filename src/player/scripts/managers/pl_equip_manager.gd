@@ -55,4 +55,8 @@ func _input_pass(event: InputEvent) -> void:
 	if event is InputEventKey && Global.input:
 		if (Global.input["key_pressed"] == KEY_F and
 			Global.input["held_down"]):
-				equip(PLInventory.favourite_effect, sentient)
+				if (sentient as Player_YN).effect == PLInventory.favourite_effect:
+					deequip(PLInventory.favourite_effect, (sentient as Player_YN))
+					return
+					
+				else: equip(PLInventory.favourite_effect, sentient)

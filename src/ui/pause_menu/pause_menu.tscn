@@ -118,7 +118,8 @@ texture = ExtResource("2_qcpkw")
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 min_value = -50.0
-max_value = 0.0
+max_value = -8.0
+value = -8.0
 
 [node name="amb" type="HBoxContainer" parent="VBoxContainer/_c/hbox/audio"]
 layout_mode = 2

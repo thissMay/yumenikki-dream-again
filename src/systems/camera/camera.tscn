@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8bnpo28a373g"]
+[gd_scene load_steps=9 format=3 uid="uid://c8bnpo28a373g"]
 
 [ext_resource type="Script" uid="uid://dpjo72gyccf67" path="res://src/systems/camera/camera_handler.gd" id="1_0c5nr"]
 [ext_resource type="Script" uid="uid://ctbtfitoggtku" path="res://src/systems/components/component_receiver.gd" id="2_rya0b"]
 [ext_resource type="Shader" uid="uid://cmxwqr6xgpduc" path="res://src/shaders/unshaded.gdshader" id="3_mqlxo"]
+[ext_resource type="Script" uid="uid://co667il3vd04t" path="res://src/systems/camera/curve_rotation.gd" id="3_qjqrg"]
+[ext_resource type="Curve" uid="uid://b5jcdrm07di2w" path="res://src/systems/camera/rotational_wiggle_curve.tres" id="4_wxyky"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pypnu"]
 shader = ExtResource("3_mqlxo")
@@ -21,6 +23,18 @@ follow_viewport_enabled = true
 process_mode = 1
 top_level = true
 script = ExtResource("1_0c5nr")
+
+[node name="components_receiver" type="Node" parent="camera_handler" node_paths=PackedStringArray("affector")]
+script = ExtResource("2_rya0b")
+affector = NodePath("..")
+metadata/_custom_type_script = "uid://ctbtfitoggtku"
+
+[node name="curve_rotation" type="Node" parent="camera_handler/components_receiver" node_paths=PackedStringArray("receiver")]
+script = ExtResource("3_qjqrg")
+rot_curve = ExtResource("4_wxyky")
+rot_strength = 2.0
+receiver = NodePath("../../marker/camera/components_receiver")
+metadata/_custom_type_script = "uid://df3nc1vhukhur"
 
 [node name="marker" type="Marker2D" parent="camera_handler"]
 

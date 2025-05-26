@@ -58,6 +58,8 @@ var floor_priority: TileMapLayer
 var greatest_index: int = -50
 var material_id: int = 0
 
+var sound_to_be_played: AudioStream
+
 @onready var multiple_floors := FootstepSet.new()
 
 func _setup(_sentient: SentientBase) -> void:
@@ -81,10 +83,18 @@ func initate_footstep() -> void:
 	
 	curr_anim = sounds_set.footstep_anim
 	spawn_footstep_fx()
-	footstep_se_player.play_sound(
-		sounds_set.pick_random() if sounds_set.size() > 0 else DEFAULT_FOOTSTEP, 
-		clampf(-6 + log(sentient.get_noise()) * 6.25, -50, 1.5), 
-		clampf(randf_range(0.75, sentient.get_noise()), 0.75, 1.2))		
+	
+	if sound_to_be_played == null:
+		footstep_se_player.play_sound(
+			sounds_set.pick_random() if sounds_set.size() > 0 else DEFAULT_FOOTSTEP, 
+			clampf(-6 + log(sentient.get_noise()) * 6.25, -50, 1.5), 
+			clampf(randf_range(0.75, sentient.get_noise()), 0.75, 1.2))
+	else:
+		footstep_se_player.play_sound(
+			sound_to_be_played, 
+			clampf(-6 + log(sentient.get_noise()) * 6.25, -50, 1.5), 
+			clampf(randf_range(0.75, sentient.get_noise()), 0.75, 1.2))	
+
 func spawn_footstep_fx() -> void: 
 	if Game.Optimization.footstep_instances < Game.Optimization.FOOTSTEP_MAX_INSTANCES:
 		var footstep_fx := FootstepDust.new(curr_anim)
@@ -110,7 +120,9 @@ func _on_body_shape_entered(
 			var cell_tile_data: TileData = floor_priority.get_cell_tile_data(tile_coords)
 
 			if cell_tile_data:
-				material_id = cell_tile_data.get_custom_data("material")
+				material_id = cell_tile_data.get_custom_data("material") if cell_tile_data.has_custom_data("material") else 0
+				sound_to_be_played = cell_tile_data.get_custom_data("custom_sound") if cell_tile_data.has_custom_data("custom_sound") else null
+				print(material_id)
 			
 			curr_material = material_id
 			
@@ -127,7 +139,6 @@ func _on_body_shape_exited(
 		if body is TileMapLayer:
 			
 			if !area.overlaps_body(body):
-				print(body ,": yo")
 				multiple_floors.remove_at(multiple_floors.find(body)) 
 				greatest_index = -50
 				
@@ -135,6 +146,8 @@ func _on_body_shape_exited(
 					curr_material = default_footstep
 					floor_priority = null
 					greatest_index = -50
+					sentient.shadow_renderer.visible = false
+					sound_to_be_played = null
 		
 		
 class FootstepDust:

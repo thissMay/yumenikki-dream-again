@@ -55,9 +55,7 @@ func enter_state(s = null) -> void:
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween.set_parallel()
 	
-	tween.tween_property(mado, \"modulate:a\", 1, 0.5)
-	tween.tween_property(effects, \"modulate:a\", 1, 0.5)
-	tween.tween_property(container, \"modulate:a\", 1, 0.5)
+	tween.tween_property(section, \"modulate:a\", 1, 0.5)
 	
 	tween.tween_property(mado, \"position:x\", 96, 0.5)
 	tween.tween_property(effects, \"position:x\", 192, 0.5)
@@ -74,9 +72,7 @@ func exit_state(s = null) -> void:
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween.set_parallel()	
 	
-	tween.tween_property(mado, \"modulate:a\", 0, 0.5)
-	tween.tween_property(effects, \"modulate:a\", 0, 0.5)
-	tween.tween_property(container, \"modulate:a\", 0, 0.5)
+	tween.tween_property(section, \"modulate:a\", 0, 0.5)
 	
 	tween.tween_property(mado, \"position:x\", 96 - 10, 0.5)
 	tween.tween_property(effects, \"position:x\", 192 - 20, 0.5)
@@ -165,7 +161,7 @@ func handle_animation_exit() -> void:
 shader = ExtResource("4_f6805")
 shader_parameter/blur_amount = 1.5
 shader_parameter/pixel_size = 380.0
-shader_parameter/contrast = 1.0
+shader_parameter/contrast = 0.5
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qtnvx"]
 
@@ -210,9 +206,9 @@ pink_petal = NodePath("display/pink_petal_effects")
 white_petal_button = NodePath("select_rough/separator/white")
 pink_petal_button = NodePath("select_rough/separator/pink")
 item_container = NodePath("display/pink_petal_effects/inv_container/margin/items")
-deequip_prompt = NodePath("display/deequip_prompt")
-effect_indicator = NodePath("display/deequip_prompt/effects_ind")
-favourite_icon = NodePath("display/favourite_icon")
+deequip_prompt = NodePath("display/pink_petal_effects/deequip_prompt")
+effect_indicator = NodePath("display/pink_petal_effects/deequip_prompt/effects_ind")
+favourite_icon = NodePath("display/pink_petal_effects/favourite_icon")
 initial_state = NodePath("PINK_PETAL")
 
 [node name="PINK_PETAL" type="Node" parent="." node_paths=PackedStringArray("section", "mado", "effects", "container", "spr_white_petal", "spr_pink_petal", "overlay_modulate")]
@@ -345,6 +341,32 @@ position = Vector2(192, 32)
 texture = ExtResource("3_qqfc2")
 centered = false
 
+[node name="deequip_prompt" type="Control" parent="display/pink_petal_effects"]
+anchors_preset = 0
+offset_left = 134.0
+offset_top = 78.0
+offset_right = 182.0
+offset_bottom = 126.0
+mouse_filter = 1
+script = ExtResource("16_kisvh")
+active = false
+metadata/_custom_type_script = "uid://sptd6yjcf24k"
+
+[node name="effects_ind" type="Sprite2D" parent="display/pink_petal_effects/deequip_prompt"]
+texture = ExtResource("20_l1wax")
+centered = false
+hframes = 2
+frame = 1
+script = ExtResource("18_3gg6c")
+frame_dimensions = Vector2i(48, 48)
+frame_h_count = 2
+progress = 1
+metadata/_custom_type_script = "uid://dlvvx5cthl4bp"
+
+[node name="favourite_icon" type="Sprite2D" parent="display/pink_petal_effects"]
+position = Vector2(190, 72)
+texture = ExtResource("19_3gg6c")
+
 [node name="white_petal_stats" type="Control" parent="display"]
 visible = false
 layout_mode = 1
@@ -413,32 +435,6 @@ texture = ExtResource("12_tlelv")
 position = Vector2(42, 32)
 texture = ExtResource("13_jwvlf")
 centered = false
-
-[node name="deequip_prompt" type="Control" parent="display"]
-anchors_preset = 0
-offset_left = 134.0
-offset_top = 78.0
-offset_right = 182.0
-offset_bottom = 126.0
-mouse_filter = 1
-script = ExtResource("16_kisvh")
-active = false
-metadata/_custom_type_script = "uid://sptd6yjcf24k"
-
-[node name="effects_ind" type="Sprite2D" parent="display/deequip_prompt"]
-texture = ExtResource("20_l1wax")
-centered = false
-hframes = 2
-frame = 1
-script = ExtResource("18_3gg6c")
-frame_dimensions = Vector2i(48, 48)
-frame_h_count = 2
-progress = 1
-metadata/_custom_type_script = "uid://dlvvx5cthl4bp"
-
-[node name="favourite_icon" type="Sprite2D" parent="display"]
-position = Vector2(190, 72)
-texture = ExtResource("19_3gg6c")
 
 [node name="select_rough" type="CenterContainer" parent="."]
 layout_mode = 1

@@ -123,8 +123,9 @@ texture = SubResource("ViewportTexture_rdda4")
 
 [node name="camera" parent="." instance=ExtResource("7_a0y8n")]
 
-[node name="camera_handler" parent="camera" index="0"]
+[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
 position = Vector2(240, 135)
+target = NodePath("../../y_order/Madotsuki")
 
 [node name="Wiggle" type="Node" parent="camera/camera_handler/marker/camera/components_receiver" index="0"]
 script = ExtResource("9_ka1fq")
@@ -150,7 +151,6 @@ y_sort_enabled = true
 
 [node name="Madotsuki" parent="y_order" instance=ExtResource("6_xra6u")]
 position = Vector2(240, 124)
-stamina_drain = 0.0
 
 [node name="nexus_floor" type="TileMapLayer" parent="y_order"]
 z_index = -1

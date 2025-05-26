@@ -35,9 +35,6 @@ tile_size = Vector2i(8, 16)
 expansion = Vector2i(250, 100)
 boundary_size = Vector2i(2480, 1856)
 min_bound_size_multiplier = Vector2i(60, 16)
-min_boundary_size = Vector2i(480, 256)
-horizontal_size = null
-vertical_size = null
 
 [node name="BGM" type="Node" parent="."]
 script = ExtResource("4_ow51c")

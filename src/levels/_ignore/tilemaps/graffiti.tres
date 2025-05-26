@@ -1,0 +1,22 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://c0iu5kuqnnmc6"]
+
+[ext_resource type="Texture2D" uid="uid://i2aab2knvltv" path="res://src/levels/_ignore/tilemaps/graffiti_world.png" id="1_5upsg"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hscin"]
+texture = ExtResource("1_5upsg")
+0:0/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+0:3/0 = 0
+1:0/0 = 0
+1:1/0 = 0
+1:2/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+3:1/0 = 0
+3:2/0 = 0
+
+[resource]
+custom_data_layer_0/name = "custom_sound"
+custom_data_layer_0/type = 24
+sources/0 = SubResource("TileSetAtlasSource_hscin")

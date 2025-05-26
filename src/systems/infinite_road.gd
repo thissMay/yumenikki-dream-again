@@ -11,7 +11,7 @@ func _ready() -> void:
 
 	var world_loop_listener := EventListener.new(["WORLD_LOOP"], false, self)	
 	world_loop_listener.do_on_notify("WORLD_LOOP", func(): 
-		if loop_count >= 5: hidden_thing.visible = true)
+		if loop_count > 5: hidden_thing.visible = true)
 
 			
 

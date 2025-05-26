@@ -8,10 +8,6 @@ var old_pos: Vector2
 var new_pos: Vector2
 var vel: Vector2
 
-var new_vel: Vector2
-var old_vel: Vector2
-var accel: Vector2
-
 # ---- FOLLOW STRATS ----
 @export_group("Miscallenous")
 static var default := CameraFollowStrategy.new()
@@ -23,7 +19,8 @@ var curr_follow_strat: CameraFollowStrategy = default
 
 # ---- components
 var marker: Marker2D
-var receiver: ComponentReceiver
+var cam_receiver: ComponentReceiver
+var instance_receiver: ComponentReceiver
 static var shake_comp: CamShake
 
 # ---- cam properties
@@ -44,15 +41,17 @@ static var motion_reduction: bool = false:
 		if CameraHolder.instance:
 			if _reduction: 
 				CameraHolder.instance.set_follow_strategy(default)
-				CameraHolder.instance.receiver.bypass = true
+				CameraHolder.instance.cam_receiver.bypass = true
+				CameraHolder.instance.instance_receiver.bypass = true
+				
 			else: 
 				CameraHolder.instance.set_follow_strategy(CameraHolder.instance.prev_follow_strat)
-				CameraHolder.instance.receiver.bypass = false
+				CameraHolder.instance.cam_receiver.bypass = false
+				CameraHolder.instance.instance_receiver.bypass = false
+				
 
 var offset_tween: Tween
 var zoom_tween: Tween
-var rot_curve: Curve = preload("res://src/systems/camera/rotational_wiggle_curve.tres")
-var rot_strength: float = 1.4
 
 # ---- target
 @export_group("Target Properties")
@@ -75,7 +74,9 @@ func _ready() -> void:
 	
 	marker = $marker
 	cam = $marker/camera
-	receiver = $marker/camera/components_receiver
+	
+	cam_receiver = $marker/camera/components_receiver
+	instance_receiver = $components_receiver
 	
 	motion_reduction = motion_reduction
 	
@@ -111,35 +112,14 @@ func _process(delta: float) -> void:
 func _physics_process(_delta: float) -> void:
 	old_pos = new_pos
 	new_pos = self.global_position
+	vel = new_pos - old_pos
 	
-	old_vel = new_vel
-	new_vel = new_pos - old_pos
-	
-	vel = new_vel
-	accel = new_vel - old_vel
-	
-	if !motion_reduction:
-		if rot_curve:
-			marker.global_rotation_degrees = lerpf(marker.global_rotation_degrees, rot_strength * rot_curve.sample(get_velocity().x), _delta * Global.TWEEN_SCALE)
-	else:
-			marker.global_rotation_degrees = 0
-		
-	
+
 	if !Engine.is_editor_hint():
-		#if switching_to_target: 
-			#switching_time_elapsed += _delta
-			#self.global_position = self.global_position.lerp(target.global_position, 0.2)
-	#
-			#if switching_time_elapsed > switching_duration:
-				#switching_to_target = false
-				#switching_time_elapsed = 0
-		#
-		#elif curr_follow_strat: 
 		curr_follow_strat._follow(self, self.global_position, target.global_position)
 
 # ========== getters. ==========
 func get_velocity() -> Vector2: return vel
-func get_acceleration() -> Vector2: return accel
 
 # ========== setters. ==========
 # ---- follow strats  ----

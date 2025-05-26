@@ -5,15 +5,11 @@ extends Node
 @export var exit_sequence: Sequence
 
 func _ready() -> void:
-	var cam_region = get_parent()
-	if cam_region != null and cam_region is CameraRegion:
+	var area_region = get_parent()
+	if area_region != null and area_region is AreaRegion:
 		
-		(cam_region as CameraRegion).area_entered.connect(
-			func(_area: Area2D):
-				if _area == PLInstance.get_pl().world_warp:
-					if enter_sequence: enter_sequence.execute())
+		(area_region as AreaRegion).player_enter_handle.connect(
+			func(): if enter_sequence: enter_sequence.execute())
 		
-		(cam_region as CameraRegion).area_exited.connect(
-			func(_area: Area2D):
-				if _area == PLInstance.get_pl().world_warp:
-					if exit_sequence: exit_sequence.execute())
+		(area_region as AreaRegion).player_exit_handle.connect(
+			func():	if exit_sequence: exit_sequence.execute())
