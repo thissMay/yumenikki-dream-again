@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cgci8oi053rxv"]
 
 [ext_resource type="Script" uid="uid://cb2wiih8v4e8b" path="res://src/player/scripts/pl_physical_eff.gd" id="1_7r0r4"]
-[ext_resource type="Texture2D" uid="uid://ednmj30blu24" path="res://src/player/madotsuki/effects/sally_pendant/glow.png" id="2_1i27k"]
+[ext_resource type="Texture2D" uid="uid://dsnbrtksc36qh" path="res://src/player/madotsuki/effects/sally_pendant/glow_harsh.png" id="2_1i27k"]
 
 [node name="lamp" type="Node2D"]
 script = ExtResource("1_7r0r4")

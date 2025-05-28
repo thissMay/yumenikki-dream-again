@@ -11,8 +11,8 @@ var marker: Marker2D
 
 @export var size: Vector2i
 
-signal player_enter_handle
-signal player_exit_handle
+signal player_enter_handle(_pl)
+signal player_exit_handle(_pl)
 
 func _init() -> void: 
 	if get_node_or_null("rect") == null: 
@@ -27,6 +27,9 @@ func _init() -> void:
 
 func _ready() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
+	self.visibility_changed.connect(func(): 
+		if self.visible: rect.disabled = false
+		else: rect.disabled = true)
 	self.set_process(false)
 
 	if !Engine.is_editor_hint():
@@ -46,11 +49,13 @@ func _handle_player_enter() -> void: pass
 func _handle_player_exit() -> void: pass
 
 func handle_player_enter(_pl: Area2D) -> void: 
-	_handle_player_enter()
-	player_enter_handle.emit()
+	if _pl == PLInstance.get_pl().world_warp:
+		_handle_player_enter()
+		player_enter_handle.emit(PLInstance.get_pl() if PLInstance.get_pl() != null else null)
 func handle_player_exit(_pl: Area2D) -> void: 
-	_handle_player_exit()
-	player_exit_handle.emit()
+	if _pl == PLInstance.get_pl().world_warp:
+		_handle_player_exit()
+		player_exit_handle.emit(PLInstance.get_pl() if PLInstance.get_pl() != null else null)
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():

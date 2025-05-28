@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://b0qn4i2rch4o6" path="res://src/images/rain_drop.png" id="5_ucbvv"]
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="6_ucbvv"]
 [ext_resource type="Texture2D" uid="uid://uj70rwlb7p8i" path="res://src/levels/_ignore/tilemaps/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA.png" id="7_7psg7"]
-[ext_resource type="Script" uid="uid://c7r7ecueroria" path="res://src/systems/infinite_road.gd" id="7_jl4jg"]
+[ext_resource type="Script" uid="uid://c7r7ecueroria" path="res://src/levels/dense_woods_a/infinite_road.gd" id="7_jl4jg"]
 [ext_resource type="Script" uid="uid://ctbtfitoggtku" path="res://src/systems/components/component_receiver.gd" id="7_tt10w"]
 [ext_resource type="Script" uid="uid://cx4t46m5wt82v" path="res://src/systems/components/overrides/look_at.gd" id="8_7psg7"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="12_sigku"]
@@ -20,7 +20,7 @@
 [ext_resource type="Script" uid="uid://0v2nidb8jsha" path="res://src/systems/event/event_resource.gd" id="15_m3pjv"]
 [ext_resource type="Script" uid="uid://c2n434y8egp0r" path="res://src/systems/event/obj_independent/camera/offset_cam.gd" id="16_ixp4d"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/utils/sequence.gd" id="17_4ap8n"]
-[ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/systems/region.gd" id="17_t3e8h"]
+[ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/systems/region/region.gd" id="17_t3e8h"]
 
 [sub_resource type="Gradient" id="Gradient_sigku"]
 offsets = PackedFloat32Array(0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bl24ldxfxb508"]
+[gd_scene load_steps=36 format=3 uid="uid://bl24ldxfxb508"]
 
 [ext_resource type="Texture2D" uid="uid://bthqacspvj0dv" path="res://src/player/inventory/menu/petal_pink.png" id="1_1btln"]
 [ext_resource type="Texture2D" uid="uid://x8um7uotrwnv" path="res://src/player/inventory/menu/what.png" id="1_hnmhd"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="18_3gg6c"]
 [ext_resource type="Texture2D" uid="uid://dm00pibk04dax" path="res://src/player/inventory/inventory_hotkeys.png" id="19_3gg6c"]
 [ext_resource type="Texture2D" uid="uid://kpymowo5rs5d" path="res://src/player/inventory/inv_effect_indicator.png" id="20_l1wax"]
+[ext_resource type="Texture2D" uid="uid://b0264v3e43oil" path="res://src/player/inventory/menu/select_pink_petal.png" id="24_1qgii"]
 
 [sub_resource type="GDScript" id="GDScript_8vhxa"]
 resource_name = "pink_petal"
@@ -472,6 +473,18 @@ text = "white"
 panel_display_texture = SubResource("CanvasTexture_2m1ok")
 panel_display_color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="GUITextureButton" type="Control" parent="select_rough/separator"]
+custom_minimum_size = Vector2(27, 0)
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("17_2m1ok")
+texture = ExtResource("24_1qgii")
+frame_dimensions = Vector2i(27, 14)
+style = 1
+hover_cell = 1
+press_cell = 2
+metadata/_custom_type_script = "uid://bqp8xu5yrv1tn"
 
 [node name="select2" type="CenterContainer" parent="."]
 visible = false

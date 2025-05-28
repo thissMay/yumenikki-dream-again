@@ -1,11 +1,9 @@
-[gd_scene load_steps=30 format=4 uid="uid://dwst4o7pf4ye7"]
+[gd_scene load_steps=28 format=4 uid="uid://dwst4o7pf4ye7"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_gl3nc"]
 [ext_resource type="TileSet" uid="uid://crsr3gx0s6ht5" path="res://src/levels/_ignore/tilemaps/apartment.tres" id="2_ev3dy"]
 [ext_resource type="PackedScene" uid="uid://crej0xx7uj05p" path="res://src/levels/_ignore/door.tscn" id="3_qimmd"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="4_5vp0h"]
-[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="5_n5r7r"]
-[ext_resource type="AudioStream" uid="uid://drbxal7equ2eo" path="res://src/audio/bgm/balcony.WAV" id="6_3jmax"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="6_ev3dy"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="7_qimmd"]
 [ext_resource type="Texture2D" uid="uid://c6glk4dy75gcg" path="res://src/images/panorama/dusk.png" id="7_vbyei"]
@@ -174,11 +172,6 @@ scroll_offset = Vector2(240, 224)
 
 [node name="Hills" type="Sprite2D" parent="balcony_dream/panorama (top_layer)/Parallax2D"]
 texture = ExtResource("11_l8pwb")
-
-[node name="BGM" type="Node" parent="balcony_dream"]
-script = ExtResource("5_n5r7r")
-stream = ExtResource("6_3jmax")
-metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 
 [node name="balcony" type="Node2D" parent="balcony_dream"]
 y_sort_enabled = true

@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://qvbki1ipp72p"]
+
+[ext_resource type="Script" uid="uid://cwii7onurq0dl" path="res://src/entities/sentient_base.gd" id="1_6bdqf"]
+[ext_resource type="Script" uid="uid://dd0qxrsakskma" path="res://src/entities/component/sb_component_receiver.gd" id="2_ngeui"]
+[ext_resource type="Script" uid="uid://co5edhtkgx3g8" path="res://src/systems/behaviour/fsm.gd" id="3_7ioek"]
+[ext_resource type="Script" uid="uid://qdqcvtymsa3v" path="res://src/entities/sentient_state.gd" id="4_p7jhh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_18lqh"]
+
+[node name="TestNeutral" type="CharacterBody2D"]
+script = ExtResource("1_6bdqf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_18lqh")
+
+[node name="components" type="Node2D" parent="."]
+script = ExtResource("2_ngeui")
+metadata/_custom_type_script = "uid://dd0qxrsakskma"
+
+[node name="stance_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_7ioek")
+initial_state = NodePath("IDLE")
+metadata/_custom_type_script = "uid://co5edhtkgx3g8"
+
+[node name="IDLE" type="Node" parent="stance_fsm"]
+script = ExtResource("4_p7jhh")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="WALK" type="Node" parent="stance_fsm"]
+script = ExtResource("4_p7jhh")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="RUN" type="Node" parent="stance_fsm"]
+script = ExtResource("4_p7jhh")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="TAUNT" type="Node" parent="stance_fsm"]
+script = ExtResource("4_p7jhh")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="behaviour_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_7ioek")
+initial_state = NodePath("WANDER")
+metadata/_custom_type_script = "uid://co5edhtkgx3g8"
+
+[node name="WANDER" type="Node" parent="behaviour_fsm"]
+script = ExtResource("4_p7jhh")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="CHASE" type="Node" parent="behaviour_fsm"]
+script = ExtResource("4_p7jhh")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"

@@ -14,11 +14,6 @@ texture = ExtResource("1_k4rq6")
 0:0/0 = 0
 0:3/size_in_atlas = Vector2i(3, 3)
 0:3/0 = 0
-0:6/0 = 0
-7:0/size_in_atlas = Vector2i(4, 6)
-7:0/0 = 0
-3:0/size_in_atlas = Vector2i(4, 6)
-3:0/0 = 0
 
 [resource]
 sources/0 = SubResource("TileSetAtlasSource_lp2cu")

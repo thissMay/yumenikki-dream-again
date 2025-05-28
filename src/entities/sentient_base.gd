@@ -51,12 +51,15 @@ func _ready() -> void:
 
 # ---- base processes ----
 func _physics_process(_delta: float) -> void:
-	super(_delta) # --- sentient entity override.
-	
+	components.physics_update(_delta)
 	speed = self.velocity.length()
 	abs_velocity = abs(self.velocity)
+	
+	super(_delta) # --- sentient entity override.
 func _process(_delta: float) -> void:
 	_handle_heading(direction)
+	components.update(_delta)
+	
 	super(_delta) # --- sentient entity override.
 
 #region ---- velocity and acceleration handling ----

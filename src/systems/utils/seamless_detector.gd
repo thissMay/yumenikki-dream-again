@@ -3,6 +3,11 @@
 class_name SeamlessDetector
 extends Node2D
 
+@export var up_overshoot_view: TextureRect
+@export var down_overshoot_view: TextureRect
+@export var right_overshoot_view: TextureRect
+@export var left_overshoot_view: TextureRect
+
 var loop_count: int
 
 const screen_size := Vector2i(480, 270)
@@ -113,6 +118,15 @@ func _draw() -> void:
 		if !right_disabled or !left_disabled:
 			draw_rect(Rect2(Vector2(pos_right_overshoot.x - h_size.x, -tile_size.y * 10 ), Vector2(h_size.x, boundary_size.y + tile_size.y * 20 )), Color(Color.RED, .275)) # ---- right overshoot
 			draw_rect(Rect2(Vector2(pos_left_overshoot.x, -tile_size.y * 10), Vector2(h_size.x, boundary_size.y + tile_size.y * 20 )), Color(Color.CORNFLOWER_BLUE, .275)) # ---- left overshoot
+			
+			right_overshoot_view.size = Vector2(h_size.x, boundary_size.y + tile_size.y * 20 )
+			right_overshoot_view.position = Vector2(pos_right_overshoot.x - h_size.x, -tile_size.y * 10 )
+			(right_overshoot_view.material as ShaderMaterial).set_shader_parameter("offset", Vector2(left_overshoot_view.position.x, 0))
+			
+			left_overshoot_view.size = Vector2(h_size.x, boundary_size.y + tile_size.y * 20 )
+			left_overshoot_view.position = Vector2(pos_left_overshoot.x, -tile_size.y * 10)
+			(left_overshoot_view.material as ShaderMaterial).set_shader_parameter("offset", Vector2(right_overshoot_view.size.x, 0))
+			
 			# ----> RIGHT
 			
 			draw_rect(Rect2(left.position.x + (tile_size.x * 3/2), left.position.y - boundary_size.y / 2, h_size_mirrored.x, h_size_mirrored.y), Color(Color.RED, .275)) # ---- right mirrored

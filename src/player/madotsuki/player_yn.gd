@@ -73,12 +73,10 @@ func _process(_delta: float) -> void:
 	super(_delta)
 	self.controller.update(_delta)
 	handle_noise()
-	dependency_update(_delta)
 	if fsm: fsm._update(_delta, self)
 
 func _physics_process(_delta: float) -> void:
 	super(_delta)
-	dependency_physics_update(_delta)
 	stamina_fsm._physics_update(_delta)
 	if behaviour: behaviour._physics_update(self, _delta)
 	if fsm: fsm._physics_update(_delta, self)
@@ -97,14 +95,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			Global.input["pressed_once"]) and components.get_component_by_name("interaction_manager"): 
 				get_behaviour()._interact(self, components.get_component_by_name("interaction_manager").curr_interactable)
 
-func dependency_update(_delta: float) -> void:
-	if components: components._update(_delta)
-func dependency_physics_update(_delta: float) -> void:
-	if components: components._physics_update(_delta)
 func dependency_input(event: InputEvent) -> void:
 	if event is InputEventKey && Global.input:
 		if components: 
-			components._input_pass(event)
+			components.input_pass(event)
 			if components.get_component_by_name("equip_manager"):
 				components.get_component_by_name("equip_manager")._input_effect(event, self)
 

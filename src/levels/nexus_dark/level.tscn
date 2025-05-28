@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://ct8ji25wno2g0"]
+[gd_scene load_steps=16 format=4 uid="uid://ct8ji25wno2g0"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_btdm5"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="2_0gjmk"]
@@ -6,8 +6,23 @@
 [ext_resource type="TileSet" uid="uid://da3yvrd5fkate" path="res://src/levels/_ignore/tilemaps/dark_world.tres" id="2_j5e4d"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_riqk2"]
 [ext_resource type="AudioStream" uid="uid://dq081qpttbo87" path="res://src/audio/bgm/world_dark.WAV" id="3_3uwa1"]
+[ext_resource type="Texture2D" uid="uid://blod6qywfp1to" path="res://src/images/panorama/dark_galaxy.png" id="4_fjcq2"]
+[ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="4_y1f6q"]
 [ext_resource type="TileSet" uid="uid://bxbyiqlq3ywcr" path="res://src/levels/_ignore/tilemaps/wilderness.tres" id="6_riqk2"]
 [ext_resource type="Script" uid="uid://bbh7tjv0f6kad" path="res://src/systems/interaction/door_scenes.gd" id="7_3uwa1"]
+[ext_resource type="Script" uid="uid://ctbtfitoggtku" path="res://src/systems/components/component_receiver.gd" id="7_tmmv2"]
+[ext_resource type="Script" uid="uid://dwpwacl2mob54" path="res://src/systems/components/overrides/follow_node.gd" id="8_40cwn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5y7fs"]
+shader = ExtResource("4_y1f6q")
+shader_parameter/offset_strength = 0.73
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+
+[sub_resource type="Curve" id="Curve_y1f6q"]
+_limits = [0.0, 1.5, 0.0, 1.0]
+_data = [Vector2(0, 1.07898), 0.0, 0.0, 0, 0, Vector2(0.0705882, 1.5), 0.0, 0.0, 0, 0, Vector2(0.170588, 0.75767), 0.0, 0.0, 0, 0, Vector2(0.220588, 0.957102), 0.0, 0.0, 0, 0, Vector2(0.408823, 0.667614), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 6
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fjcq2"]
 
@@ -23,18 +38,39 @@ metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 [node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
 layer = -30
 
-[node name="bg" type="ColorRect" parent="panorama (bottom_layer)"]
+[node name="bg" type="TextureRect" parent="panorama (bottom_layer)"]
+material = SubResource("ShaderMaterial_5y7fs")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+texture = ExtResource("4_fjcq2")
 
 [node name="camera" parent="." instance=ExtResource("2_66mxq")]
 
 [node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
 target = NodePath("../../Madotsuki")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(240, 135)
+amount = 24
+emission_shape = 3
+emission_rect_extents = Vector2(300, 200)
+gravity = Vector2(0, 0)
+scale_amount_min = 1.5
+scale_amount_max = 1.5
+scale_amount_curve = SubResource("Curve_y1f6q")
+
+[node name="ComponentReceiver" type="Node" parent="CPUParticles2D" node_paths=PackedStringArray("affector")]
+script = ExtResource("7_tmmv2")
+affector = NodePath("..")
+metadata/_custom_type_script = "uid://ctbtfitoggtku"
+
+[node name="NodeFollower" type="Node" parent="CPUParticles2D/ComponentReceiver" node_paths=PackedStringArray("node")]
+script = ExtResource("8_40cwn")
+node = NodePath("../../../camera/camera_handler")
+metadata/_custom_type_script = "uid://dwpwacl2mob54"
 
 [node name="tiles" type="TileMapLayer" parent="."]
 z_index = -1

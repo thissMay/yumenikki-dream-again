@@ -122,7 +122,6 @@ func _on_body_shape_entered(
 			if cell_tile_data:
 				material_id = cell_tile_data.get_custom_data("material") if cell_tile_data.has_custom_data("material") else 0
 				sound_to_be_played = cell_tile_data.get_custom_data("custom_sound") if cell_tile_data.has_custom_data("custom_sound") else null
-				print(material_id)
 			
 			curr_material = material_id
 			
