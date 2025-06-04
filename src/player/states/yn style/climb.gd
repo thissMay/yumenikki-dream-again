@@ -3,16 +3,15 @@ extends SentientState
 var progress: float
 var heading: float
 
-func enter_state(s = null) -> void: 
-	s.animation_manager.anim_state.start("walk")
-	heading = s.get_dir()
-func exit_state(s = null) -> void:
-	s.animation_manager.anim_state.stop()
+func enter_state() -> void: 
+	sentient.animation_manager.anim_state.start("walk")
+func exit_state() -> void:
+	sentient.animation_manager.anim_state.stop()
 	
-func update(_delta: float, s = null) -> void:
-	heading = s.get_dir()
-	s.animation_manager.update(s, _delta)
-	s.animation_manager.anim_tree.set("parameters/tree/time_scale/scale", s.speed / s.max_speed)
+func update(_delta: float, ) -> void:
 	
-func physics_update(_delta: float, s = null) -> void:
-	s.get_behaviour()._climb(s)
+	sentient.animation_manager.update(sentient, _delta)
+	sentient.animation_manager.anim_tree.set("parameters/tree/time_scale/scale", sentient.speed / sentient.max_speed)
+	
+func physics_update(_delta: float, ) -> void:
+	sentient.get_behaviour()._climb(sentient)

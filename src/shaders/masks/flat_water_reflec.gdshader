@@ -44,6 +44,8 @@ void vertex() {
 
 	vec4 bottom_screen = SCREEN_MATRIX * CANVAS_MATRIX * MODEL_MATRIX * vec4(0, 1, 0, 1);
 	screen_bottomY = bottom_screen.y;
+
+	UV = _vertex(UV, TEXTURE_PIXEL_SIZE);
 }
 
 void fragment() {

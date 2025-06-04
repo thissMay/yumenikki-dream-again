@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/amb_space.ogg-3adfb85d1b0cece85cea4e6f796a9a1
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

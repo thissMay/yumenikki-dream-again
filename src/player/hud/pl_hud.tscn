@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://q5moiijg0b7a"]
+[gd_scene load_steps=13 format=3 uid="uid://q5moiijg0b7a"]
 
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_jajjr"]
 [ext_resource type="Script" uid="uid://d3yuvhq7nx0we" path="res://src/player/hud/pl_hud_manager.gd" id="1_o4eow"]
@@ -9,27 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://cgctf7npty6c7" path="res://src/player/hud/stamina_fill.png" id="4_hogqo"]
 [ext_resource type="Texture2D" uid="uid://bvnkp5b7jvick" path="res://src/player/hud/stamina_indicator.png" id="6_2qcr0"]
 [ext_resource type="Texture2D" uid="uid://h7wmglg415a4" path="res://src/player/inventory/effects_indicator.png" id="9_a8b7g"]
-[ext_resource type="Script" uid="uid://dx7ortt8nl3ne" path="res://src/systems/utils/sequence_caller.gd" id="9_wbmf2"]
-[ext_resource type="Script" uid="uid://0v2nidb8jsha" path="res://src/systems/event/event_resource.gd" id="10_0t386"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="10_a4iu7"]
-[ext_resource type="Script" uid="uid://d01atxbr8elfs" path="res://src/systems/event/obj_independent/camera/shake_cam.gd" id="11_a8b7g"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/utils/sequence.gd" id="12_a4iu7"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_a8b7g"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_a4iu7"]
-
-[sub_resource type="Resource" id="Resource_oo0xh"]
-script = ExtResource("11_a8b7g")
-magnitude = 4.0
-speed = 2.0
-dur = 1.0
-metadata/_custom_type_script = "uid://d01atxbr8elfs"
-
-[sub_resource type="Resource" id="Resource_njkuo"]
-script = ExtResource("12_a4iu7")
-order = Array[ExtResource("10_0t386")]([SubResource("Resource_oo0xh")])
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="ui" type="Control" node_paths=PackedStringArray("hide_on_inv", "save_icon", "save_icon_timer", "inv_toggle", "inv")]
 layout_mode = 3
@@ -50,6 +34,12 @@ inv = NodePath("inventory")
 visible = false
 layout_mode = 1
 inventory_toggle = NodePath("../inventory_toggle")
+
+[node name="eye_l" parent="inventory/display/white_petal_stats/mado" index="0"]
+progress = 0
+
+[node name="eye_r" parent="inventory/display/white_petal_stats/mado" index="1"]
+progress = 0
 
 [node name="inventory_toggle" type="Control" parent="."]
 custom_minimum_size = Vector2(70, 25)
@@ -134,10 +124,5 @@ offset_bottom = 56.0
 [node name="Timer" type="Timer" parent="hide_on_inventory/icon"]
 one_shot = true
 ignore_time_scale = true
-
-[node name="screen_shake" type="Node" parent="."]
-script = ExtResource("9_wbmf2")
-sequence = SubResource("Resource_njkuo")
-metadata/_custom_type_script = "uid://dx7ortt8nl3ne"
 
 [editable path="inventory"]

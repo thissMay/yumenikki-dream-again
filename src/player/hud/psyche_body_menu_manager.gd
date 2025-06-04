@@ -4,7 +4,7 @@ extends FSM
 @export var psyche_button: GUIPanelButton
 @export var body_button: GUIPanelButton
 
-func _setup(s = null) -> void: 
+func _setup() -> void: 
 	self.visible = false
 	
 	state_dict[0] = get_node("mind")

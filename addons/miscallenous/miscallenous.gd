@@ -29,8 +29,24 @@ func _enter_tree() -> void:
 		preload("res://src/images/editor/inscene_door.png")
 		)
 		
+	add_custom_type(
+		"Event", 
+		"Node", 
+		preload("res://src/systems/event/event_interface.gd"), 
+		preload("res://src/images/editor/event_flag.png")
+		)
+	
+	add_custom_type(
+		"Sequence", 
+		"Event", 
+		preload("res://src/systems/sequence/sequence_interface.gd"), 
+		preload("res://src/images/editor/sequence_flag.png")
+		)
+		
 func _exit_tree() -> void:
 	remove_custom_type("GameScene")
 	remove_custom_type("CameraRegion")
 	remove_custom_type("SentientBase")
 	remove_custom_type("TeleportationDoor")
+	remove_custom_type("Event")
+	remove_custom_type("Sequence")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://bl24ldxfxb508"]
+[gd_scene load_steps=37 format=3 uid="uid://bl24ldxfxb508"]
 
 [ext_resource type="Texture2D" uid="uid://bthqacspvj0dv" path="res://src/player/inventory/menu/petal_pink.png" id="1_1btln"]
 [ext_resource type="Texture2D" uid="uid://x8um7uotrwnv" path="res://src/player/inventory/menu/what.png" id="1_hnmhd"]
@@ -24,7 +24,8 @@
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="18_3gg6c"]
 [ext_resource type="Texture2D" uid="uid://dm00pibk04dax" path="res://src/player/inventory/inventory_hotkeys.png" id="19_3gg6c"]
 [ext_resource type="Texture2D" uid="uid://kpymowo5rs5d" path="res://src/player/inventory/inv_effect_indicator.png" id="20_l1wax"]
-[ext_resource type="Texture2D" uid="uid://b0264v3e43oil" path="res://src/player/inventory/menu/select_pink_petal.png" id="24_1qgii"]
+[ext_resource type="Texture2D" uid="uid://cpirdgkdrfldh" path="res://src/player/inventory/menu/white_petal_eyes.png" id="20_ub6k2"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="21_cgott"]
 
 [sub_resource type="GDScript" id="GDScript_8vhxa"]
 resource_name = "pink_petal"
@@ -105,10 +106,29 @@ script/source = "extends State
 @export var spr_white_petal: Sprite2D
 @export var spr_pink_petal: Sprite2D
 
+@export var stats_mobility: Label
+@export var stats_stamina: Label
+
 var tween: Tween
+var player_stats_changed: EventListener
+@onready var default_player_stats := preload(\"res://src/player/madotsuki/effects/_none/_none.tres\")
 
 @export var overlay_modulate: ColorRect
 
+func _ready() -> void:
+	player_stats_changed = EventListener.new([\"PLAYER_EQUIP\", \"PLAYER_DEEQUIP\"], false, self)
+	player_stats_changed.do_on_notify(\"PLAYER_EQUIP\", 
+		func():
+			stats_mobility.text = PLInstance.mobility_stats_to_string()
+			stats_stamina.text = PLInstance.stamina_stats_to_string()
+			)
+	player_stats_changed.do_on_notify(\"PLAYER_DEEQUIP\", 
+		func():
+			stats_mobility.text = PLInstance.mobility_stats_to_string()
+			stats_stamina.text = PLInstance.stamina_stats_to_string()
+			)
+		
+	player_stats_changed.on_notify(\"PLAYER_EQUIP\")
 func enter_state(s = null) -> void: 
 	section.visible = true
 	mado.position.x += 10
@@ -223,7 +243,7 @@ spr_pink_petal = NodePath("../display/spr_pink_petal")
 overlay_modulate = NodePath("../display/multiply_modulate")
 metadata/_custom_type_script = "uid://r0etyaq71dla"
 
-[node name="WHITE_PETAL" type="Node" parent="." node_paths=PackedStringArray("section", "mado", "stats", "container", "spr_white_petal", "spr_pink_petal", "overlay_modulate")]
+[node name="WHITE_PETAL" type="Node" parent="." node_paths=PackedStringArray("section", "mado", "stats", "container", "spr_white_petal", "spr_pink_petal", "stats_mobility", "stats_stamina", "overlay_modulate")]
 script = SubResource("GDScript_ssbrt")
 section = NodePath("../display/white_petal_stats")
 mado = NodePath("../display/white_petal_stats/mado")
@@ -231,6 +251,8 @@ stats = NodePath("../display/white_petal_stats/stats")
 container = NodePath("../display/white_petal_stats/stats_container")
 spr_white_petal = NodePath("../display/spr_white_petal")
 spr_pink_petal = NodePath("../display/spr_pink_petal")
+stats_mobility = NodePath("../display/white_petal_stats/stats_container/margin/vbox/mobility")
+stats_stamina = NodePath("../display/white_petal_stats/stats_container/margin/vbox/stamina")
 overlay_modulate = NodePath("../display/multiply_modulate")
 metadata/_custom_type_script = "uid://r0etyaq71dla"
 
@@ -296,6 +318,7 @@ texture = ExtResource("6_l1wax")
 clip_children = 2
 
 [node name="pink_petal_effects" type="Control" parent="display"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -369,7 +392,6 @@ position = Vector2(190, 72)
 texture = ExtResource("19_3gg6c")
 
 [node name="white_petal_stats" type="Control" parent="display"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -404,6 +426,7 @@ theme_override_constants/margin_bottom = 16
 
 [node name="vbox" type="VBoxContainer" parent="display/white_petal_stats/stats_container/margin"]
 layout_mode = 2
+theme_override_constants/separation = 2
 
 [node name="stats_mobility" type="TextureRect" parent="display/white_petal_stats/stats_container/margin/vbox"]
 layout_mode = 2
@@ -412,7 +435,7 @@ stretch_mode = 2
 
 [node name="mobility" type="Label" parent="display/white_petal_stats/stats_container/margin/vbox"]
 layout_mode = 2
-text = "BASE SPEED: xx
+text = "Base Speed: xx
 Walk Multi: xx
 Run Multi: xx
 Sneak Multi: xx
@@ -431,6 +454,37 @@ Stamina Drain: xx/s"
 [node name="mado" type="Sprite2D" parent="display/white_petal_stats"]
 position = Vector2(385, 150)
 texture = ExtResource("12_tlelv")
+
+[node name="eye_l" type="Sprite2D" parent="display/white_petal_stats/mado"]
+position = Vector2(-29, -15)
+texture = ExtResource("20_ub6k2")
+hframes = 3
+frame = 2
+script = ExtResource("21_cgott")
+autoplay = true
+playing = true
+loop = true
+fps = 9.0
+frame_dimensions = Vector2i(32, 22)
+frame_h_count = 3
+progress = 2
+metadata/_custom_type_script = "uid://cdjphp77kgyqr"
+
+[node name="eye_r" type="Sprite2D" parent="display/white_petal_stats/mado"]
+position = Vector2(29, -15)
+texture = ExtResource("20_ub6k2")
+flip_h = true
+hframes = 3
+frame = 2
+script = ExtResource("21_cgott")
+autoplay = true
+playing = true
+loop = true
+fps = 8.0
+frame_dimensions = Vector2i(32, 22)
+frame_h_count = 3
+progress = 2
+metadata/_custom_type_script = "uid://cdjphp77kgyqr"
 
 [node name="stats" type="Sprite2D" parent="display/white_petal_stats"]
 position = Vector2(42, 32)
@@ -473,18 +527,6 @@ text = "white"
 panel_display_texture = SubResource("CanvasTexture_2m1ok")
 panel_display_color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://dhvrb58iweuo0"
-
-[node name="GUITextureButton" type="Control" parent="select_rough/separator"]
-custom_minimum_size = Vector2(27, 0)
-layout_mode = 2
-mouse_filter = 1
-script = ExtResource("17_2m1ok")
-texture = ExtResource("24_1qgii")
-frame_dimensions = Vector2i(27, 14)
-style = 1
-hover_cell = 1
-press_cell = 2
-metadata/_custom_type_script = "uid://bqp8xu5yrv1tn"
 
 [node name="select2" type="CenterContainer" parent="."]
 visible = false

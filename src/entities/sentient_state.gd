@@ -1,5 +1,5 @@
 class_name SentientState
 extends State
 
-var player: Player
+var sentient: SentientBase
 var animator: Node

@@ -3,7 +3,7 @@ extends SBComponent
 
 var curr_stats: PlayerStats
 
-
+const DEFAULT_EFFECT := preload("res://src/player/madotsuki/effects/_none/_none.tres")
 @export var effect: PLPhysicalEff
 
 
@@ -22,18 +22,18 @@ func equip(_ef: PlayerEffect, _pl: Player, _skip_anim: bool = false) -> void:
 				effect.action = _ef.action
 				effect._enter(_pl)
 
-				
 				if _pl.effect: _pl.effect._unapply(_pl)
 				_pl.effect = _ef
-				GameManager.EventManager.invoke_event("PLAYER_EFFECT_EQUIP")
-		
-		GameManager.EventManager.invoke_event("PLAYER_EQUIP")
+				
+		GameManager.EventManager.invoke_event("PLAYER_EQUIP_SKIP_ANIM", [_skip_anim])
+		GameManager.EventManager.invoke_event("PLAYER_EQUIP", [_ef])
 		(_pl as Player_YN).effect = _ef
 		_ef._apply(_pl)
 		_ef._enter(_pl)	
 func deequip(_ef: PlayerEffect, _pl: Player, _skip_anim: bool = false) -> void:
 	if _ef:
-		print(_ef) 
+		_pl.components.get_component_by_name("action_manager").cancel_action(
+			_pl.action, _pl)
 		GameManager.EventManager.invoke_event("PLAYER_DEEQUIP")
 
 		if effect != null: 
@@ -44,6 +44,7 @@ func deequip(_ef: PlayerEffect, _pl: Player, _skip_anim: bool = false) -> void:
 		_ef._exit(_pl)
 		_ef._unapply(_pl)
 		PLInstance.equipment_pending = null
+		equip(DEFAULT_EFFECT, _pl, true)
 
 func _input_effect(_input: InputEvent, _pl: Player) -> void: if effect != null: effect.input(_input, _pl)
 func _physics_update(_delta: float) -> void:

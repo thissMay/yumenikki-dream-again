@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://d78nmmv8xxj"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ho5yo"]
+[ext_resource type="Texture2D" uid="uid://l1ucqw2eenua" path="res://src/levels/_ignore/tilemaps/sky_garden.png" id="2_ftve3"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="3_aw62g"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_1mbd4"]
+tile_data = PackedInt32Array(0, 0, 15, 65537, 0, 15, 2, 0, 15, 65539, 0, 15)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3kh75"]
+texture = ExtResource("2_ftve3")
+0:15/size_in_atlas = Vector2i(3, 4)
+0:15/0 = 0
+3:16/0 = 0
+4:16/0 = 0
+5:16/0 = 0
+5:15/0 = 0
+5:14/0 = 0
+4:14/0 = 0
+4:15/0 = 0
+7:16/0 = 0
+6:16/0 = 0
+7:15/0 = 0
+8:15/0 = 0
+8:16/0 = 0
+9:16/0 = 0
+9:15/0 = 0
+10:15/0 = 0
+10:16/0 = 0
+11:16/0 = 0
+11:15/0 = 0
+12:15/0 = 0
+12:16/0 = 0
+6:13/0 = 0
+5:13/0 = 0
+4:13/0 = 0
+3:13/0 = 0
+4:12/0 = 0
+5:12/0 = 0
+3:18/0 = 0
+3:19/0 = 0
+4:20/0 = 0
+4:19/0 = 0
+4:18/0 = 0
+5:18/0 = 0
+5:19/0 = 0
+5:20/0 = 0
+6:20/0 = 0
+6:19/0 = 0
+3:20/0 = 0
+6:18/0 = 0
+6:17/0 = 0
+5:17/0 = 0
+7:18/0 = 0
+7:19/0 = 0
+7:20/0 = 0
+8:20/0 = 0
+4:21/0 = 0
+3:21/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_8bsbq"]
+sources/0 = SubResource("TileSetAtlasSource_3kh75")
+pattern_0 = SubResource("TileMapPattern_1mbd4")
+
+[node name="sky_garden" type="Node"]
+script = ExtResource("1_ho5yo")
+metadata/_custom_type_script = "uid://b1ofr4umso5jf"
+
+[node name="trees" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+tile_map_data = PackedByteArray(0, 0, 22, 0, 3, 0, 0, 0, 0, 0, 15, 0, 0, 0, 23, 0, 4, 0, 0, 0, 0, 0, 15, 0, 0, 0, 24, 0, 3, 0, 0, 0, 0, 0, 15, 0, 0, 0, 25, 0, 4, 0, 0, 0, 0, 0, 15, 0, 0, 0)
+tile_set = SubResource("TileSet_8bsbq")
+
+[node name="Madotsuki" parent="." instance=ExtResource("3_aw62g")]
+position = Vector2(192, 317)

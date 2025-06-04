@@ -1,9 +1,9 @@
 extends State
 
-func enter_state(s = null) -> void:
+func enter_state() -> void:
 	GameManager.set_ui_visibility(true)
 
-func input(event: InputEvent, s = null) -> void:
+func input(event: InputEvent, ) -> void:
 	if event is InputEventKey && Global.input:
 		if !Game.is_paused:
 			if (Global.input["key_pressed"] == KEY_ESCAPE &&

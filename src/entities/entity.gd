@@ -32,22 +32,11 @@ func _handle_heading(_dir: Vector2 = direction) -> compass_headings:
 		return heading
 
 # -------------------------------------------------------------------
-# -------------------------- OBJECT ENTITY --------------------------
-# -------------------------------------------------------------------
-class ObjectEntity:
-	extends Entity
-	
-	func _init() -> void:
-		assert(is_instance_of(self, PhysicsBody2D), "Error: ObjectEntity must be a derivative of PhysicsBody2D!")
-	
-	func _process(delta: float) -> void: pass
-	func _physics_process(delta: float) -> void: pass
-# -------------------------------------------------------------------
 # --------------------------SENTIENT ENTITY--------------------------
 # -------------------------------------------------------------------
 
 class SentientEntity:
-	extends Entity.ObjectEntity
+	extends Entity
 	
 	var noise: float = 0
 	
@@ -64,23 +53,21 @@ class SentientEntity:
 	var is_moving: bool
 	
 	func _init() -> void:
+		assert(is_instance_of(self, PhysicsBody2D), "Error: ObjectEntity must be a derivative of PhysicsBody2D!")
 		assert(is_instance_of(self, SentientBase), "Error: SentientEntity must be a derivative of SentientBase!")
 	func _process(delta: float) -> void:
-		super(delta)
 		handle_decelleration()
 		
 		is_moving = (self as SentientBase).abs_velocity != Vector2.ZERO
 		(self as SentientBase).move_and_slide()
 		
 		# --- apply forces on rigid bodies.
-		for i in range((self as SentientBase).get_slide_collision_count()):
-			var c = (self as SentientBase).get_slide_collision(i)
-			
-			if c.get_collider() is RigidBody2D: 
-				c.get_collider().apply_central_impulse(
-					-c.get_normal() * (push_strength / (c.get_collider().mass * 1.25)))
-	func _physics_process(delta: float) -> void: 
-		super(delta)
+		#for i in range((self as SentientBase).get_slide_collision_count()):
+			#var c = (self as SentientBase).get_slide_collision(i)
+			#
+			#if c.get_collider() is RigidBody2D: 
+				#c.get_collider().apply_central_impulse(
+					#-c.get_normal() * (push_strength / (c.get_collider().mass * 1.25)))
 	
 	func handle_ext_acceleration() -> void: pass 
 	func handle_decelleration() -> void:

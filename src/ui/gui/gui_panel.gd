@@ -52,8 +52,7 @@ var DEFAULT_PANEL_DISPLAY_TEXTURE := CanvasTexture.new()
 @export var icon: Texture2D = null:
 	set(i): 
 		icon = i
-		icon_display.texture = i
-		icon_display_container.visible = (icon_display.texture != null)
+		set_icon(i)
 
 @export var panel_stylebox_override: StyleBoxTexture:
 	set(_ov):
@@ -162,7 +161,7 @@ func _setup() -> void:
 	margin_container.add_theme_constant_override("margin_right", 4)
 	margin_container.add_theme_constant_override("margin_left", 4)
 		
-	set_icon(icon)
+	#set_icon(icon)
 	set_panel_texture_display_shader(panel_display_shader)
 	
 	_component_name_setups()	

@@ -25,13 +25,13 @@ shader_parameter/offset_strength_y_influence = 1.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_sk800"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_71x8a"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_60ane"]
 seamless = true
 noise = SubResource("FastNoiseLite_sk800")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_yqjyt"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_np025"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0lgmp"]
 seamless = true
 noise = SubResource("FastNoiseLite_yqjyt")
 
@@ -42,8 +42,8 @@ shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/offSet = 0.0
 shader_parameter/YDistortion = 1.0
-shader_parameter/waterNoise = SubResource("NoiseTexture2D_np025")
-shader_parameter/waterDistortionNoise = SubResource("NoiseTexture2D_71x8a")
+shader_parameter/waterNoise = SubResource("NoiseTexture2D_0lgmp")
+shader_parameter/waterDistortionNoise = SubResource("NoiseTexture2D_60ane")
 shader_parameter/waterColor = Color(0.0290796, 7.97166e-06, 0.174037, 1)
 shader_parameter/colorCorection = 0.17
 shader_parameter/distortionForce = 0.1
@@ -56,11 +56,11 @@ shader_parameter/offSetSpeed = Vector2(0.035, 0.06)
 shader_parameter/backGroundDirX = 0.039
 shader_parameter/backGroundDirY = 0.048
 
-[sub_resource type="Gradient" id="Gradient_f0ess"]
+[sub_resource type="Gradient" id="Gradient_sk800"]
 colors = PackedColorArray(0, 0, 0, 1, 0.148736, 0.148492, 0.17535, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_60ane"]
-gradient = SubResource("Gradient_f0ess")
+gradient = SubResource("Gradient_sk800")
 fill_to = Vector2(0, 1)
 
 [node name="mural_world" type="Node"]

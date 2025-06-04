@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://ct8ji25wno2g0"]
+[gd_scene load_steps=18 format=4 uid="uid://ct8ji25wno2g0"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_btdm5"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="2_0gjmk"]
@@ -9,9 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://blod6qywfp1to" path="res://src/images/panorama/dark_galaxy.png" id="4_fjcq2"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="4_y1f6q"]
 [ext_resource type="TileSet" uid="uid://bxbyiqlq3ywcr" path="res://src/levels/_ignore/tilemaps/wilderness.tres" id="6_riqk2"]
-[ext_resource type="Script" uid="uid://bbh7tjv0f6kad" path="res://src/systems/interaction/door_scenes.gd" id="7_3uwa1"]
 [ext_resource type="Script" uid="uid://ctbtfitoggtku" path="res://src/systems/components/component_receiver.gd" id="7_tmmv2"]
 [ext_resource type="Script" uid="uid://dwpwacl2mob54" path="res://src/systems/components/overrides/follow_node.gd" id="8_40cwn"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="12_40cwn"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="13_ybkk5"]
+[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="14_l7566"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5y7fs"]
 shader = ExtResource("4_y1f6q")
@@ -81,13 +83,22 @@ tile_set = ExtResource("2_j5e4d")
 tile_map_data = PackedByteArray("AAAwAEIAAAACAAQAAAA=")
 tile_set = ExtResource("6_riqk2")
 
-[node name="to_wilderness" type="Area2D" parent="wilderness_door"]
-position = Vector2(780, 1068)
-script = ExtResource("7_3uwa1")
-metadata/_custom_type_script = "uid://bbh7tjv0f6kad"
+[node name="Interactable" type="Area2D" parent="wilderness_door"]
+position = Vector2(778, 1076)
+script = ExtResource("12_40cwn")
+metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="col" type="CollisionShape2D" parent="wilderness_door/to_wilderness"]
-position = Vector2(-4, 8)
+[node name="Sequence" type="Node" parent="wilderness_door/Interactable"]
+process_mode = 4
+script = ExtResource("13_ybkk5")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="Event" type="Node" parent="wilderness_door/Interactable/Sequence"]
+script = ExtResource("14_l7566")
+scene_path = "uid://cs8yn56f0t60a"
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="col" type="CollisionShape2D" parent="wilderness_door/Interactable"]
 shape = SubResource("RectangleShape2D_fjcq2")
 
 [node name="dark_overlay" type="CanvasModulate" parent="."]

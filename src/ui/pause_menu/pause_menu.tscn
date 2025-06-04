@@ -47,18 +47,18 @@ grow_vertical = 2
 mouse_filter = 1
 theme = ExtResource("1_fn14o")
 script = ExtResource("1_yxvds")
-music_slider = NodePath("VBoxContainer/_c/hbox/audio/music/HSlider")
-amb_slider = NodePath("VBoxContainer/_c/hbox/audio/amb/HSlider")
-sfx_slider = NodePath("VBoxContainer/_c/hbox/audio/sfx/HSlider")
-borderless = NodePath("VBoxContainer/_c/hbox/graphics/borderless/check")
-full_screen = NodePath("VBoxContainer/_c/hbox/graphics/fullscreen/check")
-cam_reduction = NodePath("VBoxContainer/_c/hbox/graphics/cam_reduction/check")
-bloom = NodePath("VBoxContainer/_c/hbox/graphics/bloom/check")
-resume = NodePath("VBoxContainer/_e/VBoxContainer/resume")
-quit_to_menu = NodePath("VBoxContainer/_e/VBoxContainer/quit_to_menu")
-quit_to_desktop = NodePath("VBoxContainer/_e/VBoxContainer/quit_to_desktop")
+music_slider = NodePath("container/options/Audio/audio/music/HSlider")
+amb_slider = NodePath("container/options/Audio/audio/amb/HSlider")
+sfx_slider = NodePath("container/options/Audio/audio/sfx/HSlider")
+borderless = NodePath("container/options/Graphics/graphics/borderless/check")
+full_screen = NodePath("container/options/Graphics/graphics/fullscreen/check")
+cam_reduction = NodePath("container/options/Graphics/graphics/cam_reduction/check")
+bloom = NodePath("container/options/Graphics/graphics/bloom/check")
+resume = NodePath("container/_e/VBoxContainer/resume")
+quit_to_menu = NodePath("container/_e/VBoxContainer/quit_to_menu")
+quit_to_desktop = NodePath("container/_e/VBoxContainer/quit_to_desktop")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="dark" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -80,168 +80,188 @@ mouse_filter = 2
 texture = SubResource("PlaceholderTexture2D_iqcri")
 script = ExtResource("4_l8f81")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="container" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 14.0
+offset_right = -24.0
+offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="_c" type="MarginContainer" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 5
-
-[node name="hbox" type="HBoxContainer" parent="VBoxContainer/_c"]
-layout_mode = 2
 theme_override_constants/separation = 50
 
-[node name="audio" type="VBoxContainer" parent="VBoxContainer/_c/hbox"]
+[node name="options" type="TabContainer" parent="container"]
+custom_minimum_size = Vector2(235, 160)
+layout_mode = 2
+current_tab = 0
+
+[node name="Audio" type="MarginContainer" parent="container/options"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+metadata/_tab_index = 0
+
+[node name="audio" type="VBoxContainer" parent="container/options/Audio"]
 layout_mode = 2
 
-[node name="ui_audio" type="TextureRect" parent="VBoxContainer/_c/hbox/audio"]
+[node name="ui_audio" type="TextureRect" parent="container/options/Audio/audio"]
 layout_mode = 2
 texture = ExtResource("1_t1lch")
 stretch_mode = 2
 
-[node name="music" type="HBoxContainer" parent="VBoxContainer/_c/hbox/audio"]
+[node name="music" type="HBoxContainer" parent="container/options/Audio/audio"]
 layout_mode = 2
 
-[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/audio/music"]
+[node name="_" type="TextureRect" parent="container/options/Audio/audio/music"]
 layout_mode = 2
 texture = ExtResource("2_qcpkw")
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer/_c/hbox/audio/music"]
+[node name="HSlider" type="HSlider" parent="container/options/Audio/audio/music"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-min_value = -50.0
-max_value = -8.0
-value = -8.0
+max_value = 1.0
+step = 0.1
+value = 1.0
 
-[node name="amb" type="HBoxContainer" parent="VBoxContainer/_c/hbox/audio"]
+[node name="amb" type="HBoxContainer" parent="container/options/Audio/audio"]
 layout_mode = 2
 
-[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/audio/amb"]
+[node name="_" type="TextureRect" parent="container/options/Audio/audio/amb"]
 layout_mode = 2
 texture = ExtResource("3_0nd4i")
 stretch_mode = 2
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer/_c/hbox/audio/amb"]
+[node name="HSlider" type="HSlider" parent="container/options/Audio/audio/amb"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-min_value = -50.0
-max_value = 0.0
+max_value = 1.0
+step = 0.1
+value = 1.0
 
-[node name="sfx" type="HBoxContainer" parent="VBoxContainer/_c/hbox/audio"]
+[node name="sfx" type="HBoxContainer" parent="container/options/Audio/audio"]
 layout_mode = 2
 
-[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/audio/sfx"]
+[node name="_" type="TextureRect" parent="container/options/Audio/audio/sfx"]
 layout_mode = 2
 texture = ExtResource("4_d4hwy")
 stretch_mode = 2
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer/_c/hbox/audio/sfx"]
+[node name="HSlider" type="HSlider" parent="container/options/Audio/audio/sfx"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-min_value = -50.0
-max_value = 0.0
+max_value = 1.0
+step = 0.1
+value = 1.0
 
-[node name="graphics" type="VBoxContainer" parent="VBoxContainer/_c/hbox"]
+[node name="Graphics" type="MarginContainer" parent="container/options"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+metadata/_tab_index = 1
+
+[node name="graphics" type="VBoxContainer" parent="container/options/Graphics"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="ui_graphics" type="TextureRect" parent="VBoxContainer/_c/hbox/graphics"]
+[node name="ui_graphics" type="TextureRect" parent="container/options/Graphics/graphics"]
 layout_mode = 2
 texture = ExtResource("5_miamw")
 stretch_mode = 2
 
-[node name="borderless" type="HBoxContainer" parent="VBoxContainer/_c/hbox/graphics"]
+[node name="borderless" type="HBoxContainer" parent="container/options/Graphics/graphics"]
 layout_mode = 2
 
-[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/graphics/borderless"]
+[node name="_" type="TextureRect" parent="container/options/Graphics/graphics/borderless"]
 layout_mode = 2
 texture = ExtResource("7_ru7ox")
 stretch_mode = 3
 
-[node name="check" type="CheckBox" parent="VBoxContainer/_c/hbox/graphics/borderless"]
+[node name="check" type="CheckBox" parent="container/options/Graphics/graphics/borderless"]
 layout_mode = 2
 
-[node name="fullscreen" type="HBoxContainer" parent="VBoxContainer/_c/hbox/graphics"]
+[node name="fullscreen" type="HBoxContainer" parent="container/options/Graphics/graphics"]
 layout_mode = 2
 
-[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/graphics/fullscreen"]
+[node name="_" type="TextureRect" parent="container/options/Graphics/graphics/fullscreen"]
 layout_mode = 2
 texture = ExtResource("8_3ybno")
 stretch_mode = 3
 
-[node name="check" type="CheckBox" parent="VBoxContainer/_c/hbox/graphics/fullscreen"]
+[node name="check" type="CheckBox" parent="container/options/Graphics/graphics/fullscreen"]
 layout_mode = 2
 
-[node name="cam_reduction" type="HBoxContainer" parent="VBoxContainer/_c/hbox/graphics"]
+[node name="cam_reduction" type="HBoxContainer" parent="container/options/Graphics/graphics"]
 layout_mode = 2
 
-[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/graphics/cam_reduction"]
+[node name="_" type="TextureRect" parent="container/options/Graphics/graphics/cam_reduction"]
 layout_mode = 2
 texture = ExtResource("12_co110")
 stretch_mode = 3
 
-[node name="check" type="CheckBox" parent="VBoxContainer/_c/hbox/graphics/cam_reduction"]
+[node name="check" type="CheckBox" parent="container/options/Graphics/graphics/cam_reduction"]
 layout_mode = 2
 
-[node name="bloom" type="HBoxContainer" parent="VBoxContainer/_c/hbox/graphics"]
+[node name="bloom" type="HBoxContainer" parent="container/options/Graphics/graphics"]
 layout_mode = 2
 
-[node name="_" type="TextureRect" parent="VBoxContainer/_c/hbox/graphics/bloom"]
+[node name="_" type="TextureRect" parent="container/options/Graphics/graphics/bloom"]
 layout_mode = 2
 texture = ExtResource("13_co110")
 stretch_mode = 3
 
-[node name="check" type="CheckBox" parent="VBoxContainer/_c/hbox/graphics/bloom"]
+[node name="check" type="CheckBox" parent="container/options/Graphics/graphics/bloom"]
 layout_mode = 2
 
-[node name="_e" type="MarginContainer" parent="VBoxContainer"]
+[node name="_e" type="MarginContainer" parent="container"]
 layout_mode = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_right = 295
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/_e"]
+[node name="VBoxContainer" type="VBoxContainer" parent="container/_e"]
 layout_mode = 2
 
-[node name="resume" type="Container" parent="VBoxContainer/_e/VBoxContainer"]
-custom_minimum_size = Vector2(145, 25)
+[node name="resume" type="Container" parent="container/_e/VBoxContainer"]
+custom_minimum_size = Vector2(92, 25)
 layout_mode = 2
 theme = ExtResource("11_4sckj")
 script = ExtResource("12_ukw3d")
 button_display_texture = SubResource("CanvasTexture_onin4")
-min_size = Vector2(145, 25)
-true_size = Vector2(145, 25)
+min_size = Vector2(92, 25)
+true_size = Vector2(92, 25)
 text = "Resume + Save Settings"
 panel_display_texture = SubResource("CanvasTexture_4sckj")
 panel_display_color = Color(1, 1, 1, 1)
 
-[node name="quit_to_menu" type="Container" parent="VBoxContainer/_e/VBoxContainer"]
-custom_minimum_size = Vector2(145, 25)
+[node name="quit_to_menu" type="Container" parent="container/_e/VBoxContainer"]
+custom_minimum_size = Vector2(92, 25)
 layout_mode = 2
 theme = ExtResource("11_4sckj")
 script = ExtResource("12_ukw3d")
 button_display_texture = SubResource("CanvasTexture_spgs3")
-min_size = Vector2(145, 25)
-true_size = Vector2(145, 25)
+min_size = Vector2(92, 25)
+true_size = Vector2(92, 25)
 text = "Quit to Menu"
 panel_display_texture = SubResource("CanvasTexture_ahd7c")
 panel_display_color = Color(1, 1, 1, 1)
 
-[node name="quit_to_desktop" type="Container" parent="VBoxContainer/_e/VBoxContainer"]
-custom_minimum_size = Vector2(145, 25)
+[node name="quit_to_desktop" type="Container" parent="container/_e/VBoxContainer"]
+custom_minimum_size = Vector2(92, 25)
 layout_mode = 2
 theme = ExtResource("11_4sckj")
 script = ExtResource("12_ukw3d")
 button_display_texture = SubResource("CanvasTexture_l17fe")
-min_size = Vector2(145, 25)
-true_size = Vector2(145, 25)
+min_size = Vector2(92, 25)
+true_size = Vector2(92, 25)
 text = "Quit to Desktop"
 panel_display_texture = SubResource("CanvasTexture_fn14o")
 panel_display_color = Color(1, 1, 1, 1)

@@ -96,13 +96,13 @@ func _setup() -> void:
 func _on_hover() -> void: 
 	if !disabled:
 		hover_entered.emit()
-		AudioService.play_sound(preload("res://src/audio/ui/ui_button_hover.wav"))
+		AudioService.play_sound(preload("res://src/audio/ui/ui_button_hover.wav"), .5)
 		hover_animation()
 		set_button_modulate(hover_color)
 func _on_unhover() -> void: 
 	if !disabled:
 		hover_exited.emit()
-		AudioService.play_sound(preload("res://src/audio/ui/ui_button_unhover.wav"))
+		AudioService.play_sound(preload("res://src/audio/ui/ui_button_unhover.wav"), .5)
 		unhover_animation()
 		set_button_modulate(normal_color)
 

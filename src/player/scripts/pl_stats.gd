@@ -1,16 +1,22 @@
 class_name PlayerStats
 extends Resource
 
+@export_group("Speed & Multipliers")
 @export var base_speed: float = Player.BASE_SPEED
-
 @export var walk_multi: float = Player.WALK_MULTI
 @export var sprint_multi: float = Player.SPRINT_MULTI
 @export var sneak_multi: float = Player.SNEAK_MULTI
 @export var exhaust_multi: float = Player.EXHAUST_MULTI
 
+@export_group("Stamina Modifers")
 @export var stamina_drain: float = Player.STAMINA_DRAIN
 @export var stamina_regen: float = Player.STAMINA_REGEN
 @export var can_run: bool = Player.CAN_RUN
+
+@export_group("Noise Multipliers")
+@export var walk_noise_mult: float 
+@export var sneak_noise_mult: float 
+@export var run_noise_mult: float 
 
 func _apply(_pl: Player) -> void: 
 	_pl.initial_speed = base_speed

@@ -71,26 +71,34 @@ static func is_moving() -> bool:
 static func teleport_player(_pos: Vector2, _dir: Vector2, w_camera: bool = false) -> void:
 	if PLInstance.get_pl():
 		PLInstance.get_pl().global_position = _pos
-		PLInstance.get_pl().set_dir(_dir)
+		PLInstance.get_pl().set_dir.call_deferred(_dir)
 		if w_camera and CameraHolder.instance.target == PLInstance.get_pl(): 
 			CameraHolder.instance.global_position = PLInstance.get_pl().global_position
 static func handle_player_world_warp(_pos: Vector2, _dir: Vector2) -> void:
 	if PLInstance.get_pl():
 		PLInstance.get_pl().global_position = _pos
-		PLInstance.get_pl().set_dir(_dir)
+		PLInstance.get_pl().set_dir.call_deferred(_dir)
 		if CameraHolder.instance: 
 			CameraHolder.instance.global_position = PLInstance.get_pl().global_position
 # ---- data ----
-static func stats_tostring() -> String:
+static func mobility_stats_to_string() -> String:
 	if player:
 		return (
 			str(
-				'CAN RUN?: \t%s \n\n' 				% (player.can_run),
-				'BASE SPEED: \t%s m/s \n' 			% (player.initial_speed),
-				'SNEAK MULT: \t%s m/s \n' 			% (player.initial_speed * player.SNEAK_MULTI),
-				'SPRINT MULT: \t%s m/s \n\n' 		% (player.initial_speed * player.SPRINT_MULTI),
-				'STAM REGEN: \t%s stm/s \n'		% (player.STAMINA_REGEN),
-				'STAM DECAY: \t%s stm/s \n'	% (player.STAMINA_DRAIN),
+				'CAN RUN?: \t%s \n' 				% ("Yes." if player.can_run else "No."),
+				'WALK SPEED: \t%s m/s \n' 			% ((player.initial_speed * player.walk_multiplier) / 16),
+				'SNEAK SPEED: \t%s m/s \n' 			% ((player.initial_speed * player.sneak_multiplier) / 16),
+				'SPRINT SPEED: \t%s m/s \n' 		% ((player.initial_speed * player.sprint_multiplier) / 16),
+				)
+			)
+	else: return ""
+	
+static func stamina_stats_to_string() -> String:
+	if player:
+		return (
+			str(
+				'STAMINA REGEN: \t%s STM/s \n' 		% (player.stamina_regen),
+				'STAMINA DECAY: \t%s STM/s \n' 	% (player.stamina_drain),
 				)
 			)
 	else: return ""

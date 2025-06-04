@@ -56,12 +56,13 @@ folder_colors={
 2d_render/layer_1="Everything"
 2d_render/layer_2="Tiles"
 2d_render/layer_3="Entities"
-2d_render/layer_4="Obstacles"
 2d_render/layer_20="UI"
 2d_physics/layer_1="Everything / All"
 2d_physics/layer_2="Interactable"
 2d_physics/layer_3="Entity"
 2d_physics/layer_4="Tile"
+2d_physics/layer_5="Presence"
+2d_physics/layer_6="Damage"
 2d_physics/layer_32="Warp Effectors"
 
 [physics]

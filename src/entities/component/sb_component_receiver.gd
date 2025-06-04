@@ -16,13 +16,13 @@ func _setup(_sb: SentientBase) -> void:
 
 func _update(_delta: float) -> void:
 	for component in components: 
-		if component: component._update(_delta)
+		if component: component.update(_delta)
 func _physics_update(_delta: float) -> void: 
 	for component in components: 
-		if component: component._physics_update(_delta)
+		if component: component.physics_update(_delta)
 func _input_pass(_event: InputEvent) -> void:
 	for component in components: 
-		if component: component._input_pass(_event)
+		if component: component.input_pass(_event)
 
 func get_component_by_name(_name: String) -> SBComponent:
 	for i in get_children():

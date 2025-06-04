@@ -9,7 +9,7 @@ enum MUSIC_BUS {MUSIC, AMBIENCE}
 @export_group("Music Properties")
 	
 @export var stream: AudioStream
-@export_range(-80, 24, .5) var vol: float = 0
+@export_range(0, 1, .1) var vol: float = 1
 @export_range(0.1 , 2, .01) var pitch: float = 1
 @export var autoplay: bool = true
 

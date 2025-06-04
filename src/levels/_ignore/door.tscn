@@ -1,24 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://crej0xx7uj05p"]
+[gd_scene load_steps=9 format=3 uid="uid://crej0xx7uj05p"]
 
 [ext_resource type="Texture2D" uid="uid://cyr3omgnv06ig" path="res://src/levels/_ignore/doors/door_apartment.png" id="1_2hf7w"]
-[ext_resource type="Script" uid="uid://bbh7tjv0f6kad" path="res://src/systems/interaction/door_scenes.gd" id="1_ukotr"]
-[ext_resource type="Script" uid="uid://0v2nidb8jsha" path="res://src/systems/event/event_resource.gd" id="3_76or2"]
-[ext_resource type="Script" uid="uid://cucbjf4vo8isc" path="res://src/systems/interaction/interact_sequence_trigger.gd" id="3_ug7o7"]
-[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/obj_independent/audio/play_sound.gd" id="4_who8r"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_cv7t1"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="2_lea3f"]
+[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="4_who8r"]
 [ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="5_67jxd"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/utils/sequence.gd" id="6_30ut7"]
-
-[sub_resource type="Resource" id="Resource_750dc"]
-script = ExtResource("4_who8r")
-sound = ExtResource("5_67jxd")
-volume = 0.0
-pitch = 1.0
-metadata/_custom_type_script = "uid://vk574kc3l7av"
-
-[sub_resource type="Resource" id="Resource_relet"]
-script = ExtResource("6_30ut7")
-order = Array[ExtResource("3_76or2")]([SubResource("Resource_750dc")])
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
+[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="5_76or2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv7t1"]
 size = Vector2(16, 8)
@@ -26,13 +13,22 @@ size = Vector2(16, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lea3f"]
 
 [node name="door_interactable" type="Area2D"]
-script = ExtResource("1_ukotr")
-metadata/_custom_type_script = "uid://bbh7tjv0f6kad"
+script = ExtResource("1_cv7t1")
+metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="trigger" type="Node" parent="."]
-script = ExtResource("3_ug7o7")
-sequence = SubResource("Resource_relet")
-metadata/_custom_type_script = "uid://cucbjf4vo8isc"
+[node name="on_interact" type="Node" parent="."]
+script = ExtResource("2_lea3f")
+
+[node name="play_sound" type="Node" parent="on_interact"]
+script = ExtResource("4_who8r")
+emit_at_finish = true
+sound = ExtResource("5_67jxd")
+pitch = 0.8
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="Event" type="Node" parent="on_interact"]
+script = ExtResource("5_76or2")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="renderer" type="Sprite2D" parent="."]
 texture = ExtResource("1_2hf7w")

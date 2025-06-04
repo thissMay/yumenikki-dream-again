@@ -3,9 +3,9 @@ extends FSM
 
 var prev_state: State
 
-func _change_to_state(new_state: StringName, s = null) -> void:
+func _change_to_state(new_state: StringName) -> void:
 	prev_state = curr_state
-	super(new_state, s)
+	super(new_state)
 	
 func _get_prev_state() -> State: return prev_state
 func _get_prev_state_name() -> String: 

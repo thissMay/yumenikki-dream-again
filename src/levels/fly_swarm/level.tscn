@@ -1,0 +1,257 @@
+[gd_scene load_steps=42 format=4 uid="uid://clyak4figgq17"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ri5tq"]
+[ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_7xq5b"]
+[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_fec3j"]
+[ext_resource type="AudioStream" uid="uid://umly1e8go6f7" path="res://src/audio/amb/flies_buzz.ogg" id="2_j11kg"]
+[ext_resource type="Shader" uid="uid://cvj01sy4a1r7b" path="res://src/shaders/panorama/linear.gdshader" id="2_o4ypx"]
+[ext_resource type="Texture2D" uid="uid://caxhhob74b0lf" path="res://src/images/panorama/flies.png" id="3_gf132"]
+[ext_resource type="AudioStream" uid="uid://br0bkqqg1w6o7" path="res://src/audio/bgm/may_yta_ominous-atmosphere.ogg" id="4_nvj2j"]
+[ext_resource type="Shader" uid="uid://dv1dx75w12wav" path="res://src/shaders/screen_overlay/vignette_dark.gdshader" id="4_tjms7"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/sally/sally.tscn" id="5_fj7r3"]
+[ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="8_4e8ta"]
+[ext_resource type="Shader" uid="uid://b0qym6r6rs7ns" path="res://src/shaders/panorama/linear_additive.gdshader" id="11_yqxsb"]
+[ext_resource type="Texture2D" uid="uid://cm6iimafcot25" path="res://src/images/panorama/face.png" id="12_8vgs5"]
+[ext_resource type="Texture2D" uid="uid://dryh7yr1eq7o" path="res://src/levels/dream/sane/fly_swarm/sprites/warning.png" id="14_powk2"]
+[ext_resource type="PackedScene" uid="uid://bq3w86txlrkqd" path="res://src/levels/door.tscn" id="15_pcuua"]
+[ext_resource type="Texture2D" uid="uid://cu1esraxo4rnl" path="res://src/levels/dream/sane/colorful_irises/sprites/teeth.png" id="16_rca6d"]
+[ext_resource type="TileSet" uid="uid://bqmlmtywcj6oe" path="res://src/levels/dream/sane/fly_swarm/tilemaps/flies.tres" id="17_67ob7"]
+[ext_resource type="Texture2D" uid="uid://csaqgs4uhvfaw" path="res://src/levels/dream/sane/fly_swarm/sprites/floor.png" id="18_21ng7"]
+[ext_resource type="Texture2D" uid="uid://cpkt2rc64171c" path="res://src/levels/dream/sane/fly_swarm/sprites/misc.png" id="19_qnsyk"]
+[ext_resource type="Texture2D" uid="uid://itkq6v7b7bm0" path="res://src/levels/dream/sane/fly_swarm/sprites/stop.png" id="19_wrbgk"]
+[ext_resource type="Script" uid="uid://bbh7tjv0f6kad" path="res://src/systems/interaction/door_scenes.gd" id="21_6r80x"]
+[ext_resource type="Texture2D" uid="uid://dto46b5rlx3sc" path="res://src/levels/dream/sane/fire_exit/sprites/closed.png" id="24_53kn2"]
+[ext_resource type="Script" uid="uid://0v2nidb8jsha" path="res://src/systems/utils/interface.gd" id="24_qm7qu"]
+[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/command/concrete/audio/play_sound.gd" id="25_rxeoh"]
+[ext_resource type="AudioStream" uid="uid://bipehuwb1yaul" path="res://src/audio/se/se_door_open-1.wav" id="26_3lsg7"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/utils/sequence.gd" id="27_h5cjy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rfra1"]
+shader = ExtResource("4_tjms7")
+shader_parameter/inner_radius = 0.1
+shader_parameter/outer_radius = 1.0
+shader_parameter/vignette_strength = 1.0
+shader_parameter/dither_strength = 0.03
+shader_parameter/vignette_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_70lvv"]
+shader = ExtResource("2_o4ypx")
+shader_parameter/transparency = 0.0
+shader_parameter/dirX = 1.0
+shader_parameter/dirY = 0.0
+shader_parameter/scroll_speed = 0.03
+shader_parameter/offset_strength = 0.055
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m6kt2"]
+shader = ExtResource("11_yqxsb")
+shader_parameter/transparency = 0.1
+shader_parameter/dirX = 1.0
+shader_parameter/dirY = 1.0
+shader_parameter/scroll_speed = 0.01
+shader_parameter/uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 0.075
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o6tur"]
+texture = ExtResource("19_wrbgk")
+texture_region_size = Vector2i(143, 210)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cw6am"]
+texture = ExtResource("14_powk2")
+texture_region_size = Vector2i(61, 182)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_3gqu7"]
+sources/0 = SubResource("TileSetAtlasSource_o6tur")
+sources/1 = SubResource("TileSetAtlasSource_cw6am")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fdabd"]
+texture = ExtResource("18_21ng7")
+separation = Vector2i(1, 1)
+texture_region_size = Vector2i(78, 40)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -20, -39, 0, 0, 20, 39, 0)
+0:0/0/custom_data_0 = 2
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -20, -39, 0, 0, 20, 39, 0)
+1:0/0/custom_data_0 = 2
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -20, -39, 0, 0, 20, 39, 0)
+1:1/0/custom_data_0 = 2
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -20, -39, 0, 0, 20, 39, 0)
+0:1/0/custom_data_0 = 2
+
+[sub_resource type="TileSet" id="TileSet_nnqk4"]
+tile_shape = 1
+tile_size = Vector2i(78, 40)
+physics_layer_0/collision_layer = 8
+physics_layer_0/collision_mask = 9
+custom_data_layer_0/name = "material"
+custom_data_layer_0/type = 2
+sources/0 = SubResource("TileSetAtlasSource_fdabd")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p7ew2"]
+texture = ExtResource("19_qnsyk")
+separation = Vector2i(3, 0)
+texture_region_size = Vector2i(29, 32)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-13.3333, 8, 13.3333, 8, 13.3333, 13.3333, -13.3333, 13.3333)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-13.3333, 8, 13.3333, 8, 13.3333, 13.3333, -13.3333, 13.3333)
+
+[sub_resource type="TileSet" id="TileSet_852ia"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_p7ew2")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a5wrg"]
+texture = ExtResource("19_wrbgk")
+texture_region_size = Vector2i(143, 210)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_yod8u"]
+sources/0 = SubResource("TileSetAtlasSource_a5wrg")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xp4to"]
+size = Vector2(50, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_acb54"]
+size = Vector2(16, 6)
+
+[sub_resource type="Resource" id="Resource_effhv"]
+script = ExtResource("25_rxeoh")
+sound = ExtResource("26_3lsg7")
+volume = 0.0
+pitch = 1.0
+
+[sub_resource type="Resource" id="Resource_021qt"]
+script = ExtResource("27_h5cjy")
+order = Array[ExtResource("24_qm7qu")]([SubResource("Resource_effhv")])
+
+[node name="fly_swarm" type="Node"]
+script = ExtResource("1_ri5tq")
+
+[node name="AMB" type="Node" parent="."]
+script = ExtResource("2_fec3j")
+music_bus = 1
+stream = ExtResource("2_j11kg")
+metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
+
+[node name="BGM" type="Node" parent="."]
+script = ExtResource("2_fec3j")
+stream = ExtResource("4_nvj2j")
+vol = 3.0
+pitch = 0.44
+metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
+
+[node name="camera" parent="." instance=ExtResource("2_7xq5b")]
+
+[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../Node2D/Sally")
+
+[node name="Wiggle" type="Node" parent="camera/camera_handler/marker/camera/components_receiver" index="0"]
+script = ExtResource("8_4e8ta")
+ignore_rotation = false
+
+[node name="vignette" type="ColorRect" parent="camera/camera_handler/camera_overlay" index="0"]
+material = SubResource("ShaderMaterial_rfra1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="panorama (top_layer)" type="CanvasLayer" parent="."]
+layer = -20
+
+[node name="bg" type="TextureRect" parent="panorama (top_layer)"]
+material = SubResource("ShaderMaterial_70lvv")
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_gf132")
+
+[node name="fg" type="TextureRect" parent="panorama (top_layer)"]
+material = SubResource("ShaderMaterial_m6kt2")
+offset_right = 426.0
+offset_bottom = 240.0
+texture = ExtResource("12_8vgs5")
+
+[node name="Node2D" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="big_signs_b" type="TileMapLayer" parent="Node2D"]
+tile_map_data = PackedByteArray("AAD+/wUAAAAAAAAAAAAOAAEAAAAAAAAAAAAOAA8AAAAAAAAAAAD5/xAAAAAAAAAAAAAnAA8AAAAAAAAAAAAZAAEAAQAAAAAAAAD9/xEAAQAAAAAAAAAGAAEAAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_3gqu7")
+
+[node name="floor" type="TileMapLayer" parent="Node2D"]
+tile_map_data = PackedByteArray("AAACAAQAAAABAAEAAAADAAQAAAAAAAAAAAADAAMAAAAAAAAAAAACAAUAAAABAAAAAAADAAYAAAAAAAAAAAACAAoAAAAAAAAAAAABAAoAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAAwAAAAAAAAAAAD//w0AAAAAAAAAAAD//w4AAAAAAAAAAAD+/w8AAAAAAAAAAAAEAAQAAAAAAAAAAAADAAUAAAAAAAAAAAAEAAUAAAAAAAAAAAAFAAYAAAAAAAAAAAAFAAcAAAABAAAAAAAEAAMAAAAAAAAAAAAFAAQAAAAAAAAAAAAFAAUAAAAAAAEAAAAGAAgAAAAAAAEAAAAEAAgAAAABAAEAAAAFAAgAAAABAAEAAAAEAAcAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAYAAAAAAAAAAAADAAoAAAAAAAAAAAACAAsAAAAAAAAAAAACAAwAAAAAAAEAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAABAAEAAAABAAUAAAAAAAAAAAABAAYAAAAAAAAAAAAAAAUAAAAAAAAAAAABAAQAAAAAAAAAAAAAAAMAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAADAP//AAAAAAEAAAADAAAAAAAAAAAAAAADAAEAAAAAAAEAAAADAAIAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAoAAAAAAAAAAAAFAAsAAAAAAAAAAAAGAAwAAAAAAAAAAAAGAA0AAAAAAAAAAAAHAA4AAAAAAAAAAAAHAA8AAAAAAAAAAAAIABAAAAAAAAAAAAAHABEAAAAAAAAAAAAIABIAAAAAAAAAAAAIABEAAAAAAAAAAAAJABAAAAAAAAAAAAAIAA8AAAAAAAAAAAAIAA4AAAAAAAAAAAAHABAAAAAAAAAAAAAGAA8AAAAAAAAAAAAGAA4AAAAAAAAAAAAFAA0AAAAAAAAAAAAFAAwAAAAAAAAAAAAEAAsAAAABAAEAAAAEAAoAAAAAAAEAAAABAAsAAAAAAAAAAAABAAwAAAAAAAEAAAD+/w0AAAAAAAAAAAD+/w4AAAAAAAAAAAD+/xAAAAAAAAAAAAD+/xEAAAAAAAAAAAD+/xIAAAAAAAAAAAD//xIAAAAAAAAAAAD//xEAAAAAAAAAAAD//xAAAAAAAAAAAAD//w8AAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_nnqk4")
+
+[node name="floor_misc" type="TileMapLayer" parent="Node2D"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAVAAgAAAAAAAAAAAAUAAQAAAABAAAAAAADAAQAAAABAAAAAAAQAAMAAAAAAAAAAAAcAAUAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_852ia")
+
+[node name="flies" type="TileMapLayer" parent="Node2D"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAiAB0AAAAAAAAAABATAAsABAAAAAAAAAAUAAwABAAAAAEAAAASAAgABAAAAAEAAAAVAAkABAAAAAAAAAAIAA8ABAAAAAEAAAARABUABAAAAAEAABASABYABAAAAAEAABADAAwABAAAAAEAABAXABMABAAAAAEAAAAYABMABAAAAAEAAAAWABUABAAAAAAAAAAaAA0ABAAAAAAAAAADABoABAAAAAAAAAAEABYABAAAAAAAAAAGABgABAAAAAAAABAHABcABAAAAAAAABAJABkABAAAAAAAABARABAABAAAAAAAAAARAAIABAAAAAAAAAAQAAMABAAAAAAAAAATAAIABAAAAAAAAAAbABkAAAAAAAAAAAAYAAgAAAAAAAEAAAAOABkAAAAAAAEAABAGAAYAAAAAAAAAABACABMAAAAAAAAAABAoACAAAgAAAAAAAAAuACQAAgAAAAAAABArACIABAAAAAAAAAAsACIABAAAAAAAAAAsACMABAAAAAAAAAAiACAABAAAAAEAABAjACAABAAAAAEAABAnABQAAQAAAAAAAAD3/xUAAQAAAAEAAAD5/xUAAQAAAAEAAAD3/xkAAQAAAAEAAAA=")
+tile_set = ExtResource("17_67ob7")
+
+[node name="big_signs_f" type="TileMapLayer" parent="Node2D"]
+z_index = 1
+tile_map_data = PackedByteArray("AAAUABMAAAAAAAAAAAAdAAgAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_yod8u")
+
+[node name="flies_on_signs" type="TileMapLayer" parent="Node2D"]
+z_index = 1
+tile_map_data = PackedByteArray("AAAbAAYAAQAAAAAAAAANAPr/AQAAAAEAAAATABoAAQAAAAAAADAUAB0AAQAAAAEAADD8/wQAAQAAAAEAADA=")
+tile_set = ExtResource("17_67ob7")
+
+[node name="Sally" parent="Node2D" instance=ExtResource("5_fj7r3")]
+position = Vector2(272, 120)
+
+[node name="teeth" type="Area2D" parent="Node2D"]
+position = Vector2(144, 72)
+collision_layer = 3
+monitorable = false
+script = ExtResource("21_6r80x")
+connection_id = "teeth"
+scene_path = "res://src/levels/dream/sane/colorful_irises/level.tscn"
+spawn_point = Vector2(0, 35)
+detectable = false
+area = true
+
+[node name="_" type="Sprite2D" parent="Node2D/teeth"]
+texture = ExtResource("16_rca6d")
+
+[node name="field" type="CollisionShape2D" parent="Node2D/teeth"]
+position = Vector2(0, 11)
+shape = SubResource("RectangleShape2D_xp4to")
+
+[node name="coll_1" type="StaticBody2D" parent="Node2D/teeth"]
+position = Vector2(-22, 6)
+
+[node name="shape" type="CollisionShape2D" parent="Node2D/teeth/coll_1"]
+position = Vector2(0, 13)
+shape = SubResource("RectangleShape2D_acb54")
+
+[node name="coll_2" type="StaticBody2D" parent="Node2D/teeth"]
+position = Vector2(25, 7)
+
+[node name="shape" type="CollisionShape2D" parent="Node2D/teeth/coll_2"]
+position = Vector2(0, 13)
+shape = SubResource("RectangleShape2D_acb54")
+
+[node name="door" parent="Node2D" instance=ExtResource("15_pcuua")]
+position = Vector2(680, 336)
+connection_id = "fire_exit"
+scene_path = "res://src/levels/dream/sane/fire_exit/level.tscn"
+trigger = SubResource("Resource_021qt")
+
+[node name="_" parent="Node2D/door" index="1"]
+texture = ExtResource("24_53kn2")
+
+[editable path="camera"]
+[editable path="Node2D/door"]

@@ -14,4 +14,4 @@ func update(_delta: float) -> void:
 func physics_update(_delta: float) -> void:
 	if active: _physics_update(_delta)
 func input_pass(event: InputEvent) -> void:
-	if active: input_pass(event)
+	if active: _input_pass(event)

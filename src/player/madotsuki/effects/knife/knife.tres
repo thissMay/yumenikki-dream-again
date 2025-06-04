@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="PlayerEffect" load_steps=2 format=3 uid="uid://caen3plrw7hok"]
+[gd_resource type="Resource" script_class="PlayerEffect" load_steps=3 format=3 uid="uid://caen3plrw7hok"]
 
 [ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_cgyrr"]
+[ext_resource type="Texture2D" uid="uid://c6ouvpoio8t7f" path="res://src/player/inventory/menu/effect_practical.png" id="1_tn1os"]
 
 [resource]
 script = ExtResource("1_cgyrr")
 name = "Knife"
+icon = ExtResource("1_tn1os")
 player_component_prefab = ""
 metadata/_custom_type_script = "uid://cycsi2jsiuie0"

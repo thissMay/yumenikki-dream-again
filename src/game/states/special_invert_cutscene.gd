@@ -4,7 +4,7 @@ var old_timescale: float
 @export var bgm: BGM
 
 
-func enter_state(s = null) -> void: 
+func enter_state() -> void: 
 	GameManager.EventManager.invoke_event("SPECIAL_INVERT_CUTSCENE_BEGIN")
 	bgm.play_music()
 	
@@ -14,7 +14,7 @@ func enter_state(s = null) -> void:
 	Game.lerp_timescale(0.5)
 	GameManager.set_cinematic_bars(true)
 
-func exit_state(s = null) -> void: 	
+func exit_state() -> void: 	
 	GameManager.EventManager.invoke_event("SPECIAL_INVERT_CUTSCENE_END")
 	Music.play_music_dict(Music.prev_music)
 

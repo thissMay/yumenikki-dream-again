@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://dgcff10ohhvo7"]
+[gd_scene load_steps=19 format=4 uid="uid://dgcff10ohhvo7"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_fu6ox"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_7ddji"]
@@ -9,48 +9,15 @@
 [ext_resource type="AudioStream" uid="uid://dlfw10qwka7su" path="res://src/audio/amb/amb_rain.ogg" id="4_lpvjp"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="5_0tk1k"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/_ignore/tilemaps/_common_objs.tres" id="5_jl4jg"]
-[ext_resource type="Texture2D" uid="uid://b0qn4i2rch4o6" path="res://src/images/rain_drop.png" id="5_ucbvv"]
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="6_ucbvv"]
 [ext_resource type="Texture2D" uid="uid://uj70rwlb7p8i" path="res://src/levels/_ignore/tilemaps/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA.png" id="7_7psg7"]
 [ext_resource type="Script" uid="uid://c7r7ecueroria" path="res://src/levels/dense_woods_a/infinite_road.gd" id="7_jl4jg"]
+[ext_resource type="PackedScene" uid="uid://be7r3txtdvb20" path="res://src/levels/_ignore/rain.tscn" id="7_t3e8h"]
 [ext_resource type="Script" uid="uid://ctbtfitoggtku" path="res://src/systems/components/component_receiver.gd" id="7_tt10w"]
 [ext_resource type="Script" uid="uid://cx4t46m5wt82v" path="res://src/systems/components/overrides/look_at.gd" id="8_7psg7"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="12_sigku"]
 [ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/camera/sequence_region.gd" id="14_lju3l"]
-[ext_resource type="Script" uid="uid://0v2nidb8jsha" path="res://src/systems/event/event_resource.gd" id="15_m3pjv"]
-[ext_resource type="Script" uid="uid://c2n434y8egp0r" path="res://src/systems/event/obj_independent/camera/offset_cam.gd" id="16_ixp4d"]
-[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/utils/sequence.gd" id="17_4ap8n"]
 [ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/systems/region/region.gd" id="17_t3e8h"]
-
-[sub_resource type="Gradient" id="Gradient_sigku"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(1, 1, 1, 0.533333)
-
-[sub_resource type="Resource" id="Resource_t3e8h"]
-script = ExtResource("16_ixp4d")
-offset = Vector2(0, -50)
-ease = 1
-trans = 5
-duration = 1
-metadata/_custom_type_script = "uid://c2n434y8egp0r"
-
-[sub_resource type="Resource" id="Resource_lju3l"]
-script = ExtResource("17_4ap8n")
-order = Array[ExtResource("15_m3pjv")]([SubResource("Resource_t3e8h")])
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
-
-[sub_resource type="Resource" id="Resource_m3pjv"]
-script = ExtResource("16_ixp4d")
-offset = Vector2(0, 0)
-ease = 1
-trans = 5
-duration = 1
-metadata/_custom_type_script = "uid://c2n434y8egp0r"
-
-[sub_resource type="Resource" id="Resource_ixp4d"]
-script = ExtResource("17_4ap8n")
-order = Array[ExtResource("15_m3pjv")]([SubResource("Resource_m3pjv")])
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="dense_woods" type="Node"]
 script = ExtResource("1_fu6ox")
@@ -79,20 +46,8 @@ wig_x_strn = 5.0
 wig_y_strn = 6.0
 metadata/_custom_type_script = "uid://bptlrkdn0tpua"
 
-[node name="rain" type="CPUParticles2D" parent="camera/camera_handler/camera_overlay" index="0"]
+[node name="rain" parent="camera/camera_handler/camera_overlay" index="0" instance=ExtResource("7_t3e8h")]
 position = Vector2(128, -16)
-amount = 20
-texture = ExtResource("5_ucbvv")
-lifetime = 0.95
-preprocess = 5.0
-emission_shape = 3
-emission_rect_extents = Vector2(350, 0.1)
-direction = Vector2(1, 1)
-spread = 3.7
-gravity = Vector2(200, 200)
-initial_velocity_min = 350.0
-initial_velocity_max = 400.0
-color_ramp = SubResource("Gradient_sigku")
 
 [node name="seamless_detector" parent="." instance=ExtResource("3_cngr4")]
 position = Vector2(-880, -672)
@@ -194,8 +149,6 @@ metadata/_custom_type_script = "uid://4dkyll6fxqod"
 
 [node name="SequenceRegion" type="Node" parent="infinite_road/AreaRegion"]
 script = ExtResource("14_lju3l")
-enter_sequence = SubResource("Resource_lju3l")
-exit_sequence = SubResource("Resource_ixp4d")
 metadata/_custom_type_script = "uid://f4sb25g3gpic"
 
 [editable path="camera"]

@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://be7r3txtdvb20"]
+
+[ext_resource type="Texture2D" uid="uid://b0qn4i2rch4o6" path="res://src/images/rain_drop.png" id="1_w7h40"]
+
+[sub_resource type="Gradient" id="Gradient_sigku"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 0.533333)
+
+[node name="rain" type="CPUParticles2D"]
+amount = 20
+texture = ExtResource("1_w7h40")
+lifetime = 0.95
+preprocess = 5.0
+emission_shape = 3
+emission_rect_extents = Vector2(350, 0.1)
+direction = Vector2(1, 1)
+spread = 3.7
+gravity = Vector2(200, 200)
+initial_velocity_min = 350.0
+initial_velocity_max = 400.0
+color_ramp = SubResource("Gradient_sigku")

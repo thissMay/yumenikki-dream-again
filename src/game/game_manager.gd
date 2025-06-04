@@ -115,7 +115,7 @@ static func show_options(_visible: bool) -> void:
 
 # ---- state based stuff ----
 static func change_to_state(new_state: String) -> void:
-	game_fsm._change_to_state(new_state, null)
+	game_fsm._change_to_state(new_state)
 static func request_transition(_fade_type: ScreenTransition.fade_type) -> void:
 	await ScreenTransition.request_transition(_fade_type)
 
@@ -242,13 +242,6 @@ static var event_ids := {
 		"subscribers" : [],
 		"params" : []},
 	
-	"PLAYER_EFFECT_EQUIP_ANIM" : {
-		"subscribers" : [],
-		"params" : []},
-	"PLAYER_EFFECT_DEEQUIP_ANIM" : {
-		"subscribers" : [],
-		"params" : []},
-		
 	"PLAYER_EQUIP" : {
 		"subscribers" : [],
 		"params" : []},
@@ -256,27 +249,10 @@ static var event_ids := {
 		"subscribers" : [],
 		"params" : []},
 		
-	"PLAYER_EFFECT_EQUIP" : {
-		"subscribers" : [],
-		"params" : []},
-	"PLAYER_EFFECT_DEEQUIP" : {
+	"PLAYER_DOOR_TELEPORTATION" : {
 		"subscribers" : [],
 		"params" : []},
 		
-	"PLAYER_MEMORIAM_EQUIP_ANIM" : {
-		"subscribers" : [],
-		"params" : []},
-	"PLAYER_MEMORIAM_DEEQUIP_ANIM" : {
-		"subscribers" : [],
-		"params" : []},
-
-	"PLAYER_MEMORIAM_EQUIP" : {
-		"subscribers" : [],
-		"params" : []},
-	"PLAYER_MEMORIAM_DEEQUIP" : {
-		"subscribers" : [],
-		"params" : []},
-	
 	"PLAYER_DOOR_USED" : {
 		"subscribers" : [],
 		"params" : []},

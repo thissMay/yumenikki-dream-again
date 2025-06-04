@@ -4,9 +4,9 @@ class_name Player_YN extends Player
 var audio_listener: AudioListener2D
 var sound_player: AudioStreamPlayer
 
-var animation_manager: PLAnimationManager
+var animation_manager: SentientAnimator
 var footstep_manager: Node
-@export var fsm: SentientFSM
+
  	
 const DEFAULT_DISPLAY := preload("res://src/player/madotsuki/sprite_sheets/no_effect.tres") as SerializableDict
 var DEFAULT_BEHAVIOUR := PlayerBehaviour.new()
@@ -29,27 +29,16 @@ var mental_status: SBComponent
 
 var action: PlayerAction 
 
-# ----> controller
-var input_controller := InputController.new()
 
-func _ready() -> void:
-	super()
-	mandatory_components()
-	dependency_components()
-
-func dependency_components() -> void:
-
-	set_controller(input_controller)
-	
+func dependency_components() -> void:	
 	marker_look_at._setup()			# --- fsm; not player dependency but required
-	stamina_fsm._setup(self) 	# --- fsm; not player dependency but required
+	stamina_fsm._setup() 	# --- fsm; not player dependency but required
 	fsm._setup(self)			# --- fsm; not player dependency but required
 	
 	if components.get_component_by_name("health"):
 		components.get_component_by_name("health").took_damage.connect( 
 			func(_dmg: float):
 				GameManager.EventManager.invoke_event("PLAYER_HURT", [_dmg]))
-	
 func mandatory_components() -> void:
 	animation_manager = components.get_component_by_name("animation_manager")
 	
@@ -71,21 +60,19 @@ func set_marker_direction_mode(_new_mode: Strategy) -> void:
 # ---- process / input ----
 func _process(_delta: float) -> void:	
 	super(_delta)
-	self.controller.update(_delta)
 	handle_noise()
-	if fsm: fsm._update(_delta, self)
-
+	if fsm: fsm._update(_delta)
 func _physics_process(_delta: float) -> void:
 	super(_delta)
 	stamina_fsm._physics_update(_delta)
 	if behaviour: behaviour._physics_update(self, _delta)
-	if fsm: fsm._physics_update(_delta, self)
+	if fsm: fsm._physics_update(_delta)
+
 func _unhandled_input(event: InputEvent) -> void:
 	dependency_input(event)
-
 			
 	if event is InputEventKey && Global.input:
-		if fsm: fsm._input_pass(event, self)
+		if fsm: fsm._input_pass(event)
 	
 		if (Global.input["key_pressed"] == KEY_SPACE and
 			Global.input["held_down"]):
@@ -98,7 +85,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func dependency_input(event: InputEvent) -> void:
 	if event is InputEventKey && Global.input:
 		if components: 
-			components.input_pass(event)
+			components._input_pass(event)
 			if components.get_component_by_name("equip_manager"):
 				components.get_component_by_name("equip_manager")._input_effect(event, self)
 
@@ -132,7 +119,7 @@ func get_behaviour() -> PlayerBehaviour: return behaviour
 #endregion
 
 #region STATES and ANIMATIONS
-func force_change_state(_new: String) -> void: fsm._change_to_state(_new, self)
+func force_change_state(_new: String) -> void: fsm._change_to_state(_new)
 func get_state_name() -> String: return fsm._get_curr_state_name()
 
 func play_sound(_sound: AudioStreamWAV, _vol: float, _pitch: float) -> void:

@@ -21,14 +21,14 @@ func _ready() -> void:
 	
 func play_sound(
 	_stream: AudioStream, 
-	_vol: float = 0, 
+	_vol: float = 1, 
 	_pitch: float = 1, 
 	forget_after: bool = false) -> void:
 	if _stream and not muted: 
 		if ResourceLoader.exists(_stream.resource_path):
 			if playing: stop()
 			stream = _stream
-			volume_db = _vol
+			volume_db = linear_to_db(_vol)
 			pitch_scale = _pitch
 			play()
 			await finished

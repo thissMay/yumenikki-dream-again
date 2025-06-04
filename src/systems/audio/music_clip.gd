@@ -7,4 +7,4 @@ extends Resource
 
 @export var abrupt_ease: bool = false
 
-func _init(music_stream: AudioStreamOggVorbis = null) -> void: stream = music_stream
+func _init(music_stream: AudioStreamOggVorbi) -> void: stream = music_stream

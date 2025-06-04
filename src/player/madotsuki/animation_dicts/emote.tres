@@ -1,9 +1,10 @@
-[gd_resource type="AnimationLibrary" load_steps=7 format=3 uid="uid://bm1cor2werd5w"]
+[gd_resource type="AnimationLibrary" load_steps=9 format=3 uid="uid://bm1cor2werd5w"]
 
 [ext_resource type="Texture2D" uid="uid://d4i48avg5j1dg" path="res://src/player/madotsuki/display/cat/gesture.png" id="1_kpkma"]
 [ext_resource type="AudioStream" uid="uid://du5x1lok1mk78" path="res://src/audio/se/se_cloth_foley_3.wav" id="2_ixmb4"]
 [ext_resource type="AudioStream" uid="uid://gcav35h2qrid" path="res://src/audio/se/Cat2.wav" id="3_0wjkr"]
 [ext_resource type="Texture2D" uid="uid://bd57ui48qj2ao" path="res://src/player/madotsuki/display/default/pinch.png" id="4_0wjkr"]
+[ext_resource type="Texture2D" uid="uid://bs8r676rfchai" path="res://src/player/madotsuki/display/neon/dansen.png" id="5_k5aq2"]
 
 [sub_resource type="Animation" id="Animation_kt2ol"]
 resource_name = "cat"
@@ -105,8 +106,39 @@ tracks/2/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6]
 }
 
+[sub_resource type="Animation" id="Animation_6o6td"]
+resource_name = "neon_dansen"
+length = 0.72
+loop_mode = 1
+step = 0.03
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../sprite_renderer:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_k5aq2")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../sprite_renderer:progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36, 0.48, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
 [resource]
 _data = {
 &"cat": SubResource("Animation_kt2ol"),
+&"neon_dansen": SubResource("Animation_6o6td"),
 &"pinch": SubResource("Animation_k5aq2")
 }

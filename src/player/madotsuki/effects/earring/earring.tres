@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PlayerEffect" load_steps=3 format=3 uid="uid://c7vdqqrvfrv78"]
+
+[ext_resource type="Texture2D" uid="uid://c6ouvpoio8t7f" path="res://src/player/inventory/menu/effect_practical.png" id="1_4mlxi"]
+[ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_bnso0"]
+
+[resource]
+script = ExtResource("1_bnso0")
+name = "Sally's Earring"
+icon = ExtResource("1_4mlxi")
+player_component_prefab = "uid://cyclhtxv2hj8w"

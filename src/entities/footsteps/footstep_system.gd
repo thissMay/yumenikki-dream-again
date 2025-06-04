@@ -35,17 +35,17 @@ enum mat {
 	}
 var curr_material: mat
 const GROUND_MAT_DICT := {
-	mat.NULL 		: preload("res://src/audio/footsteps/null.tres"),
-	mat.CONCRETE 	: preload("res://src/audio/footsteps/concrete.tres"),
-	mat.WOOD		: preload("res://src/audio/footsteps/wood.tres"),
-	mat.SNOW 		: preload("res://src/audio/footsteps/snow.tres"),
-	mat.GRASS 		: preload("res://src/audio/footsteps/grass.tres"),
-	mat.MUD 		: preload("res://src/audio/footsteps/blood.tres"),
-	mat.BLOOD 		: preload("res://src/audio/footsteps/blood.tres"),
-	mat.WATER 		: preload("res://src/audio/footsteps/water.tres"),
-	mat.CLOTH 		: preload("res://src/audio/footsteps/cloth.tres"),
-	mat.GLASS 		: preload("res://src/audio/footsteps/glass.tres"),
-	mat.DIRT_FLESH 	: preload("res://src/audio/footsteps/dirt_flesh.tres"),
+	mat.NULL 		: preload("res://src/audio/footsteps/null.tres"), 		# --- 0
+	mat.CONCRETE 	: preload("res://src/audio/footsteps/concrete.tres"),	# --- 1
+	mat.WOOD		: preload("res://src/audio/footsteps/wood.tres"),		# --- 2
+	mat.SNOW 		: preload("res://src/audio/footsteps/snow.tres"),		# --- 3
+	mat.GRASS 		: preload("res://src/audio/footsteps/grass.tres"),		# --- 4
+	mat.MUD 		: preload("res://src/audio/footsteps/blood.tres"),		# --- 5
+	mat.BLOOD 		: preload("res://src/audio/footsteps/blood.tres"),		# --- 6
+	mat.WATER 		: preload("res://src/audio/footsteps/water.tres"),		# --- 7
+	mat.CLOTH 		: preload("res://src/audio/footsteps/cloth.tres"),		# --- 8
+	mat.GLASS 		: preload("res://src/audio/footsteps/glass.tres"),		# --- 9
+	mat.DIRT_FLESH 	: preload("res://src/audio/footsteps/dirt_flesh.tres"),	# --- 10
 	}
 
 var DEFAULT_FOOTSTEP: AudioStreamWAV = preload("res://src/audio/se/footstep_null-1.wav")
@@ -87,12 +87,12 @@ func initate_footstep() -> void:
 	if sound_to_be_played == null:
 		footstep_se_player.play_sound(
 			sounds_set.pick_random() if sounds_set.size() > 0 else DEFAULT_FOOTSTEP, 
-			clampf(-6 + log(sentient.get_noise()) * 6.25, -50, 1.5), 
+			clampf(db_to_linear(log(sentient.get_noise() + 1) * 1.1), 0, 2), 
 			clampf(randf_range(0.75, sentient.get_noise()), 0.75, 1.2))
 	else:
 		footstep_se_player.play_sound(
 			sound_to_be_played, 
-			clampf(-6 + log(sentient.get_noise()) * 6.25, -50, 1.5), 
+			clampf(db_to_linear(-2 + log(sentient.get_noise() + 1) * .5), 0, 2), 
 			clampf(randf_range(0.75, sentient.get_noise()), 0.75, 1.2))	
 
 func spawn_footstep_fx() -> void: 
@@ -115,20 +115,25 @@ func _on_body_shape_entered(
 					greatest_index = floors.z_index
 					floor_priority = floors
 					break
-						
-			var tile_coords: Vector2i = floor_priority.get_coords_for_body_rid(body_rid)
-			var cell_tile_data: TileData = floor_priority.get_cell_tile_data(tile_coords)
+				
+				if !floor_priority.has_body_rid(body_rid): return
+				var tile_coords: Vector2i = floor_priority.get_coords_for_body_rid(body_rid)
+				var cell_tile_data: TileData = floor_priority.get_cell_tile_data(tile_coords)
 
-			if cell_tile_data:
-				material_id = cell_tile_data.get_custom_data("material") if cell_tile_data.has_custom_data("material") else 0
-				sound_to_be_played = cell_tile_data.get_custom_data("custom_sound") if cell_tile_data.has_custom_data("custom_sound") else null
-			
-			curr_material = material_id
-			
-			if transparent_surfaces[curr_material]: sentient.shadow_renderer.visible = false
-			else: sentient.shadow_renderer.visible = true
-		else:
-			sentient.shadow_renderer.visible = false
+				if cell_tile_data:
+					material_id = cell_tile_data.get_custom_data("material") if cell_tile_data.has_custom_data("material") else 0
+				
+				curr_material = material_id
+				
+				if cell_tile_data:
+					if cell_tile_data.has_custom_data("custom_sound"):
+						sound_to_be_played = cell_tile_data.get_custom_data("custom_sound")
+					else:
+						sound_to_be_played = GROUND_MAT_DICT[curr_material].pick_random()
+								
+				
+				if transparent_surfaces[curr_material]: sentient.shadow_renderer.visible = false
+				else: sentient.shadow_renderer.visible = true
 		
 func _on_body_shape_exited(
 	body_rid: RID, 

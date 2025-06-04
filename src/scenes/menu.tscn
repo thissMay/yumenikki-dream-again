@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://305ow1lkjqm5"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_2521n"]
+[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_nr8cr"]
+[ext_resource type="AudioStream" uid="uid://c2l2mic8iusdu" path="res://src/audio/bgm/title.WAV" id="3_t7jdw"]
+
+[node name="pre_menu" type="Node"]
+script = ExtResource("1_2521n")
+metadata/_custom_type_script = "uid://dcos3dvfrola8"
+
+[node name="BGM" type="Node" parent="."]
+script = ExtResource("2_nr8cr")
+stream = ExtResource("3_t7jdw")
+metadata/_custom_type_script = "uid://b4b3kjcm65mv6"

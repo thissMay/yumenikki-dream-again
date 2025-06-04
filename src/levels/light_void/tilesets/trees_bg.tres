@@ -1,0 +1,13 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://g0y1bjx2c4uq"]
+
+[ext_resource type="Texture2D" uid="uid://c564g3qdippns" path="res://src/levels/dream/sane/light_void/sprites/tree-bg_tiles.png" id="1_g3sxi"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dlfpx"]
+texture = ExtResource("1_g3sxi")
+texture_region_size = Vector2i(98, 175)
+1:0/0 = 0
+2:0/0 = 0
+
+[resource]
+tile_size = Vector2i(32, 16)
+sources/1 = SubResource("TileSetAtlasSource_dlfpx")

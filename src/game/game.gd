@@ -200,9 +200,9 @@ class Config:
 		
 		config_data.set_value("misc", "instantiated", true)
 		
-		config_data.set_value("audio", "music", Audio.get_bus_volume("Music"))
-		config_data.set_value("audio", "ambience", Audio.get_bus_volume("Ambience"))
-		config_data.set_value("audio", "se", Audio.get_bus_volume("Effects"))
+		config_data.set_value("audio", "music", db_to_linear(Audio.get_bus_volume("Music")))
+		config_data.set_value("audio", "ambience", db_to_linear(Audio.get_bus_volume("Ambience")))
+		config_data.set_value("audio", "se", db_to_linear(Audio.get_bus_volume("Effects")))
 		
 		config_data.set_value("graphics", "borderless", Game.main_window.borderless)
 		config_data.set_value("graphics", "fullscreen", Game.main_window.mode == Window.MODE_FULLSCREEN)
@@ -214,9 +214,9 @@ class Config:
 	static func save_settings_data() -> void: 
 		GameManager.EventManager.invoke_event("GAME_CONFIG_SAVE")
 		
-		config_data.set_value("audio", "music", Audio.get_bus_volume("Music"))
-		config_data.set_value("audio", "ambience", Audio.get_bus_volume("Ambience"))
-		config_data.set_value("audio", "se", Audio.get_bus_volume("Effects"))
+		config_data.set_value("audio", "music", db_to_linear(Audio.get_bus_volume("Music")))
+		config_data.set_value("audio", "ambience", db_to_linear(Audio.get_bus_volume("Ambience")))
+		config_data.set_value("audio", "se", db_to_linear(Audio.get_bus_volume("Effects")))
 		
 		config_data.set_value("graphics", "borderless", Game.main_window.borderless)
 		config_data.set_value("graphics", "fullscreen", Game.main_window.mode == Window.MODE_FULLSCREEN)
@@ -260,7 +260,8 @@ class Application:
 class Audio: 
 	static func adjust_bus_volume(_bus_name: String, _vol: float) -> void:
 		if (AudioServer.get_bus_index(_bus_name)) >= 0:
-			AudioServer.set_bus_volume_db(AudioServer.get_bus_index(_bus_name), _vol)
+			AudioServer.set_bus_volume_db(AudioServer.get_bus_index(_bus_name), linear_to_db(_vol))
+			print()
 	static func get_bus_volume(_bus_name: String) -> float:
 		if (AudioServer.get_bus_index(_bus_name)) >= 0:
 			return AudioServer.get_bus_volume_db(AudioServer.get_bus_index(_bus_name))

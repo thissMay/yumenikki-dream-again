@@ -10,25 +10,25 @@ var curr_state: State
 func _init(init_state: State = null) -> void: initial_state = init_state
 
 # --- initial ---
-func _setup(s = null) -> void:
+func _setup() -> void:
 	for states in self.get_children():
 		if states is State:
 			states.fsm = self 
 			state_dict[states.name.to_lower()] = states 
 			
 	curr_state = initial_state
-	_enter_initial(s)
-func _enter_initial(s = null) -> void:
-	if curr_state != null: curr_state.enter_state(s)
+	_enter_initial()
+func _enter_initial() -> void:
+	if curr_state != null: curr_state.enter_state()
 
-func _change_to_state(new_state: StringName, s = null) -> void:
+func _change_to_state(new_state: StringName, ) -> void:
 	if new_state != "" and _has_state(new_state):
 		var newstate: State = state_dict.get(new_state.to_lower())
 		if curr_state != newstate and newstate.transitionable:
 			
-			curr_state.exit_state(s)
+			curr_state.exit_state()
 			curr_state = newstate
-			curr_state.enter_state(s)
+			curr_state.enter_state()
 			
 			state_changed.emit(newstate)	
 
@@ -46,9 +46,9 @@ func _get_curr_state() -> State: return curr_state
 func _get_curr_state_name() -> String: return state_dict.find_key(curr_state)
 
 # --- dependent update / process --- 
-func _update(_delta: float, s = null) -> void: 
-	if curr_state != null: curr_state.update(_delta, s)
-func _physics_update(_delta: float, s = null) -> void: 
-	if curr_state != null: curr_state.physics_update(_delta, s)
-func _input_pass(event: InputEvent, s = null) -> void: 
-	if curr_state != null: curr_state.input(event, s)
+func _update(_delta: float,) -> void: 
+	if curr_state != null: curr_state.update(_delta)
+func _physics_update(_delta: float) -> void: 
+	if curr_state != null: curr_state.physics_update(_delta)
+func _input_pass(event: InputEvent,) -> void: 
+	if curr_state != null: curr_state.input(event)

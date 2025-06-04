@@ -1,24 +1,60 @@
-[gd_scene load_steps=6 format=3 uid="uid://qvbki1ipp72p"]
+[gd_scene load_steps=16 format=3 uid="uid://qvbki1ipp72p"]
 
-[ext_resource type="Script" uid="uid://cwii7onurq0dl" path="res://src/entities/sentient_base.gd" id="1_6bdqf"]
+[ext_resource type="Script" uid="uid://jbydpt773v5a" path="res://src/entities/hostile/nav_entity.gd" id="1_5a0qw"]
 [ext_resource type="Script" uid="uid://dd0qxrsakskma" path="res://src/entities/component/sb_component_receiver.gd" id="2_ngeui"]
+[ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="2_p7jhh"]
+[ext_resource type="Texture2D" uid="uid://igeawgnb7dyk" path="res://src/levels/upper_abyss/sprites/jellyfish_small/transparent.png" id="2_tdxiw"]
 [ext_resource type="Script" uid="uid://co5edhtkgx3g8" path="res://src/systems/behaviour/fsm.gd" id="3_7ioek"]
+[ext_resource type="Script" uid="uid://dklkysmgxwdv2" path="res://src/entities/animator.gd" id="3_ngeui"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="3_tdxiw"]
 [ext_resource type="Script" uid="uid://qdqcvtymsa3v" path="res://src/entities/sentient_state.gd" id="4_p7jhh"]
+[ext_resource type="Script" uid="uid://bj1oqttajdq2m" path="res://src/entities/hostile/behaviour_states/wander.gd" id="6_7ioek"]
+[ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/entities/sentient_fsm.gd" id="7_28vvt"]
+[ext_resource type="Script" uid="uid://bk8x1gghf4e05" path="res://src/entities/hostile/stance_states/walk.gd" id="9_xo6tg"]
+[ext_resource type="Script" uid="uid://clwsghva612ul" path="res://src/entities/hostile/behaviour_states/observe.gd" id="10_p7hxl"]
+[ext_resource type="Script" uid="uid://dbo5xans8s5ib" path="res://src/entities/hostile/behaviour_states/chase.gd" id="10_xo6tg"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_18lqh"]
+blend_mode = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_18lqh"]
 
 [node name="TestNeutral" type="CharacterBody2D"]
-script = ExtResource("1_6bdqf")
+script = ExtResource("1_5a0qw")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_18lqh")
+[node name="sprite_renderer" type="Sprite2D" parent="."]
+texture = ExtResource("2_tdxiw")
+hframes = 6
+frame = 3
+script = ExtResource("3_tdxiw")
+autoplay = true
+playing = true
+loop = true
+fps = 5.0
+frame_dimensions = Vector2i(30, 16)
+frame_h_count = 6
+progress = 3
+metadata/_custom_type_script = "uid://cdjphp77kgyqr"
 
-[node name="components" type="Node2D" parent="."]
+[node name="shadow_renderer" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_18lqh")
+position = Vector2(0, -8)
+texture = ExtResource("2_p7jhh")
+
+[node name="sb_components" type="Node2D" parent="."]
 script = ExtResource("2_ngeui")
 metadata/_custom_type_script = "uid://dd0qxrsakskma"
 
+[node name="animator" type="Node" parent="sb_components"]
+script = ExtResource("3_ngeui")
+
+[node name="coll" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_18lqh")
+
+[node name="nav" type="NavigationAgent2D" parent="."]
+
 [node name="stance_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
-script = ExtResource("3_7ioek")
+script = ExtResource("7_28vvt")
 initial_state = NodePath("IDLE")
 metadata/_custom_type_script = "uid://co5edhtkgx3g8"
 
@@ -27,7 +63,7 @@ script = ExtResource("4_p7jhh")
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
 [node name="WALK" type="Node" parent="stance_fsm"]
-script = ExtResource("4_p7jhh")
+script = ExtResource("9_xo6tg")
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
 [node name="RUN" type="Node" parent="stance_fsm"]
@@ -43,10 +79,24 @@ script = ExtResource("3_7ioek")
 initial_state = NodePath("WANDER")
 metadata/_custom_type_script = "uid://co5edhtkgx3g8"
 
-[node name="WANDER" type="Node" parent="behaviour_fsm"]
-script = ExtResource("4_p7jhh")
+[node name="WANDER" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "idle_timer")]
+script = ExtResource("6_7ioek")
+stance_fsm = NodePath("../../stance_fsm")
+idle_timer = NodePath("idle_timer")
+idle_wait_time = null
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
-[node name="CHASE" type="Node" parent="behaviour_fsm"]
-script = ExtResource("4_p7jhh")
+[node name="idle_timer" type="Timer" parent="behaviour_fsm/WANDER"]
+
+[node name="OBSERVE" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "hesitance_timer")]
+script = ExtResource("10_p7hxl")
+stance_fsm = NodePath("../../stance_fsm")
+hesitance_timer = NodePath("hesitance_timer")
+metadata/_custom_type_script = "uid://sd3feymdmkd6"
+
+[node name="hesitance_timer" type="Timer" parent="behaviour_fsm/OBSERVE"]
+
+[node name="CHASE" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("stance_fsm")]
+script = ExtResource("10_xo6tg")
+stance_fsm = NodePath("../../stance_fsm")
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"

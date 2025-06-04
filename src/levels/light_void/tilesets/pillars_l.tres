@@ -1,0 +1,20 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://djgci6ukkjsr5"]
+
+[ext_resource type="Texture2D" uid="uid://ck5b5ege266ph" path="res://src/levels/dream/sane/light_void/sprites/glass-pillars-l_tile.png" id="1_r1tjm"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bwnmh"]
+texture = ExtResource("1_r1tjm")
+separation = Vector2i(2, 0)
+texture_region_size = Vector2i(35, 57)
+0:0/0 = 0
+0:0/0/y_sort_origin = 60
+0:1/0 = 0
+0:1/0/y_sort_origin = 40
+0:2/0 = 0
+0:2/0/y_sort_origin = 20
+1:2/0 = 0
+1:2/0/y_sort_origin = 20
+
+[resource]
+tile_size = Vector2i(16, 57)
+sources/1 = SubResource("TileSetAtlasSource_bwnmh")

@@ -2,9 +2,7 @@ class_name Player
 extends SentientBase
 
 @export_file("*.tscn") var access_menu: String
-
-# ---- controllers. ----
-var controller: SentientController
+@export var fsm: SentientFSM
 
 #region ---- data variables ----
 
@@ -25,13 +23,6 @@ var stamina: float = MAX_STAMINA:
 var is_exhausted: bool = false
 var can_run: bool = CAN_RUN
 
-# ---- sanity & adrenaline ----
-const MAX_ADRENA := 100
-
-const MAX_SANITY := 100
-const MIN_SANE_THRESHOLD := 35
-const MIN_INSANE_THRESHOLD := 30
-
 # ---- data constants ----
 const CAN_RUN: bool = true
 
@@ -45,40 +36,13 @@ const STAMINA_DRAIN: float = .78
 const STAMINA_REGEN: float = 1
 
 const NOISE_MULTI: float = 1
+
+var walk_noise_mult: float = 1
+var run_noise_mult: float = 2.2
+var sneak_noise_mult: float = 0.1
 #endregion ---- data variables ----
 
 # ---- initial ----
 func _enter_tree() -> void: 
 	PLInstance.player = self
 	GameManager.EventManager.invoke_event("PLAYER_UPDATED")
-func _ready() -> void:
-	super()
-
-# ---- process ----
-func _process(_delta: float) -> void:
-	super(_delta)
-func _physics_process(_delta: float) -> void:
-	super(_delta)
-			
-# ---- controller ----
-func set_controller(_controller: SentientController) -> void: 
-	controller = _controller
-	_controller.sentient = self
-
-# ---- sanity and adrenaline ----
-func set_adrenaline(_ad: float) -> void: 
-	PLInstance.adrenaline = clamp(_ad, 0 , MAX_ADRENA)
-	GameManager.EventManager.invoke_event("PLAYER_ADRENALINE_CHANGE", [_ad])
-func set_sanity(_sn: float) -> void: 
-	PLInstance.sanity = clamp(_sn, 0, MAX_SANITY)
-	GameManager.EventManager.invoke_event("PLAYER_SANITY_CHANGE", [_sn])
-	if get_sanity() > MIN_SANE_THRESHOLD: GameManager.EventManager.invoke_event("PLAYER_SANITY_SANE_STATE")
-	elif get_sanity() < MIN_INSANE_THRESHOLD: GameManager.EventManager.invoke_event("PLAYER_SANITY_INSANE_STATE")
-
-func change_adrenaline(_ad: float) -> void:
-	set_adrenaline(_ad + get_adrenaline())
-func change_sanity(_sn: float) -> void:
-	set_sanity(_sn + get_sanity())
-
-func get_adrenaline() -> float: return PLInstance.adrenaline
-func get_sanity() -> float: return PLInstance.sanity

@@ -4,13 +4,17 @@ extends Node
 @export var transitionable: bool = true
 var fsm: FSM
 
-func enter_state(s = null) -> void: pass
-func exit_state(s = null) -> void: pass
+func _init() -> void:
+	set_process(false)
+	set_physics_process(false)
 
-func physics_update(_delta: float, s = null) -> void: pass
-func update(_delta: float, s = null) -> void: pass
+func enter_state() -> void: pass
+func exit_state() -> void: pass
 
-func input(event: InputEvent, s = null) -> void: pass
+func physics_update(_delta: float) -> void: pass
+func update(_delta: float) -> void: pass
+
+func input(event: InputEvent) -> void: pass
 
 # ----
 

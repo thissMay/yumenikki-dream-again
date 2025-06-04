@@ -1,19 +1,19 @@
 class_name SentientFSM
 extends FSM
 
-var player: Player
+var sentient: SentientBase
 var animator: Node
 
 func _setup(_sentient: SentientBase = null) -> void:
-	player = _sentient
+	sentient = _sentient
 	
 	for states in self.get_children():
 		if states is SentientState:
 			states.fsm = self 
 			state_dict[states.name.to_lower()] = states 
 			
-			states.player = player
+			states.sentient = _sentient
 			states.animator = animator
 			
 	curr_state = initial_state
-	_enter_initial(_sentient)
+	_enter_initial()

@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="PlayerEffect" load_steps=6 format=3 uid="uid://w1ycqdwy7pk8"]
+[gd_resource type="Resource" script_class="PlayerEffect" load_steps=7 format=3 uid="uid://w1ycqdwy7pk8"]
 
 [ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_3esty"]
 [ext_resource type="Resource" uid="uid://q3h1rxmfopt5" path="res://src/player/madotsuki/effects/bike/ding_bell.tres" id="1_3l3wi"]
 [ext_resource type="Resource" uid="uid://drjlw4hwxccy8" path="res://src/player/madotsuki/effects/bike/autorun.tres" id="2_3l3wi"]
 [ext_resource type="Script" uid="uid://bxe7uci7t77tx" path="res://src/player/scripts/pl_stats.gd" id="3_8al8y"]
+[ext_resource type="Texture2D" uid="uid://cofl3ja34vnou" path="res://src/player/inventory/menu/effect_cosmetic.png" id="3_jbu78"]
 
 [sub_resource type="Resource" id="Resource_3l3wi"]
 script = ExtResource("3_8al8y")
@@ -15,11 +16,15 @@ exhaust_multi = 0.9
 stamina_drain = 0.0
 stamina_regen = 1.0
 can_run = true
+walk_noise_mult = 0.0
+sneak_noise_mult = 0.0
+run_noise_mult = 0.0
 metadata/_custom_type_script = "uid://bxe7uci7t77tx"
 
 [resource]
 script = ExtResource("1_3esty")
 name = "Bike"
+icon = ExtResource("3_jbu78")
 stats = SubResource("Resource_3l3wi")
 behaviour = ExtResource("2_3l3wi")
 action = ExtResource("1_3l3wi")

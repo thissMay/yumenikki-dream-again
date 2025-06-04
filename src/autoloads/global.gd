@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 const TWEEN_SCALE := 3.75
 

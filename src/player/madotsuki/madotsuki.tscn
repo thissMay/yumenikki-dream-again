@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=41 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/madotsuki/player_yn.gd" id="1_wub1p"]
 [ext_resource type="Script" uid="uid://32q36bskoln0" path="res://src/systems/behaviour/strategist.gd" id="2_c8hmm"]
@@ -8,14 +8,14 @@
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_3hhoi"]
 [ext_resource type="Script" uid="uid://dtqoa37rhrqdu" path="res://src/player/scripts/components/pl_mental_status.gd" id="6_mbimu"]
 [ext_resource type="Script" uid="uid://dd0qxrsakskma" path="res://src/entities/component/sb_component_receiver.gd" id="7_ps2wd"]
+[ext_resource type="Script" uid="uid://cs0aicp13761u" path="res://src/player/scripts/managers/pl_input_manager.gd" id="7_wc1wu"]
+[ext_resource type="Texture2D" uid="uid://v1tx4oh6hb3y" path="res://src/player/madotsuki/display/default/_RESET_match.png" id="8_mbimu"]
 [ext_resource type="AnimationLibrary" uid="uid://bm1cor2werd5w" path="res://src/player/madotsuki/animation_dicts/emote.tres" id="9_m68sj"]
 [ext_resource type="Script" uid="uid://cb08xjc16uxc7" path="res://src/player/scripts/managers/pl_equip_manager.gd" id="9_y4vx3"]
 [ext_resource type="AnimationLibrary" uid="uid://beo0dtar63jr7" path="res://src/player/madotsuki/animation_dicts/normal.tres" id="10_mbimu"]
 [ext_resource type="Script" uid="uid://ce1ox7oil4djt" path="res://src/player/scripts/managers/pl_action_manager.gd" id="10_rhwps"]
 [ext_resource type="Script" uid="uid://dh7dintxcyffh" path="res://src/player/scripts/managers/pl_interact_manager.gd" id="11_bof2k"]
 [ext_resource type="AnimationLibrary" uid="uid://jmtvl5nfo2wn" path="res://src/player/madotsuki/animation_dicts/reset.tres" id="11_wc1wu"]
-[ext_resource type="Script" uid="uid://bxdr1wekbu7uu" path="res://src/player/scripts/managers/pl_animator_manager.gd" id="12_ukmoe"]
-[ext_resource type="Texture2D" uid="uid://51l0bvgjidxn" path="res://src/player/madotsuki/display/default/_RESET.png" id="13_p1bbc"]
 [ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/entities/sentient_fsm.gd" id="18_rujao"]
 [ext_resource type="Script" uid="uid://co5edhtkgx3g8" path="res://src/systems/behaviour/fsm.gd" id="19_hy2th"]
 [ext_resource type="Script" uid="uid://bcy41p4huaij7" path="res://src/player/states/yn style/stamina/normal.gd" id="20_fr82v"]
@@ -31,6 +31,24 @@
 
 [sub_resource type="Resource" id="Resource_gmp5c"]
 script = ExtResource("3_kx4hk")
+
+[sub_resource type="GDScript" id="GDScript_mbimu"]
+script/source = "class_name PLAnimationManager
+extends SentientAnimator
+
+# --- setup functions --- 
+func _update(_delta: float) -> void:
+	super(_delta)
+
+	if sentient.is_moving: 
+		animation_player.speed_scale = clamp(.21 * log(sentient.speed / sentient.MAX_SPEED) + 1, 0, INF)
+	else: animation_player.speed_scale = 1
+#
+#func handle_sprite_direction(_sentient: SentientBase) -> void:
+	#if _sentient.abs_velocity.length() > 5:
+		#super(_sentient)
+	#
+"
 
 [sub_resource type="Animation" id="Animation_m68sj"]
 length = 0.001
@@ -56,7 +74,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("13_p1bbc")]
+"values": [ExtResource("8_mbimu")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m68sj"]
@@ -109,9 +127,10 @@ blend_mode = 2
 size = Vector2(2, 2)
 
 [node name="Madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("fsm")]
+collision_layer = 5
 script = ExtResource("1_wub1p")
-fsm = NodePath("fsm")
 sprite_sheet = ExtResource("2_mbimu")
+fsm = NodePath("fsm")
 
 [node name="look_at" type="Marker2D" parent="."]
 script = ExtResource("2_c8hmm")
@@ -123,8 +142,11 @@ script = ExtResource("7_ps2wd")
 [node name="mental_status" type="Node" parent="sb_components"]
 script = ExtResource("6_mbimu")
 
+[node name="input_manager" type="Node" parent="sb_components"]
+script = ExtResource("7_wc1wu")
+
 [node name="animation_manager" type="Node" parent="sb_components"]
-script = ExtResource("12_ukmoe")
+script = SubResource("GDScript_mbimu")
 
 [node name="animation_player" type="AnimationPlayer" parent="sb_components/animation_manager"]
 libraries = {
@@ -221,11 +243,10 @@ texture = ExtResource("29_1qwjo")
 clip_children = 2
 use_parent_material = true
 position = Vector2(0, 14)
-texture = ExtResource("13_p1bbc")
+texture = ExtResource("8_mbimu")
 offset = Vector2(0, -24)
 script = ExtResource("30_kknx7")
 frame_dimensions = Vector2i(48, 48)
-frame_v_count = 0
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="sprite_renderer"]
 position = Vector2(0, -10)

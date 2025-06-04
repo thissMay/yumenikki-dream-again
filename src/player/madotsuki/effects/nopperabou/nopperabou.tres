@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PlayerEffect" load_steps=4 format=3 uid="uid://dee3tybqqh0yj"]
+
+[ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_qyuky"]
+[ext_resource type="Texture2D" uid="uid://cofl3ja34vnou" path="res://src/player/inventory/menu/effect_cosmetic.png" id="1_rjcr4"]
+[ext_resource type="Resource" uid="uid://bga2t6rqog6kv" path="res://src/player/madotsuki/sprite_sheets/nopperabou.tres" id="3_7ejb6"]
+
+[resource]
+script = ExtResource("1_qyuky")
+name = "Nopperabou"
+icon = ExtResource("1_rjcr4")
+sprite_override = ExtResource("3_7ejb6")
+player_component_prefab = ""
+metadata/_custom_type_script = "uid://cycsi2jsiuie0"

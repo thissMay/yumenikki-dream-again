@@ -30,11 +30,11 @@ func _ready() -> void:
 	
 func setup() -> void:
 	music_slider.value_changed.connect(func(_val: float):
-		Game.Audio.adjust_bus_volume("Music", clamp(_val, -100, 0)))
+		Game.Audio.adjust_bus_volume("Music", clamp(_val, 0, 1)))
 	amb_slider.value_changed.connect(func(_val: float):
-		Game.Audio.adjust_bus_volume("Ambience", clamp(_val, -100, 0)))
+		Game.Audio.adjust_bus_volume("Ambience", clamp(_val, 0, 1)))
 	sfx_slider.value_changed.connect(func(_val: float):
-		Game.Audio.adjust_bus_volume("Effects", clamp(_val, -100, 0)))
+		Game.Audio.adjust_bus_volume("Effects", clamp(_val, 0, 1)))
 
 	borderless.toggled.connect(func(_truth: bool): Game.set_window_borderless(_truth))
 	full_screen.toggled.connect(func(_truth: bool): 

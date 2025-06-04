@@ -10,18 +10,17 @@ var components: SBComponentReceiver
 const TRANS_WEIGHT := 0.225
 
 const BASE_SPEED: float = 27.5
+const SPRINT_MULT: float = 2.3
 const MAX_SPEED: float = 35
 
 @export_category("Base Entity Behaviour")
 
 var sprite_renderer: Sprite2D
 var shadow_renderer: Sprite2D # -- optional
-
 var desired_vel: Vector2
 
 @export_subgroup("Direction Vectors")
 var lerped_direction: Vector2 = Vector2.DOWN
-var trans_weight: float = TRANS_WEIGHT
 
 #region ---- mobility and velocity properties ----
 @export_group("Mobility Values")
@@ -48,17 +47,21 @@ func _ready() -> void:
 		
 	await self.ready
 	self.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
+	
+	mandatory_components()
+	dependency_components()
+	
+func dependency_components() -> void: pass 	
+func mandatory_components() -> void: pass 
 
 # ---- base processes ----
 func _physics_process(_delta: float) -> void:
-	components.physics_update(_delta)
+	components._physics_update(_delta)
 	speed = self.velocity.length()
 	abs_velocity = abs(self.velocity)
-	
-	super(_delta) # --- sentient entity override.
 func _process(_delta: float) -> void:
 	_handle_heading(direction)
-	components.update(_delta)
+	components._update(_delta)
 	
 	super(_delta) # --- sentient entity override.
 
@@ -67,7 +70,6 @@ func handle_velocity(_dir: Vector2, _mult: float = 1) -> void:
 	desired_vel = ((_dir.normalized() * initial_speed) * _mult) + external_velocity
 	self.velocity = desired_vel
 	
-
 #endregion
 #region ---- direction ----
 
@@ -85,7 +87,7 @@ func lerp_dir(dir: Vector2, interpolation_multi: float = 1) -> void:
 func look_at_dir(_dir: Vector2) -> void: 
 	if _dir != Vector2.ZERO: 
 		direction = _dir
-		lerp_dir(_dir, trans_weight)
+		lerp_dir(_dir, TRANS_WEIGHT)
 #endregion
 
 func handle_noise() -> void:

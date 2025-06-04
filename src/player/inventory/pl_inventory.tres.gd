@@ -28,8 +28,12 @@ static var favourite_effect: PlayerEffect
 static var data: PLInventoryData = preload("res://src/player/inventory/data/default_debug_data.tres")
 signal inv_updatedxx
 
-func _setup(s = null) -> void:
-	super(s)
+func _setup() -> void:
+		
+	white_petal.visible = false
+	pink_petal.visible = false
+	
+	super()
 	
 	invert_cutscene_listener = EventListener.new(["SPECIAL_INVERT_CUTSCENE_BEGIN", "SPECIAL_INVERT_CUTSCENE_END"], false, self)
 	player_equip_listener = EventListener.new(["PLAYER_EQUIP", "PLAYER_DEEQUIP"], false, self)
@@ -71,6 +75,8 @@ func append_item(_item: PlayerEffect) -> void:
 	button.unique_data = _item
 	button.min_size.y = 20
 	button.set_text(_item.get_eff_name())
+	
+	button.set_icon(_item.icon)
 	button.name = (_item.get_eff_name())
 	
 	button.hover_exited.connect(func(): hovered_button = null)

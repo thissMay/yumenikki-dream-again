@@ -1,0 +1,42 @@
+[gd_scene load_steps=9 format=3 uid="uid://cyclhtxv2hj8w"]
+
+[ext_resource type="Script" uid="uid://gd3mx2wqj62v" path="res://src/player/madotsuki/effects/earring/earring.gd" id="1_sjmey"]
+[ext_resource type="Shader" uid="uid://hg6wywtqrlha" path="res://src/shaders/masks/additive.gdshader" id="2_mvjnb"]
+[ext_resource type="Texture2D" uid="uid://ednmj30blu24" path="res://src/player/madotsuki/effects/earring/glow.png" id="3_mc1cf"]
+[ext_resource type="AudioStream" uid="uid://2d4lpai18j6m" path="res://src/audio/amb/amb_lin_pendant.ogg" id="4_1gqm7"]
+[ext_resource type="Texture2D" uid="uid://c330iw8g0pnfw" path="res://src/player/madotsuki/effects/earring/arrow_direction.png" id="4_chp2p"]
+[ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="5_uevph"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5lfuw"]
+radius = 100.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6qiwq"]
+shader = ExtResource("2_mvjnb")
+shader_parameter/transparency = 0.0
+
+[node name="lin_earring" type="Node2D" node_paths=PackedStringArray("sound_player", "field", "glow", "arrow")]
+script = ExtResource("1_sjmey")
+sound_player = NodePath("noise")
+field = NodePath("field")
+glow = NodePath("glow")
+arrow = NodePath("glow/arrow")
+
+[node name="field" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="circle" type="CollisionShape2D" parent="field"]
+shape = SubResource("CircleShape2D_5lfuw")
+
+[node name="glow" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_6qiwq")
+texture = ExtResource("3_mc1cf")
+
+[node name="arrow" type="Sprite2D" parent="glow"]
+texture = ExtResource("4_chp2p")
+
+[node name="noise" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_1gqm7")
+bus = &"Effects"
+script = ExtResource("5_uevph")
+metadata/_custom_type_script = "uid://b8o626ec7226k"
