@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="PlayerEffect" load_steps=2 format=3 uid="uid://grgjuuj8rupj"]
-
-[ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_mrfho"]
-
-[resource]
-script = ExtResource("1_mrfho")
-name = ""
-player_component_prefab = ""
-metadata/_custom_type_script = "uid://cycsi2jsiuie0"

@@ -5,7 +5,7 @@ var trauma: ShaderMaterial
 
 var bpm: float
 
-func _ready() -> void:
+func _setup() -> void:
 	trauma = get_node("trauma/fx").material
 	
 	sound_player = $sound
@@ -14,7 +14,7 @@ func _ready() -> void:
 	
 	set_active(active)
 
-func _process(delta: float) -> void:
+func _update(delta: float) -> void:
 	if PLInstance.get_pl() != null:
 		bpm = PLInstance.get_pl().components.get_component_by_name("mental_status").bpm
 		

@@ -11,9 +11,8 @@ func _setup(_sentient: SentientBase = null) -> void:
 		if states is SentientState:
 			states.fsm = self 
 			state_dict[states.name.to_lower()] = states 
-			
-			states.sentient = _sentient
-			states.animator = animator
+			states.sentient = sentient
+			states._setup()
 			
 	curr_state = initial_state
 	_enter_initial()

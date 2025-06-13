@@ -37,11 +37,15 @@ func _ready() -> void:
 	_setup()
 	self.mouse_filter = Control.MOUSE_FILTER_PASS
 	set_button_toggle_mode(is_togglable)
-	button.pressed.connect(func(): pressed.emit())
 	button.size = self.size
 	
-	set_active(active)
+	button.pressed.connect(func(): pressed.emit())
+	button.mouse_entered.connect(_on_hover)
+	button.mouse_exited.connect(_on_unhover)
+	button.button_down.connect(_on_press)
 	
+	set_active(active)
+	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 func _setup() -> void:
 	_components_setup_instantiation()
 	_components_setup_children()

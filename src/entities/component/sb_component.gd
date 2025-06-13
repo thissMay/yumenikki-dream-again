@@ -4,6 +4,10 @@ extends Node
 var sentient: SentientBase
 @export var active: bool = true
 
+func _ready() -> void:
+	set_process(false)
+	set_physics_process(false)
+
 func _setup(_sentient: SentientBase) -> void: sentient = _sentient
 func _update(delta: float) -> void: pass
 func _physics_update(delta: float) -> void: pass

@@ -9,8 +9,7 @@ func _ready() -> void:
 	if area_region != null and area_region is AreaRegion:
 		
 		(area_region as AreaRegion).player_enter_handle.connect(
-			func(_pl): if enter_sequence: 
-				enter_sequence._execute())
+			func(_pl): if enter_sequence != null: enter_sequence._execute())
 		
 		(area_region as AreaRegion).player_exit_handle.connect(
-			func(_pl):	if exit_sequence: exit_sequence._execute())
+			func(_pl):	if exit_sequence != null: exit_sequence._execute())

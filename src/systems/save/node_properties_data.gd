@@ -13,14 +13,14 @@ func _ready() -> void:
 
 
 # ---- load (props) ----
-func load_data(_ws: SceneNode) -> Error:
+func load_data(_scene: SceneNode) -> Error:
 	parent = get_parent()
 	if parent == null: return ERR_UNAVAILABLE
 		
 	# we are going to fetch it from game lol.
 	if properties:
-		for p in Game.data["scene"][_ws.name]["data"]["prop"]:
-			parent.set_indexed(p, Game.data["scene"][_ws.name]["data"]["prop"].get(p))
+		for p in Game.data["scene"][_scene.name]["data"]["prop"]:
+			parent.set_indexed(p, Game.data["scene"][_scene.name]["data"]["prop"].get(p))
 			
 		return OK
 	return ERR_DOES_NOT_EXIST

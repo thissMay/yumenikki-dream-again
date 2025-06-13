@@ -36,9 +36,11 @@ layout_mode = 1
 inventory_toggle = NodePath("../inventory_toggle")
 
 [node name="eye_l" parent="inventory/display/white_petal_stats/mado" index="0"]
+ping_pong = null
 progress = 0
 
 [node name="eye_r" parent="inventory/display/white_petal_stats/mado" index="1"]
+ping_pong = null
 progress = 0
 
 [node name="inventory_toggle" type="Control" parent="."]

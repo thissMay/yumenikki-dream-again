@@ -31,13 +31,14 @@ static func setup() -> void:
 	door_listener = EventListener.new(["PLAYER_DOOR_USED", "SCENE_CHANGE_SUCCESS"], true)
 	door_listener.do_on_notify("PLAYER_DOOR_USED", func(): door_went_flag = true)
 	door_listener.do_on_notify("SCENE_CHANGE_SUCCESS", func(): 
-		for d : SceneDoor in Game.get_group_arr("doors"):
+		for d in Game.get_group_arr("doors"):
 			if (
 				load(d.scene_path) == Game.scene_manager.prev_scene_ps and 
 				door_went_flag and
 				GameManager.EventManager.get_event_param("PLAYER_DOOR_USED")[0] == d.connection_id):
 					
 					teleport_player(d.get_spawn_point(), d.spawn_dir, true)
+					player.reparent(d.interactable)
 					door_went_flag = false
 		)
 

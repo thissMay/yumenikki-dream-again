@@ -35,11 +35,13 @@ const MAX_STAMINA := 5
 const STAMINA_DRAIN: float = .78
 const STAMINA_REGEN: float = 1
 
-const NOISE_MULTI: float = 1
+const WALK_NOISE_MULTI: float = 1
+const RUN_NOISE_MULTI: float = 2.2
+const SNEAK_NOISE_MULTI: float = 0.5
 
-var walk_noise_mult: float = 1
-var run_noise_mult: float = 2.2
-var sneak_noise_mult: float = 0.1
+var walk_noise_mult: float = WALK_NOISE_MULTI
+var run_noise_mult: float = RUN_NOISE_MULTI
+var sneak_noise_mult: float =SNEAK_NOISE_MULTI
 #endregion ---- data variables ----
 
 # ---- initial ----

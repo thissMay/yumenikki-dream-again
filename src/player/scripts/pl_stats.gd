@@ -14,9 +14,9 @@ extends Resource
 @export var can_run: bool = Player.CAN_RUN
 
 @export_group("Noise Multipliers")
-@export var walk_noise_mult: float 
-@export var sneak_noise_mult: float 
-@export var run_noise_mult: float 
+@export var walk_noise_mult: float = Player.WALK_NOISE_MULTI
+@export var sneak_noise_mult: float = Player.SNEAK_NOISE_MULTI
+@export var run_noise_mult: float = Player.RUN_NOISE_MULTI
 
 func _apply(_pl: Player) -> void: 
 	_pl.initial_speed = base_speed
@@ -29,6 +29,11 @@ func _apply(_pl: Player) -> void:
 	_pl.stamina_drain = self.stamina_drain
 	_pl.stamina_regen = self.stamina_regen
 	_pl.can_run = self.can_run	
+	
+	_pl.walk_noise_mult = walk_noise_mult
+	_pl.sneak_noise_mult = sneak_noise_mult
+	_pl.run_noise_mult = run_noise_mult
+	
 func _unapply(_pl: Player) -> void: 
 	_pl.initial_speed = Player.BASE_SPEED
 	
@@ -40,5 +45,9 @@ func _unapply(_pl: Player) -> void:
 	_pl.stamina_drain = Player.STAMINA_DRAIN
 	_pl.stamina_regen = Player.STAMINA_REGEN
 	_pl.can_run = Player.CAN_RUN
+
+	_pl.walk_noise_mult = Player.WALK_NOISE_MULTI
+	_pl.sneak_noise_mult = Player.SNEAK_NOISE_MULTI
+	_pl.run_noise_mult = Player.RUN_NOISE_MULTI
 
 func _physics_update(_delta: float, _pl: Player) -> void: pass

@@ -10,8 +10,8 @@ var player_equip_listener: EventListener
 @export var pink_petal: Control
 
 @export var inventory_toggle: GUIPanelButton
-@export var white_petal_button: GUIPanelButton
-@export var pink_petal_button: GUIPanelButton
+@export var white_petal_button: AbstractButton
+@export var pink_petal_button: AbstractButton
 
 @export var item_container: GridContainer
 

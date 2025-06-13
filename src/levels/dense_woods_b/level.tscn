@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://dhb4h12jpspjg"]
+[gd_scene load_steps=21 format=4 uid="uid://dhb4h12jpspjg"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_wjh5h"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_6hpsn"]
@@ -11,12 +11,20 @@
 [ext_resource type="PackedScene" uid="uid://be7r3txtdvb20" path="res://src/levels/_ignore/rain.tscn" id="5_dwx8a"]
 [ext_resource type="PackedScene" uid="uid://djnomncx1otsq" path="res://src/systems/seamless_detector.tscn" id="5_k7yxg"]
 [ext_resource type="Shader" uid="uid://5k0375eqfw0q" path="res://src/shaders/masks/sub.gdshader" id="8_5st6v"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="8_iii1a"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="9_xynxk"]
+[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="10_wuq7m"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/_ignore/tilemaps/_common_objs.tres" id="11_c3ibc"]
 [ext_resource type="Script" uid="uid://bbh7tjv0f6kad" path="res://src/systems/interaction/door_scenes.gd" id="13_ar0bk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pemjj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e4mse"]
 shader = ExtResource("8_5st6v")
 shader_parameter/transparency = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ar0bk"]
+size = Vector2(1016, 400)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ibb01"]
 size = Vector2(64, 128)
@@ -66,8 +74,29 @@ down_disabled = true
 [node name="dense_woods_b" type="Node2D" parent="."]
 y_sort_enabled = true
 
+[node name="interactable" type="Area2D" parent="dense_woods_b"]
+process_mode = 3
+position = Vector2(344, 26)
+script = ExtResource("8_iii1a")
+area = true
+shape = SubResource("RectangleShape2D_pemjj")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
+metadata/_custom_type_script = "uid://bxh774473av7t"
+
+[node name="on_interact" type="Node" parent="dense_woods_b/interactable"]
+process_mode = 4
+script = ExtResource("9_xynxk")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="go_to_mall" type="Node" parent="dense_woods_b/interactable/on_interact" node_paths=PackedStringArray("interactable")]
+script = ExtResource("10_wuq7m")
+connection_id = "manhole"
+scene_path = "uid://bbrdx4chh535q"
+interactable = NodePath("../..")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
 [node name="Madotsuki" parent="dense_woods_b" instance=ExtResource("2_i7lt2")]
-position = Vector2(1920, -336)
+position = Vector2(384, 28)
 
 [node name="grass" type="TileMapLayer" parent="dense_woods_b"]
 z_index = -2
@@ -118,6 +147,7 @@ process_mode = 3
 position = Vector2(1856, -384)
 script = ExtResource("4_tp3uc")
 size = Vector2i(1016, 400)
+shape = SubResource("RectangleShape2D_ar0bk")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [node name="Interactable" type="Area2D" parent="dense_woods_b"]

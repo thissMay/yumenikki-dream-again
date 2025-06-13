@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=40 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/madotsuki/player_yn.gd" id="1_wub1p"]
 [ext_resource type="Script" uid="uid://32q36bskoln0" path="res://src/systems/behaviour/strategist.gd" id="2_c8hmm"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dtqoa37rhrqdu" path="res://src/player/scripts/components/pl_mental_status.gd" id="6_mbimu"]
 [ext_resource type="Script" uid="uid://dd0qxrsakskma" path="res://src/entities/component/sb_component_receiver.gd" id="7_ps2wd"]
 [ext_resource type="Script" uid="uid://cs0aicp13761u" path="res://src/player/scripts/managers/pl_input_manager.gd" id="7_wc1wu"]
+[ext_resource type="Script" uid="uid://dklkysmgxwdv2" path="res://src/entities/component/sb_animator.gd" id="8_cin7d"]
 [ext_resource type="Texture2D" uid="uid://v1tx4oh6hb3y" path="res://src/player/madotsuki/display/default/_RESET_match.png" id="8_mbimu"]
 [ext_resource type="AnimationLibrary" uid="uid://bm1cor2werd5w" path="res://src/player/madotsuki/animation_dicts/emote.tres" id="9_m68sj"]
 [ext_resource type="Script" uid="uid://cb08xjc16uxc7" path="res://src/player/scripts/managers/pl_equip_manager.gd" id="9_y4vx3"]
@@ -16,6 +17,7 @@
 [ext_resource type="Script" uid="uid://ce1ox7oil4djt" path="res://src/player/scripts/managers/pl_action_manager.gd" id="10_rhwps"]
 [ext_resource type="Script" uid="uid://dh7dintxcyffh" path="res://src/player/scripts/managers/pl_interact_manager.gd" id="11_bof2k"]
 [ext_resource type="AnimationLibrary" uid="uid://jmtvl5nfo2wn" path="res://src/player/madotsuki/animation_dicts/reset.tres" id="11_wc1wu"]
+[ext_resource type="Script" uid="uid://dyhtvuyxwohdq" path="res://src/entities/component/sb_sprite_handler.gd" id="13_p5dbe"]
 [ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/entities/sentient_fsm.gd" id="18_rujao"]
 [ext_resource type="Script" uid="uid://co5edhtkgx3g8" path="res://src/systems/behaviour/fsm.gd" id="19_hy2th"]
 [ext_resource type="Script" uid="uid://bcy41p4huaij7" path="res://src/player/states/yn style/stamina/normal.gd" id="20_fr82v"]
@@ -31,24 +33,6 @@
 
 [sub_resource type="Resource" id="Resource_gmp5c"]
 script = ExtResource("3_kx4hk")
-
-[sub_resource type="GDScript" id="GDScript_mbimu"]
-script/source = "class_name PLAnimationManager
-extends SentientAnimator
-
-# --- setup functions --- 
-func _update(_delta: float) -> void:
-	super(_delta)
-
-	if sentient.is_moving: 
-		animation_player.speed_scale = clamp(.21 * log(sentient.speed / sentient.MAX_SPEED) + 1, 0, INF)
-	else: animation_player.speed_scale = 1
-#
-#func handle_sprite_direction(_sentient: SentientBase) -> void:
-	#if _sentient.abs_velocity.length() > 5:
-		#super(_sentient)
-	#
-"
 
 [sub_resource type="Animation" id="Animation_m68sj"]
 length = 0.001
@@ -92,31 +76,6 @@ size = Vector2(6, 3)
 radius = 11.0
 height = 34.0
 
-[sub_resource type="GDScript" id="GDScript_f84pu"]
-script/source = "extends PlayerEmote
-
-func _perform(_pl: Player) -> void:
-	(_pl as Player_YN).force_change_state(\"action\")
-	
-func _enter(_pl: Player) -> void:
-	(_pl as Player_YN).animation_manager.play_animation(get_enter_anim_path())
-	await (_pl as Player_YN).animation_manager.animation_player.animation_finished
-	GameManager.change_scene_to(load(\"res://src/levels/dream/sane/nexus/level.tscn\"))
-	(_pl as Player_YN).force_change_state(\"idle\")
-	
-func _exit(_pl: Player) -> void: pass
-func _input(_pl: Player, _input: InputEvent) -> void: pass
-"
-
-[sub_resource type="Resource" id="Resource_keq3n"]
-script = SubResource("GDScript_f84pu")
-path = "normal/"
-emote_enter_anim = "pinch"
-emote_exit_anim = ""
-emote_speed = 1.0
-auto_exit = false
-metadata/_custom_type_script = "uid://48y120qdeepc"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7co0"]
 size = Vector2(10, 4)
 
@@ -146,7 +105,7 @@ script = ExtResource("6_mbimu")
 script = ExtResource("7_wc1wu")
 
 [node name="animation_manager" type="Node" parent="sb_components"]
-script = SubResource("GDScript_mbimu")
+script = ExtResource("8_cin7d")
 
 [node name="animation_player" type="AnimationPlayer" parent="sb_components/animation_manager"]
 libraries = {
@@ -156,6 +115,10 @@ libraries = {
 &"reset": ExtResource("11_wc1wu")
 }
 playback_auto_capture = false
+
+[node name="sprite_handler" type="Node" parent="sb_components"]
+script = ExtResource("13_p5dbe")
+metadata/_custom_type_script = "uid://bgisym1hdeqgt"
 
 [node name="equip_manager" type="Node" parent="sb_components"]
 script = ExtResource("9_y4vx3")
@@ -211,7 +174,6 @@ script = ExtResource("21_5r1vc")
 
 [node name="IDLE" type="Node" parent="fsm"]
 script = ExtResource("22_e8irh")
-pinch = SubResource("Resource_keq3n")
 
 [node name="WALK" type="Node" parent="fsm"]
 script = ExtResource("24_ydgy1")

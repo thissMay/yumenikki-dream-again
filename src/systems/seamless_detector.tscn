@@ -3,16 +3,16 @@
 [ext_resource type="Script" uid="uid://bs2b8lb5xbqm3" path="res://src/systems/utils/seamless_detector.gd" id="1_ytyvq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3xc3k"]
-size = Vector2(3040, 16)
+size = Vector2(3360, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x4sw1"]
-size = Vector2(3040, 16)
+size = Vector2(3360, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pjes7"]
-size = Vector2(16, 1856)
+size = Vector2(16, 2816)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tonw3"]
-size = Vector2(16, 1856)
+size = Vector2(16, 2816)
 
 [node name="seamless_detector" type="Node2D"]
 script = ExtResource("1_ytyvq")

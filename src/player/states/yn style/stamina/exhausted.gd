@@ -10,5 +10,5 @@ func exit_state() -> void:
 func physics_update(_delta: float, ) -> void:
 	PLInstance.get_pl().components.get_component_by_name("mental_status").bpm = 120
 	PLInstance.player.stamina += (_delta * (PLInstance.player.stamina_regen)) / 2
-	if PLInstance.get_pl().stamina > 3.75: 
+	if PLInstance.get_pl().stamina > 0.5 * (Player.MAX_STAMINA): 
 		fsm._change_to_state("normal")

@@ -5,8 +5,10 @@ var heading: float
 
 func enter_state() -> void: 
 	sentient.animation_manager.anim_state.start("walk")
+	super()
 func exit_state() -> void:
 	sentient.animation_manager.anim_state.stop()
+	super()
 	
 func update(_delta: float, ) -> void:
 	

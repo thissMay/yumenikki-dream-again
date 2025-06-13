@@ -21,13 +21,13 @@ func set_active(_active: bool) -> void:
 	self.set_physics_process(_active)
 	self.set_process_input(_active)	
 func _handle_heading(_dir: Vector2 = direction) -> compass_headings:
-		if abs(_dir.x) > 0: 
-			if _dir.y > 0: heading = compass_headings.SOUTH_HORIZ
-			elif _dir.y < 0: heading = compass_headings.NORTH_HORIZ
+		if abs(_dir.x) > .5: 
+			if _dir.y > .5: heading = compass_headings.SOUTH_HORIZ
+			elif _dir.y < -.5: heading = compass_headings.NORTH_HORIZ
 			else: heading = compass_headings.HORIZ
 		else:
-			if _dir.y > 0: heading = compass_headings.SOUTH
-			elif _dir.y < 0: heading = compass_headings.NORTH
+			if _dir.y > .5: heading = compass_headings.SOUTH
+			elif _dir.y < -.5: heading = compass_headings.NORTH
 			
 		return heading
 

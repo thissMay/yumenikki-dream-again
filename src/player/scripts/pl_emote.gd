@@ -12,14 +12,14 @@ func _perform(_pl: Player) -> void:
 	(_pl as Player_YN).force_change_state("action")
 	
 func _enter(_pl: Player) -> void:
-	(_pl as Player_YN).animation_manager.play_animation(get_enter_anim_path())
-	await (_pl as Player_YN).animation_manager.animation_player.animation_finished
+	(_pl as Player_YN).components.get_component_by_name("animation_manager").play_animation(get_enter_anim_path())
+	await (_pl as Player_YN).components.get_component_by_name("animation_manager").animation_player.animation_finished
 	if auto_exit: (_pl as Player_YN).cancel_action(self)
 	
 func _exit(_pl: Player) -> void:
 	if !emote_exit_anim.is_empty():
-		(_pl as Player_YN).animation_manager.play_animation(get_exit_anim_path())
-		await (_pl as Player_YN).animation_manager.animation_player.animation_finished
+		(_pl as Player_YN).components.get_component_by_name("animation_manager").play_animation(get_exit_anim_path())
+		await (_pl as Player_YN).components.get_component_by_name("animation_manager").animation_player.animation_finished
 	
 	(_pl as Player_YN).force_change_state("idle")
 

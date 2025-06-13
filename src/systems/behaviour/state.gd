@@ -4,12 +4,15 @@ extends Node
 @export var transitionable: bool = true
 var fsm: FSM
 
+signal entered
+signal exited
+
 func _init() -> void:
 	set_process(false)
 	set_physics_process(false)
 
-func enter_state() -> void: pass
-func exit_state() -> void: pass
+func enter_state() -> void: entered.emit()
+func exit_state() -> void: exited.emit()
 
 func physics_update(_delta: float) -> void: pass
 func update(_delta: float) -> void: pass

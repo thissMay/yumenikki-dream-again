@@ -18,7 +18,7 @@ class_name Component extends Node
 		active = _a
 		set_active(_a)
 
-func _enter_tree() -> void: setup()
+func _ready() -> void: setup()
 
 # ---- component functions ----
 func set_active(_active: bool = true) -> void:
@@ -30,11 +30,14 @@ func set_active(_active: bool = true) -> void:
 func setup() -> void:
 	if get_parent() is ComponentReceiver: 
 		receiver = get_parent()
+		_setup()
 		if !receiver.bypass_enabled.is_connected(_on_bypass_enabled): 
 			receiver.bypass_enabled.connect(_on_bypass_enabled)
 		if !receiver.bypass_lifted.is_connected(_on_bypass_lifted): 
 			receiver.bypass_lifted.connect(_on_bypass_lifted)
 	else: return
+func _setup() -> void: pass
+	
 func delete() -> void: 
 	self.queue_free()
 

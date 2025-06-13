@@ -25,12 +25,18 @@ func _component_setup_name() -> void:
 func _setup() -> void:
 	super()
 	texture_renderer.frame_dimensions = frame_dimensions
-	texture_renderer.texture = texture
 	texture_renderer.strip_style = style
 	texture_renderer.centered = false
 	
 	texture_renderer.progress = unhover_cell if GlobalUtils.is_within_exclusive(unhover_cell, 0, 3) else 0
+	texture_renderer.set_sprite(texture)
 
-func _on_hover() -> void: texture_renderer.progress = hover_cell
-func _on_unhover() -> void: texture_renderer.progress = unhover_cell
-func _on_press() -> void: texture_renderer.progress = press_cell
+func _on_hover() -> void: 
+	AudioService.play_sound(preload("res://src/audio/ui/ui_button_hover.wav"), .5)
+	texture_renderer.progress = hover_cell	
+func _on_unhover() -> void: 
+	AudioService.play_sound(preload("res://src/audio/ui/ui_button_unhover.wav"), .5)
+	texture_renderer.progress = unhover_cell
+func _on_press() -> void: 
+	AudioService.play_sound(preload("res://src/audio/ui/ui_button_press.wav"), .5)
+	texture_renderer.progress = press_cell

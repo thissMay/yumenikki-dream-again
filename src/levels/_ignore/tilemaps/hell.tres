@@ -12,6 +12,7 @@ texture = ExtResource("1_o4nfu")
 3:3/animation_frame_3/duration = 1.0
 3:3/animation_frame_4/duration = 1.0
 3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:2/animation_speed = 8.0
 3:2/animation_frame_0/duration = 1.0
 3:2/animation_frame_1/duration = 1.0
@@ -19,6 +20,8 @@ texture = ExtResource("1_o4nfu")
 3:2/animation_frame_3/duration = 1.0
 3:2/animation_frame_4/duration = 1.0
 3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [resource]
+physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_4s6ac")

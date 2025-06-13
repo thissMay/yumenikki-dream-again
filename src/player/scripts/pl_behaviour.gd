@@ -35,8 +35,6 @@ func _run(_pl: Player, _dir: Vector2) -> void:
 		
 	if abs(_pl.velocity.length()) <= 0 or !Global.key_held_down(Vector2i(Global.keybinds.sprint_key, 0)):
 		_pl.force_change_state("walk")
-		
-
 func _sneak(_pl: Player, _dir: Vector2) -> void:
 	_pl.handle_velocity(_dir, _pl.sneak_multiplier)
 	if _pl.velocity == Vector2.ZERO: _pl.force_change_state("idle")

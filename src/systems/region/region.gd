@@ -3,41 +3,52 @@
 class_name AreaRegion
 extends Area2D
 
-# --- sets the camera to the region area.
-
 var region_priority: int = 0
 var rect: CollisionShape2D
 var marker: Marker2D
 
 @export var size: Vector2i
-
-signal player_enter_handle(_pl)
-signal player_exit_handle(_pl)
-
-var parent: Node
+@export var shape: Shape2D: 
+	set(_shape): 
+		shape = _shape
+		if Engine.is_editor_hint():
+			rect.shape = _shape
+@export var debug_colour: Color:
+	set(_colour):
+		if Engine.is_editor_hint():
+			debug_colour = _colour
+			rect.debug_color = _colour
+		
+signal player_enter_handle(_pl: Player)
+signal player_exit_handle(_pl: Player)
 
 func _init() -> void: 
 	if get_node_or_null("rect") == null: 
 		rect = CollisionShape2D.new()
-		rect.shape = RectangleShape2D.new()
+		shape = RectangleShape2D.new()
+		rect.shape = shape
 		rect.name = "rect"
 		self.add_child(rect)	
+	else:
+		shape = rect.shape
+		
 	if get_node_or_null("marker") == null:
 		marker = Marker2D.new()
 		marker.name = "marker"
 		self.add_child(marker)
-
+		
+	rect.debug_color = Color(0.2 ,0, 0.7, 0.2)
 func _ready() -> void:
-	parent = get_parent()
-	if parent != null and parent is CanvasItem: 
-		parent.visibility_changed.connect(func(): rect.disabled = !(parent.visible and is_visible_in_tree()))
-	self.visibility_changed.connect(func(): rect.disabled = !(self.visible and is_visible_in_tree()))
-	self.set_process(false)
 	
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
-
-	
+	self.visibility_changed.connect(func(): rect.disabled = !(self.visible and is_visible_in_tree()))
+	self.set_process(false)
+		
+	rect.shape = shape
+		
 	if !Engine.is_editor_hint():
+		rect.disabled = !(self.visible and is_visible_in_tree())
+		
 		set_collision_layer_value(32, true)
 		set_collision_mask_value(32, true)
 		
@@ -48,8 +59,11 @@ func _ready() -> void:
 		self.area_exited.connect(handle_player_exit)
 	
 	self.set_process(true)
-	self.rect.shape.size = size
-			
+	_setup()
+
+func _setup() -> void:
+	pass
+
 func _handle_player_enter() -> void: pass
 func _handle_player_exit() -> void: pass
 
@@ -64,5 +78,8 @@ func handle_player_exit(_pl: Area2D) -> void:
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
-		rect.shape.size = size
-		
+		handle_shape_size()
+
+func handle_shape_size() -> void: 
+	if shape is	RectangleShape2D: (shape as RectangleShape2D).size = size
+	if shape is	CircleShape2D: (shape as CircleShape2D).radius = size.x

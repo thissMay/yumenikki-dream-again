@@ -27,7 +27,7 @@ var lerped_direction: Vector2 = Vector2.DOWN
 
 var speed: float = 0
 var speed_multiplier: float = 1
-var initial_speed: float = 25
+@export var initial_speed: float = BASE_SPEED
 
 var abs_velocity: Vector2:
 	get: return abs(self.velocity)
@@ -78,15 +78,15 @@ func get_dir() -> Vector2:
 func get_lerped_dir() -> Vector2: 
 	return self.lerped_direction
 
-func set_dir(dir: Vector2) -> void: 
-	direction = dir
-func lerp_dir(dir: Vector2, interpolation_multi: float = 1) -> void:
-	if dir != Vector2.ZERO: 
-		lerped_direction = lerped_direction.lerp(dir, interpolation_multi)
+func set_dir(_dir: Vector2) -> void: 
+	direction = _dir.normalized()
+func lerp_dir(_dir: Vector2, interpolation_multi: float = 1) -> void:
+	if _dir != Vector2.ZERO: 
+		lerped_direction = lerped_direction.lerp(_dir, interpolation_multi)
 
 func look_at_dir(_dir: Vector2) -> void: 
 	if _dir != Vector2.ZERO: 
-		direction = _dir
+		direction = _dir.normalized()
 		lerp_dir(_dir, TRANS_WEIGHT)
 #endregion
 

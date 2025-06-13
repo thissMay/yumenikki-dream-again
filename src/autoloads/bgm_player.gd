@@ -3,11 +3,15 @@ extends SoundPlayer
 
 ## The 'Music Container' is going to act as a 
 ## container for any ambience stream player instances.
-const MUSIC_DICT := {"stream" : null, "volume" : 0, "pitch" : 0, "carry_over": false}
+const MUSIC_DICT := {
+	"stream" : null, 
+	"volume" : 0, 
+	"pitch" : 1, 
+	"carry_over": false}
 
-var prev_music := MUSIC_DICT.duplicate()
-var curr_music := MUSIC_DICT.duplicate()
-var pending_music := MUSIC_DICT.duplicate()
+@onready var prev_music := MUSIC_DICT.duplicate()
+@onready var curr_music := MUSIC_DICT.duplicate()
+@onready var pending_music := MUSIC_DICT.duplicate()
 
 var vol_tween: Tween
 var pitch_tween: Tween
@@ -22,7 +26,7 @@ func _ready() -> void:
 
 func play_sound(
 	_stream: AudioStream, 
-	_vol: float = 0, 
+	_vol: float = 1, 
 	_pitch: float = 1, 
 	forget_after: bool = false) -> void:
 

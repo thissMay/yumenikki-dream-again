@@ -31,7 +31,8 @@ enum mat {
 	WATER 		= 7,
 	CLOTH		= 8,
 	GLASS		= 9,
-	DIRT_FLESH 	= 10
+	DIRT_FLESH 	= 10,
+	GRAVEL 		= 11
 	}
 var curr_material: mat
 const GROUND_MAT_DICT := {
@@ -46,6 +47,7 @@ const GROUND_MAT_DICT := {
 	mat.CLOTH 		: preload("res://src/audio/footsteps/cloth.tres"),		# --- 8
 	mat.GLASS 		: preload("res://src/audio/footsteps/glass.tres"),		# --- 9
 	mat.DIRT_FLESH 	: preload("res://src/audio/footsteps/dirt_flesh.tres"),	# --- 10
+	mat.GRAVEL 		: preload("res://src/audio/footsteps/gravel.tres"),	# --- 10
 	}
 
 var DEFAULT_FOOTSTEP: AudioStreamWAV = preload("res://src/audio/se/footstep_null-1.wav")
@@ -85,21 +87,21 @@ func initate_footstep() -> void:
 	spawn_footstep_fx()
 	
 	if sound_to_be_played == null:
-		footstep_se_player.play_sound(
-			sounds_set.pick_random() if sounds_set.size() > 0 else DEFAULT_FOOTSTEP, 
-			clampf(db_to_linear(log(sentient.get_noise() + 1) * 1.1), 0, 2), 
-			clampf(randf_range(0.75, sentient.get_noise()), 0.75, 1.2))
+		play_footstep_sound(sounds_set.pick_random() if sounds_set.size() > 0 else DEFAULT_FOOTSTEP)
 	else:
-		footstep_se_player.play_sound(
-			sound_to_be_played, 
-			clampf(db_to_linear(-2 + log(sentient.get_noise() + 1) * .5), 0, 2), 
-			clampf(randf_range(0.75, sentient.get_noise()), 0.75, 1.2))	
+		play_footstep_sound(sound_to_be_played)
 
 func spawn_footstep_fx() -> void: 
 	if Game.Optimization.footstep_instances < Game.Optimization.FOOTSTEP_MAX_INSTANCES:
 		var footstep_fx := FootstepDust.new(curr_anim)
 		self.add_child(footstep_fx)
 		footstep_fx.global_position = sentient.global_position
+
+func play_footstep_sound(_footstep_se: AudioStream) -> void: 
+	footstep_se_player.play_sound(
+		_footstep_se, 
+		clampf(linear_to_db(log(sentient.get_noise() + 3)), 0, 2), 
+		clampf(randf_range(0.75, sentient.get_noise()), 0.75, 1.2))	
 
 func _on_body_shape_entered(
 	body_rid: RID, 
@@ -133,8 +135,7 @@ func _on_body_shape_entered(
 								
 				
 				if transparent_surfaces[curr_material]: sentient.shadow_renderer.visible = false
-				else: sentient.shadow_renderer.visible = true
-		
+				else: sentient.shadow_renderer.visible = true	
 func _on_body_shape_exited(
 	body_rid: RID, 
 	body: Node2D, 

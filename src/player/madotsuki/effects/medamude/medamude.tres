@@ -15,9 +15,9 @@ exhaust_multi = 0.9
 stamina_drain = 0.78
 stamina_regen = 1.0
 can_run = false
-walk_noise_mult = 0.0
-sneak_noise_mult = 0.0
-run_noise_mult = 0.0
+walk_noise_mult = 1.0
+sneak_noise_mult = 0.5
+run_noise_mult = 2.2
 metadata/_custom_type_script = "uid://bxe7uci7t77tx"
 
 [resource]

@@ -2,6 +2,7 @@ class_name FSM
 extends Node
 
 signal state_changed(_new_state)
+signal setup
 
 var state_dict: Dictionary
 var curr_state: State
@@ -21,16 +22,17 @@ func _setup() -> void:
 func _enter_initial() -> void:
 	if curr_state != null: curr_state.enter_state()
 
-func _change_to_state(new_state: StringName, ) -> void:
+func _change_to_state(new_state: StringName) -> void:
 	if new_state != "" and _has_state(new_state):
 		var newstate: State = state_dict.get(new_state.to_lower())
 		if curr_state != newstate and newstate.transitionable:
+			
+			state_changed.emit(newstate)	
 			
 			curr_state.exit_state()
 			curr_state = newstate
 			curr_state.enter_state()
 			
-			state_changed.emit(newstate)	
 
 # --- state checks + getter --- 
 func _has_state(state_name: StringName) -> bool:

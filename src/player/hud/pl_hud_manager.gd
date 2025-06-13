@@ -32,7 +32,7 @@ func _ready() -> void:
 			inv.visible = _toggled)
 	
 func show_ui(_ui: Node, _show: bool) -> void:	
-	if ui_tween: ui_tween.kill()
+	if ui_tween != null: ui_tween.kill()
 	ui_tween = _ui.create_tween()
 	ui_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	

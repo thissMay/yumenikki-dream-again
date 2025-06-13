@@ -1,5 +1,5 @@
 class_name TimeManager
-extends Node
+extends Component
 
 static var instance
 

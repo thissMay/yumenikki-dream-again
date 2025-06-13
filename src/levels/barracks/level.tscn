@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwrdtbix8nr0o"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_r5evf"]
+[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_kjp3u"]
+[ext_resource type="AudioStream" uid="uid://dtcqqpb7rpjrj" path="res://src/audio/bgm/world_barracks.WAV" id="3_ngk6t"]
+[ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_eoce6"]
+
+[node name="barracks_settlement" type="Node"]
+script = ExtResource("1_r5evf")
+metadata/_custom_type_script = "uid://b1ofr4umso5jf"
+
+[node name="BGM" type="Node" parent="."]
+script = ExtResource("2_kjp3u")
+stream = ExtResource("3_ngk6t")
+pitch = 0.9
+metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+
+[node name="camera" parent="." instance=ExtResource("4_eoce6")]
+
+[editable path="camera"]

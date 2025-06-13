@@ -30,3 +30,7 @@ func get_component_by_name(_name: String) -> SBComponent:
 			return i
 			
 	return null
+func has_component_by_name(_name: String) -> bool:
+	for i in get_children():
+		if i and i.name == _name: return true
+	return false

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccrur7hvy6jyu"
-path="res://.godot/imported/walk.png-338a04241eb141bff082b436c5eac081.ctex"
+uid="uid://vwqbebihtfkc"
+path="res://.godot/imported/long_head.png-a7eba20af2390b760fcb508c18782cae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/player/madotsuki/display/lamp/walk.png"
-dest_files=["res://.godot/imported/walk.png-338a04241eb141bff082b436c5eac081.ctex"]
+source_file="res://src/entities/sentients/teleport_maze/long_head.png"
+dest_files=["res://.godot/imported/long_head.png-a7eba20af2390b760fcb508c18782cae.ctex"]
 
 [params]
 

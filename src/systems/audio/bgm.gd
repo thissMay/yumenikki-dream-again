@@ -4,7 +4,7 @@ const ZEROVOLUME = -50 # the volume dB where the audio player is silent.
 enum MUSIC_BUS {MUSIC, AMBIENCE}
 
 @export var music_bus: MUSIC_BUS
-@export var carry_over: bool = false
+@export var save_as_previous: bool = false
 
 @export_group("Music Properties")
 	

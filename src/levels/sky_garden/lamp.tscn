@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1gqp3s2ch5hg"]
+
+[ext_resource type="Texture2D" uid="uid://0aoqub5oq24s" path="res://src/levels/sky_garden/lamp.png" id="1_i58lt"]
+[ext_resource type="Texture2D" uid="uid://ednmj30blu24" path="res://src/player/madotsuki/effects/earring/glow.png" id="2_i58lt"]
+
+[node name="lamp" type="Sprite2D"]
+texture = ExtResource("1_i58lt")
+
+[node name="glow" type="PointLight2D" parent="."]
+light_mask = 2
+position = Vector2(0, -10)
+scale = Vector2(3.65714, 3.65714)
+energy = 1.5
+range_item_cull_mask = 2
+shadow_enabled = true
+shadow_item_cull_mask = 2
+texture = ExtResource("2_i58lt")
+
+[node name="coll" type="StaticBody2D" parent="."]
+
+[node name="shape" type="CollisionPolygon2D" parent="coll"]
+polygon = PackedVector2Array(-11, 5, -16, 10, -11, 15, 11, 15, 16, 10, 11, 5)

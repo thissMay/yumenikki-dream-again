@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FootstepSet" load_steps=6 format=3 uid="uid://c1fqfqvlgkxrg"]
+
+[ext_resource type="Texture2D" uid="uid://b3ubvq54l072p" path="res://src/entities/footsteps/default.png" id="1_2k5my"]
+[ext_resource type="AudioStream" uid="uid://cbq4vctrba7bu" path="res://src/audio/se/footstep_gravel-1.ogg" id="1_rf4qp"]
+[ext_resource type="AudioStream" uid="uid://cwser21psr38i" path="res://src/audio/se/footstep_gravel-2.ogg" id="2_47yw6"]
+[ext_resource type="Script" uid="uid://dl740w6e37l11" path="res://src/audio/footsteps/footstep_set.gd" id="2_vayte"]
+[ext_resource type="AudioStream" uid="uid://b3riq0wmc8rnh" path="res://src/audio/se/footstep_gravel-3.ogg" id="3_jemho"]
+
+[resource]
+script = ExtResource("2_vayte")
+footstep_anim = ExtResource("1_2k5my")
+arr = [ExtResource("1_rf4qp"), ExtResource("2_47yw6"), ExtResource("3_jemho")]
+metadata/_custom_type_script = "uid://dl740w6e37l11"

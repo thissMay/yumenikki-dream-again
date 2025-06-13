@@ -1,12 +1,14 @@
 extends SentientState
-
-@export var pinch: PlayerAction
+var library_path := "normal"
+#var pinch: PlayerAction = preload("pinch")
 
 func enter_state() -> void: 
 	(sentient as Player_YN).set_texture_using_sprite_sheet("idle")
-	sentient.animation_manager.play_animation("normal/idle")
-	sentient.noise_multi = Player.NOISE_MULTI
+	sentient.components.get_component_by_name("animation_manager").play_animation(str(library_path, '/', "idle"))
+	sentient.noise_multi = sentient.walk_noise_mult
 	sentient.velocity = Vector2.ZERO
+
+	super()
 
 func update(_delta: float, ) -> void:
 	sentient.look_at_dir(sentient.get_marker_direction())
@@ -22,4 +24,4 @@ func input(event: InputEvent, ) -> void:
 			sentient.perform_emote(sentient.emote)
 	if (Global.input["key_pressed"] == KEY_Q and
 		Global.input["held_down"]):
-			sentient.perform_action(pinch)
+			pass

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://dnuf6dan0x8o"]
+[gd_scene load_steps=81 format=4 uid="uid://dnuf6dan0x8o"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_egqpp"]
 [ext_resource type="TileSet" uid="uid://cpqq48f7d0ihq" path="res://src/levels/_ignore/tilemaps/teleport_maze.tres" id="2_2rf7s"]
@@ -16,6 +16,23 @@
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="11_svsfr"]
 [ext_resource type="AudioStream" uid="uid://dso8pw0y7eu6k" path="res://src/audio/se/teleport_maze.WAV" id="12_5fm2a"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="13_bsaik"]
+[ext_resource type="Script" uid="uid://jbydpt773v5a" path="res://src/entities/hostile/nav_entity.gd" id="16_p5wri"]
+[ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="17_rwpra"]
+[ext_resource type="Texture2D" uid="uid://vwqbebihtfkc" path="res://src/entities/sentients/teleport_maze/long_head.png" id="18_fxi8e"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="19_lvyma"]
+[ext_resource type="Script" uid="uid://dd0qxrsakskma" path="res://src/entities/component/sb_component_receiver.gd" id="20_5aicu"]
+[ext_resource type="Script" uid="uid://dyhtvuyxwohdq" path="res://src/entities/component/sb_sprite_handler.gd" id="21_5h850"]
+[ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/entities/sentient_fsm.gd" id="22_pc4i7"]
+[ext_resource type="Script" uid="uid://bhmqr5byqpscr" path="res://src/entities/hostile/stance_states/idle.gd" id="23_uvfef"]
+[ext_resource type="Script" uid="uid://bk8x1gghf4e05" path="res://src/entities/hostile/stance_states/walk.gd" id="24_xktca"]
+[ext_resource type="Script" uid="uid://qdqcvtymsa3v" path="res://src/entities/sentient_state.gd" id="25_0c3lv"]
+[ext_resource type="Script" uid="uid://rbvkxb3m2omw" path="res://src/entities/hostile/behaviour_states/idle.gd" id="26_4v7gi"]
+[ext_resource type="Script" uid="uid://bj1oqttajdq2m" path="res://src/entities/hostile/behaviour_states/wander.gd" id="27_wajl5"]
+[ext_resource type="Script" uid="uid://clwsghva612ul" path="res://src/entities/hostile/behaviour_states/observe.gd" id="28_cushs"]
+[ext_resource type="Script" uid="uid://dbo5xans8s5ib" path="res://src/entities/hostile/behaviour_states/chase.gd" id="29_oe8v3"]
+[ext_resource type="Script" uid="uid://cbg0uhsr4h72h" path="res://src/entities/hostile/behaviour_states/stare_at.gd" id="30_rq55e"]
+[ext_resource type="Script" uid="uid://sahjehrg3n8o" path="res://src/entities/hostile/behaviour_states/follow.gd" id="31_fra41"]
+[ext_resource type="Texture2D" uid="uid://swe1pucjx0t3" path="res://src/entities/sentients/teleport_maze/short_head.png" id="32_rwpra"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ea6g4"]
 shader = ExtResource("2_olcxh")
@@ -92,8 +109,85 @@ lightmap_size_hint = Vector2i(13, 26)
 material = SubResource("ORMMaterial3D_hsdg6")
 size = Vector3(0.8, 1.5, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3hyyy"]
-size = Vector2(16, 8)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5fm2a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_olcxh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ea6g4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hsdg6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rkd6m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_srgn5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sarek"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3jaf8"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_18lqh"]
+blend_mode = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_18lqh"]
+size = Vector2(13, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_23uat"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kkfyc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v8mrr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0mwyy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dwk0i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_chcq2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ldn3b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4blpb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5wri"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rwpra"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fxi8e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lvyma"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5aicu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5h850"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pc4i7"]
+size = Vector2(520, 380)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uvfef"]
+size = Vector2(480, 270)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xktca"]
+size = Vector2(480, 270)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0c3lv"]
+size = Vector2(480, 270)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4v7gi"]
+size = Vector2(480, 285)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wajl5"]
+size = Vector2(480, 270)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cushs"]
+size = Vector2(570, 320)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oe8v3"]
+size = Vector2(480, 270)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rq55e"]
+size = Vector2(600, 350)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fra41"]
+size = Vector2(600, 300)
 
 [node name="teleportation_maze" type="Node"]
 script = ExtResource("1_egqpp")
@@ -206,6 +300,7 @@ position = Vector2(112, 256)
 [node name="a" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_a_1" type="Area2D" parent="y_order/teleports/a" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(216, 288)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(-20, 3)
@@ -213,12 +308,12 @@ spawn_dir = Vector2(-1, 1)
 target_door = NodePath("../teleport_a_2")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_5fm2a")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/a/teleport_a_1"]
-shape = SubResource("RectangleShape2D_3hyyy")
-
 [node name="teleport_a_2" type="Area2D" parent="y_order/teleports/a" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(488, 336)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(15, -15)
@@ -226,38 +321,38 @@ spawn_dir = Vector2(1, -1)
 target_door = NodePath("../teleport_a_1")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_olcxh")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
-
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/a/teleport_a_2"]
-shape = SubResource("RectangleShape2D_3hyyy")
 
 [node name="b" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_b_1" type="Area2D" parent="y_order/teleports/b" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(136, 208)
 script = ExtResource("13_bsaik")
 target_door = NodePath("../teleport_b_2")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_ea6g4")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/b/teleport_b_1"]
-shape = SubResource("RectangleShape2D_3hyyy")
-
 [node name="teleport_b_2" type="Area2D" parent="y_order/teleports/b" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(760, 16)
 script = ExtResource("13_bsaik")
 target_door = NodePath("../teleport_b_1")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_hsdg6")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
-
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/b/teleport_b_2"]
-shape = SubResource("RectangleShape2D_3hyyy")
 
 [node name="c" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_c_1" type="Area2D" parent="y_order/teleports/c" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(56, 256)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(-20, 3)
@@ -265,12 +360,12 @@ spawn_dir = Vector2(-1, 1)
 target_door = NodePath("../teleport_c_2")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_rkd6m")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/c/teleport_c_1"]
-shape = SubResource("RectangleShape2D_3hyyy")
-
 [node name="teleport_c_2" type="Area2D" parent="y_order/teleports/c" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(264, 608)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(20, -5)
@@ -278,14 +373,14 @@ spawn_dir = Vector2(1, 1)
 target_door = NodePath("../teleport_c_1")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_srgn5")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
-
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/c/teleport_c_2"]
-shape = SubResource("RectangleShape2D_3hyyy")
 
 [node name="d" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_d_1" type="Area2D" parent="y_order/teleports/d" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(776, 288)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(-20, 3)
@@ -293,12 +388,12 @@ spawn_dir = Vector2(-1, 0)
 target_door = NodePath("../teleport_d_2")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_sarek")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/d/teleport_d_1"]
-shape = SubResource("RectangleShape2D_3hyyy")
-
 [node name="teleport_d_2" type="Area2D" parent="y_order/teleports/d" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(1192, 336)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(20, -5)
@@ -306,14 +401,122 @@ spawn_dir = Vector2(1, -1)
 target_door = NodePath("../teleport_d_1")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_3jaf8")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/d/teleport_d_2"]
-shape = SubResource("RectangleShape2D_3hyyy")
+[node name="long_head" type="CharacterBody2D" parent="y_order/teleports/d" node_paths=PackedStringArray("nav_agent", "stance_fsm", "behaviour_fsm")]
+position = Vector2(1120, 312)
+script = ExtResource("16_p5wri")
+nav_agent = NodePath("nav")
+stance_fsm = NodePath("stance_fsm")
+behaviour_fsm = NodePath("behaviour_fsm")
+initial_speed = 34.3
+
+[node name="on_screen_enabler" type="VisibleOnScreenEnabler2D" parent="y_order/teleports/d/long_head"]
+rect = Rect2(-50, -40, 100, 80)
+
+[node name="shadow_renderer" type="Sprite2D" parent="y_order/teleports/d/long_head"]
+material = SubResource("CanvasItemMaterial_18lqh")
+position = Vector2(0, 16)
+texture = ExtResource("17_rwpra")
+offset = Vector2(0, -24)
+
+[node name="sprite_renderer" type="Sprite2D" parent="y_order/teleports/d/long_head"]
+texture = ExtResource("18_fxi8e")
+hframes = 4
+frame = 3
+script = ExtResource("19_lvyma")
+playing = true
+loop = true
+ping_pong = null
+fps = 5.0
+frame_dimensions = Vector2i(15, 32)
+frame_h_count = 4
+progress = 3
+metadata/_custom_type_script = "uid://cdjphp77kgyqr"
+
+[node name="sb_components" type="Node2D" parent="y_order/teleports/d/long_head"]
+script = ExtResource("20_5aicu")
+metadata/_custom_type_script = "uid://dd0qxrsakskma"
+
+[node name="sprite_handler" type="Node" parent="y_order/teleports/d/long_head/sb_components"]
+script = ExtResource("21_5h850")
+metadata/_custom_type_script = "uid://bgisym1hdeqgt"
+
+[node name="coll" type="CollisionShape2D" parent="y_order/teleports/d/long_head"]
+position = Vector2(0, 14)
+shape = SubResource("RectangleShape2D_18lqh")
+
+[node name="nav" type="NavigationAgent2D" parent="y_order/teleports/d/long_head"]
+target_desired_distance = 25.0
+avoidance_enabled = true
+
+[node name="stance_fsm" type="Node" parent="y_order/teleports/d/long_head" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("22_pc4i7")
+initial_state = NodePath("IDLE")
+metadata/_custom_type_script = "uid://co5edhtkgx3g8"
+
+[node name="IDLE" type="Node" parent="y_order/teleports/d/long_head/stance_fsm"]
+script = ExtResource("23_uvfef")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="WALK" type="Node" parent="y_order/teleports/d/long_head/stance_fsm"]
+script = ExtResource("24_xktca")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="RUN" type="Node" parent="y_order/teleports/d/long_head/stance_fsm"]
+script = ExtResource("25_0c3lv")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="TAUNT" type="Node" parent="y_order/teleports/d/long_head/stance_fsm"]
+script = ExtResource("25_0c3lv")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="behaviour_fsm" type="Node" parent="y_order/teleports/d/long_head" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("22_pc4i7")
+initial_state = NodePath("IDLE")
+metadata/_custom_type_script = "uid://co5edhtkgx3g8"
+
+[node name="path_update" type="Timer" parent="y_order/teleports/d/long_head/behaviour_fsm"]
+
+[node name="IDLE" type="Node" parent="y_order/teleports/d/long_head/behaviour_fsm"]
+script = ExtResource("26_4v7gi")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="WANDER" type="Node" parent="y_order/teleports/d/long_head/behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "idle_timer")]
+script = ExtResource("27_wajl5")
+stance_fsm = NodePath("../../stance_fsm")
+idle_timer = NodePath("idle_timer")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="idle_timer" type="Timer" parent="y_order/teleports/d/long_head/behaviour_fsm/WANDER"]
+
+[node name="OBSERVE" type="Node" parent="y_order/teleports/d/long_head/behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "hesitance_timer")]
+script = ExtResource("28_cushs")
+stance_fsm = NodePath("../../stance_fsm")
+hesitance_timer = NodePath("hesitance_timer")
+metadata/_custom_type_script = "uid://sd3feymdmkd6"
+
+[node name="hesitance_timer" type="Timer" parent="y_order/teleports/d/long_head/behaviour_fsm/OBSERVE"]
+
+[node name="CHASE" type="Node" parent="y_order/teleports/d/long_head/behaviour_fsm" node_paths=PackedStringArray("stance_fsm")]
+script = ExtResource("29_oe8v3")
+stance_fsm = NodePath("../../stance_fsm")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="STARE_AT" type="Node" parent="y_order/teleports/d/long_head/behaviour_fsm"]
+script = ExtResource("30_rq55e")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="FOLLOW" type="Node" parent="y_order/teleports/d/long_head/behaviour_fsm"]
+script = ExtResource("31_fra41")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
 [node name="e" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_e_1" type="Area2D" parent="y_order/teleports/e" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(904, 32)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(-20, 3)
@@ -321,12 +524,12 @@ spawn_dir = Vector2(-1, 0)
 target_door = NodePath("../teleport_e_2")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_23uat")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/e/teleport_e_1"]
-shape = SubResource("RectangleShape2D_3hyyy")
-
 [node name="teleport_e_2" type="Area2D" parent="y_order/teleports/e" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(1352, 48)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(20, -5)
@@ -334,14 +537,14 @@ spawn_dir = Vector2(1, -1)
 target_door = NodePath("../teleport_e_1")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_kkfyc")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
-
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/e/teleport_e_2"]
-shape = SubResource("RectangleShape2D_3hyyy")
 
 [node name="f" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_f_1" type="Area2D" parent="y_order/teleports/f" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(1480, -16)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(-20, 3)
@@ -349,12 +552,12 @@ spawn_dir = Vector2(-1, 1)
 target_door = NodePath("../teleport_f_2")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_v8mrr")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/f/teleport_f_1"]
-shape = SubResource("RectangleShape2D_3hyyy")
-
 [node name="teleport_f_2" type="Area2D" parent="y_order/teleports/f" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(1112, 608)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(-20, 3)
@@ -362,14 +565,14 @@ spawn_dir = Vector2(-1, 1)
 target_door = NodePath("../teleport_f_1")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_0mwyy")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
-
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/f/teleport_f_2"]
-shape = SubResource("RectangleShape2D_3hyyy")
 
 [node name="h" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_h_1" type="Area2D" parent="y_order/teleports/h" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(1032, 640)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(20, -3)
@@ -377,12 +580,12 @@ spawn_dir = Vector2(1, -1)
 target_door = NodePath("../teleport_h_2")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_dwk0i")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/h/teleport_h_1"]
-shape = SubResource("RectangleShape2D_3hyyy")
-
 [node name="teleport_h_2" type="Area2D" parent="y_order/teleports/h" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(824, 608)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(20, 0)
@@ -390,14 +593,14 @@ spawn_dir = Vector2(1, 0)
 target_door = NodePath("../teleport_h_1")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_chcq2")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
-
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/h/teleport_h_2"]
-shape = SubResource("RectangleShape2D_3hyyy")
 
 [node name="i" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_i_1" type="Area2D" parent="y_order/teleports/i" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(936, 560)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(-20, 3)
@@ -405,12 +608,12 @@ spawn_dir = Vector2(-1, 1)
 target_door = NodePath("../teleport_i_2")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_ldn3b")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/i/teleport_i_1"]
-shape = SubResource("RectangleShape2D_3hyyy")
-
 [node name="teleport_i_2" type="Area2D" parent="y_order/teleports/i" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(520, 880)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(-20, 3)
@@ -418,14 +621,227 @@ spawn_dir = Vector2(-1, 1)
 target_door = NodePath("../teleport_i_1")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_4blpb")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/i/teleport_i_2"]
-shape = SubResource("RectangleShape2D_3hyyy")
+[node name="short_head" type="CharacterBody2D" parent="y_order/teleports/i" node_paths=PackedStringArray("nav_agent", "stance_fsm", "behaviour_fsm")]
+position = Vector2(368, 816)
+script = ExtResource("16_p5wri")
+nav_agent = NodePath("nav")
+stance_fsm = NodePath("stance_fsm")
+behaviour_fsm = NodePath("behaviour_fsm")
+initial_speed = 34.3
+
+[node name="on_screen_enabler" type="VisibleOnScreenEnabler2D" parent="y_order/teleports/i/short_head"]
+rect = Rect2(-50, -40, 100, 80)
+
+[node name="shadow_renderer" type="Sprite2D" parent="y_order/teleports/i/short_head"]
+material = SubResource("CanvasItemMaterial_18lqh")
+position = Vector2(0, 16)
+texture = ExtResource("17_rwpra")
+offset = Vector2(0, -24)
+
+[node name="sprite_renderer" type="Sprite2D" parent="y_order/teleports/i/short_head"]
+texture = ExtResource("32_rwpra")
+hframes = 4
+script = ExtResource("19_lvyma")
+playing = true
+loop = true
+ping_pong = null
+fps = 5.0
+frame_dimensions = Vector2i(15, 30)
+frame_h_count = 4
+frame_v_count = 0
+metadata/_custom_type_script = "uid://cdjphp77kgyqr"
+
+[node name="sb_components" type="Node2D" parent="y_order/teleports/i/short_head"]
+script = ExtResource("20_5aicu")
+metadata/_custom_type_script = "uid://dd0qxrsakskma"
+
+[node name="sprite_handler" type="Node" parent="y_order/teleports/i/short_head/sb_components"]
+script = ExtResource("21_5h850")
+metadata/_custom_type_script = "uid://bgisym1hdeqgt"
+
+[node name="coll" type="CollisionShape2D" parent="y_order/teleports/i/short_head"]
+position = Vector2(0, 14)
+shape = SubResource("RectangleShape2D_18lqh")
+
+[node name="nav" type="NavigationAgent2D" parent="y_order/teleports/i/short_head"]
+target_desired_distance = 25.0
+avoidance_enabled = true
+
+[node name="stance_fsm" type="Node" parent="y_order/teleports/i/short_head" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("22_pc4i7")
+initial_state = NodePath("IDLE")
+metadata/_custom_type_script = "uid://co5edhtkgx3g8"
+
+[node name="IDLE" type="Node" parent="y_order/teleports/i/short_head/stance_fsm"]
+script = ExtResource("23_uvfef")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="WALK" type="Node" parent="y_order/teleports/i/short_head/stance_fsm"]
+script = ExtResource("24_xktca")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="RUN" type="Node" parent="y_order/teleports/i/short_head/stance_fsm"]
+script = ExtResource("25_0c3lv")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="TAUNT" type="Node" parent="y_order/teleports/i/short_head/stance_fsm"]
+script = ExtResource("25_0c3lv")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="behaviour_fsm" type="Node" parent="y_order/teleports/i/short_head" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("22_pc4i7")
+initial_state = NodePath("IDLE")
+metadata/_custom_type_script = "uid://co5edhtkgx3g8"
+
+[node name="path_update" type="Timer" parent="y_order/teleports/i/short_head/behaviour_fsm"]
+
+[node name="IDLE" type="Node" parent="y_order/teleports/i/short_head/behaviour_fsm"]
+script = ExtResource("26_4v7gi")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="WANDER" type="Node" parent="y_order/teleports/i/short_head/behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "idle_timer")]
+script = ExtResource("27_wajl5")
+stance_fsm = NodePath("../../stance_fsm")
+idle_timer = NodePath("idle_timer")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="idle_timer" type="Timer" parent="y_order/teleports/i/short_head/behaviour_fsm/WANDER"]
+
+[node name="OBSERVE" type="Node" parent="y_order/teleports/i/short_head/behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "hesitance_timer")]
+script = ExtResource("28_cushs")
+stance_fsm = NodePath("../../stance_fsm")
+hesitance_timer = NodePath("hesitance_timer")
+metadata/_custom_type_script = "uid://sd3feymdmkd6"
+
+[node name="hesitance_timer" type="Timer" parent="y_order/teleports/i/short_head/behaviour_fsm/OBSERVE"]
+
+[node name="CHASE" type="Node" parent="y_order/teleports/i/short_head/behaviour_fsm" node_paths=PackedStringArray("stance_fsm")]
+script = ExtResource("29_oe8v3")
+stance_fsm = NodePath("../../stance_fsm")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="STARE_AT" type="Node" parent="y_order/teleports/i/short_head/behaviour_fsm"]
+script = ExtResource("30_rq55e")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="FOLLOW" type="Node" parent="y_order/teleports/i/short_head/behaviour_fsm"]
+script = ExtResource("31_fra41")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="long_head" type="CharacterBody2D" parent="y_order/teleports/i" node_paths=PackedStringArray("nav_agent", "stance_fsm", "behaviour_fsm")]
+position = Vector2(304, 880)
+script = ExtResource("16_p5wri")
+nav_agent = NodePath("nav")
+stance_fsm = NodePath("stance_fsm")
+behaviour_fsm = NodePath("behaviour_fsm")
+initial_speed = 34.3
+
+[node name="on_screen_enabler" type="VisibleOnScreenEnabler2D" parent="y_order/teleports/i/long_head"]
+rect = Rect2(-50, -40, 100, 80)
+
+[node name="shadow_renderer" type="Sprite2D" parent="y_order/teleports/i/long_head"]
+material = SubResource("CanvasItemMaterial_18lqh")
+position = Vector2(0, 16)
+texture = ExtResource("17_rwpra")
+offset = Vector2(0, -24)
+
+[node name="sprite_renderer" type="Sprite2D" parent="y_order/teleports/i/long_head"]
+texture = ExtResource("18_fxi8e")
+hframes = 4
+script = ExtResource("19_lvyma")
+playing = true
+loop = true
+ping_pong = null
+fps = 5.0
+frame_dimensions = Vector2i(15, 30)
+frame_h_count = 4
+metadata/_custom_type_script = "uid://cdjphp77kgyqr"
+
+[node name="sb_components" type="Node2D" parent="y_order/teleports/i/long_head"]
+script = ExtResource("20_5aicu")
+metadata/_custom_type_script = "uid://dd0qxrsakskma"
+
+[node name="sprite_handler" type="Node" parent="y_order/teleports/i/long_head/sb_components"]
+script = ExtResource("21_5h850")
+metadata/_custom_type_script = "uid://bgisym1hdeqgt"
+
+[node name="coll" type="CollisionShape2D" parent="y_order/teleports/i/long_head"]
+position = Vector2(0, 14)
+shape = SubResource("RectangleShape2D_18lqh")
+
+[node name="nav" type="NavigationAgent2D" parent="y_order/teleports/i/long_head"]
+target_desired_distance = 25.0
+avoidance_enabled = true
+
+[node name="stance_fsm" type="Node" parent="y_order/teleports/i/long_head" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("22_pc4i7")
+initial_state = NodePath("IDLE")
+metadata/_custom_type_script = "uid://co5edhtkgx3g8"
+
+[node name="IDLE" type="Node" parent="y_order/teleports/i/long_head/stance_fsm"]
+script = ExtResource("23_uvfef")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="WALK" type="Node" parent="y_order/teleports/i/long_head/stance_fsm"]
+script = ExtResource("24_xktca")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="RUN" type="Node" parent="y_order/teleports/i/long_head/stance_fsm"]
+script = ExtResource("25_0c3lv")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="TAUNT" type="Node" parent="y_order/teleports/i/long_head/stance_fsm"]
+script = ExtResource("25_0c3lv")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="behaviour_fsm" type="Node" parent="y_order/teleports/i/long_head" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("22_pc4i7")
+initial_state = NodePath("IDLE")
+metadata/_custom_type_script = "uid://co5edhtkgx3g8"
+
+[node name="path_update" type="Timer" parent="y_order/teleports/i/long_head/behaviour_fsm"]
+
+[node name="IDLE" type="Node" parent="y_order/teleports/i/long_head/behaviour_fsm"]
+script = ExtResource("26_4v7gi")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="WANDER" type="Node" parent="y_order/teleports/i/long_head/behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "idle_timer")]
+script = ExtResource("27_wajl5")
+stance_fsm = NodePath("../../stance_fsm")
+idle_timer = NodePath("idle_timer")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="idle_timer" type="Timer" parent="y_order/teleports/i/long_head/behaviour_fsm/WANDER"]
+
+[node name="OBSERVE" type="Node" parent="y_order/teleports/i/long_head/behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "hesitance_timer")]
+script = ExtResource("28_cushs")
+stance_fsm = NodePath("../../stance_fsm")
+hesitance_timer = NodePath("hesitance_timer")
+metadata/_custom_type_script = "uid://sd3feymdmkd6"
+
+[node name="hesitance_timer" type="Timer" parent="y_order/teleports/i/long_head/behaviour_fsm/OBSERVE"]
+
+[node name="CHASE" type="Node" parent="y_order/teleports/i/long_head/behaviour_fsm" node_paths=PackedStringArray("stance_fsm")]
+script = ExtResource("29_oe8v3")
+stance_fsm = NodePath("../../stance_fsm")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="STARE_AT" type="Node" parent="y_order/teleports/i/long_head/behaviour_fsm"]
+script = ExtResource("30_rq55e")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="FOLLOW" type="Node" parent="y_order/teleports/i/long_head/behaviour_fsm"]
+script = ExtResource("31_fra41")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
 [node name="j" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_j_1" type="Area2D" parent="y_order/teleports/j" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(472, 896)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(20, 0)
@@ -433,12 +849,12 @@ spawn_dir = Vector2(1, -1)
 target_door = NodePath("../teleport_j_2")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_p5wri")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/j/teleport_j_1"]
-shape = SubResource("RectangleShape2D_3hyyy")
-
 [node name="teleport_j_2" type="Area2D" parent="y_order/teleports/j" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(376, 560)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(-20, 3)
@@ -446,14 +862,121 @@ spawn_dir = Vector2(-1, 1)
 target_door = NodePath("../teleport_j_1")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_rwpra")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/j/teleport_j_2"]
-shape = SubResource("RectangleShape2D_3hyyy")
+[node name="short_head" type="CharacterBody2D" parent="y_order/teleports/j" node_paths=PackedStringArray("nav_agent", "stance_fsm", "behaviour_fsm")]
+position = Vector2(576, 560)
+script = ExtResource("16_p5wri")
+nav_agent = NodePath("nav")
+stance_fsm = NodePath("stance_fsm")
+behaviour_fsm = NodePath("behaviour_fsm")
+initial_speed = 34.3
+
+[node name="on_screen_enabler" type="VisibleOnScreenEnabler2D" parent="y_order/teleports/j/short_head"]
+rect = Rect2(-50, -40, 100, 80)
+
+[node name="shadow_renderer" type="Sprite2D" parent="y_order/teleports/j/short_head"]
+material = SubResource("CanvasItemMaterial_18lqh")
+position = Vector2(0, 16)
+texture = ExtResource("17_rwpra")
+offset = Vector2(0, -24)
+
+[node name="sprite_renderer" type="Sprite2D" parent="y_order/teleports/j/short_head"]
+texture = ExtResource("32_rwpra")
+hframes = 4
+script = ExtResource("19_lvyma")
+playing = true
+loop = true
+ping_pong = null
+fps = 5.0
+frame_dimensions = Vector2i(15, 32)
+frame_h_count = 4
+frame_v_count = 0
+metadata/_custom_type_script = "uid://cdjphp77kgyqr"
+
+[node name="sb_components" type="Node2D" parent="y_order/teleports/j/short_head"]
+script = ExtResource("20_5aicu")
+metadata/_custom_type_script = "uid://dd0qxrsakskma"
+
+[node name="sprite_handler" type="Node" parent="y_order/teleports/j/short_head/sb_components"]
+script = ExtResource("21_5h850")
+metadata/_custom_type_script = "uid://bgisym1hdeqgt"
+
+[node name="coll" type="CollisionShape2D" parent="y_order/teleports/j/short_head"]
+position = Vector2(0, 14)
+shape = SubResource("RectangleShape2D_18lqh")
+
+[node name="nav" type="NavigationAgent2D" parent="y_order/teleports/j/short_head"]
+target_desired_distance = 25.0
+avoidance_enabled = true
+
+[node name="stance_fsm" type="Node" parent="y_order/teleports/j/short_head" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("22_pc4i7")
+initial_state = NodePath("IDLE")
+metadata/_custom_type_script = "uid://co5edhtkgx3g8"
+
+[node name="IDLE" type="Node" parent="y_order/teleports/j/short_head/stance_fsm"]
+script = ExtResource("23_uvfef")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="WALK" type="Node" parent="y_order/teleports/j/short_head/stance_fsm"]
+script = ExtResource("24_xktca")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="RUN" type="Node" parent="y_order/teleports/j/short_head/stance_fsm"]
+script = ExtResource("25_0c3lv")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="TAUNT" type="Node" parent="y_order/teleports/j/short_head/stance_fsm"]
+script = ExtResource("25_0c3lv")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="behaviour_fsm" type="Node" parent="y_order/teleports/j/short_head" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("22_pc4i7")
+initial_state = NodePath("IDLE")
+metadata/_custom_type_script = "uid://co5edhtkgx3g8"
+
+[node name="path_update" type="Timer" parent="y_order/teleports/j/short_head/behaviour_fsm"]
+
+[node name="IDLE" type="Node" parent="y_order/teleports/j/short_head/behaviour_fsm"]
+script = ExtResource("26_4v7gi")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="WANDER" type="Node" parent="y_order/teleports/j/short_head/behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "idle_timer")]
+script = ExtResource("27_wajl5")
+stance_fsm = NodePath("../../stance_fsm")
+idle_timer = NodePath("idle_timer")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="idle_timer" type="Timer" parent="y_order/teleports/j/short_head/behaviour_fsm/WANDER"]
+
+[node name="OBSERVE" type="Node" parent="y_order/teleports/j/short_head/behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "hesitance_timer")]
+script = ExtResource("28_cushs")
+stance_fsm = NodePath("../../stance_fsm")
+hesitance_timer = NodePath("hesitance_timer")
+metadata/_custom_type_script = "uid://sd3feymdmkd6"
+
+[node name="hesitance_timer" type="Timer" parent="y_order/teleports/j/short_head/behaviour_fsm/OBSERVE"]
+
+[node name="CHASE" type="Node" parent="y_order/teleports/j/short_head/behaviour_fsm" node_paths=PackedStringArray("stance_fsm")]
+script = ExtResource("29_oe8v3")
+stance_fsm = NodePath("../../stance_fsm")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="STARE_AT" type="Node" parent="y_order/teleports/j/short_head/behaviour_fsm"]
+script = ExtResource("30_rq55e")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="FOLLOW" type="Node" parent="y_order/teleports/j/short_head/behaviour_fsm"]
+script = ExtResource("31_fra41")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
 [node name="k" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_k_1" type="Area2D" parent="y_order/teleports/k" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(904, 672)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(-20, -5)
@@ -461,12 +984,12 @@ spawn_dir = Vector2(-1, -1)
 target_door = NodePath("../teleport_k_2")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_fxi8e")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/k/teleport_k_1"]
-shape = SubResource("RectangleShape2D_3hyyy")
-
 [node name="teleport_k_2" type="Area2D" parent="y_order/teleports/k" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(-152, 920)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(20, 3)
@@ -474,14 +997,14 @@ spawn_dir = Vector2(1, 1)
 target_door = NodePath("../teleport_k_1")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_lvyma")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
-
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/k/teleport_k_2"]
-shape = SubResource("RectangleShape2D_3hyyy")
 
 [node name="l" type="Node2D" parent="y_order/teleports"]
 
 [node name="teleport_l_1" type="Area2D" parent="y_order/teleports/l" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(8, 992)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(-20, 0)
@@ -489,12 +1012,12 @@ spawn_dir = Vector2(-1, -1)
 target_door = NodePath("../teleport_l_2")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_5aicu")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/l/teleport_l_1"]
-shape = SubResource("RectangleShape2D_3hyyy")
-
 [node name="teleport_l_2" type="Area2D" parent="y_order/teleports/l" node_paths=PackedStringArray("target_door")]
+process_mode = 3
 position = Vector2(440, 1160)
 script = ExtResource("13_bsaik")
 spawn_point = Vector2(5, 15)
@@ -502,10 +1025,9 @@ spawn_dir = Vector2(1, 1)
 target_door = NodePath("../teleport_l_1")
 parallel = true
 area = true
+shape = SubResource("RectangleShape2D_5h850")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
-
-[node name="coll" type="CollisionShape2D" parent="y_order/teleports/l/teleport_l_2"]
-shape = SubResource("RectangleShape2D_3hyyy")
 
 [node name="dead_zones" type="Node2D" parent="y_order"]
 
@@ -514,6 +1036,7 @@ process_mode = 3
 position = Vector2(128, 304)
 script = ExtResource("3_boia1")
 size = Vector2i(520, 380)
+shape = SubResource("RectangleShape2D_pc4i7")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [node name="B_dead_zone" type="Area2D" parent="y_order/dead_zones"]
@@ -521,6 +1044,7 @@ process_mode = 3
 position = Vector2(832, 48)
 script = ExtResource("3_boia1")
 size = Vector2i(480, 270)
+shape = SubResource("RectangleShape2D_uvfef")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [node name="C_dead_zone" type="Area2D" parent="y_order/dead_zones"]
@@ -528,6 +1052,7 @@ process_mode = 3
 position = Vector2(480, 928)
 script = ExtResource("3_boia1")
 size = Vector2i(480, 270)
+shape = SubResource("RectangleShape2D_xktca")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [node name="D_dead_zone" type="Area2D" parent="y_order/dead_zones"]
@@ -535,6 +1060,7 @@ process_mode = 3
 position = Vector2(640, 336)
 script = ExtResource("3_boia1")
 size = Vector2i(480, 270)
+shape = SubResource("RectangleShape2D_0c3lv")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [node name="E_dead_zone" type="Area2D" parent="y_order/dead_zones"]
@@ -542,6 +1068,7 @@ process_mode = 3
 position = Vector2(944, 640)
 script = ExtResource("3_boia1")
 size = Vector2i(480, 285)
+shape = SubResource("RectangleShape2D_4v7gi")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [node name="F_dead_zone" type="Area2D" parent="y_order/dead_zones"]
@@ -549,6 +1076,7 @@ process_mode = 3
 position = Vector2(1168, 336)
 script = ExtResource("3_boia1")
 size = Vector2i(480, 270)
+shape = SubResource("RectangleShape2D_wajl5")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [node name="H_dead_zone" type="Area2D" parent="y_order/dead_zones"]
@@ -556,6 +1084,7 @@ process_mode = 3
 position = Vector2(1376, 16)
 script = ExtResource("3_boia1")
 size = Vector2i(570, 320)
+shape = SubResource("RectangleShape2D_cushs")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [node name="I_dead_zone" type="Area2D" parent="y_order/dead_zones"]
@@ -563,6 +1092,7 @@ process_mode = 3
 position = Vector2(432, 640)
 script = ExtResource("3_boia1")
 size = Vector2i(480, 270)
+shape = SubResource("RectangleShape2D_oe8v3")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [node name="J_dead_zone" type="Area2D" parent="y_order/dead_zones"]
@@ -570,6 +1100,7 @@ process_mode = 3
 position = Vector2(-80, 976)
 script = ExtResource("3_boia1")
 size = Vector2i(600, 350)
+shape = SubResource("RectangleShape2D_rq55e")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [node name="L_dead_zone" type="Area2D" parent="y_order/dead_zones"]
@@ -577,6 +1108,7 @@ process_mode = 3
 position = Vector2(544, 1232)
 script = ExtResource("3_boia1")
 size = Vector2i(600, 300)
+shape = SubResource("RectangleShape2D_fra41")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [editable path="camera"]

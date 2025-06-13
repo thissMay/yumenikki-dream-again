@@ -46,6 +46,7 @@ enabled=PackedStringArray("res://addons/autoload_setup/plugin.cfg", "res://addon
 
 folder_colors={
 "res://src/entities/hostile/": "red",
+"res://src/entities/sentients/": "yellow",
 "res://src/levels/_ignore/": "gray",
 "res://src/player/hud/": "gray",
 "res://src/player/inventory/": "gray"
@@ -58,8 +59,11 @@ folder_colors={
 2d_render/layer_3="Entities"
 2d_render/layer_20="UI"
 2d_physics/layer_1="Everything / All"
+2d_navigation/layer_1="All"
 2d_physics/layer_2="Interactable"
+2d_navigation/layer_2="Wander"
 2d_physics/layer_3="Entity"
+2d_navigation/layer_3="Chase / Observe"
 2d_physics/layer_4="Tile"
 2d_physics/layer_5="Presence"
 2d_physics/layer_6="Damage"

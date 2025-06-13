@@ -1,7 +1,13 @@
 extends State
 
+@export var active_exclusive_cr: ComponentReceiver
+
 func enter_state() -> void:
+	active_exclusive_cr.set_bypass(false)
 	GameManager.set_ui_visibility(true)
+	
+func exit_state() -> void:
+	active_exclusive_cr.set_bypass(false)
 
 func input(event: InputEvent, ) -> void:
 	if event is InputEventKey && Global.input:

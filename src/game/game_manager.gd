@@ -31,7 +31,7 @@ static var cb_tween: Tween
 
 # ---- components
 static var game_fsm: StrategistFSM
-static var time_manager: Node
+
 
 # ---- internal setup ----
 func _ready() -> void:
@@ -55,8 +55,6 @@ func setup() -> void:
 	cinematic_ui = $always/cinematic
 	cinematic_bars = $always/cinematic/cinematic_bars
 
-	time_manager = TimeManager.instance
-
 	game_fsm._setup()
 	
 	pausable_parent.process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -71,7 +69,6 @@ func setup() -> void:
 	
 	global_screen_effect.environment.glow_enabled = bloom
 	PLInstance.setup()
-	time_manager.setup()
 
 # ---- game functionality ----
 static func pause_options(_pause: bool = true) -> void:

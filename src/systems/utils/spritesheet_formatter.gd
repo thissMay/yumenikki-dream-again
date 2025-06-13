@@ -8,7 +8,10 @@ enum style {HORIZONTAL, VERTICAL}
 # helpful if you wanna format it on the fly
 @export_tool_button("Format") var formatter = refresh_frame_splitting
 
-@export var frame_dimensions: Vector2i
+@export var frame_dimensions: Vector2i:
+	set(_dims):
+		if Engine.is_editor_hint(): frame_dimensions = _dims.clamp(Vector2i.ZERO, texture.get_size())
+		else: frame_dimensions = _dims
 
 @export var frame_h_count	: int = 1
 @export var frame_v_count	: int = 1
@@ -66,7 +69,7 @@ func _process(delta: float) -> void:
 	match strip_style:
 		style.HORIZONTAL:
 			frame_coords.x = clamp(round(progress), 0, frame_h_count)
-			frame_coords.y = clamp(round(row), 		0, frame_v_count)
+			frame_coords.y = clamp(snapped(row, 0.5), 		0, frame_v_count)
 			row_within_bounds = cached_row <= frame_v_count - 1
 		style.VERTICAL:
 			frame_coords.x = clamp(round(column), 	0, frame_h_count)

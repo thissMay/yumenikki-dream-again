@@ -35,10 +35,9 @@ func fade_in(speed: int = 1) -> void:
 	fade_tween.tween_method(
 		func(p: float):
 			transition_instance.material.set_shader_parameter("progress", p),
-		0 as float, 
-		1 as float, 
-		1 * speed
-		)
+			transition_instance.material.get_shader_parameter("progress"), 
+			1 as float, 
+			1 * speed)
 		
 	await fade_tween.finished
 	reset_fade_shaders()

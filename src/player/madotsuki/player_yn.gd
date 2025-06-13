@@ -4,8 +4,8 @@ class_name Player_YN extends Player
 var audio_listener: AudioListener2D
 var sound_player: AudioStreamPlayer
 
-var animation_manager: SentientAnimator
 var footstep_manager: Node
+var input_manager: PLInput
 
  	
 const DEFAULT_DISPLAY := preload("res://src/player/madotsuki/sprite_sheets/no_effect.tres") as SerializableDict
@@ -35,13 +35,12 @@ func dependency_components() -> void:
 	stamina_fsm._setup() 	# --- fsm; not player dependency but required
 	fsm._setup(self)			# --- fsm; not player dependency but required
 	
+	input_manager = components.get_component_by_name("input_manager")  
 	if components.get_component_by_name("health"):
 		components.get_component_by_name("health").took_damage.connect( 
 			func(_dmg: float):
 				GameManager.EventManager.invoke_event("PLAYER_HURT", [_dmg]))
 func mandatory_components() -> void:
-	animation_manager = components.get_component_by_name("animation_manager")
-	
 	audio_listener = $audio_listener
 	sound_player = $sound_player
 	

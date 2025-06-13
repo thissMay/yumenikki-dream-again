@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_6knvu"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="2_tq601"]
+[ext_resource type="AudioStream" uid="uid://d3ne7k6ma2gud" path="res://src/audio/bgm/luff_yta_thalassophobia.ogg" id="3_fpoo2"]
 [ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="4_dh60x"]
 [ext_resource type="PackedScene" uid="uid://djnomncx1otsq" path="res://src/systems/seamless_detector.tscn" id="5_fi7jb"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="6_3s5hh"]
@@ -18,9 +19,6 @@
 [ext_resource type="TileSet" uid="uid://du5agmvlu6p41" path="res://src/levels/upper_abyss/tile_set.tres" id="15_idx74"]
 [ext_resource type="PackedScene" uid="uid://crej0xx7uj05p" path="res://src/levels/_ignore/door.tscn" id="17_uike6"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="23_fc2sj"]
-
-[sub_resource type="Resource" id="Resource_xtx8l"]
-metadata/__load_path__ = "res://src/audio/bgm/luff_yta_thalassophobia.ogg"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_101a1"]
 shader = ExtResource("6_3s5hh")
@@ -180,7 +178,7 @@ script = ExtResource("1_6knvu")
 
 [node name="BGM" type="Node" parent="."]
 script = ExtResource("23_fc2sj")
-stream = SubResource("Resource_xtx8l")
+stream = ExtResource("3_fpoo2")
 
 [node name="seamless_detector" parent="." instance=ExtResource("5_fi7jb")]
 position = Vector2(-384, -312)
@@ -253,7 +251,7 @@ material = SubResource("ShaderMaterial_cw11x")
 
 [node name="overlay_3" parent="cam_layer/camera_handler/camera_overlay" index="5"]
 material = SubResource("ShaderMaterial_ijr0l")
-color = Color(0.451783, 0.540947, 0.830366, 1)
+color = Color(0.333896, 0.420632, 0.72675, 1)
 
 [node name="background" type="CanvasLayer" parent="."]
 layer = -1

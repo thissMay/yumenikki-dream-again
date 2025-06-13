@@ -16,10 +16,10 @@ func update(_delta: float) -> void:
 func pass_input(x: float, y: float) -> void:
 	inp_x = clamp(x, -1, 1)
 	inp_y = clamp(y, -1, 1)
-func interact(p: Player = PLInstance.player) -> void: pass
+func interact(_pl: Player = PLInstance.get_pl()) -> void: pass
 
-func perform_action(p: Player = PLInstance.player) -> void: pass
-func execute_emote(p: Player = PLInstance.player) -> void: pass
+func perform_action(_pl: Player = PLInstance.get_pl()) -> void: pass
+func execute_emote(_pl: Player = PLInstance.get_pl()) -> void: pass
 
 static func get_input_vectors() -> Vector2: 
 	return Vector2(inp_x, inp_y)

@@ -1,5 +1,7 @@
+@tool
+
 class_name Interactable
-extends Area2D
+extends AreaRegion
 
 @export_group("Flags")
 @export var detectable: bool = true
@@ -20,18 +22,22 @@ extends Area2D
 
 @export_group("Misc.")
 signal interacted
-var coll: CollisionShape2D
 
+func _init() -> void:
+	super()
+	debug_colour = Color(0.9 ,0, 0.7, 0.3)
 func _ready() -> void:	
+	super() 
+	
 	if !Engine.is_editor_hint():
 		self.set_collision_layer_value(2, true)
 		self.set_collision_mask_value(3, true)
-		self.set_collision_mask_value(32, true)
-		
-		self.set_collision_layer_value(1, false)
-		self.set_collision_mask_value(1, false)
 		
 		set_area_mode(area)
+
+func _setup() -> void:
+	set_physics_process(false)
+	set_process(false)
 
 func _interact() -> void: pass
 func interact() -> void:
@@ -45,14 +51,7 @@ func interact() -> void:
 		interacted.emit()
 
 func set_area_mode(_area: bool, _include_detection: bool = true) -> void: 
-	match _area:
-		true: 
-			area_entered.connect(player_entered)
-			if _include_detection: detectable = false
-		false: 
-			if body_entered.is_connected(player_entered): 
-				body_entered.disconnect(player_entered)
-			if _include_detection: detectable = true
+	if _include_detection: detectable = !_area		
 
-func player_entered(pl: Area2D) -> void:
-	if pl == PLInstance.get_pl().world_warp: self.interact()
+func _handle_player_enter() -> void: if area: self.interact()
+func _handle_player_exit() -> void: pass

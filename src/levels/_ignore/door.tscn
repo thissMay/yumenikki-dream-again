@@ -7,13 +7,16 @@
 [ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="5_67jxd"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="5_76or2"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_76or2"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv7t1"]
 size = Vector2(16, 8)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lea3f"]
-
 [node name="door_interactable" type="Area2D"]
+process_mode = 3
 script = ExtResource("1_cv7t1")
+shape = SubResource("RectangleShape2D_76or2")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
 [node name="on_interact" type="Node" parent="."]
@@ -26,7 +29,7 @@ sound = ExtResource("5_67jxd")
 pitch = 0.8
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="Event" type="Node" parent="on_interact"]
+[node name="travel_to_scene" type="Node" parent="on_interact"]
 script = ExtResource("5_76or2")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -38,6 +41,3 @@ position = Vector2(0, 12)
 
 [node name="shape" type="CollisionShape2D" parent="coll"]
 shape = SubResource("RectangleShape2D_cv7t1")
-
-[node name="shape" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_lea3f")

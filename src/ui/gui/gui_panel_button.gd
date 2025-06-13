@@ -69,6 +69,8 @@ func _ready() -> void:
 			unhover_animation()
 			set_modulate(curr_color))
 
+	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		
 func _components_children_setup() -> void: 
 	super()
 	
