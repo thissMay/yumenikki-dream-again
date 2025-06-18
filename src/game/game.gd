@@ -83,7 +83,6 @@ func _ready() -> void:
 	scene_manager.setup()
 	GlobalPanoramaManager.setup()
 	
-
 func _process(delta: float) -> void: 
 	Game.scene_manager.handle_background_loading_upon_request(Game.scene_manager.scene_node_packed)
 	GlobalPanoramaManager.update(delta)
@@ -247,10 +246,11 @@ class Config:
 class Application: 
 	static func quit(): 
 		Music.fade_out()
+		Optimization.set_max_fps(30)
+		await Game.Save.save_data()
 		await GameManager.request_transition(ScreenTransition.fade_type.FADE_IN)
-		Game.scene_manager.unload_current_scene()
-		Game.Save.save_data()
-		Game.main_tree.quit()
+		Game.main_tree.quit.call_deferred()
+	
 	static func pause(): 
 		Game.main_tree.paused = true
 		Game.is_paused = true
@@ -261,7 +261,6 @@ class Audio:
 	static func adjust_bus_volume(_bus_name: String, _vol: float) -> void:
 		if (AudioServer.get_bus_index(_bus_name)) >= 0:
 			AudioServer.set_bus_volume_db(AudioServer.get_bus_index(_bus_name), linear_to_db(_vol))
-			print()
 	static func get_bus_volume(_bus_name: String) -> float:
 		if (AudioServer.get_bus_index(_bus_name)) >= 0:
 			return AudioServer.get_bus_volume_db(AudioServer.get_bus_index(_bus_name))
@@ -303,3 +302,5 @@ class Optimization:
 		Game.main_window.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 		Game.main_window.canvas_item_default_texture_repeat = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_REPEAT_ENABLED
 		Game.main_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+	static func set_max_fps(_max_fps: int) -> void:
+		Engine.max_fps = _max_fps

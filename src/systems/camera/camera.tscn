@@ -32,7 +32,6 @@ metadata/_custom_type_script = "uid://ctbtfitoggtku"
 [node name="curve_rotation" type="Node" parent="camera_handler/components_receiver" node_paths=PackedStringArray("receiver")]
 script = ExtResource("3_qjqrg")
 rot_curve = ExtResource("4_wxyky")
-rot_strength = 2.0
 receiver = NodePath("../../marker/camera/components_receiver")
 metadata/_custom_type_script = "uid://df3nc1vhukhur"
 

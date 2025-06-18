@@ -40,3 +40,10 @@ func _on_unhover() -> void:
 func _on_press() -> void: 
 	AudioService.play_sound(preload("res://src/audio/ui/ui_button_press.wav"), .5)
 	texture_renderer.progress = press_cell
+	
+	if is_togglable:
+		is_toggled = !is_toggled
+		
+		if is_toggled: toggle()
+		else: untoggle() 
+		

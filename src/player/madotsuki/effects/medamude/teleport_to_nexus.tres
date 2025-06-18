@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dq7sekhxcf1s1"]
+
+[ext_resource type="Script" uid="uid://db2wp3fae1xmk" path="res://src/player/madotsuki/effects/medamude/teleport_to_nexus.gd" id="1_lgjcx"]
+
+[resource]
+script = ExtResource("1_lgjcx")
+metadata/_custom_type_script = "uid://gqxupngqpt0n"

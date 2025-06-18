@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/world_pink-sea.ogg-82c26f4d4318c8b540cf825764
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

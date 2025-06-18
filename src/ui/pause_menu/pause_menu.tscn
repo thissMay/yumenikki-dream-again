@@ -231,37 +231,37 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 
 [node name="resume" type="Container" parent="container/_e/VBoxContainer"]
-custom_minimum_size = Vector2(92, 25)
+custom_minimum_size = Vector2(96, 25)
 layout_mode = 2
 theme = ExtResource("11_4sckj")
 script = ExtResource("12_ukw3d")
 button_display_texture = SubResource("CanvasTexture_onin4")
-min_size = Vector2(92, 25)
-true_size = Vector2(92, 25)
+min_size = Vector2(96, 25)
+true_size = Vector2(96, 25)
 text = "Resume + Save Settings"
 panel_display_texture = SubResource("CanvasTexture_4sckj")
 panel_display_color = Color(1, 1, 1, 1)
 
 [node name="quit_to_menu" type="Container" parent="container/_e/VBoxContainer"]
-custom_minimum_size = Vector2(92, 25)
+custom_minimum_size = Vector2(96, 25)
 layout_mode = 2
 theme = ExtResource("11_4sckj")
 script = ExtResource("12_ukw3d")
 button_display_texture = SubResource("CanvasTexture_spgs3")
-min_size = Vector2(92, 25)
-true_size = Vector2(92, 25)
+min_size = Vector2(96, 25)
+true_size = Vector2(96, 25)
 text = "Quit to Menu"
 panel_display_texture = SubResource("CanvasTexture_ahd7c")
 panel_display_color = Color(1, 1, 1, 1)
 
 [node name="quit_to_desktop" type="Container" parent="container/_e/VBoxContainer"]
-custom_minimum_size = Vector2(92, 25)
+custom_minimum_size = Vector2(96, 25)
 layout_mode = 2
 theme = ExtResource("11_4sckj")
 script = ExtResource("12_ukw3d")
 button_display_texture = SubResource("CanvasTexture_l17fe")
-min_size = Vector2(92, 25)
-true_size = Vector2(92, 25)
+min_size = Vector2(96, 25)
+true_size = Vector2(96, 25)
 text = "Quit to Desktop"
 panel_display_texture = SubResource("CanvasTexture_fn14o")
 panel_display_color = Color(1, 1, 1, 1)

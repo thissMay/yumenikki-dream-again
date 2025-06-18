@@ -1,6 +1,6 @@
 extends Component
 @export var rot_curve: Curve
-@export var rot_strength: float = 2
+@export var rot_strength: float = 1.2
 
 func _physics_update(_delta: float) -> void:
 	if rot_curve:

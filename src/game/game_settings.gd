@@ -1,3 +1,4 @@
+class_name IngameSettings
 extends Control
 
 @export var music_slider: HSlider
@@ -26,7 +27,6 @@ func _ready() -> void:
 
 	setup()
 	
-	self.visibility_changed.connect(on_show)
 	
 func setup() -> void:
 	music_slider.value_changed.connect(func(_val: float):
@@ -47,7 +47,7 @@ func setup() -> void:
 			
 	quit_to_menu.pressed.connect(
 		func(): 
-			GameManager.change_scene_to(preload("res://src/levels/menu/level.tscn"))
+			GameManager.change_scene_to(preload("res://src/levels/_neutral/menu/menu.tscn"))
 			GameManager.pause_options(false)
 			GameManager.pause(false)
 			)		
@@ -58,8 +58,8 @@ func setup() -> void:
 			Game.Config.save_settings_data()
 			GameManager.pause_options(false))
 
-func on_show() -> void:
-	if Game.scene_manager.scene_node_packed == load("res://src/scenes/menu/menu.tscn"):
-		quit_to_menu.set_active(false)
-	else:
-		quit_to_menu.set_active(true)
+#func on_show() -> void:
+	#if Game.scene_manager.scene_node_packed == load("res://src/scenes/menu/menu.tscn"):
+		#quit_to_menu.set_active(false)
+	#else:
+		#quit_to_menu.set_active(true)

@@ -4,22 +4,16 @@ extends RefCounted
 controllers define how the player works.
 we'll have two different controllers: key-board only, and kbm.
 '''
-
 var sentient: SentientBase
+
 static var inp_x: float = 0
 static var inp_y: float = 0
 
-
 func update(_delta: float) -> void:
 	pass_input(Global.horizontal_total, Global.vertical_total)
-
 func pass_input(x: float, y: float) -> void:
 	inp_x = clamp(x, -1, 1)
 	inp_y = clamp(y, -1, 1)
-func interact(_pl: Player = PLInstance.get_pl()) -> void: pass
-
-func perform_action(_pl: Player = PLInstance.get_pl()) -> void: pass
-func execute_emote(_pl: Player = PLInstance.get_pl()) -> void: pass
 
 static func get_input_vectors() -> Vector2: 
 	return Vector2(inp_x, inp_y)

@@ -49,7 +49,6 @@ func _update(delta: float) -> void:
 
 func set_active(_active: bool = true) -> void:
 	if !_active:
-		print("pk")
 		sound_player.volume_db = -50
 		sound_player.pitch_scale = 1
 		trauma.set_shader_parameter("blur_amount", 0)

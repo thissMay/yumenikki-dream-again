@@ -3,22 +3,25 @@
 class_name SpriteSheetFormatterAnimated
 extends SpriteSheetFormatter
 
-@export_category("Animation Properties")
+@export_category("Spritesheet Animation")
 
 # ---- animation flags ----
-@export var autoplay: bool = false
-@export var playing: bool = false
+@export_group("Play Properties")
+var playing: bool = false
+@export var autoplay: bool = false:
+	set(_auto):
+		autoplay = _auto
+		if Engine.is_editor_hint(): playing = _auto
 @export var loop: bool = false
 
 @export var reverse: bool = false
 @export var end_frame: bool = false
-@export var ping_pong: bool = false
 
-var ping_ponged: bool = false
 var reached_end: bool = false
 var reached_first: bool = false
 
 # ---- time ----
+@export_group("Animation Properties")
 @export var fps: float = 1
 var time_elapsed: float = 0
 

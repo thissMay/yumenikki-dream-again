@@ -1,15 +1,13 @@
-[gd_scene load_steps=29 format=3 uid="uid://ra24ysq2f70c"]
+[gd_scene load_steps=33 format=3 uid="uid://ra24ysq2f70c"]
 
 [ext_resource type="Script" uid="uid://b2yjestmw6ux7" path="res://src/game/game_manager.gd" id="1_1weyd"]
 [ext_resource type="Environment" uid="uid://be4tedt15qnrp" path="res://src/main/environment_2d.tres" id="2_nfr70"]
-[ext_resource type="Script" uid="uid://bot0qrhchjod5" path="res://src/main/time/time_manager.gd" id="2_yhp8d"]
-[ext_resource type="Script" uid="uid://cnom6llevtjbx" path="res://src/main/heartbeat.gd" id="4_00sxe"]
+[ext_resource type="Script" uid="uid://bot0qrhchjod5" path="res://src/systems/game/time/time_manager.gd" id="2_yhp8d"]
 [ext_resource type="Script" uid="uid://b28e410lfdesx" path="res://src/player/instance/pl_effect_player.gd" id="4_th8l7"]
 [ext_resource type="AudioStream" uid="uid://xxugef5ihpej" path="res://src/audio/se/effect_equip.WAV" id="5_arbwm"]
 [ext_resource type="Shader" uid="uid://dhvgpadvrk0e2" path="res://src/shaders/screen_overlay/vignette_blur.gdshader" id="5_n1fgk"]
 [ext_resource type="Texture2D" uid="uid://bvntqmlvl36s0" path="res://src/player/madotsuki/effects/effect_anim_petal_pink.png" id="6_3p7ss"]
 [ext_resource type="Script" uid="uid://ctbtfitoggtku" path="res://src/systems/components/component_receiver.gd" id="6_arbwm"]
-[ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_bn1po"]
 [ext_resource type="Script" uid="uid://6jmuo8r04t1" path="res://src/systems/behaviour/strat_fsm_hyb.gd" id="6_n5e32"]
 [ext_resource type="AudioStream" uid="uid://b5ua6uth0mp44" path="res://src/audio/se/effect_unequip.WAV" id="6_th8l7"]
 [ext_resource type="Script" uid="uid://bkcfhq2u2bvbg" path="res://src/game/states/pregame.gd" id="7_pptqv"]
@@ -19,11 +17,17 @@
 [ext_resource type="Script" uid="uid://drtlglqkjepmq" path="res://src/game/states/pause.gd" id="9_uggay"]
 [ext_resource type="PackedScene" uid="uid://c2sv1637gh6ub" path="res://src/ui/pause_menu/pause_menu.tscn" id="10_kqpe4"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="11_bn1po"]
+[ext_resource type="Script" uid="uid://gigwxif6kkss" path="res://src/systems/game/dream/dream_manager.gd" id="13_3p7ss"]
 [ext_resource type="Script" uid="uid://cwsl1s56sohmv" path="res://src/game/states/special_invert_cutscene.gd" id="13_bn1po"]
+[ext_resource type="Script" uid="uid://c138sv0uwhbgj" path="res://src/systems/game/dream/neutral_state.gd" id="14_5gc60"]
 [ext_resource type="AudioStream" uid="uid://cjs57vjoi1p2s" path="res://src/audio/bgm/madoxy_63.wav" id="14_73454"]
 [ext_resource type="PackedScene" uid="uid://q5moiijg0b7a" path="res://src/player/hud/pl_hud.tscn" id="15_f8vi8"]
+[ext_resource type="Script" uid="uid://b5eh18jkduvjk" path="res://src/systems/game/heartbeat_manager.gd" id="15_r0d38"]
+[ext_resource type="Script" uid="uid://byjfgx55roir" path="res://src/systems/game/dream/dream_state.gd" id="15_xyhoc"]
 [ext_resource type="Script" uid="uid://dx4noqrry2gq1" path="res://src/systems/game/chase_manager.gd" id="16_arbwm"]
+[ext_resource type="Script" uid="uid://bv8x8ui1ialx" path="res://src/systems/game/dream/real_state.gd" id="16_jhnr1"]
 [ext_resource type="Texture2D" uid="uid://co64pugf2as81" path="res://src/shaders/ui/cinematic_bars_grad.tres" id="16_v4uq4"]
+[ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="20_xyhoc"]
 
 [sub_resource type="Animation" id="Animation_arbwm"]
 resource_name = "effect_deequip"
@@ -422,18 +426,30 @@ texture = ExtResource("7_r0d38")
 
 [node name="sound" type="AudioStreamPlayer" parent="fsm/ACTIVE/active_state_components/effect_equip_anim"]
 bus = &"Effects"
-script = ExtResource("6_bn1po")
-metadata/_custom_type_script = "uid://b8o626ec7226k"
+script = ExtResource("20_xyhoc")
+metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
+
+[node name="dream_manager" type="Node" parent="fsm/ACTIVE/active_state_components" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("13_3p7ss")
+initial_state = NodePath("NEUTRAL")
+
+[node name="NEUTRAL" type="Node" parent="fsm/ACTIVE/active_state_components/dream_manager"]
+script = ExtResource("14_5gc60")
+
+[node name="DREAM" type="Node" parent="fsm/ACTIVE/active_state_components/dream_manager"]
+script = ExtResource("15_xyhoc")
+
+[node name="REAL" type="Node" parent="fsm/ACTIVE/active_state_components/dream_manager"]
+script = ExtResource("16_jhnr1")
 
 [node name="time_manager" type="Node" parent="fsm/ACTIVE/active_state_components"]
 script = ExtResource("2_yhp8d")
 
-[node name="heartbeat_manager" type="Node" parent="fsm/ACTIVE/active_state_components"]
-script = ExtResource("4_00sxe")
+[node name="screen_overlay" type="CanvasLayer" parent="fsm/ACTIVE/active_state_components"]
+layer = 10
+script = ExtResource("15_r0d38")
 
-[node name="trauma" type="CanvasLayer" parent="fsm/ACTIVE/active_state_components/heartbeat_manager"]
-
-[node name="fx" type="ColorRect" parent="fsm/ACTIVE/active_state_components/heartbeat_manager/trauma"]
+[node name="fx" type="ColorRect" parent="fsm/ACTIVE/active_state_components/screen_overlay"]
 material = SubResource("ShaderMaterial_73454")
 anchors_preset = 15
 anchor_right = 1.0
@@ -442,10 +458,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="sound" type="AudioStreamPlayer" parent="fsm/ACTIVE/active_state_components/heartbeat_manager"]
+[node name="sound" type="AudioStreamPlayer" parent="fsm/ACTIVE/active_state_components/screen_overlay"]
 bus = &"Effects"
-script = ExtResource("6_bn1po")
-metadata/_custom_type_script = "uid://b8o626ec7226k"
+script = ExtResource("20_xyhoc")
+metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
 
 [node name="chase_manager" type="Node" parent="fsm/ACTIVE/active_state_components"]
 script = ExtResource("16_arbwm")

@@ -7,7 +7,7 @@ var flash_tween: Tween
 func _ready() -> void:
 	on_player_effect = EventListener.new(["PLAYER_EQUIP", "PLAYER_DEEQUIP"], false, self)
 	on_player_effect.do_on_notify("PLAYER_EQUIP", func():
-		if (GameManager.EventManager.get_event_param("PLAYER_EQUIP")[0] == load("res://src/player/madotsuki/effects/_none/_none.tres")
+		if (GameManager.EventManager.get_event_param("PLAYER_EQUIP")[0] == load("res://src/player/madotsuki/effects/_none/_default.tres")
 			or GameManager.EventManager.get_event_param("PLAYER_EQUIP_SKIP_ANIM")[0] == true): return
 		
 		(PLInstance.get_pl().sprite_renderer.get_node("shader") as ColorRect).color.a = 1
@@ -19,6 +19,9 @@ func _ready() -> void:
 		animation_player.play("effect_equip"))
 	
 	on_player_effect.do_on_notify("PLAYER_DEEQUIP", func(): 
+		if (GameManager.EventManager.get_event_param("PLAYER_DEEQUIP")[0] == load("res://src/player/madotsuki/effects/_none/_default.tres")): 
+			return
+			
 		(PLInstance.get_pl().sprite_renderer.get_node("shader") as ColorRect).color.a = 1
 		if flash_tween != null: flash_tween.kill()
 		flash_tween = self.create_tween()

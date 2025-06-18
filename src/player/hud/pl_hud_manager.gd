@@ -17,7 +17,7 @@ var hud_fade: EventListener
 var on_invert: EventListener
 var game_save: EventListener
 
-@export var inv_toggle: GUIPanelButton
+@export var inv_toggle: AbstractButton
 @export var inv: FSM
 
 func _ready() -> void:

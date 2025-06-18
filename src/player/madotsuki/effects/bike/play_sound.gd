@@ -1,4 +1,4 @@
-extends PlayerAction
+extends PLAction
 
 @export var sound: AudioStream
 

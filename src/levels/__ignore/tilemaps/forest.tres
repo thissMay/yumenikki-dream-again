@@ -1,0 +1,21 @@
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://dco2oteu0g2q1"]
+
+[ext_resource type="Texture2D" uid="uid://datbhgmjkhyyj" path="res://src/levels/__ignore/tilemaps/forest_world.png" id="1_k4rq6"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_k4rq6"]
+tile_data = PackedInt32Array(65536, 196608, 0, 1, 196608, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_lp2cu"]
+tile_data = PackedInt32Array(65536, 196608, 0, 2, 196608, 0)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lp2cu"]
+texture = ExtResource("1_k4rq6")
+0:0/size_in_atlas = Vector2i(3, 3)
+0:0/0 = 0
+0:3/size_in_atlas = Vector2i(3, 3)
+0:3/0 = 0
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_lp2cu")
+pattern_0 = SubResource("TileMapPattern_k4rq6")
+pattern_1 = SubResource("TileMapPattern_lp2cu")

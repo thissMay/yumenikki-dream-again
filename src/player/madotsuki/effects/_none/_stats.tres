@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PlayerStats" load_steps=2 format=3 uid="uid://bkposgoemqwvu"]
+
+[ext_resource type="Script" uid="uid://bxe7uci7t77tx" path="res://src/player/scripts/pl_stats.gd" id="1_qckyx"]
+
+[resource]
+script = ExtResource("1_qckyx")
+base_speed = 27.5
+walk_multi = 1.25
+sprint_multi = 2.9
+sneak_multi = 0.735
+exhaust_multi = 0.9
+stamina_drain = 0.78
+stamina_regen = 1.0
+can_run = true
+walk_noise_mult = 1.0
+sneak_noise_mult = 0.5
+run_noise_mult = 2.2
+metadata/_custom_type_script = "uid://bxe7uci7t77tx"

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PLEffect" load_steps=4 format=3 uid="uid://dhc55c375fam2"]
+
+[ext_resource type="Resource" uid="uid://fbyv4ifpj1q5" path="res://src/player/madotsuki/effects/_none/_behaviour.tres" id="1_ru6d1"]
+[ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_u55wu"]
+[ext_resource type="Resource" uid="uid://bkposgoemqwvu" path="res://src/player/madotsuki/effects/_none/_stats.tres" id="3_daw3f"]
+
+[resource]
+script = ExtResource("1_u55wu")
+name = ""
+desc = ""
+stats = ExtResource("3_daw3f")
+behaviour = ExtResource("1_ru6d1")
+sprite_override = "res://src/player/madotsuki/sprite_sheets/no_effect.tres"
+emote = "uid://cp5rqnga8asj0"
+player_component_prefab = ""
+metadata/_custom_type_script = "uid://cycsi2jsiuie0"

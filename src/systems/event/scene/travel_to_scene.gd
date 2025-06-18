@@ -3,21 +3,21 @@ extends Event
 
 @export var connection_id: String = "default"
 @export_file("*.tscn") var scene_path: String
-@export var interactable: Node2D
 @export var spawn_point: Vector2 = Vector2(0, 20)
 @export var spawn_dir: Vector2 = Vector2(0, 1)
+var interactable: Node2D
 
 func _ready() -> void:
-	self.add_to_group("doors")
-	if !Engine.is_editor_hint(): super()
-	if interactable == null: return
+	if !Engine.is_editor_hint(): 
+		if !(get_parent() is Sequence) or get_parent().interactable == null: return
+		interactable = get_parent().interactable
+		self.add_to_group("doors")
+		super()
 	
-	interactable.draw.connect(_draw)
-	
-func _draw() -> void:
-	if Engine.is_editor_hint():
-		Global.draw_circle(spawn_point, 10, Color(Color.YELLOW, 0.35))
-		
+#func _draw() -> void:
+	#if Engine.is_editor_hint():
+		#Global.draw_circle(spawn_point, 10, Color(Color.YELLOW, 0.35))
+		#
 	
 func _execute() -> void:
 	super()

@@ -1,10 +1,17 @@
-[gd_resource type="Resource" script_class="PlayerEffect" load_steps=3 format=3 uid="uid://c7vdqqrvfrv78"]
+[gd_resource type="Resource" script_class="PLEffect" load_steps=5 format=3 uid="uid://c7vdqqrvfrv78"]
 
-[ext_resource type="Texture2D" uid="uid://c6ouvpoio8t7f" path="res://src/player/inventory/menu/effect_practical.png" id="1_4mlxi"]
+[ext_resource type="Texture2D" uid="uid://c6ouvpoio8t7f" path="res://src/player/inventory/menu/effect_one_action.png" id="1_4mlxi"]
 [ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_bnso0"]
+[ext_resource type="Resource" uid="uid://fbyv4ifpj1q5" path="res://src/player/madotsuki/effects/_none/_behaviour.tres" id="1_yugfs"]
+[ext_resource type="Resource" uid="uid://bkposgoemqwvu" path="res://src/player/madotsuki/effects/_none/_stats.tres" id="4_44xlh"]
 
 [resource]
 script = ExtResource("1_bnso0")
 name = "Sally's Earring"
+desc = ""
 icon = ExtResource("1_4mlxi")
+stats = ExtResource("4_44xlh")
+behaviour = ExtResource("1_yugfs")
+sprite_override = "res://src/player/madotsuki/sprite_sheets/no_effect.tres"
+emote = "res://src/player/madotsuki/emotes/sit_down.tres"
 player_component_prefab = "uid://cyclhtxv2hj8w"

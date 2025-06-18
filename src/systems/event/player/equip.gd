@@ -1,7 +1,7 @@
 class_name PlayerEquipEffect
 extends ResourceEvent
 
-var to_equip: PlayerEffect
+var to_equip: PLEffect
 
 func _execute() -> void: 
 	if PLInstance.get_pl() != null:

@@ -24,7 +24,7 @@ static var door_went_flag: bool = false
 
 static var equipment_auto_apply: EventListener 
 
-static var equipment_pending: PlayerEffect
+static var equipment_pending: PLEffect
 static var item_pending: ItemData
 
 static func setup() -> void: 	

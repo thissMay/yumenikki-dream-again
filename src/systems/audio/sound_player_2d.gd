@@ -1,5 +1,5 @@
-class_name SoundPlayer
-extends AudioStreamPlayer
+class_name SoundPlayer2D
+extends AudioStreamPlayer2D
 
 var pre_mute_vol: float = 0
 var pre_mute_pit: float = 1

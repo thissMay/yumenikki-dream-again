@@ -1,4 +1,4 @@
-extends PlayerBehaviour
+extends PLBehaviour
 
 func _enter(_pl: Player) -> void: 
 	(_pl as Player_YN).components.get_component_by_name("sprite_handler").set_dynamic_rot_multi(0.45)

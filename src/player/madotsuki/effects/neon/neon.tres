@@ -1,15 +1,18 @@
-[gd_resource type="Resource" script_class="PlayerEffect" load_steps=5 format=3 uid="uid://ncax1yyo23go"]
+[gd_resource type="Resource" script_class="PLEffect" load_steps=5 format=3 uid="uid://ncax1yyo23go"]
 
-[ext_resource type="Texture2D" uid="uid://cofl3ja34vnou" path="res://src/player/inventory/menu/effect_cosmetic.png" id="1_716di"]
-[ext_resource type="Resource" uid="uid://deu3u3675q0t8" path="res://src/player/madotsuki/emotes/neon_dansen.tres" id="1_oc44n"]
+[ext_resource type="Resource" uid="uid://fbyv4ifpj1q5" path="res://src/player/madotsuki/effects/_none/_behaviour.tres" id="1_oc44n"]
 [ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_q1psf"]
-[ext_resource type="Resource" uid="uid://scyqbtmejjfc" path="res://src/player/madotsuki/sprite_sheets/neon.tres" id="3_3cxnb"]
+[ext_resource type="Texture2D" uid="uid://cofl3ja34vnou" path="res://src/player/inventory/menu/effect_two_actions.png" id="2_oc44n"]
+[ext_resource type="Resource" uid="uid://bkposgoemqwvu" path="res://src/player/madotsuki/effects/_none/_stats.tres" id="4_axsfe"]
 
 [resource]
 script = ExtResource("1_q1psf")
 name = "Neon"
-icon = ExtResource("1_716di")
-sprite_override = ExtResource("3_3cxnb")
-emote = ExtResource("1_oc44n")
+desc = ""
+icon = ExtResource("2_oc44n")
+stats = ExtResource("4_axsfe")
+behaviour = ExtResource("1_oc44n")
+sprite_override = "uid://scyqbtmejjfc"
+emote = "uid://d25tomxbgdqrt"
 player_component_prefab = ""
 metadata/_custom_type_script = "uid://cycsi2jsiuie0"

@@ -1,0 +1,82 @@
+[gd_scene load_steps=15 format=3 uid="uid://c1crevnw4c26l"]
+
+[ext_resource type="Texture2D" uid="uid://sebowvddo33p" path="res://src/levels/_dream/upper_abyss/sprites/jellyfish_medium/skin.png" id="1_jenvo"]
+[ext_resource type="Shader" uid="uid://ce1sqbdswmmmt" path="res://src/shaders/masks/scale_wiggle.gdshader" id="1_ydha6"]
+[ext_resource type="Texture2D" uid="uid://kwbs3528i0sd" path="res://src/levels/_dream/upper_abyss/sprites/jellyfish_medium/head.png" id="2_rqqkm"]
+[ext_resource type="Texture2D" uid="uid://b5gytqsxx45en" path="res://src/levels/_dream/upper_abyss/sprites/jellyfish_medium/heart.png" id="3_fhxg7"]
+[ext_resource type="Texture2D" uid="uid://cj5olgal4rwdr" path="res://src/levels/_dream/upper_abyss/sprites/jellyfish_medium/heart_core.png" id="4_jcq6m"]
+[ext_resource type="Texture2D" uid="uid://3ift5whek017" path="res://src/levels/_dream/upper_abyss/sprites/jellyfish_medium/inner_tentacles.png" id="5_gixb6"]
+[ext_resource type="Texture2D" uid="uid://dkw3oj0sxcrfy" path="res://src/levels/_dream/upper_abyss/sprites/jellyfish_medium/side_tentacles.png" id="6_rrswg"]
+[ext_resource type="Texture2D" uid="uid://cdhrttvid34q4" path="res://src/levels/_dream/upper_abyss/sprites/jellyfish_medium/outer_tentacles.png" id="7_3pfxf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ihmva"]
+shader = ExtResource("1_ydha6")
+shader_parameter/x_scale_amplitude = 1.0
+shader_parameter/x_scale_speed = 2.0
+shader_parameter/y_scale_amplitude = 2.0
+shader_parameter/y_scale_speed = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jag63"]
+shader = ExtResource("1_ydha6")
+shader_parameter/x_scale_amplitude = 1.0
+shader_parameter/x_scale_speed = 1.0
+shader_parameter/y_scale_amplitude = 2.0
+shader_parameter/y_scale_speed = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uq6pt"]
+shader = ExtResource("1_ydha6")
+shader_parameter/x_scale_amplitude = 1.0
+shader_parameter/x_scale_speed = 1.0
+shader_parameter/y_scale_amplitude = 2.0
+shader_parameter/y_scale_speed = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t6x6i"]
+shader = ExtResource("1_ydha6")
+shader_parameter/x_scale_amplitude = 1.945
+shader_parameter/x_scale_speed = 0.77
+shader_parameter/y_scale_amplitude = 2.0
+shader_parameter/y_scale_speed = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qec0a"]
+shader = ExtResource("1_ydha6")
+shader_parameter/x_scale_amplitude = 1.08
+shader_parameter/x_scale_speed = 0.91
+shader_parameter/y_scale_amplitude = 2.0
+shader_parameter/y_scale_speed = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fqie6"]
+shader = ExtResource("1_ydha6")
+shader_parameter/x_scale_amplitude = 1.325
+shader_parameter/x_scale_speed = 1.62
+shader_parameter/y_scale_amplitude = 2.0
+shader_parameter/y_scale_speed = 1.0
+
+[node name="medium_jellyfish" type="Node2D"]
+position = Vector2(60, 38)
+
+[node name="heart" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ihmva")
+texture = ExtResource("3_fhxg7")
+
+[node name="skin" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_jag63")
+texture = ExtResource("1_jenvo")
+
+[node name="head" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_uq6pt")
+texture = ExtResource("2_rqqkm")
+
+[node name="inner_tentacles" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_t6x6i")
+texture = ExtResource("5_gixb6")
+
+[node name="side_tentacles" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_qec0a")
+texture = ExtResource("6_rrswg")
+
+[node name="outer_tentacles" type="Sprite2D" parent="."]
+texture = ExtResource("7_3pfxf")
+
+[node name="core" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_fqie6")
+texture = ExtResource("4_jcq6m")

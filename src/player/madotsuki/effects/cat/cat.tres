@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="PlayerEffect" load_steps=7 format=3 uid="uid://b3ej66fhp7a0e"]
+[gd_resource type="Resource" script_class="PLEffect" load_steps=6 format=3 uid="uid://b3ej66fhp7a0e"]
 
+[ext_resource type="Resource" uid="uid://fbyv4ifpj1q5" path="res://src/player/madotsuki/effects/_none/_behaviour.tres" id="1_5a2w6"]
 [ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_5bfqw"]
-[ext_resource type="Resource" uid="uid://b35fjlqpm7n5k" path="res://src/player/madotsuki/emotes/cat.tres" id="1_jr6q7"]
-[ext_resource type="Resource" uid="uid://t640tko80xou" path="res://src/player/madotsuki/sprite_sheets/cat.tres" id="2_628jq"]
-[ext_resource type="Texture2D" uid="uid://cofl3ja34vnou" path="res://src/player/inventory/menu/effect_cosmetic.png" id="2_ruopn"]
+[ext_resource type="Texture2D" uid="uid://c6ouvpoio8t7f" path="res://src/player/inventory/menu/effect_one_action.png" id="2_rlw0v"]
 [ext_resource type="Script" uid="uid://bxe7uci7t77tx" path="res://src/player/scripts/pl_stats.gd" id="4_5a2w6"]
 
 [sub_resource type="Resource" id="Resource_ruopn"]
@@ -24,9 +23,11 @@ metadata/_custom_type_script = "uid://bxe7uci7t77tx"
 [resource]
 script = ExtResource("1_5bfqw")
 name = "Cat"
-icon = ExtResource("2_ruopn")
+desc = ""
+icon = ExtResource("2_rlw0v")
 stats = SubResource("Resource_ruopn")
-sprite_override = ExtResource("2_628jq")
-emote = ExtResource("1_jr6q7")
+behaviour = ExtResource("1_5a2w6")
+sprite_override = "uid://t640tko80xou"
+emote = "uid://cjsw1ure21qyt"
 player_component_prefab = ""
 metadata/_custom_type_script = "uid://cycsi2jsiuie0"

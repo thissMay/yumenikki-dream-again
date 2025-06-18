@@ -45,14 +45,14 @@ func fade_out(speed: int = 1) -> void:
 	if fade_tween != null: fade_tween.kill()
 	fade_tween = transition_instance.create_tween()
 	transition_instance.material = fade_out_shader
-		
+	transition_instance.material.set_shader_parameter("progress", 1)
+	
 	fade_tween.tween_method(
 	func(p: float):
 		transition_instance.material.set_shader_parameter("progress", p),
 		1 as float, 
 		0 as float, 
-		1 * speed
-		)
+		1 * speed)
 		
 	await fade_tween.finished
 

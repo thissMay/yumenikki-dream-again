@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="PlayerEffect" load_steps=6 format=3 uid="uid://bi65brqjolfb"]
+[gd_resource type="Resource" script_class="PLEffect" load_steps=7 format=3 uid="uid://bi65brqjolfb"]
 
-[ext_resource type="Texture2D" uid="uid://c6ouvpoio8t7f" path="res://src/player/inventory/menu/effect_practical.png" id="1_vmmiy"]
+[ext_resource type="Resource" uid="uid://fbyv4ifpj1q5" path="res://src/player/madotsuki/effects/_none/_behaviour.tres" id="1_8fwxv"]
+[ext_resource type="Texture2D" uid="uid://cofl3ja34vnou" path="res://src/player/inventory/menu/effect_two_actions.png" id="1_vmmiy"]
 [ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="2_8fwxv"]
-[ext_resource type="Resource" uid="uid://jkp88c1g030d" path="res://src/player/madotsuki/sprite_sheets/medamude.tres" id="3_cl054"]
+[ext_resource type="Resource" uid="uid://dq7sekhxcf1s1" path="res://src/player/madotsuki/effects/medamude/teleport_to_nexus.tres" id="2_vmmiy"]
 [ext_resource type="Script" uid="uid://bxe7uci7t77tx" path="res://src/player/scripts/pl_stats.gd" id="4_y478k"]
 
 [sub_resource type="Resource" id="Resource_jp5jo"]
@@ -23,8 +24,12 @@ metadata/_custom_type_script = "uid://bxe7uci7t77tx"
 [resource]
 script = ExtResource("2_8fwxv")
 name = "Medamaude"
+desc = ""
 icon = ExtResource("1_vmmiy")
 stats = SubResource("Resource_jp5jo")
-sprite_override = ExtResource("3_cl054")
+behaviour = ExtResource("1_8fwxv")
+primary_action = ExtResource("2_vmmiy")
+sprite_override = "uid://jkp88c1g030d"
+emote = ""
 player_component_prefab = ""
 metadata/_custom_type_script = "uid://cycsi2jsiuie0"

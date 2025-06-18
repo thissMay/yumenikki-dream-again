@@ -1,63 +1,56 @@
 class_name PlEquipManager
 extends SBComponent
 
-var curr_stats: PlayerStats
-
-const DEFAULT_EFFECT := preload("res://src/player/madotsuki/effects/_none/_none.tres")
-@export var effect: PLPhysicalEff
-
+var effect_prefab: PLPhysicalEff = null
+var effect_data: PLEffect = null
 
 # ----> equip / de-equip.
-func equip(_ef: PlayerEffect, _pl: Player, _skip_anim: bool = false) -> void:
-	if _pl.effect: deequip(_pl.effect, _pl, true)
-	if _ef and _ef != _pl.effect:
+func equip(_ef: PLEffect, _pl: Player, _skip_anim: bool = false) -> void:
+	if _ef == effect_data:
+		await deequip(_pl, false)
+		return
+	if _ef:
+		await deequip(_pl, true, true)
+		effect_data = _ef
 		if 	( 
 			!_ef.player_component_prefab.is_empty() and
 			ResourceLoader.exists(_ef.player_component_prefab) and 
 			load(_ef.player_component_prefab).can_instantiate() 
 			):
-				effect = load(_ef.player_component_prefab).instantiate()
-				effect.name = "effect" + _ef.name
-				_pl.add_child(effect)
-				effect.action = _ef.action
-				effect._enter(_pl)
+				effect_prefab = load(_ef.player_component_prefab).instantiate()
+				effect_prefab.name = "effect" + _ef.name
+				_pl.add_child(effect_prefab)
+				effect_prefab._enter(_pl)
 
-				if _pl.effect: _pl.effect._unapply(_pl)
-				_pl.effect = _ef
-				
 		GameManager.EventManager.invoke_event("PLAYER_EQUIP_SKIP_ANIM", [_skip_anim])
 		GameManager.EventManager.invoke_event("PLAYER_EQUIP", [_ef])
-		(_pl as Player_YN).effect = _ef
 		_ef._apply(_pl)
-		_ef._enter(_pl)	
-func deequip(_ef: PlayerEffect, _pl: Player, _skip_anim: bool = false) -> void:
-	if _ef:
-		_pl.components.get_component_by_name("action_manager").cancel_action(
-			_pl.action, _pl)
-		GameManager.EventManager.invoke_event("PLAYER_DEEQUIP")
+		
+func deequip(_pl: Player, _skip_anim: bool = false, _skip_default: bool = false) -> void:
+	if effect_data:
+		_pl.components.get_component_by_name("action_manager").cancel_action(_pl.action, _pl, true)
+		GameManager.EventManager.invoke_event("PLAYER_DEEQUIP", [effect_data])
 
-		if effect != null: 
-			effect._exit(_pl)
-			effect.queue_free()
+		if effect_prefab != null: 
+			effect_prefab._exit(_pl)
+			effect_prefab.queue_free()
 
-		(_pl as Player_YN).effect = null
-		_ef._exit(_pl)
-		_ef._unapply(_pl)
+		effect_data._unapply(_pl)
+		effect_data = null
 		PLInstance.equipment_pending = null
-		equip(DEFAULT_EFFECT, _pl, true)
-
-func _input_effect(_input: InputEvent, _pl: Player) -> void: if effect != null: effect.input(_input, _pl)
+		
+		if _skip_default: return
+		equip(_pl.DEFAULT_EFFECT, _pl)
+func _input_effect(_input: InputEvent, _pl: Player) -> void: 
+	if effect_prefab != null: effect_prefab.input(_input, _pl)
+	
 func _physics_update(_delta: float) -> void:
-	if effect != null: effect._physics_update(_delta, sentient)
+	if effect_prefab != null: effect_prefab._physics_update(_delta, sentient)
 func _update(_delta: float) -> void:
-	if effect != null: effect._update(_delta, sentient)
+	if effect_prefab != null: effect_prefab._update(_delta, sentient)
 	
 func _input_pass(event: InputEvent) -> void: 
-	if event is InputEventKey && Global.input:
-		if (Global.input["key_pressed"] == KEY_F and
-			Global.input["held_down"]):
-				if (sentient as Player_YN).effect == PLInventory.favourite_effect:
-					deequip(PLInventory.favourite_effect, (sentient as Player_YN))
-					return
-					
-				else: equip(PLInventory.favourite_effect, sentient)
+	_input_effect(event, sentient)
+	if (Global.input["key_pressed"] == KEY_F and
+		Global.input["held_down"]):
+			equip(PLInventory.favourite_effect, sentient)

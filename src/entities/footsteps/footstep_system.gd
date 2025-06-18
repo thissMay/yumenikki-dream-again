@@ -53,7 +53,7 @@ const GROUND_MAT_DICT := {
 var DEFAULT_FOOTSTEP: AudioStreamWAV = preload("res://src/audio/se/footstep_null-1.wav")
 var curr_anim: CompressedTexture2D = preload("res://src/entities/footsteps/default.png")
 
-var footstep_se_player: SoundPlayer
+var footstep_se_player: SoundPlayer2D
 var area: Area2D
 
 var floor_priority: TileMapLayer
@@ -100,7 +100,7 @@ func spawn_footstep_fx() -> void:
 func play_footstep_sound(_footstep_se: AudioStream) -> void: 
 	footstep_se_player.play_sound(
 		_footstep_se, 
-		clampf(linear_to_db(log(sentient.get_noise() + 3)), 0, 2), 
+		clampf(linear_to_db(log(sentient.get_noise() + 3)), 0, 1.2), 
 		clampf(randf_range(0.75, sentient.get_noise()), 0.75, 1.2))	
 
 func _on_body_shape_entered(
@@ -113,25 +113,24 @@ func _on_body_shape_entered(
 			multiple_floors.append(body)
 			
 			for floors: TileMapLayer in multiple_floors.arr:
-				if floors.z_index > greatest_index: 
-					greatest_index = floors.z_index
+				if floors.get_cell_tile_data(floors.get_coords_for_body_rid(body_rid)).z_index > greatest_index: 
+					greatest_index = floors.get_cell_tile_data(floors.get_coords_for_body_rid(body_rid)).z_index
 					floor_priority = floors
 					break
 				
-				if !floor_priority.has_body_rid(body_rid): return
-				var tile_coords: Vector2i = floor_priority.get_coords_for_body_rid(body_rid)
-				var cell_tile_data: TileData = floor_priority.get_cell_tile_data(tile_coords)
+			var tile_coords: Vector2i = floor_priority.get_coords_for_body_rid(body_rid)
+			var cell_tile_data: TileData = floor_priority.get_cell_tile_data(tile_coords)
 
-				if cell_tile_data:
-					material_id = cell_tile_data.get_custom_data("material") if cell_tile_data.has_custom_data("material") else 0
-				
-				curr_material = material_id
-				
-				if cell_tile_data:
-					if cell_tile_data.has_custom_data("custom_sound"):
-						sound_to_be_played = cell_tile_data.get_custom_data("custom_sound")
-					else:
-						sound_to_be_played = GROUND_MAT_DICT[curr_material].pick_random()
+			if cell_tile_data:
+				material_id = cell_tile_data.get_custom_data("material") if cell_tile_data.has_custom_data("material") else 0
+			
+			curr_material = material_id
+			
+			if cell_tile_data:
+				if cell_tile_data.has_custom_data("custom_sound"):
+					sound_to_be_played = cell_tile_data.get_custom_data("custom_sound")
+				else:
+					sound_to_be_played = GROUND_MAT_DICT[curr_material].pick_random()
 								
 				
 				if transparent_surfaces[curr_material]: sentient.shadow_renderer.visible = false

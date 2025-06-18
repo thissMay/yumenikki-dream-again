@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/madotsuki/player_yn.gd" id="1_wub1p"]
 [ext_resource type="Script" uid="uid://32q36bskoln0" path="res://src/systems/behaviour/strategist.gd" id="2_c8hmm"]
-[ext_resource type="Resource" uid="uid://cvowf83xfm3jk" path="res://src/player/madotsuki/sprite_sheets/no_effect.tres" id="2_mbimu"]
 [ext_resource type="Script" uid="uid://cpc216jqo5itw" path="res://src/player/scripts/directional_poi/input.gd" id="3_kx4hk"]
 [ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="5_xe7mj"]
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_3hhoi"]
@@ -29,6 +28,7 @@
 [ext_resource type="Script" uid="uid://bmml0v7khpsyf" path="res://src/player/states/yn style/climb.gd" id="27_xcxb0"]
 [ext_resource type="Script" uid="uid://s2qduwa65o" path="res://src/player/states/yn style/action.gd" id="28_4wyx3"]
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="29_1qwjo"]
+[ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="30_cin7d"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="30_kknx7"]
 
 [sub_resource type="Resource" id="Resource_gmp5c"]
@@ -85,10 +85,9 @@ blend_mode = 2
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r8oc4"]
 size = Vector2(2, 2)
 
-[node name="Madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("fsm")]
+[node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("fsm")]
 collision_layer = 5
 script = ExtResource("1_wub1p")
-sprite_sheet = ExtResource("2_mbimu")
 fsm = NodePath("fsm")
 
 [node name="look_at" type="Marker2D" parent="."]
@@ -132,9 +131,11 @@ script = ExtResource("10_rhwps")
 material = SubResource("CanvasItemMaterial_mbimu")
 script = ExtResource("5_xe7mj")
 
-[node name="sound_player" type="AudioStreamPlayer" parent="sb_components/footstep_manager"]
+[node name="sound_player" type="AudioStreamPlayer2D" parent="sb_components/footstep_manager"]
+max_distance = 750.0
 bus = &"Effects"
 script = ExtResource("6_3hhoi")
+metadata/_custom_type_script = "uid://b8o626ec7226k"
 
 [node name="terrain_detector" type="Area2D" parent="sb_components/footstep_manager"]
 collision_layer = 8
@@ -229,4 +230,5 @@ shape = SubResource("RectangleShape2D_r8oc4")
 
 [node name="sound_player" type="AudioStreamPlayer" parent="."]
 bus = &"Effects"
-script = ExtResource("6_3hhoi")
+script = ExtResource("30_cin7d")
+metadata/_custom_type_script = "uid://dgrha4aqsx4kh"

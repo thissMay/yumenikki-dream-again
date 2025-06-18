@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerEmote" load_steps=2 format=3 uid="uid://deu3u3675q0t8"]
+[gd_resource type="Resource" script_class="PLEmote" load_steps=2 format=3 uid="uid://d25tomxbgdqrt"]
 
 [ext_resource type="Script" uid="uid://48y120qdeepc" path="res://src/player/scripts/pl_emote.gd" id="1_8s0dh"]
 

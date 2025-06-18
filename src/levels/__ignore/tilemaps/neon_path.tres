@@ -1,0 +1,51 @@
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://cdwf1q5unkp6r"]
+
+[ext_resource type="AudioStream" uid="uid://d3l80gr2a7w6c" path="res://src/audio/se/footstep_neonpath-purple.WAV" id="1_fjtyr"]
+[ext_resource type="Texture2D" uid="uid://bdthflni0rdcr" path="res://src/levels/__ignore/tilemaps/neon_tilepath.png" id="1_ke71q"]
+[ext_resource type="AudioStream" uid="uid://dwdh2uoc6ios2" path="res://src/audio/se/footstep_neonpath-pink.wav" id="2_11ovu"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2uj8c"]
+texture = ExtResource("1_ke71q")
+0:2/animation_speed = 5.0
+0:2/animation_frame_0/duration = 1.0
+0:2/animation_frame_1/duration = 1.0
+0:2/animation_frame_2/duration = 1.0
+0:2/animation_frame_3/duration = 1.0
+0:2/animation_frame_4/duration = 1.0
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, 0, 7, 0, 7, 8.33333, -7, 8.33333)
+0:2/0/custom_data_0 = ExtResource("2_11ovu")
+0:1/animation_speed = 5.0
+0:1/animation_frame_0/duration = 1.0
+0:1/animation_frame_1/duration = 1.0
+0:1/animation_frame_2/duration = 1.0
+0:1/animation_frame_3/duration = 1.0
+0:1/animation_frame_4/duration = 1.0
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, 0, 7, 0, 7, 8.33333, -7, 8.33333)
+0:1/0/custom_data_0 = ExtResource("1_fjtyr")
+0:0/animation_speed = 10.0
+0:0/animation_mode = 1
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/animation_frame_6/duration = 1.0
+0:0/0 = 0
+0:3/size_in_atlas = Vector2i(3, 2)
+0:3/0 = 0
+3:3/size_in_atlas = Vector2i(2, 2)
+3:3/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+
+[resource]
+tile_size = Vector2i(14, 10)
+physics_layer_0/collision_layer = 8
+physics_layer_0/collision_mask = 9
+custom_data_layer_0/name = "custom_sound"
+custom_data_layer_0/type = 24
+sources/0 = SubResource("TileSetAtlasSource_2uj8c")

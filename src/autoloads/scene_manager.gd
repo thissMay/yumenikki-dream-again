@@ -90,7 +90,6 @@ func load_scene(scene: PackedScene, root_node: Node, backup_root_node: Node = nu
 		load_requested = false
 		bg_load_finished = true
 		
-		print(scene.resource_path)
 		
 		print(str("SceneManager // Load Status: ", scene_load_status))
 		print_rich("[b]SceneManager // Loading :: Loading Scene was a success![/b]")
@@ -126,7 +125,7 @@ func change_scene_to
 				if ResourceLoader.exists(scene.resource_path):
 					await load_scene(scene, root_node, backup_root_node)
 					print_rich("[color=green]SceneManager // Scene Change :: Success.[/color]")
-					GameManager.EventManager.invoke_event("SCENE_CHANGE_SUCCESS")
+					GameManager.EventManager.invoke_event("SCENE_CHANGE_SUCCESS", [scene.resource_path])
 
 				await ScreenTransition.request_transition(ScreenTransition.fade_type.FADE_OUT)
 				scene_change_pending = false

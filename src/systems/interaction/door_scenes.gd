@@ -1,4 +1,3 @@
-class_name SceneDoor
 extends Interactable
 
 @export var connection_id: String = "default"

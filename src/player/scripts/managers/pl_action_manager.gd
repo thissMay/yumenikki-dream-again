@@ -1,8 +1,11 @@
 class_name PLActionManager 
 extends SBComponent
 
-var prev_action: PlayerAction
-var action: PlayerAction
+var emote: PLEmote
+var primary_action: PLAction
+var secondary_action: PLAction
+
+var curr_action: PLAction
 
 var cooldown: float = .8
 var cooldown_timer: Timer
@@ -25,43 +28,36 @@ func _setup(_pl: SentientBase) -> void:
 	did_something.connect(flag_false_can_action)
 	
 # ---- action setters ----
-func set_action(_action: PlayerAction) -> void: 
-	prev_action = action	
-	action = _action
+func set_emote(_emote: PLEmote) -> void: emote = _emote
+func set_primary_action(_prim_action: PLAction) -> void: primary_action = _prim_action
+func set_secondary_action(_second_action: PLAction) -> void: secondary_action = _second_action
+func set_curr_action(_action: PLAction) -> void: curr_action = _action
 
-func perform_action(_action: PlayerAction, _pl: Player) -> void: 
+func perform_action(_action: PLAction, _pl: Player) -> void: 
 	if _action and can_action: 
-		set_action(_action)
-		_action._perform(_pl)
 		did_something.emit()
-func cancel_action(_action: PlayerAction, _pl: Player) -> void: 
-	if _action and can_action:
-		set_action(null) 
-		_action._exit(_pl)
+		set_curr_action(_action)
+		_action._perform(_pl)
+func cancel_action(_action: PLAction, _pl: Player, _force: bool = false) -> void: 
+	if _action and (can_action or _force):
+		_action._cancel(_pl)
+		set_curr_action(null)
+func get_curr_action() -> PLAction: return curr_action
 
-func get_curr_action() -> PlayerAction: return action
-func get_prev_action() -> PlayerAction: return prev_action
+# ---- action handles ----
+func handle_action_enter() -> void: 
+	if curr_action: 
+		await curr_action._enter(sentient)
+func handle_action_exit() -> void: 
+	if curr_action: 
+		await curr_action._exit(sentient)
 
-func set_emote(_emote: PlayerEmote) -> void: 
-	PLInstance.player.emote = _emote
-func perform_emote(_emote: PlayerEmote, _pl: Player) -> void:
-	perform_action(_emote, _pl)
-func cancel_emote(_emote: PlayerEmote, _pl: Player) -> void: 
-	cancel_action(_emote, _pl)
-
-# ---- action executes / cancels ----
-func handle_action_enter() -> void: if action: action._enter(sentient)
-func handle_action_exit() -> void: if action: action._exit(sentient)
-
-func handle_action_input(_input: InputEvent) -> void: if action: action._input(sentient, _input)
-func handle_action_phys_update(_delta: float) -> void: if action: action._physics_update(sentient, _delta)
-func handle_action_update(_delta: float) -> void: if action: action._update(sentient, _delta)
+func handle_action_input(_input: InputEvent) -> void: if curr_action and can_action: curr_action._input(sentient, _input)
+func handle_action_phys_update(_delta: float) -> void: if curr_action: curr_action._physics_update(sentient, _delta)
+func handle_action_update(_delta: float) -> void: if curr_action: curr_action._update(sentient, _delta)
 
 func _physics_update(_delta: float) -> void: handle_action_phys_update(_delta)
 func _update(_delta: float) -> void: handle_action_update(_delta)
-
-func _input(event: InputEvent) -> void: 
-	if event is InputEventKey && Global.input: handle_action_input(event)
 
 # ---- action executes / cancels ----
 func flag_false_can_action() -> void: 

@@ -1,0 +1,70 @@
+[gd_scene load_steps=9 format=3 uid="uid://ba5f1eftc1ykj"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_afb7t"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="2_nb6pg"]
+[ext_resource type="Texture2D" uid="uid://c0vs6pssjg5oy" path="res://src/images/panorama/train_car_forest.png" id="2_y16ts"]
+[ext_resource type="Texture2D" uid="uid://c0gtkensruf83" path="res://src/levels/_dream/traincar/train.png" id="3_yrj65"]
+[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/camera/cam_deadzone.gd" id="4_20b70"]
+[ext_resource type="Texture2D" uid="uid://cfolkwqp7govn" path="res://src/levels/_dream/traincar/inside_car.png" id="5_y16ts"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5wlcx"]
+size = Vector2(480, 270)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_taw1g"]
+size = Vector2(480, 270)
+
+[node name="traincar" type="Node"]
+script = ExtResource("1_afb7t")
+metadata/_custom_type_script = "uid://b1ofr4umso5jf"
+
+[node name="panorama (top_layer)" type="CanvasLayer" parent="."]
+layer = -20
+
+[node name="ColorRect" type="ColorRect" parent="panorama (top_layer)"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0989259, 0.116267, 0.220202, 1)
+
+[node name="TrainCarForest" type="Sprite2D" parent="panorama (top_layer)"]
+position = Vector2(240, 148)
+texture = ExtResource("2_y16ts")
+
+[node name="Madotsuki" parent="." instance=ExtResource("2_nb6pg")]
+position = Vector2(195, 223)
+
+[node name="train_deadzone" type="Area2D" parent="."]
+process_mode = 3
+position = Vector2(240, 144)
+script = ExtResource("4_20b70")
+size = Vector2i(480, 270)
+shape = SubResource("RectangleShape2D_5wlcx")
+metadata/_custom_type_script = "uid://btgm8okupfro7"
+
+[node name="inside_car_deadzone" type="Area2D" parent="."]
+process_mode = 3
+position = Vector2(752, 144)
+script = ExtResource("4_20b70")
+size = Vector2i(480, 270)
+shape = SubResource("RectangleShape2D_taw1g")
+metadata/_custom_type_script = "uid://btgm8okupfro7"
+
+[node name="Train" type="Sprite2D" parent="."]
+position = Vector2(240, 144)
+texture = ExtResource("3_yrj65")
+
+[node name="InsideCar" type="Sprite2D" parent="."]
+position = Vector2(752, 144)
+texture = ExtResource("5_y16ts")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="InsideCar"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="InsideCar/StaticBody2D"]
+build_mode = 1
+polygon = PackedVector2Array(-96, -48, -96, 48, 96, 48, 96, -48)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="InsideCar/StaticBody2D"]
+build_mode = 1
+polygon = PackedVector2Array(-96, -16, -96, 8, -24, 8, -24, -4, 20, -4, 20, 8, 96, 8, 96, -16)

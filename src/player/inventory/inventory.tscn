@@ -1,10 +1,10 @@
-[gd_scene load_steps=32 format=3 uid="uid://bl24ldxfxb508"]
+[gd_scene load_steps=31 format=3 uid="uid://bl24ldxfxb508"]
 
 [ext_resource type="Texture2D" uid="uid://bthqacspvj0dv" path="res://src/player/inventory/menu/petal_pink.png" id="1_1btln"]
 [ext_resource type="Texture2D" uid="uid://x8um7uotrwnv" path="res://src/player/inventory/menu/what.png" id="1_hnmhd"]
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_jwvlf"]
 [ext_resource type="Texture2D" uid="uid://cs08f133r86y2" path="res://src/player/inventory/menu/mado.png" id="2_3hyeo"]
-[ext_resource type="Script" uid="uid://c26ss6y7br14h" path="res://src/player/inventory/pl_inventory.tres.gd" id="2_6jr1t"]
+[ext_resource type="Script" uid="uid://c26ss6y7br14h" path="res://src/player/inventory/pl_inventory.gd" id="2_6jr1t"]
 [ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="2_f6805"]
 [ext_resource type="Texture2D" uid="uid://m68cqpctvey4" path="res://src/player/inventory/menu/petal_white.png" id="2_q6odh"]
 [ext_resource type="Texture2D" uid="uid://c6ybhwpcy6a4b" path="res://src/player/inventory/menu/inv_eff.png" id="3_qqfc2"]
@@ -12,12 +12,11 @@
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="5_2m1ok"]
 [ext_resource type="Texture2D" uid="uid://c0pf76njxs5ss" path="res://src/images/panorama/inv_petal_pink.jpeg" id="6_l1wax"]
 [ext_resource type="Texture2D" uid="uid://drhfxkok0x64j" path="res://src/images/panorama/inv_petal_white.jpeg" id="8_im28w"]
-[ext_resource type="Texture2D" uid="uid://641771i2v7id" path="res://src/player/hud/stats_mobility.png" id="12_f6805"]
 [ext_resource type="Texture2D" uid="uid://bwu4uvhnwkx8j" path="res://src/player/inventory/menu/white_petal_stats.png" id="12_tlelv"]
 [ext_resource type="Texture2D" uid="uid://4hm3ms1l4bg" path="res://src/player/inventory/menu/inv_stats.png" id="13_jwvlf"]
-[ext_resource type="Texture2D" uid="uid://qb3b0xt471r1" path="res://src/player/hud/stam_mobility.png" id="13_ssbrt"]
 [ext_resource type="Script" uid="uid://sptd6yjcf24k" path="res://src/ui/abstract_button.gd" id="16_kisvh"]
 [ext_resource type="Script" uid="uid://bqp8xu5yrv1tn" path="res://src/ui/gui/texture_button.gd" id="17_2m1ok"]
+[ext_resource type="PackedScene" uid="uid://demusraqmvy5s" path="res://src/player/inventory/inventory_effect_stats.gd.tscn" id="17_6jr1t"]
 [ext_resource type="Texture2D" uid="uid://c4n8hvjbra1w" path="res://src/player/inventory/menu/select_white_petal.png" id="17_qtnvx"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="18_3gg6c"]
 [ext_resource type="Texture2D" uid="uid://dm00pibk04dax" path="res://src/player/inventory/inventory_hotkeys.png" id="19_3gg6c"]
@@ -107,27 +106,16 @@ script/source = "extends State
 
 @export var stats_mobility: Label
 @export var stats_stamina: Label
+@export var effect_description: Label
 
 var tween: Tween
 var player_stats_changed: EventListener
-@onready var default_player_stats := preload(\"res://src/player/madotsuki/effects/_none/_none.tres\")
+#const default_player_stats := preload(\"res://src/player/madotsuki/effects/_none/_default.tres\")
 
 @export var overlay_modulate: ColorRect
 
 func _ready() -> void:
-	player_stats_changed = EventListener.new([\"PLAYER_EQUIP\", \"PLAYER_DEEQUIP\"], false, self)
-	player_stats_changed.do_on_notify(\"PLAYER_EQUIP\", 
-		func():
-			stats_mobility.text = PLInstance.mobility_stats_to_string()
-			stats_stamina.text = PLInstance.stamina_stats_to_string()
-			)
-	player_stats_changed.do_on_notify(\"PLAYER_DEEQUIP\", 
-		func():
-			stats_mobility.text = PLInstance.mobility_stats_to_string()
-			stats_stamina.text = PLInstance.stamina_stats_to_string()
-			)
-		
-	player_stats_changed.on_notify(\"PLAYER_EQUIP\")
+	pass
 func enter_state(s = null) -> void: 
 	section.visible = true
 	mado.position.x += 10
@@ -139,9 +127,9 @@ func enter_state(s = null) -> void:
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween.set_parallel()
 	
-	tween.tween_property(mado, \"position:x\", 385, 0.5)
+	tween.tween_property(mado, \"position:x\", 395, 0.5)
 	tween.tween_property(stats, \"position:x\", 42, 0.5)
-	tween.tween_property(container, \"position:x\", 48, 0.5)
+	tween.tween_property(container, \"position:x\", 32, 0.5)
 	
 	tween.tween_property(mado, \"modulate:a\", 1, 0.5)
 	tween.tween_property(stats, \"modulate:a\", 1, 0.5)
@@ -192,14 +180,6 @@ shader_parameter/optional_grad = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kisvh"]
 shader = ExtResource("5_2m1ok")
-shader_parameter/transparency = 0.0
-shader_parameter/dirX = 1.0
-shader_parameter/dirY = 1.0
-shader_parameter/scroll_speed = 0.05
-shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/offset_strength = 0.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 
 [node name="inventory" type="Control" node_paths=PackedStringArray("display", "white_petal", "pink_petal", "white_petal_button", "pink_petal_button", "item_container", "deequip_prompt", "effect_indicator", "favourite_icon", "initial_state")]
 clip_contents = true
@@ -234,7 +214,7 @@ spr_pink_petal = NodePath("../display/spr_pink_petal")
 overlay_modulate = NodePath("../display/multiply_modulate")
 metadata/_custom_type_script = "uid://r0etyaq71dla"
 
-[node name="WHITE_PETAL" type="Node" parent="." node_paths=PackedStringArray("section", "mado", "stats", "container", "spr_white_petal", "spr_pink_petal", "stats_mobility", "stats_stamina", "overlay_modulate")]
+[node name="WHITE_PETAL" type="Node" parent="." node_paths=PackedStringArray("section", "mado", "stats", "container", "spr_white_petal", "spr_pink_petal", "overlay_modulate")]
 script = SubResource("GDScript_ssbrt")
 section = NodePath("../display/white_petal_stats")
 mado = NodePath("../display/white_petal_stats/mado")
@@ -242,8 +222,6 @@ stats = NodePath("../display/white_petal_stats/stats")
 container = NodePath("../display/white_petal_stats/stats_container")
 spr_white_petal = NodePath("../display/spr_white_petal")
 spr_pink_petal = NodePath("../display/spr_pink_petal")
-stats_mobility = NodePath("../display/white_petal_stats/stats_container/margin/vbox/mobility")
-stats_stamina = NodePath("../display/white_petal_stats/stats_container/margin/vbox/stamina")
 overlay_modulate = NodePath("../display/multiply_modulate")
 metadata/_custom_type_script = "uid://r0etyaq71dla"
 
@@ -309,7 +287,6 @@ texture = ExtResource("6_l1wax")
 clip_children = 2
 
 [node name="pink_petal_effects" type="Control" parent="display"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -383,6 +360,7 @@ position = Vector2(190, 72)
 texture = ExtResource("19_3gg6c")
 
 [node name="white_petal_stats" type="Control" parent="display"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -390,75 +368,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="stats_container" type="NinePatchRect" parent="display/white_petal_stats"]
-layout_mode = 0
-offset_left = 48.0
+[node name="stats_container" parent="display/white_petal_stats" instance=ExtResource("17_6jr1t")]
+layout_mode = 1
+offset_left = 32.0
 offset_top = 80.0
-offset_right = 312.0
+offset_right = 296.0
 offset_bottom = 240.0
-texture = ExtResource("1_hnmhd")
-patch_margin_left = 6
-patch_margin_top = 6
-patch_margin_right = 6
-patch_margin_bottom = 6
-
-[node name="margin" type="MarginContainer" parent="display/white_petal_stats/stats_container"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="vbox" type="VBoxContainer" parent="display/white_petal_stats/stats_container/margin"]
-layout_mode = 2
-theme_override_constants/separation = 2
-
-[node name="stats_mobility" type="TextureRect" parent="display/white_petal_stats/stats_container/margin/vbox"]
-layout_mode = 2
-texture = ExtResource("12_f6805")
-stretch_mode = 2
-
-[node name="mobility" type="Label" parent="display/white_petal_stats/stats_container/margin/vbox"]
-layout_mode = 2
-text = "Base Speed: xx
-Walk Multi: xx
-Run Multi: xx
-Sneak Multi: xx
-"
-
-[node name="stats_stamina" type="TextureRect" parent="display/white_petal_stats/stats_container/margin/vbox"]
-layout_mode = 2
-texture = ExtResource("13_ssbrt")
-stretch_mode = 2
-
-[node name="stamina" type="Label" parent="display/white_petal_stats/stats_container/margin/vbox"]
-layout_mode = 2
-text = "Stamina Regen: xx / s
-Stamina Drain: xx/s"
 
 [node name="mado" type="Sprite2D" parent="display/white_petal_stats"]
-position = Vector2(385, 150)
+position = Vector2(394, 150)
 texture = ExtResource("12_tlelv")
 
 [node name="eye_l" type="Sprite2D" parent="display/white_petal_stats/mado"]
 position = Vector2(-29, -15)
 texture = ExtResource("20_ub6k2")
 hframes = 3
-frame = 2
+frame = 1
 script = ExtResource("21_cgott")
 autoplay = true
-playing = true
 loop = true
 fps = 9.0
 frame_dimensions = Vector2i(32, 22)
 frame_h_count = 3
-progress = 2
 metadata/_custom_type_script = "uid://cdjphp77kgyqr"
 
 [node name="eye_r" type="Sprite2D" parent="display/white_petal_stats/mado"]
@@ -466,15 +397,12 @@ position = Vector2(29, -15)
 texture = ExtResource("20_ub6k2")
 flip_h = true
 hframes = 3
-frame = 2
 script = ExtResource("21_cgott")
 autoplay = true
-playing = true
 loop = true
 fps = 8.0
 frame_dimensions = Vector2i(32, 22)
 frame_h_count = 3
-progress = 2
 metadata/_custom_type_script = "uid://cdjphp77kgyqr"
 
 [node name="stats" type="Sprite2D" parent="display/white_petal_stats"]

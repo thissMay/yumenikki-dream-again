@@ -3,7 +3,7 @@ extends Event
 
 @export var dir: Vector2 = Vector2(0, 1)
 @export var target: Node2D
-@export var as_sibling: bool = true
+@export var as_sibling: bool = false
 
 func _ready() -> void:
 	if target == null: return

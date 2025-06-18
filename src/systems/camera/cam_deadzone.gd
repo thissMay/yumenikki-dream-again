@@ -9,9 +9,12 @@ var in_deadzone: bool = false
 
 func _ready() -> void:
 	super()
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	if Engine.is_editor_hint(): 
 		set_physics_process(false)
 		set_process(true)
+	
 	else: 
 		set_physics_process(true)
 		set_process(false)
@@ -19,8 +22,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if in_deadzone and CameraHolder.instance != null:
 		CameraHolder.instance.global_position = CameraHolder.instance.global_position.clamp(
-				self.global_position - ((rect.shape as RectangleShape2D).size / 2 - Vector2(Game.get_viewport_dimens().x, Game.get_viewport_dimens().y) / 2),
-				self.global_position + ((rect.shape as RectangleShape2D).size / 2 - Vector2(Game.get_viewport_dimens().x, Game.get_viewport_dimens().y) / 2)
+				self.global_position - ((shape as RectangleShape2D).size / 2 - Vector2(Game.get_viewport_dimens().x, Game.get_viewport_dimens().y) / 2),
+				self.global_position + ((shape as RectangleShape2D).size / 2 - Vector2(Game.get_viewport_dimens().x, Game.get_viewport_dimens().y) / 2)
 				)
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():

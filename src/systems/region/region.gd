@@ -7,13 +7,16 @@ var region_priority: int = 0
 var rect: CollisionShape2D
 var marker: Marker2D
 
-@export var size: Vector2i
+@export var size: Vector2i:
+	set(_size): 
+		size = abs(_size)	
+		if Engine.is_editor_hint(): handle_shape_size(_size)
 @export var shape: Shape2D: 
 	set(_shape): 
 		shape = _shape
 		if Engine.is_editor_hint():
 			rect.shape = _shape
-@export var debug_colour: Color:
+@export var debug_colour: Color = Color(0, 0, 0, .3):
 	set(_colour):
 		if Engine.is_editor_hint():
 			debug_colour = _colour
@@ -40,7 +43,7 @@ func _init() -> void:
 	rect.debug_color = Color(0.2 ,0, 0.7, 0.2)
 func _ready() -> void:
 	
-	self.process_mode = Node.PROCESS_MODE_ALWAYS
+	self.process_mode = Node.PROCESS_MODE_INHERIT
 	self.visibility_changed.connect(func(): rect.disabled = !(self.visible and is_visible_in_tree()))
 	self.set_process(false)
 		
@@ -76,10 +79,6 @@ func handle_player_exit(_pl: Area2D) -> void:
 		_handle_player_exit()
 		player_exit_handle.emit(PLInstance.get_pl() if PLInstance.get_pl() != null else null)
 
-func _process(delta: float) -> void:
-	if Engine.is_editor_hint():
-		handle_shape_size()
-
-func handle_shape_size() -> void: 
-	if shape is	RectangleShape2D: (shape as RectangleShape2D).size = size
-	if shape is	CircleShape2D: (shape as CircleShape2D).radius = size.x
+func handle_shape_size(_size: Vector2) -> void: 
+	if shape is	RectangleShape2D: (shape as RectangleShape2D).size = _size
+	if shape is	CircleShape2D: (shape as CircleShape2D).radius = _size.x

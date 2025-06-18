@@ -25,6 +25,9 @@ var user_cached_scenes_file: FileAccess
 var res_cached_shader_file: FileAccess
 var res_cached_scenes_file: FileAccess
 
+func _on_load() -> void: Game.Optimization.set_max_fps(30)
+func _on_unload() -> void: Game.Optimization.set_max_fps(60) 
+
 func _ready() -> void:
 	super()
 	
@@ -55,9 +58,8 @@ func _ready() -> void:
 	
 
 	GameManager.change_to_state(\"pregame\")
-	if Game.Save.read_data_value(\"read_warning\"): GameManager.change_scene_to(preload(\"res://src/levels/menu/level.tscn\"))
+	if Game.Save.read_data_value(\"read_warning\"): GameManager.change_scene_to(preload(\"res://src/levels/_neutral/menu/menu.tscn\"))
 	else: GameManager.change_scene_to(preload(\"res://src/scenes/pre_menu.tscn\"))
-
 
 func compile_shader_material(_shader: Shader) -> void: 
 	garbage_placeholder.material.shader = _shader
@@ -169,9 +171,9 @@ color = Color(0, 0, 0, 1)
 position = Vector2(240, 196)
 texture = ExtResource("2_nlmqr")
 hframes = 4
+frame = 2
 script = ExtResource("3_d62i2")
 autoplay = true
-playing = true
 loop = true
 fps = 5.0
 frame_dimensions = Vector2i(16, 16)

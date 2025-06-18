@@ -7,12 +7,10 @@ uniform sampler2D world_texture : source_color, repeat_enable;
 
 void vertex()
 {
-
 }
 
 void fragment() {
 	float mask = texture(TEXTURE, UV).a;
-
-	COLOR.rgb = _fragment(SCREEN_UV, world_texture).rgb;
-	COLOR.a *= mask;
+	COLOR = _fragment(SCREEN_UV, world_texture) + texture(TEXTURE, UV);
+	COLOR.a *= mask - transparency;
 }

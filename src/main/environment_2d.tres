@@ -2,7 +2,10 @@
 
 [resource]
 background_mode = 3
+background_color = Color(0.13167, 0.852147, 1, 1)
 background_canvas_max_layer = 99
+reflected_light_source = 1
+tonemap_white = 4.3
 glow_enabled = true
 glow_levels/5 = 0.0
 glow_strength = 0.9

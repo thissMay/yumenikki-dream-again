@@ -15,9 +15,10 @@ func _setup(_sentient: SentientBase) -> void:
 func _update(delta: float) -> void: 
 	current_controller.update(delta)
 
-func key_pressed(_input: Key) -> bool: 
-	return _input 
+func key_pressed(_input: Key, _expected: Key) -> bool: 
+	return _input == _expected 
 	
 func _input_pass(event: InputEvent) -> void:
 	if event is InputEventKey:
-		key_pressed(event.keycode)
+		if key_pressed(event.keycode, keybinds.interact_key): 
+			sentient.components.get_component_by_name("interaction_manager").handle_interaction()

@@ -29,6 +29,7 @@ func _apply(_pl: Player) -> void:
 	_pl.stamina_drain = self.stamina_drain
 	_pl.stamina_regen = self.stamina_regen
 	_pl.can_run = self.can_run	
+	if !_pl.can_run: _pl.force_change_state("idle")
 	
 	_pl.walk_noise_mult = walk_noise_mult
 	_pl.sneak_noise_mult = sneak_noise_mult

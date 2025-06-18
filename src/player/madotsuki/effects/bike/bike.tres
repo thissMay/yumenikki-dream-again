@@ -1,11 +1,9 @@
-[gd_resource type="Resource" script_class="PlayerEffect" load_steps=8 format=3 uid="uid://w1ycqdwy7pk8"]
+[gd_resource type="Resource" script_class="PLEffect" load_steps=6 format=3 uid="uid://w1ycqdwy7pk8"]
 
 [ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_3esty"]
-[ext_resource type="Resource" uid="uid://q3h1rxmfopt5" path="res://src/player/madotsuki/effects/bike/ding_bell.tres" id="1_3l3wi"]
 [ext_resource type="Resource" uid="uid://drjlw4hwxccy8" path="res://src/player/madotsuki/effects/bike/autorun.tres" id="2_3l3wi"]
 [ext_resource type="Script" uid="uid://bxe7uci7t77tx" path="res://src/player/scripts/pl_stats.gd" id="3_8al8y"]
-[ext_resource type="Texture2D" uid="uid://cofl3ja34vnou" path="res://src/player/inventory/menu/effect_cosmetic.png" id="3_jbu78"]
-[ext_resource type="Resource" uid="uid://fk0lvphi6mur" path="res://src/player/madotsuki/sprite_sheets/bike.tres" id="5_fqtve"]
+[ext_resource type="Texture2D" uid="uid://c6ouvpoio8t7f" path="res://src/player/inventory/menu/effect_one_action.png" id="3_fqtve"]
 
 [sub_resource type="Resource" id="Resource_3l3wi"]
 script = ExtResource("3_8al8y")
@@ -25,10 +23,11 @@ metadata/_custom_type_script = "uid://bxe7uci7t77tx"
 [resource]
 script = ExtResource("1_3esty")
 name = "Bike"
-icon = ExtResource("3_jbu78")
+desc = ""
+icon = ExtResource("3_fqtve")
 stats = SubResource("Resource_3l3wi")
 behaviour = ExtResource("2_3l3wi")
-action = ExtResource("1_3l3wi")
-sprite_override = ExtResource("5_fqtve")
+sprite_override = "uid://fk0lvphi6mur"
+emote = ""
 player_component_prefab = ""
 metadata/_custom_type_script = "uid://cycsi2jsiuie0"

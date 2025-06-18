@@ -1,4 +1,4 @@
-class_name PlayerBehaviour
+class_name PLBehaviour
 extends Resource
 
 # ---- behaviour enter - exit ----

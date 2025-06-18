@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="PlayerEffect" load_steps=6 format=3 uid="uid://dee3tybqqh0yj"]
+[gd_resource type="Resource" script_class="PLEffect" load_steps=6 format=3 uid="uid://dee3tybqqh0yj"]
 
+[ext_resource type="Resource" uid="uid://fbyv4ifpj1q5" path="res://src/player/madotsuki/effects/_none/_behaviour.tres" id="1_d6e30"]
 [ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_qyuky"]
-[ext_resource type="Texture2D" uid="uid://cofl3ja34vnou" path="res://src/player/inventory/menu/effect_cosmetic.png" id="1_rjcr4"]
-[ext_resource type="Resource" uid="uid://bga2t6rqog6kv" path="res://src/player/madotsuki/sprite_sheets/nopperabou.tres" id="3_7ejb6"]
+[ext_resource type="Texture2D" uid="uid://c6ouvpoio8t7f" path="res://src/player/inventory/menu/effect_one_action.png" id="1_ugti7"]
 [ext_resource type="Script" uid="uid://bxe7uci7t77tx" path="res://src/player/scripts/pl_stats.gd" id="4_ugti7"]
 
 [sub_resource type="Resource" id="Resource_ugti7"]
@@ -23,8 +23,11 @@ metadata/_custom_type_script = "uid://bxe7uci7t77tx"
 [resource]
 script = ExtResource("1_qyuky")
 name = "Nopperabou"
-icon = ExtResource("1_rjcr4")
+desc = ""
+icon = ExtResource("1_ugti7")
 stats = SubResource("Resource_ugti7")
-sprite_override = ExtResource("3_7ejb6")
+behaviour = ExtResource("1_d6e30")
+sprite_override = "res://src/player/madotsuki/sprite_sheets/no_effect.tres"
+emote = "res://src/player/madotsuki/emotes/sit_down.tres"
 player_component_prefab = ""
 metadata/_custom_type_script = "uid://cycsi2jsiuie0"

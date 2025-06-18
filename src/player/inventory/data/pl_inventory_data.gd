@@ -1,7 +1,7 @@
 class_name PLInventoryData
 extends Resource
 
-@export var effects: Array[PlayerEffect]
+@export var effects: Array[PLEffect]
 
 func get_effects_path() -> Array:
 	var paths: Array

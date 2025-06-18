@@ -12,7 +12,6 @@ static func _new(_name, _id, _icon) -> PromptOptionButton:
 	option_button.option_name = _name
 	option_button.option_id = _id
 	option_button.icon = _icon
-	print(option_button.icon_rect.texture)
 	
 	return option_button
 func _ready() -> void:

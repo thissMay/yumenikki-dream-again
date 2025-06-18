@@ -1,0 +1,154 @@
+[gd_scene load_steps=7 format=3 uid="uid://demusraqmvy5s"]
+
+[ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_cjy1q"]
+[ext_resource type="Script" uid="uid://dgxld1rmdcf3y" path="res://src/player/inventory/effect_stats_window.gd" id="2_2csn3"]
+[ext_resource type="Texture2D" uid="uid://x8um7uotrwnv" path="res://src/player/inventory/menu/what.png" id="2_3c6xc"]
+[ext_resource type="Texture2D" uid="uid://641771i2v7id" path="res://src/player/hud/stats_mobility.png" id="3_2csn3"]
+[ext_resource type="Texture2D" uid="uid://qb3b0xt471r1" path="res://src/player/hud/stam_mobility.png" id="4_m5a7d"]
+[ext_resource type="Texture2D" uid="uid://bthea7xsvafa5" path="res://src/player/inventory/stats_neutral.png" id="5_2csn3"]
+
+[node name="effect_stats_window" type="Control" node_paths=PackedStringArray("walk_speed", "sprint_speed", "sneak_speed", "exhaust_speed", "can_run", "stamina_regen", "stamina_decay")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -336.0
+offset_bottom = -158.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_cjy1q")
+script = ExtResource("2_2csn3")
+walk_speed = NodePath("stats_container/margin/vbox/walk_speed")
+sprint_speed = NodePath("stats_container/margin/vbox/sprint_speed")
+sneak_speed = NodePath("stats_container/margin/vbox/sneak_speed")
+exhaust_speed = NodePath("stats_container/margin/vbox/exhaust_speed")
+can_run = NodePath("stats_container/margin/vbox/can_run")
+stamina_regen = NodePath("stats_container/margin/vbox/stamina_regen")
+stamina_decay = NodePath("stats_container/margin/vbox/stamina_decay")
+
+[node name="stats_container" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_3c6xc")
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="margin" type="MarginContainer" parent="stats_container"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="vbox" type="VBoxContainer" parent="stats_container/margin"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="stats_mobility" type="TextureRect" parent="stats_container/margin/vbox"]
+layout_mode = 2
+texture = ExtResource("3_2csn3")
+stretch_mode = 2
+
+[node name="walk_speed" type="HBoxContainer" parent="stats_container/margin/vbox"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="stats_container/margin/vbox/walk_speed"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Walk Speed: xx"
+
+[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/walk_speed"]
+layout_mode = 2
+texture = ExtResource("5_2csn3")
+
+[node name="sprint_speed" type="HBoxContainer" parent="stats_container/margin/vbox"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="stats_container/margin/vbox/sprint_speed"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Sprint Speed: xx"
+
+[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/sprint_speed"]
+layout_mode = 2
+texture = ExtResource("5_2csn3")
+
+[node name="sneak_speed" type="HBoxContainer" parent="stats_container/margin/vbox"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="stats_container/margin/vbox/sneak_speed"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Sneak Speed: xx"
+
+[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/sneak_speed"]
+layout_mode = 2
+texture = ExtResource("5_2csn3")
+
+[node name="exhaust_speed" type="HBoxContainer" parent="stats_container/margin/vbox"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="stats_container/margin/vbox/exhaust_speed"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Exhaust Speed: xx"
+
+[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/exhaust_speed"]
+layout_mode = 2
+texture = ExtResource("5_2csn3")
+
+[node name="split" type="HSplitContainer" parent="stats_container/margin/vbox"]
+layout_mode = 2
+
+[node name="stats_stamina" type="TextureRect" parent="stats_container/margin/vbox"]
+layout_mode = 2
+texture = ExtResource("4_m5a7d")
+stretch_mode = 2
+
+[node name="can_run" type="HBoxContainer" parent="stats_container/margin/vbox"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="stats_container/margin/vbox/can_run"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Can Run: xx"
+
+[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/can_run"]
+layout_mode = 2
+texture = ExtResource("5_2csn3")
+
+[node name="stamina_regen" type="HBoxContainer" parent="stats_container/margin/vbox"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="stats_container/margin/vbox/stamina_regen"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Stamina Regen: xx"
+
+[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/stamina_regen"]
+layout_mode = 2
+texture = ExtResource("5_2csn3")
+
+[node name="stamina_decay" type="HBoxContainer" parent="stats_container/margin/vbox"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="stats_container/margin/vbox/stamina_decay"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Stamina Decay: xx"
+
+[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/stamina_decay"]
+layout_mode = 2
+texture = ExtResource("5_2csn3")

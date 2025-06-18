@@ -1,0 +1,148 @@
+[gd_scene load_steps=17 format=3 uid="uid://btg3e240ltjxx"]
+
+[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="1_bs40n"]
+[ext_resource type="AudioStream" uid="uid://c2l2mic8iusdu" path="res://src/audio/bgm/title.WAV" id="2_f6dtr"]
+[ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="3_5atdl"]
+[ext_resource type="Texture2D" uid="uid://dgilrv0qps4ve" path="res://src/levels/_neutral/menu/title.png" id="4_egbxm"]
+[ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="5_dms37"]
+[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="6_s36j7"]
+[ext_resource type="Script" uid="uid://sptd6yjcf24k" path="res://src/ui/abstract_button.gd" id="7_cqhuh"]
+
+[sub_resource type="GDScript" id="GDScript_h18ho"]
+resource_name = "menu"
+script/source = "extends GameScene
+
+@export var button_new_game: GUIPanelButton
+@export var button_continue: GUIPanelButton
+@export var button_settings: GUIPanelButton
+@export var button_quit: GUIPanelButton
+
+func _ready() -> void:
+	super()
+	button_new_game.pressed.connect(func(): pass)
+	button_continue.pressed.connect(func(): pass)
+	button_settings.pressed.connect(func(): GameManager.show_options(true))
+	button_quit.pressed.connect(func(): pass)
+	
+func _on_load() -> void: 
+	super()
+	GameManager.options.quit_to_desktop.set_active(false)
+	GameManager.options.quit_to_menu.set_active(false)
+	print(GameManager.options.quit_to_desktop.disabled)
+
+func _on_unload() -> void: 
+	super()
+	GameManager.options.quit_to_desktop.set_active(true)
+	GameManager.options.quit_to_menu.set_active(true)
+"
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_sei71"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_rkpo7"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_s5fon"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ec13o"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_6p2qj"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_nvx5g"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_km2j4"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_uocsa"]
+
+[node name="menu" type="Node2D" node_paths=PackedStringArray("button_new_game", "button_continue", "button_settings", "button_quit")]
+script = SubResource("GDScript_h18ho")
+button_new_game = NodePath("ui/menu/new_game")
+button_continue = NodePath("ui/menu/dream_diary")
+button_settings = NodePath("ui/menu/options")
+button_quit = NodePath("ui/menu/exit")
+
+[node name="BGM" type="Node" parent="."]
+script = ExtResource("1_bs40n")
+stream = ExtResource("2_f6dtr")
+metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
+
+[node name="ui" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="menu" type="VBoxContainer" parent="ui"]
+offset_left = 40.0
+offset_top = 48.0
+offset_right = 156.0
+offset_bottom = 229.0
+mouse_filter = 2
+theme = ExtResource("3_5atdl")
+
+[node name="title" type="TextureRect" parent="ui/menu"]
+layout_mode = 2
+texture = ExtResource("4_egbxm")
+
+[node name="seprator_1" type="HSeparator" parent="ui/menu"]
+layout_mode = 2
+
+[node name="new_game" type="Control" parent="ui/menu"]
+custom_minimum_size = Vector2(116, 22)
+layout_mode = 2
+theme = ExtResource("5_dms37")
+script = ExtResource("6_s36j7")
+button_display_texture = SubResource("CanvasTexture_sei71")
+min_size = Vector2(116, 22)
+true_size = Vector2(116, 22)
+text = "New Game"
+panel_display_texture = SubResource("CanvasTexture_rkpo7")
+panel_display_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="dream_diary" type="Control" parent="ui/menu"]
+custom_minimum_size = Vector2(116, 22)
+layout_mode = 2
+theme = ExtResource("5_dms37")
+script = ExtResource("6_s36j7")
+button_display_texture = SubResource("CanvasTexture_s5fon")
+min_size = Vector2(116, 22)
+true_size = Vector2(116, 22)
+text = "Dream Diary"
+panel_display_texture = SubResource("CanvasTexture_ec13o")
+panel_display_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="options" type="Control" parent="ui/menu"]
+custom_minimum_size = Vector2(116, 22)
+layout_mode = 2
+theme = ExtResource("5_dms37")
+script = ExtResource("6_s36j7")
+button_display_texture = SubResource("CanvasTexture_6p2qj")
+min_size = Vector2(116, 22)
+true_size = Vector2(116, 22)
+text = "Settings"
+panel_display_texture = SubResource("CanvasTexture_nvx5g")
+panel_display_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="exit" type="Control" parent="ui/menu"]
+custom_minimum_size = Vector2(116, 22)
+layout_mode = 2
+theme = ExtResource("5_dms37")
+script = ExtResource("6_s36j7")
+button_display_texture = SubResource("CanvasTexture_km2j4")
+min_size = Vector2(116, 22)
+true_size = Vector2(116, 22)
+text = "Quit"
+panel_display_texture = SubResource("CanvasTexture_uocsa")
+panel_display_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="seprator_2" type="HSeparator" parent="ui/menu"]
+layout_mode = 2
+
+[node name="game_ver" type="Label" parent="ui/menu"]
+layout_mode = 2
+text = "VERSION: pre-alpha 0"
+
+[node name="AbstractButton" type="Control" parent="ui/menu"]
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("7_cqhuh")
+metadata/_custom_type_script = "uid://sptd6yjcf24k"

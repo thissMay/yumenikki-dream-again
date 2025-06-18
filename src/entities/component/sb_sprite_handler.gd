@@ -26,13 +26,15 @@ func handle_sprite_flip(_sentient: SentientBase) -> void:
 		if _sentient.get_lerped_dir().x < 0: _sentient.sprite_renderer.flip_h = true
 		else: _sentient.sprite_renderer.flip_h = false
 func handle_sprite_direction(_sentient: SentientBase) -> void:
+	if sentient.is_moving : lerp_sprite_direction(_sentient, _sentient.heading)
+	else: set_sprite_direction(_sentient, _sentient.heading)
+
+func lerp_sprite_direction(_sentient: SentientBase, _heading: Entity.compass_headings) -> void:
 	_sentient.sprite_renderer.set_row(lerpf(
 		_sentient.sprite_renderer.row, 
-		_sentient.heading, 
-		0.3)) 
-
+		_heading, 
+		0.3))
 func set_sprite_direction(_sentient: SentientBase, _heading: Entity.compass_headings) -> void: 
-	_sentient.sprite_renderer.set_row(
-		4 * (_heading / (sprite_renderer as SpriteSheetFormatter).frame_v_count))
+	_sentient.sprite_renderer.set_row(_heading)
 func set_dynamic_rot_multi(_multi: float) -> void:
 	dynamic_rot_multi = _multi

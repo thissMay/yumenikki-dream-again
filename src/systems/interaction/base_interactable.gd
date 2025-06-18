@@ -32,8 +32,6 @@ func _ready() -> void:
 	if !Engine.is_editor_hint():
 		self.set_collision_layer_value(2, true)
 		self.set_collision_mask_value(3, true)
-		
-		set_area_mode(area)
 
 func _setup() -> void:
 	set_physics_process(false)
@@ -50,8 +48,7 @@ func interact() -> void:
 		_interact()
 		interacted.emit()
 
-func set_area_mode(_area: bool, _include_detection: bool = true) -> void: 
-	if _include_detection: detectable = !_area		
 
-func _handle_player_enter() -> void: if area: self.interact()
+func _handle_player_enter() -> void: 
+	if area: self.interact()
 func _handle_player_exit() -> void: pass

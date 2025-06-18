@@ -21,8 +21,8 @@ static var always_parent: CanvasLayer
 
 # ---- UI ----
 static var player_hud: PLHUD
+static var options: IngameSettings
 static var ui_parent: CanvasLayer
-static var options: Control
 
 # ---- cinematic ----
 static var cinematic_ui: CanvasLayer
@@ -114,6 +114,7 @@ static func show_options(_visible: bool) -> void:
 static func change_to_state(new_state: String) -> void:
 	game_fsm._change_to_state(new_state)
 static func request_transition(_fade_type: ScreenTransition.fade_type) -> void:
+	await Game.main_tree.physics_frame
 	await ScreenTransition.request_transition(_fade_type)
 
 # ---- message display manager ----

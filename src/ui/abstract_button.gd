@@ -4,14 +4,11 @@ class_name AbstractButton
 extends Control
 
 @export_group("Flags")
-var is_toggled: bool = false:
-	get: 
-		if button: return button.button_pressed
-		return false
+var is_toggled: bool = false
 @export var is_togglable: bool = false:
 	set(_tog):
 		is_togglable = _tog
-		set_button_toggle_mode(_tog)
+		if Engine.is_editor_hint(): set_button_toggle_mode(_tog)
 @export var active: bool = true:
 	set(_a): 
 		active = _a
@@ -23,6 +20,8 @@ var is_toggled: bool = false:
 # ---- signals ----
 signal pressed
 signal toggled(_truth)
+signal hover_entered
+signal hover_exited
 
 # ---- instantiation ----
 func _components_setup_instantiation() -> void:
@@ -70,3 +69,12 @@ func set_button_toggle_mode(_toggle: bool) -> void:
 func untoggle() -> void:
 	button.button_pressed = false
 	_on_unhover()
+	_on_untoggle()
+	toggled.emit(false)
+	is_toggled = false
+func toggle() -> void:
+	button.button_pressed = true
+	_on_hover()
+	_on_toggle()
+	toggled.emit(true)
+	is_toggled = true

@@ -1,0 +1,355 @@
+[gd_scene load_steps=45 format=3 uid="uid://he4hpqrfbk5w"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_v0g1x"]
+[ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_f8of1"]
+[ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="6_42e87"]
+[ext_resource type="Texture2D" uid="uid://lqin0be5aulg" path="res://src/levels/_dream/apartment_balcony/sprites/bg.png" id="7_465ow"]
+[ext_resource type="Shader" uid="uid://hg6wywtqrlha" path="res://src/shaders/masks/additive.gdshader" id="8_db0b4"]
+[ext_resource type="Texture2D" uid="uid://4t00djnyofcf" path="res://src/levels/_dream/apartment_balcony/sprites/bubble_l.png" id="9_yqlf5"]
+[ext_resource type="Texture2D" uid="uid://ns8tyfurjei0" path="res://src/levels/_dream/apartment_balcony/sprites/bg_buildings_large_blurred.png" id="10_xunrx"]
+[ext_resource type="Texture2D" uid="uid://b7g1x8nxpepcg" path="res://src/levels/_dream/apartment_balcony/sprites/bg_buildings_blurred.png" id="11_phmqr"]
+[ext_resource type="Texture2D" uid="uid://bkiyc7axrhgdt" path="res://src/images/panorama/deep.png" id="12_3mst5"]
+[ext_resource type="Texture2D" uid="uid://bde5tli04v527" path="res://src/levels/_dream/apartment_balcony/sprites/goldfish.png" id="12_ata1p"]
+[ext_resource type="Shader" uid="uid://bqp8m8worpqyn" path="res://src/shaders/panorama/linear_fog.gdshader" id="13_dtquc"]
+[ext_resource type="Texture2D" uid="uid://bciotfdo1sr7a" path="res://src/levels/_dream/apartment_balcony/sprites/bg_buildings_small.png" id="13_qupph"]
+[ext_resource type="Texture2D" uid="uid://do5gh2pld28x8" path="res://src/levels/_dream/apartment_balcony/sprites/bubble.png" id="14_2eafh"]
+[ext_resource type="Shader" uid="uid://bjc3g4hpc28r1" path="res://src/shaders/screen_overlay/ocean_lights.gdshader" id="15_6011g"]
+[ext_resource type="Shader" uid="uid://20gve0q01un3" path="res://src/shaders/screen_overlay/distortion_waves.gdshader" id="16_jqpo4"]
+[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="17_hdlsp"]
+[ext_resource type="Texture2D" uid="uid://cihxg8l1s7n40" path="res://src/levels/_dream/apartment_balcony/sprites/balcony.png" id="17_n6npm"]
+[ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/camera/sequence_region.gd" id="20_42e87"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="21_2vk4d"]
+[ext_resource type="Script" uid="uid://bbh7tjv0f6kad" path="res://src/systems/interaction/door_scenes.gd" id="23_8rvh6"]
+
+[sub_resource type="Resource" id="Resource_mgo11"]
+metadata/__load_path__ = "res://src/audio/bgm/luff_yta_goldfish-march.ogg"
+
+[sub_resource type="Gradient" id="Gradient_ytbh7"]
+offsets = PackedFloat32Array(0, 0.582524, 0.834951, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.28797, 0.166815, 0.630079, 1, 0.673144, 0.466166, 0.826578, 1, 0.945335, 0.71513, 0.905508, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_42e87"]
+gradient = SubResource("Gradient_ytbh7")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_sla7v"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7otd0"]
+noise = SubResource("FastNoiseLite_sla7v")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7uquv"]
+shader = ExtResource("15_6011g")
+shader_parameter/opacity = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_7otd0")
+shader_parameter/scroll_speed = 0.05
+shader_parameter/offset_strength = 0.05
+shader_parameter/uv_offset = Vector2(0, 0)
+shader_parameter/gradient = SubResource("GradientTexture2D_42e87")
+shader_parameter/ray_strength = 1.225
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tdu7n"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hi0md"]
+width = 480
+height = 270
+seamless = true
+noise = SubResource("FastNoiseLite_tdu7n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8wcub"]
+shader = ExtResource("16_jqpo4")
+shader_parameter/transparency = 0.0
+shader_parameter/dirX = 1.0
+shader_parameter/dirY = 1.0
+shader_parameter/scroll_speed = 0.255
+shader_parameter/noise_strength = 0.165
+shader_parameter/noise_fwd = SubResource("NoiseTexture2D_hi0md")
+shader_parameter/uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6tu8p"]
+shader = ExtResource("8_db0b4")
+shader_parameter/transparency = 0.3
+
+[sub_resource type="Curve" id="Curve_hp2su"]
+_limits = [0.0, 0.75, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 14.3863, 0, 0, Vector2(0.19346, 0.558626), 0.739308, 0.739308, 0, 0, Vector2(0.313352, 0.674458), -4.43408, -4.43408, 0, 0, Vector2(0.457766, 0.478048), 1.17057, 1.17057, 0, 0, Vector2(0.59673, 0.659349), 2.93686, 2.93686, 0, 0, Vector2(0.754768, 0.513301), 0.0, 0.0, 0, 0, Vector2(0.847411, 0.35718), 0.0, 0.0, 0, 0, Vector2(0.957516, 0.638216), -4.66442, -4.66442, 0, 0, Vector2(1, 0), -45.4613, 0.0, 0, 0]
+point_count = 9
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0jot5"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sxiqe"]
+seamless = true
+noise = SubResource("FastNoiseLite_0jot5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_42e87"]
+shader = ExtResource("13_dtquc")
+shader_parameter/transparency = 0.0
+shader_parameter/dirX = 1.0
+shader_parameter/dirY = 0.0
+shader_parameter/scroll_speed = 0.1
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 1.0
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_sxiqe")
+shader_parameter/color_overlay = Color(0.226808, 0.000729795, 0.124129, 1)
+shader_parameter/color_overlay_intensity = 2.855
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_54bv0"]
+shader = ExtResource("8_db0b4")
+shader_parameter/transparency = 0.9
+
+[sub_resource type="Curve" id="Curve_lvx8k"]
+_data = [Vector2(0, 0.652229), 0.0, 0.0, 0, 0, Vector2(0.0326797, 0.254777), 0.0, 0.0, 0, 0, Vector2(0.114379, 0.850955), 0.0, 0.0, 0, 0, Vector2(0.205882, 0.743312), 0.0, 0.0, 0, 0, Vector2(0.339869, 0.875796), 0.0, 0.0, 0, 0, Vector2(0.434641, 0.635669), 0.0, 0.0, 0, 0, Vector2(0.562091, 0.784713), 0.0, 0.0, 0, 0, Vector2(0.656863, 0.271338), 0.0, 0.0, 0, 0, Vector2(0.702614, 0.792994), 0.0, 0.0, 0, 0, Vector2(0.748366, 0.561146), 0.0, 0.0, 0, 0, Vector2(0.849673, 0.917197), 0.0, 0.0, 0, 0, Vector2(0.911765, 0.726752), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 13
+
+[sub_resource type="Curve" id="Curve_qa5uu"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.04, 1), 0.0, 0.0, 0, 0, Vector2(0.964, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_kt1bx"]
+curve = SubResource("Curve_qa5uu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tluj2"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(1, 5, 1)
+emission_shape = 2
+emission_sphere_radius = 10.0
+direction = Vector3(-1, 0, 0)
+spread = 20.0
+initial_velocity_min = 20.0
+initial_velocity_max = 25.0
+gravity = Vector3(-20, 0, 0)
+scale_min = 0.5
+scale_max = 0.65
+color = Color(0.745098, 0.678431, 0.866667, 1)
+alpha_curve = SubResource("CurveTexture_kt1bx")
+turbulence_enabled = true
+turbulence_noise_scale = 2.5
+turbulence_influence_min = 0.01
+turbulence_influence_max = 0.02
+
+[sub_resource type="Curve" id="Curve_w20rd"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1e-05, 0.57732), 0.0, 0.0, 0, 0, Vector2(0.02, 1), 0.0, 0.0, 0, 0, Vector2(0.312, 1), 0.0, 0.0, 0, 0, Vector2(0.656, 1), 0.0, 0.0, 0, 0, Vector2(0.824, 1), 0.0, 0.0, 0, 0, Vector2(0.968, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 8
+
+[sub_resource type="CurveTexture" id="CurveTexture_wcnfw"]
+curve = SubResource("Curve_w20rd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_85ycw"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(1, 4.5, 1)
+emission_shape = 2
+emission_sphere_radius = 12.0
+direction = Vector3(-1, 0, 0)
+spread = 20.0
+initial_velocity_min = 40.0
+initial_velocity_max = 50.0
+gravity = Vector3(-37.5, 0, 0)
+linear_accel_min = 5.0
+linear_accel_max = 5.0
+scale_max = 1.2
+alpha_curve = SubResource("CurveTexture_wcnfw")
+turbulence_enabled = true
+turbulence_noise_strength = 0.2
+turbulence_noise_scale = 0.2
+turbulence_influence_min = 0.025
+turbulence_influence_max = 0.05
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5gtxv"]
+size = Vector2(30, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ryio"]
+size = Vector2(20, 13)
+
+[node name="sane_balcony" type="Node"]
+script = ExtResource("1_v0g1x")
+metadata/_edit_vertical_guides_ = [-341.0]
+
+[node name="BGM" type="Node" parent="."]
+script = ExtResource("17_hdlsp")
+stream = SubResource("Resource_mgo11")
+
+[node name="cam_layer" parent="." instance=ExtResource("4_f8of1")]
+
+[node name="camera_handler" parent="cam_layer" index="0"]
+position = Vector2(217, 120)
+
+[node name="Wiggle" type="Node" parent="cam_layer/camera_handler/marker/camera/components_receiver" index="0"]
+script = ExtResource("6_42e87")
+wig_x_strn = 5.2
+wig_y_strn = 2.25
+wig_pos_speed = 2.5
+metadata/_custom_type_script = "uid://bptlrkdn0tpua"
+
+[node name="overlay_1" parent="cam_layer/camera_handler/camera_overlay" index="0"]
+material = SubResource("ShaderMaterial_7uquv")
+
+[node name="overlay_2" parent="cam_layer/camera_handler/camera_overlay" index="1"]
+material = SubResource("ShaderMaterial_8wcub")
+
+[node name="screen_overlay" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="bubbles_s" type="CPUParticles2D" parent="screen_overlay"]
+material = SubResource("ShaderMaterial_6tu8p")
+position = Vector2(240, 280)
+amount = 7
+texture = ExtResource("14_2eafh")
+lifetime = 3.0
+preprocess = 3.0
+emission_shape = 3
+emission_rect_extents = Vector2(240, 0)
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, -50)
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+damping_min = 0.05
+damping_max = 2.0
+angle_min = 3.0
+angle_max = 90.0
+scale_amount_curve = SubResource("Curve_hp2su")
+
+[node name="bubbles_l" type="CPUParticles2D" parent="screen_overlay"]
+material = SubResource("ShaderMaterial_6tu8p")
+position = Vector2(240, 280)
+amount = 7
+texture = ExtResource("9_yqlf5")
+lifetime = 3.0
+preprocess = 3.0
+emission_shape = 3
+emission_rect_extents = Vector2(240, 0)
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, -50)
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+damping_min = 0.05
+damping_max = 2.0
+angle_min = 3.0
+angle_max = 90.0
+scale_amount_curve = SubResource("Curve_hp2su")
+
+[node name="panorama" type="CanvasLayer" parent="."]
+layer = -2
+
+[node name="bg" type="CanvasLayer" parent="panorama"]
+layer = -10
+
+[node name="_" type="Sprite2D" parent="panorama/bg"]
+position = Vector2(-34, -24)
+texture = ExtResource("7_465ow")
+centered = false
+
+[node name="WaterWaves" type="Sprite2D" parent="panorama/bg"]
+material = SubResource("ShaderMaterial_42e87")
+position = Vector2(188, 95)
+
+[node name="_2" type="Sprite2D" parent="panorama/bg"]
+visible = false
+material = SubResource("ShaderMaterial_54bv0")
+position = Vector2(-34, -24)
+texture = ExtResource("12_3mst5")
+centered = false
+
+[node name="STARS" type="CPUParticles2D" parent="panorama/bg"]
+z_as_relative = false
+position = Vector2(210, 99)
+amount = 50
+lifetime = 2.75
+preprocess = 10.0
+emission_shape = 3
+emission_rect_extents = Vector2(213, 100)
+gravity = Vector2(0, 0)
+scale_amount_min = 0.79
+scale_amount_max = 1.5
+scale_amount_curve = SubResource("Curve_lvx8k")
+
+[node name="bg_building" type="ParallaxBackground" parent="panorama"]
+layer = -9
+scroll_offset = Vector2(524, 274.5)
+scroll_base_scale = Vector2(-0.7, 0.7)
+
+[node name="building_very_far" type="ParallaxLayer" parent="panorama/bg_building"]
+position = Vector2(-34, 0)
+motion_scale = Vector2(-0.2, -0.2)
+
+[node name="_" type="Sprite2D" parent="panorama/bg_building/building_very_far"]
+position = Vector2(-5, 19)
+texture = ExtResource("10_xunrx")
+centered = false
+
+[node name="building_far" type="ParallaxLayer" parent="panorama/bg_building"]
+position = Vector2(-34, 0)
+motion_scale = Vector2(-0.035, 1.12)
+
+[node name="_" type="Sprite2D" parent="panorama/bg_building/building_far"]
+position = Vector2(0, 136)
+texture = ExtResource("11_phmqr")
+centered = false
+
+[node name="BACK_Fish" type="GPUParticles2D" parent="panorama/bg_building"]
+position = Vector2(435, 112)
+amount = 4
+texture = ExtResource("12_ata1p")
+lifetime = 10.0
+process_material = SubResource("ParticleProcessMaterial_tluj2")
+
+[node name="buildings_close" type="ParallaxLayer" parent="panorama/bg_building"]
+position = Vector2(-34, 0)
+motion_scale = Vector2(-0.255, 1.34)
+
+[node name="_" type="Sprite2D" parent="panorama/bg_building/buildings_close"]
+position = Vector2(-1, 197)
+texture = ExtResource("13_qupph")
+centered = false
+
+[node name="FRONT_Fish" type="GPUParticles2D" parent="panorama"]
+z_index = -15
+position = Vector2(436, 118)
+amount = 3
+texture = ExtResource("12_ata1p")
+lifetime = 25.0
+preprocess = 10.0
+process_material = SubResource("ParticleProcessMaterial_85ycw")
+
+[node name="BalconyBase" type="Sprite2D" parent="."]
+position = Vector2(38, -37)
+texture = ExtResource("17_n6npm")
+centered = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="BalconyBase"]
+position = Vector2(382, 210)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="BalconyBase/StaticBody2D"]
+position = Vector2(51, -22)
+build_mode = 1
+polygon = PackedVector2Array(-99, -3, -67.9912, 12.2926, -63, 13, -39, 25, -39, 13, -19, 13, -19, 37, -7, 41, -7, 13, -99, -27, -155, -7, -155, 17, -7, 93, 5, 93, 5, 13, -7, 13, -7, 77, -135, 13)
+
+[node name="SequenceRegion" type="Area2D" parent="BalconyBase"]
+position = Vector2(322, 201)
+script = ExtResource("20_42e87")
+metadata/_custom_type_script = "uid://f4sb25g3gpic"
+
+[node name="rect" type="CollisionShape2D" parent="BalconyBase/SequenceRegion"]
+position = Vector2(-5, 0)
+shape = SubResource("RectangleShape2D_5gtxv")
+
+[node name="Satsuki" parent="." instance=ExtResource("21_2vk4d")]
+position = Vector2(384, 160)
+
+[node name="door" type="Area2D" parent="."]
+position = Vector2(441, 169)
+collision_layer = 3
+script = ExtResource("23_8rvh6")
+connection_id = "nexus"
+scene_path = "uid://dx4lyv3rh8b5p"
+spawn_dir = Vector2(-1, 1)
+area = true
+
+[node name="field" type="CollisionShape2D" parent="door"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_8ryio")
+
+[editable path="cam_layer"]

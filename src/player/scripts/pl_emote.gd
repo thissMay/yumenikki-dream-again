@@ -1,5 +1,5 @@
-class_name PlayerEmote
-extends PlayerAction
+class_name PLEmote
+extends PLAction
 
 const EMOTE_PATH := "emote/"
 @export var path: String = EMOTE_PATH
@@ -13,23 +13,23 @@ func _perform(_pl: Player) -> void:
 	
 func _enter(_pl: Player) -> void:
 	(_pl as Player_YN).components.get_component_by_name("animation_manager").play_animation(get_enter_anim_path())
-	await (_pl as Player_YN).components.get_component_by_name("animation_manager").animation_player.animation_finished
-	if auto_exit: (_pl as Player_YN).cancel_action(self)
-	
-func _exit(_pl: Player) -> void:
+		
+func _quit_emote(_pl: Player) -> void:
 	if !emote_exit_anim.is_empty():
 		(_pl as Player_YN).components.get_component_by_name("animation_manager").play_animation(get_exit_anim_path())
 		await (_pl as Player_YN).components.get_component_by_name("animation_manager").animation_player.animation_finished
-	
+
+func _cancel(_pl: Player) -> void:
 	(_pl as Player_YN).force_change_state("idle")
 
 
 func _input(_pl: Player, _input: InputEvent) -> void: 
-	if ((Global.input["key_pressed"] == KEY_G and
-		Global.input["held_down"])) or SentientController.get_input_vectors().abs().length() > 0:
-		(_pl as Player_YN).cancel_action(self)
+	if (
+		((Global.input["key_pressed"] == KEY_G and Global.input["held_down"]) 
+		or SentientController.get_input_vectors().abs().length() > 0)):
+			await _quit_emote(_pl)
+			_cancel(_pl)
 
-# -------------------
 
 func get_enter_anim_path() -> String: 
 	return str(path + emote_enter_anim)
