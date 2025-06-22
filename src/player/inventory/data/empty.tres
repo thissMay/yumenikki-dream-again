@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PLInventoryData" load_steps=3 format=3 uid="uid://dxo6s4uc71dtm"]
+
+[ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_w34tw"]
+[ext_resource type="Script" uid="uid://bub475hm2s16o" path="res://src/player/inventory/data/pl_inventory_data.gd" id="9_6tt2x"]
+
+[resource]
+script = ExtResource("9_6tt2x")
+effects = Array[ExtResource("1_w34tw")]([])
+metadata/_custom_type_script = "uid://bub475hm2s16o"

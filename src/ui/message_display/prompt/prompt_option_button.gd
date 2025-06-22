@@ -1,7 +1,6 @@
 class_name PromptOptionButton
 extends GUIPanelButton
 
-@export var sequence_caller: SequenceCaller
 
 var option_id: int
 var option_name: String
@@ -18,7 +17,3 @@ func _ready() -> void:
 	super()
 	self.name = "prompt_option_button"
 	self.text = option_name
-
-func _press_action() -> void:
-	if sequence_caller: 
-		sequence_caller.execute()

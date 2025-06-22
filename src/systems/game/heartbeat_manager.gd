@@ -13,9 +13,9 @@ func _ready() -> void:
 	
 	set_active(active)
 
-func _process(delta: float) -> void:
-	if PLInstance.get_pl() != null:
-		bpm = PLInstance.get_pl().components.get_component_by_name("mental_status").bpm
+func _update(delta: float) -> void:
+	if Player.Instance.get_pl() != null:
+		bpm = Player.Instance.get_pl().components.get_component_by_name("mental_status").bpm
 		sound_player.volume_db = lerpf(
 			sound_player.volume_db, -50 + (1.08 * (bpm - 60)), 
 			delta * 3.2)
@@ -40,10 +40,8 @@ func _process(delta: float) -> void:
 
 		Game.Audio.adjust_bus_effect( # --- distortion
 			"Distorted", 0, 
-			"drive", (0.0025 * (bpm - 60)))
-		Game.Audio.adjust_bus_effect( # --- lowpass
-			"Distorted", 1, 
-			"cutoff_hz", (clamp(16000 - 150 * (bpm - 60), 5000, 16000)))
+			"drive", (0.003 * (bpm - 60)))
+
 
 func set_active(_active: bool = true) -> void:
 	if !_active:

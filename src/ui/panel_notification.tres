@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://dimgnk3vr8x4b"]
+
+[ext_resource type="Texture2D" uid="uid://x8um7uotrwnv" path="res://src/player/inventory/menu/what.png" id="1_l6vs2"]
+
+[resource]
+texture = ExtResource("1_l6vs2")
+texture_margin_left = 6.0
+texture_margin_top = 2.0
+texture_margin_right = 6.0
+texture_margin_bottom = 2.0

@@ -27,12 +27,13 @@ script = ExtResource("1_0c5nr")
 [node name="components_receiver" type="Node" parent="camera_handler" node_paths=PackedStringArray("affector")]
 script = ExtResource("2_rya0b")
 affector = NodePath("..")
+independent = true
 metadata/_custom_type_script = "uid://ctbtfitoggtku"
 
 [node name="curve_rotation" type="Node" parent="camera_handler/components_receiver" node_paths=PackedStringArray("receiver")]
 script = ExtResource("3_qjqrg")
 rot_curve = ExtResource("4_wxyky")
-receiver = NodePath("../../marker/camera/components_receiver")
+receiver = NodePath("..")
 metadata/_custom_type_script = "uid://df3nc1vhukhur"
 
 [node name="marker" type="Marker2D" parent="camera_handler"]
@@ -45,6 +46,7 @@ editor_draw_limits = true
 [node name="components_receiver" type="Node" parent="camera_handler/marker/camera" node_paths=PackedStringArray("affector")]
 script = ExtResource("2_rya0b")
 affector = NodePath("..")
+independent = true
 metadata/_custom_type_script = "uid://ctbtfitoggtku"
 
 [node name="camera_overlay" type="CanvasLayer" parent="camera_handler"]

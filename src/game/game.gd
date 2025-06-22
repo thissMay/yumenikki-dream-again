@@ -1,18 +1,6 @@
 extends Node
 
 # ---- data ----
-var data := {
-	"version" : "prev_00_01",
-	"id" : 0,
-	"read_warning" : false,
-	
-	"player" : {
-		"sanity" : 0,
-		"effects_collected" : [],
-		"memoriams_collected" : []
-		},
-	"scene" : {},
-}
 
 # inner and static class singletons
 var scene_manager: SceneManager
@@ -148,14 +136,22 @@ func get_group_arr(_name: String) -> Array:
 	return []
 	
 class Save:
+	static var data := {
+	"game" : {
+		"version" : "prev_00_01",
+		"id" : 0,
+		"read_warning" : false},
+	"player" : {},
+	"scene" : {}}
+	
 	static func save_scene_data(_scene: SceneNode) -> void: 
 		var node_savers = Game.get_group_arr("node_savers") as Array[NodeSaver]
-		Game.data["scene"][_scene.name] = {"data" : null, "id" : _scene.id}
+		data["scene"][_scene.name] = {"data" : null, "id" : _scene.id}
 		for ns in node_savers: 
-			if ns != null: Game.data["scene"][_scene.name]["data"] = ns.save_data()		
+			if ns != null: data["scene"][_scene.name]["data"] = ns.save_data()		
 	static func load_scene_data(_scene: SceneNode) -> void:
 		var node_savers = Game.get_group_arr("node_savers") as Array[NodeSaver]
-		if Game.data["scene"].has(_scene.name):
+		if data["scene"].has(_scene.name):
 			for ns in node_savers: 
 				if ns != null: ns.load_data(_scene)
 	
@@ -166,7 +162,7 @@ class Save:
 		
 		var save_file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 		
-		save_file.store_string(JSON.stringify(Game.data))
+		save_file.store_string(JSON.stringify(data))
 		save_file.close()
 		save_file = null
 		
@@ -177,7 +173,7 @@ class Save:
 		if FileAccess.file_exists(SAVE_PATH): 
 			var load_file := FileAccess.open(SAVE_PATH, FileAccess.READ)
 			var content = JSON.parse_string(load_file.get_as_text())
-			Game.data = content
+			data = content
 			
 			load_file.close()
 			load_file = null
@@ -186,11 +182,11 @@ class Save:
 		return OK
 
 	static func change_data_value(_key: String, _val: Variant) -> void:
-		if !_key in Game.data: return
-		Game.data[_key] = _val 
+		if !_key in data: return
+		data[_key] = _val 
 	static func read_data_value(_key: String) -> Variant:
-		if !_key in Game.data: return
-		return Game.data[_key]
+		if !_key in data: return
+		return data[_key]
 class Config: 
 	static var config_data := ConfigFile.new()
 	

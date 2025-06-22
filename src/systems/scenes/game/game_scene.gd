@@ -9,7 +9,6 @@ extends SceneNode
 				
 func _ready() -> void: 
 	super()
-	
 	if load_transition == null: 
 		load_transition = ShaderMaterial.new()
 		load_transition.material = preload("res://src/shaders/transition/tr_fade.gdshader")

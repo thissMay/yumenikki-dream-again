@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PlayerBehaviour" load_steps=2 format=3 uid="uid://fbyv4ifpj1q5"]
 
-[ext_resource type="Script" uid="uid://bxqbtaovh6aka" path="res://src/player/scripts/pl_behaviour.gd" id="1_1xons"]
+[ext_resource type="Script" uid="uid://bxqbtaovh6aka" path="res://src/player/scripts/behaviour/pl_behaviour.gd" id="1_1xons"]
 
 [resource]
 script = ExtResource("1_1xons")

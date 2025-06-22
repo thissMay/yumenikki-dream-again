@@ -30,14 +30,15 @@ signal animation_loop
 signal animation_finished
 
 func _ready() -> void:
-	if autoplay: play()
+	if autoplay: play(texture)
 	animation_loop.connect(func(): if !loop: playing = false)
 	super()
 func format(_spr: Texture2D = texture) -> void:
 	super(_spr)
 
 
-func play(_reverse: bool = false) -> void:
+func play(_sprite: Texture2D, _reverse: bool = false) -> void:
+	set_sprite(_sprite)
 	playing = true
 	progress = 0 if !_reverse else frame_h_count - 1
 	reverse = _reverse

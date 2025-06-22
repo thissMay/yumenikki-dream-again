@@ -70,6 +70,7 @@ func _ready() -> void:
 			set_modulate(curr_color))
 
 	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	button.focus_mode = Control.FOCUS_NONE
 		
 func _components_children_setup() -> void: 
 	super()

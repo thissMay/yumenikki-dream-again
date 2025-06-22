@@ -24,5 +24,5 @@ void fragment()
 
 void vertex()
 	{
-		_vertex(UV, TEXTURE_PIXEL_SIZE, MODEL_MATRIX);
+		UV = _depth_vertex(UV, TEXTURE_PIXEL_SIZE);
 	}

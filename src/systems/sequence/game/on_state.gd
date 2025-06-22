@@ -2,7 +2,7 @@ extends Sequence
 
 enum MODE {ENTER, EXIT, BOTH}
 var state: State
-var emit_mode: MODE
+@export var emit_mode: MODE
 
 func _ready() -> void:
 	order = get_children()
@@ -17,4 +17,3 @@ func _ready() -> void:
 				state.exited.connect(_execute)
 				
 	process_mode = Node.PROCESS_MODE_DISABLED	
-	

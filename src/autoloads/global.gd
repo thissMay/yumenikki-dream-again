@@ -3,7 +3,6 @@ extends Control
 const TWEEN_SCALE := 3.75
 
 # ---- input. ----
-var keybinds := SentientController.SentientKeybind.new()
 
 var input: Dictionary 
 var any_key: bool
@@ -71,11 +70,3 @@ func get_mouse_position_within_vp() -> Vector2:
 	return clamp(Game.main_viewport.get_mouse_position(), Vector2.ZERO, Game.get_viewport_dimens())
 func get_mouse_position() -> Vector2:
 	return Game.main_viewport.get_mouse_position() - (Game.get_viewport_dimens() / 2)
-
-func _process(_delta: float) -> void:
-	calculate_input_values(
-		Vector2i(keybinds.primary_move_up_key, keybinds.secondary_move_up_key),
-		Vector2i(keybinds.primary_move_left_key, keybinds.secondary_move_left_key),
-		Vector2i(keybinds.primary_move_down_key, keybinds.secondary_move_down_key),
-		Vector2i(keybinds.primary_move_right_key, keybinds.secondary_move_right_key)
-		)

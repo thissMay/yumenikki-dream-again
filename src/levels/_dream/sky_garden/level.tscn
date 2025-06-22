@@ -58,10 +58,12 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kb088"]
 shader = ExtResource("4_bgmpq")
+shader_parameter/type = 0
 shader_parameter/uv_offset_initial = Vector2(0, -0.4)
 shader_parameter/offset_strength = -0.8
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
 
 [sub_resource type="Gradient" id="Gradient_dwx7i"]
 offsets = PackedFloat32Array(0, 0.992857)
@@ -78,10 +80,12 @@ noise = SubResource("FastNoiseLite_bvc3k")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_83i6e"]
 shader = ExtResource("6_3igev")
+shader_parameter/type = 0
 shader_parameter/uv_offset_initial = Vector2(0, 0)
 shader_parameter/offset_strength = 0.085
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
 shader_parameter/opacity = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_dlrun")
 shader_parameter/scroll_speed = -0.015

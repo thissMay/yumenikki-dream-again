@@ -7,7 +7,7 @@ extends SentientState
 @export var min_wait_time: float = 1
 @export var max_wait_time: float = 3
 
-@export var wander_radius: float = 12
+@export var wander_radius: float = 25
 
 var direction: Vector2i = Vector2i(1, 1)
 

@@ -18,10 +18,11 @@ extends Control
 var player_stats_changed: EventListener
 
 func _ready() -> void:
-	player_stats_changed = EventListener.new(["PLAYER_EQUIP", "PLAYER_DEEQUIP"], false, self)
-	player_stats_changed.do_on_notify("PLAYER_EQUIP", func(): update_stats_display(GameManager.EventManager.get_event_param("PLAYER_EQUIP")[0]))
-	update_stats_display(PLInstance.get_pl().components.get_component_by_name("equip_manager").effect_data)
-	
+	player_stats_changed = EventListener.new(["PLAYER_EQUIP"], false, self)
+	player_stats_changed.do_on_notify(
+		"PLAYER_EQUIP", 
+		func(): update_stats_display(GameManager.EventManager.get_event_param("PLAYER_EQUIP")[0]))
+
 func update_stats_display(_effect: PLEffect) -> void:
 		handle_stats_display_value(walk_speed, "WALK SPEED: %.2f m/s" % (_effect.stats.walk_multi * SentientBase.BASE_SPEED / 16))
 		handle_stats_display_value(sprint_speed, "SPRINT SPEED: %.2f m/s" % (_effect.stats.sprint_multi * SentientBase.BASE_SPEED / 16))

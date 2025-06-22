@@ -104,10 +104,6 @@ script/source = "extends State
 @export var spr_white_petal: Sprite2D
 @export var spr_pink_petal: Sprite2D
 
-@export var stats_mobility: Label
-@export var stats_stamina: Label
-@export var effect_description: Label
-
 var tween: Tween
 var player_stats_changed: EventListener
 #const default_player_stats := preload(\"res://src/player/madotsuki/effects/_none/_default.tres\")
@@ -117,6 +113,8 @@ var player_stats_changed: EventListener
 func _ready() -> void:
 	pass
 func enter_state(s = null) -> void: 
+	container.update_stats_display(GameManager.EventManager.get_event_param(\"PLAYER_EQUIP\")[0])
+	
 	section.visible = true
 	mado.position.x += 10
 	stats.position.x += 20
@@ -180,6 +178,15 @@ shader_parameter/optional_grad = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kisvh"]
 shader = ExtResource("5_2m1ok")
+shader_parameter/transparency = 0.0
+shader_parameter/dirX = 0.0
+shader_parameter/dirY = 0.0
+shader_parameter/scroll_speed = 0.0
+shader_parameter/uv_offset_initial = Vector2(0, 0)
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
 
 [node name="inventory" type="Control" node_paths=PackedStringArray("display", "white_petal", "pink_petal", "white_petal_button", "pink_petal_button", "item_container", "deequip_prompt", "effect_indicator", "favourite_icon", "initial_state")]
 clip_contents = true
@@ -287,6 +294,7 @@ texture = ExtResource("6_l1wax")
 clip_children = 2
 
 [node name="pink_petal_effects" type="Control" parent="display"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -360,7 +368,6 @@ position = Vector2(190, 72)
 texture = ExtResource("19_3gg6c")
 
 [node name="white_petal_stats" type="Control" parent="display"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -383,13 +390,14 @@ texture = ExtResource("12_tlelv")
 position = Vector2(-29, -15)
 texture = ExtResource("20_ub6k2")
 hframes = 3
-frame = 1
+frame = 2
 script = ExtResource("21_cgott")
 autoplay = true
 loop = true
 fps = 9.0
 frame_dimensions = Vector2i(32, 22)
 frame_h_count = 3
+progress = 2
 metadata/_custom_type_script = "uid://cdjphp77kgyqr"
 
 [node name="eye_r" type="Sprite2D" parent="display/white_petal_stats/mado"]

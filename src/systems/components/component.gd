@@ -18,7 +18,16 @@ class_name Component extends Node
 		active = _a
 		set_active(_a)
 
-func _ready() -> void: setup()
+func _ready() -> void: 
+	if receiver != null: return
+
+	if get_parent() is ComponentReceiver: 
+		receiver = get_parent()
+		if !receiver.bypass_enabled.is_connected(_on_bypass_enabled): 
+			receiver.bypass_enabled.connect(_on_bypass_enabled)
+		if !receiver.bypass_lifted.is_connected(_on_bypass_lifted): 
+			receiver.bypass_lifted.connect(_on_bypass_lifted)
+				
 
 # ---- component functions ----
 func set_active(_active: bool = true) -> void:
@@ -27,15 +36,6 @@ func set_active(_active: bool = true) -> void:
 		true: process_mode = Node.PROCESS_MODE_INHERIT
 
 # ---- node functions ----
-func setup() -> void:
-	if get_parent() is ComponentReceiver: 
-		receiver = get_parent()
-		_setup()
-		if !receiver.bypass_enabled.is_connected(_on_bypass_enabled): 
-			receiver.bypass_enabled.connect(_on_bypass_enabled)
-		if !receiver.bypass_lifted.is_connected(_on_bypass_lifted): 
-			receiver.bypass_lifted.connect(_on_bypass_lifted)
-	else: return
 func _setup() -> void: pass
 	
 func delete() -> void: 
@@ -47,12 +47,12 @@ func _update(_delta: float) -> void: pass
 func _physics_update(_delta: float) -> void: pass
 
 # ---- INDEPENDENT INSTANCE PROCESS ----
-func _process(delta: float) -> void: 
-	if active and receiver != null and !receiver.bypass:
-		_update(delta)
-func _physics_process(delta: float) -> void: 
-	if active and receiver != null and !receiver.bypass:
-		_physics_update(delta)
+#func _process(delta: float) -> void: 
+	#if active and receiver != null and !receiver.bypass:
+		#_update(delta)
+#func _physics_process(delta: float) -> void: 
+	#if active and receiver != null and !receiver.bypass:
+		#_physics_update(delta)
 
 # ---- ON RECIEVER BYPASS ----
 func _on_bypass_enabled() -> void: pass

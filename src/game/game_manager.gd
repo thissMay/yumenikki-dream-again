@@ -68,7 +68,8 @@ func setup() -> void:
 		else: change_to_state("pregame")
 	
 	global_screen_effect.environment.glow_enabled = bloom
-	PLInstance.setup()
+	
+	Player.Instance.setup()
 
 # ---- game functionality ----
 static func pause_options(_pause: bool = true) -> void:
@@ -83,6 +84,7 @@ static func get_curr_scene() -> void: Game.scene_manager.scene_node
 static func unload_curr_scene() -> void: Game.scene_manager.unload_current_scene()
 static func unload_scene(scene: SceneNode) -> void: Game.scene_manager.unload_scene(scene)
 static func change_scene_to(_new: PackedScene) -> void: 
+	if _new == null: return
 	if instance: Game.scene_manager.change_scene_to(_new, pausable_parent)
 	else: Game.scene_manager.change_scene_to(_new, Global)
 					
@@ -111,8 +113,8 @@ static func show_options(_visible: bool) -> void:
 	options.visible = _visible
 
 # ---- state based stuff ----
-static func change_to_state(new_state: String) -> void:
-	game_fsm._change_to_state(new_state)
+static func change_to_state(new_state: String) -> void: game_fsm._change_to_state(new_state)
+static func is_in_state(state: String) -> bool: return game_fsm._is_in_state(state)
 static func request_transition(_fade_type: ScreenTransition.fade_type) -> void:
 	await Game.main_tree.physics_frame
 	await ScreenTransition.request_transition(_fade_type)
@@ -246,6 +248,13 @@ static var event_ids := {
 	"PLAYER_DEEQUIP" : {
 		"subscribers" : [],
 		"params" : []},
+
+	"PLAYER_EFFECT_FOUND" : {
+		"subscribers" : [],
+		"params" : []},
+	"PLAYER_EFFECT_DISCARD" : {
+		"subscribers" : [],
+		"params" : []},
 		
 	"PLAYER_DOOR_TELEPORTATION" : {
 		"subscribers" : [],
@@ -261,17 +270,7 @@ static var event_ids := {
 		"subscribers" : [],
 		"params" : []},	
 	
-	"PLAYER_SANITY_SANE_STATE" : {
-		"subscribers" : [],
-		"params" : []},	
-	"PLAYER_SANITY_INSANE_STATE" : {
-		"subscribers" : [],
-		"params" : []},	
-		
-	"PLAYER_INVENTORY_ITEM_ADD" : {
-		"subscribers" : [],
-		"params" : []},	
-	
+
 	# ---- chase events -----
 	"PRECHASE_ACTIVE" : {
 		"subscribers" : [],

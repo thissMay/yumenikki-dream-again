@@ -3,6 +3,7 @@ extends FSM
 
 var invert_cutscene_listener: EventListener
 var player_equip_listener: EventListener
+var effect_collect: EventListener
 
 @export var display: Control
 
@@ -38,20 +39,21 @@ func _setup() -> void:
 	
 	invert_cutscene_listener = EventListener.new(["SPECIAL_INVERT_CUTSCENE_BEGIN", "SPECIAL_INVERT_CUTSCENE_END"], false, self)
 	player_equip_listener = EventListener.new(["PLAYER_EQUIP", "PLAYER_DEEQUIP"], false, self)
+	effect_collect = EventListener.new(["PLAYER_EFFECT_FOUND"], false, self)
 	
 	player_equip_listener.do_on_notify("PLAYER_DEEQUIP", func(): 
 		deequip_prompt.set_active(false)
 		effect_indicator.progress = 1
 		)
 	player_equip_listener.do_on_notify("PLAYER_EQUIP", func(): 
-		if GameManager.EventManager.get_event_param("PLAYER_EQUIP")[0] == PLInstance.get_pl().DEFAULT_EFFECT: 
+		if GameManager.EventManager.get_event_param("PLAYER_EQUIP")[0] == Player.Instance.get_pl().DEFAULT_EFFECT: 
 			return
 		deequip_prompt.set_active(true)
 		effect_indicator.progress = 0
 		)
 		
 	deequip_prompt.pressed.connect(func():
-		(PLInstance.get_pl() as Player_YN).deequip_effect()
+		(Player.Instance.get_pl() as Player_YN).deequip_effect()
 		inventory_toggle._on_press()
 		)
 	
@@ -85,7 +87,7 @@ func append_item(_item: PLEffect) -> void:
 	button.hover_entered.connect(func(): hovered_button = button)
 	
 	button.pressed.connect(func():
-		if button.unique_data: (PLInstance.get_pl() as Player_YN).equip(button.unique_data)
+		if button.unique_data: (Player.Instance.get_pl() as Player_YN).equip(button.unique_data)
 		inventory_toggle.untoggle())
 	
 	item_container.add_child(button)

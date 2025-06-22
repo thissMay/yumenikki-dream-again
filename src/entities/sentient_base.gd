@@ -6,6 +6,7 @@
 class_name SentientBase
 extends Entity.SentientEntity
 
+var world_warp: Area2D
 var components: SBComponentReceiver
 const TRANS_WEIGHT := 0.225
 
@@ -41,29 +42,32 @@ var noise_multi: float = 1
 func _ready() -> void:
 	sprite_renderer = get_node_or_null("sprite_renderer")
 	shadow_renderer = get_node_or_null("shadow_renderer")
-
+	
+	world_warp = get_node_or_null("world_warp")
 	components = $sb_components
 	components._setup(self)
 		
 	await self.ready
 	self.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	
-	mandatory_components()
 	dependency_components()
+	dependency_setup()
 	
 func dependency_components() -> void: pass 	
-func mandatory_components() -> void: pass 
+func dependency_setup() -> void: pass 
 
 # ---- base processes ----
 func _physics_process(_delta: float) -> void:
 	components._physics_update(_delta)
 	speed = self.velocity.length()
 	abs_velocity = abs(self.velocity)
+	
 func _process(_delta: float) -> void:
+	(self as SentientBase).move_and_slide()
+	super(_delta) # --- sentient entity override.
+	
 	_handle_heading(direction)
 	components._update(_delta)
-	
-	super(_delta) # --- sentient entity override.
 
 #region ---- velocity and acceleration handling ----
 func handle_velocity(_dir: Vector2, _mult: float = 1) -> void:

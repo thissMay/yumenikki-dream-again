@@ -1,0 +1,67 @@
+[gd_resource type="AnimationLibrary" load_steps=5 format=3 uid="uid://ckrlxt13tw453"]
+
+[ext_resource type="Texture2D" uid="uid://b2wf3y71rd5l8" path="res://src/entities/sentients/red_jellyfish/flap.png" id="1_wxrm3"]
+[ext_resource type="Texture2D" uid="uid://cfciqqbav65d7" path="res://src/entities/sentients/red_jellyfish/idle.png" id="2_mp6jw"]
+
+[sub_resource type="Animation" id="Animation_elgg7"]
+resource_name = "flap"
+length = 0.62
+step = 0.03
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../sprite_renderer:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_wxrm3")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../sprite_renderer:progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.121212, 0.212121, 0.30303, 0.393939, 0.484848, 0.575758),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_fyb6a"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../sprite_renderer:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_mp6jw")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../sprite_renderer:progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[resource]
+_data = {
+&"flap": SubResource("Animation_elgg7"),
+&"idle": SubResource("Animation_fyb6a")
+}

@@ -1,5 +1,4 @@
 extends LookAt
 
-func setup() -> void:
-	super()
-	look_at_target = PLInstance.get_pl()
+func _setup() -> void:
+	look_at_target = Player.Instance.get_pl()

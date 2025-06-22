@@ -93,7 +93,7 @@ func _ready() -> void:
 		bounds_max = Vector2(cam.limit_right, cam.limit_bottom)
 		
 		if !target: target = self ## ensures that its going to be static at least.
-		await Global.get_tree().process_frame
+		await Game.main_tree.process_frame
 		
 		assert(target is Node2D || target is Control)
 		global_position = target.global_position

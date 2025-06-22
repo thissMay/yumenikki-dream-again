@@ -79,6 +79,8 @@ func _setup(_sentient: SentientBase) -> void:
 	area.body_shape_entered.connect(_on_body_shape_entered)
 	
 	curr_material = default_footstep
+	sentient.shadow_renderer.visible = transparent_surfaces[curr_material]
+	footstep_se_player.max_distance = 250
 
 func initate_footstep() -> void:  
 	var sounds_set: FootstepSet = GROUND_MAT_DICT[curr_material]
@@ -100,7 +102,7 @@ func spawn_footstep_fx() -> void:
 func play_footstep_sound(_footstep_se: AudioStream) -> void: 
 	footstep_se_player.play_sound(
 		_footstep_se, 
-		clampf(linear_to_db(log(sentient.get_noise() + 3)), 0, 1.2), 
+		clampf((log(sentient.get_noise() + 1)), 0.5, 1.75), 
 		clampf(randf_range(0.75, sentient.get_noise()), 0.75, 1.2))	
 
 func _on_body_shape_entered(
@@ -112,14 +114,20 @@ func _on_body_shape_entered(
 		if body is TileMapLayer:
 			multiple_floors.append(body)
 			
+			var tile_coords: Vector2i
+			var cell_tile_data: TileData
+			var atlas_coords: Vector2i
+			
 			for floors: TileMapLayer in multiple_floors.arr:
-				if floors.get_cell_tile_data(floors.get_coords_for_body_rid(body_rid)).z_index > greatest_index: 
+				tile_coords = floors.get_coords_for_body_rid(body_rid)
+				atlas_coords = floors.get_cell_atlas_coords( tile_coords)
+				cell_tile_data = floors.get_cell_tile_data(tile_coords)
+
+				if cell_tile_data and cell_tile_data.z_index > greatest_index: 
 					greatest_index = floors.get_cell_tile_data(floors.get_coords_for_body_rid(body_rid)).z_index
 					floor_priority = floors
 					break
-				
-			var tile_coords: Vector2i = floor_priority.get_coords_for_body_rid(body_rid)
-			var cell_tile_data: TileData = floor_priority.get_cell_tile_data(tile_coords)
+	
 
 			if cell_tile_data:
 				material_id = cell_tile_data.get_custom_data("material") if cell_tile_data.has_custom_data("material") else 0
@@ -132,9 +140,9 @@ func _on_body_shape_entered(
 				else:
 					sound_to_be_played = GROUND_MAT_DICT[curr_material].pick_random()
 								
-				
 				if transparent_surfaces[curr_material]: sentient.shadow_renderer.visible = false
 				else: sentient.shadow_renderer.visible = true	
+				
 func _on_body_shape_exited(
 	body_rid: RID, 
 	body: Node2D, 
@@ -152,7 +160,6 @@ func _on_body_shape_exited(
 					greatest_index = -50
 					sentient.shadow_renderer.visible = false
 					sound_to_be_played = null
-		
 		
 class FootstepDust:
 	extends SpriteSheetFormatterAnimated
@@ -175,6 +182,6 @@ class FootstepDust:
 		Game.Optimization.footstep_instances -= 1
 		
 	func _ready() -> void:
-		self.play()
+		self.play(texture)
 		await self.animation_finished
 		self.queue_free()

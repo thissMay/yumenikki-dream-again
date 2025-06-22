@@ -13,7 +13,7 @@ func update(_delta: float, ) -> void:
 	if sentient.velocity == Vector2.ZERO: sentient.force_change_state("idle")
 	
 func physics_update(_delta: float, ) -> void:
-	sentient.get_behaviour()._walk(sentient, SentientController.get_input_vectors())
+	sentient.get_behaviour()._walk(sentient, sentient.input)
 
 	if sentient.stamina < sentient.MAX_STAMINA and !sentient.is_exhausted:
 		sentient.stamina += _delta * (sentient.stamina_regen / 1.2)

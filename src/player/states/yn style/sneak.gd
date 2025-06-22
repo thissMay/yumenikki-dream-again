@@ -18,4 +18,4 @@ func physics_update(_delta: float, ) -> void:
 	if sentient.stamina < sentient.MAX_STAMINA:
 		sentient.stamina += _delta * (sentient.stamina_regen / 1.5)
 
-	sentient.get_behaviour()._sneak(sentient, SentientController.get_input_vectors())
+	sentient.get_behaviour()._sneak(sentient, sentient.input)

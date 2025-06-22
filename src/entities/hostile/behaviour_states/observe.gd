@@ -13,6 +13,7 @@ var target: SentientBase
 var roll: float = 0
 
 func _setup() -> void:
+	if aggression_component == null: return
 	hesitance_timer.wait_time = randf_range(min_wait_time, max_wait_time)
 	hesitance_timer.autostart = false
 	hesitance_timer.one_shot = true
@@ -22,9 +23,7 @@ func _setup() -> void:
 		hesitance_timer.wait_time = randf_range(min_wait_time, max_wait_time)
 		update_hesitance_observe_point())
 		
-	(sentient as NavSentient).nav_agent.target_reached.connect(
-		func(): 
-			hesitance_timer.start())
+	(sentient as NavSentient).nav_agent.target_reached.connect(hesitance_timer.start)
 
 func enter_state() -> void:
 	roll = randf()
@@ -40,6 +39,7 @@ func enter_state() -> void:
 	super()
 	
 func exit_state() -> void: 
+	
 	aggression_component.suspicion_indicator_status.visible = false
 	hesitance_timer.stop()
 	super()

@@ -15,4 +15,4 @@ func _setup(_sentient: SentientBase = null) -> void:
 			states._setup()
 			
 	curr_state = initial_state
-	_enter_initial()
+	if curr_state != null: curr_state.enter_state()

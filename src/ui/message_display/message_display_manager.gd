@@ -1,7 +1,12 @@
 class_name MessageDisplayManager
-extends Node
+extends Control
+
+static var instance: MessageDisplayManager
 
 const BASE := preload("res://src/ui/message_display/message_instance.tscn")
+const DEFAULT_THEME := preload("res://src/global_theme.tres")
+
+var is_open: bool = false
 
 var active: MessageDisplay
 
@@ -13,45 +18,43 @@ var current_index: int = 0
 var texts: Array[String]
 
 func _ready() -> void:
-	pass
-	#active = MessageDisplay.new()
-	#
-	#message_display = MessageDisplay.new()
-	#prompt_display = Prompt.new()
-	#dialogue_display = Dialogue.new()
-	#
-	#message_display.visible = false
-	#prompt_display.visible = false
-	#dialogue_display.visible = false
-	#
-	#self.add_child(active)
+	instance = self
+	theme = DEFAULT_THEME
+	
+	message_display = MessageDisplay.new()
+	prompt_display = Prompt.new()
+	dialogue_display = Dialogue.new()
+	
+	self.add_child(message_display)
+	self.add_child(prompt_display)
+	self.add_child(dialogue_display)
+	
+	message_display.visible = false
+	prompt_display.visible = false
+	dialogue_display.visible = false
 
 func open_message_display(
 	_display: MessageDisplay,
 	_texts: Array[String], 
-	_interruptive: bool = false, 
 	_sound: AudioStreamWAV = load("res://src/audio/se/se_talk.wav"),
 	_speed: int = 1,
 	_reset: bool = true, 
 	_pos: Vector2 = Vector2(Game.viewport_width / 2, Game.viewport_length - 110)) -> void: 
-		if message_display != null: 
-			close_message_display(message_display)
-			active = _display
-		if _reset: current_index = 0
+		if is_open == true: return
+		current_index = 0
+		
+		is_open = true
+		active = _display
+		active.visible = true 
 		
 		texts.clear()
 		for t in _texts: texts.append(t)
 		
-		
-		active.visible = true
-
-		message_display.open(
-			_pos, 
-			message_display.text_size, 
-			_interruptive,
-			)
+		message_display.open(_pos)
 		message_display.display_text(_texts[current_index], _sound, _speed)
-func close_message_display(_display: MessageDisplay) -> void: 
+		
+func close_message_display(_display: MessageDisplay) -> void:
+	is_open = false
 	await _display.close()
 
 func get_current_message_display() -> MessageDisplay: 

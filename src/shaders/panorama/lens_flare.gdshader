@@ -1,39 +1,36 @@
 shader_type canvas_item;
 render_mode blend_add;
 
-uniform float uv_rotation_speed = 5.;
-uniform vec2 uv_rotation_pivot = vec2(0.5);
+#include "general_base.gdshaderinc"
+#include "depth_base.gdshaderinc"
+#include "radial_base.gdshaderinc"
 
-uniform vec2 uv_offset = vec2(0);
-uniform float offset_strength = 1;
-
+uniform bool rotation = true;
 uniform float transparency = 0;
+
+uniform float max_opacity = 1;
+uniform float min_opacity = 0;
+uniform float flicker_speed = 1;
 
 float random () {
     float r = 0.;
 	for (int i = 0; i <= 10; i += 1)
 		{
-			r = abs(sin(sqrt(float(i * 2)) * TIME / 1.813)) - abs(cos(float(i) * TIME / 7.23));
+			r = abs(sin(sqrt(float(i * 2)) * TIME / 2.813)) - abs(cos(float(i) * flicker_speed *  TIME / 17.23));
 		}
-	return clamp(r + (transparency), 0.1, 1. - transparency);
+	return clamp(1.3 * r + (transparency), min_opacity, max_opacity);
 }
 
-mat2 get2dRotationMatrix(float angleRadians)
+
+void vertex() 
 {
-    float s = sin(angleRadians);
-    float c = cos(angleRadians);
-    return mat2(vec2(c, s), vec2(-s, c));
+	UV = _depth_vertex(UV, TEXTURE_PIXEL_SIZE);
 }
 
 void fragment()
 {
-    vec2 uv = UV; // whatever your UV is
-    uv -= floor(uv); // make it into [0.0, 1.0) x [0.0, 1.0) range
-    uv -= uv_rotation_pivot; // move origin to the rotation pivot
-    uv *= get2dRotationMatrix(radians(TIME * uv_rotation_speed)); // rotate
-    uv += uv_rotation_pivot; // move origin back
 
-    COLOR.rgba = texture(TEXTURE, uv).rgba; // use calculated uv
+   	if (rotation) COLOR = _radial_fragment(UV, TEXTURE);
 	COLOR.a = random();
 }
 

@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqmxnyvau3174"]
+
+[ext_resource type="PackedScene" uid="uid://qvbki1ipp72p" path="res://src/entities/sentients/template_sentient.tscn" id="1_3cesb"]
+[ext_resource type="Texture2D" uid="uid://o72aesjs8ff3" path="res://src/entities/sentients/neon/bird.png" id="2_3cesb"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="3_hot6v"]
+
+[node name="bird" instance=ExtResource("1_3cesb")]
+
+[node name="sprite_renderer" parent="." index="3"]
+position = Vector2(0, 0)
+texture = ExtResource("2_3cesb")
+hframes = 4
+frame = 2
+script = ExtResource("3_hot6v")
+autoplay = true
+loop = true
+reverse = false
+end_frame = false
+fps = 5.0
+frame_dimensions = Vector2i(16, 25)
+frame_h_count = 4
+frame_v_count = 0
+progress = 2
+
+[node name="behaviour_fsm" parent="." index="9" node_paths=PackedStringArray("initial_state")]
+initial_state = NodePath("WANDER")

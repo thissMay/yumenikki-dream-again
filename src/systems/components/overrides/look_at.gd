@@ -9,8 +9,7 @@ var angle_rads: float 	# readonly
 
 var target_vector: Vector2
 
-func setup():
-	super()
+func _setup():
 	origin_pos = receiver.affector.position
 
 func _physics_update(_delta: float) -> void:

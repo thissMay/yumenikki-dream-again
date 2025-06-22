@@ -11,6 +11,6 @@ void vertex()
 
 void fragment() {
 	float mask = texture(TEXTURE, UV).a;
-	COLOR = _fragment(SCREEN_UV, world_texture) + texture(TEXTURE, UV);
+	COLOR = _linear_fragment(SCREEN_UV, world_texture) + texture(TEXTURE, UV);
 	COLOR.a *= mask - transparency;
 }

@@ -7,8 +7,8 @@ uniform sampler2D gradient ;
 
 void fragment()
 	{
-		if (optional_grad)
-		{ COLOR = texture(gradient, UV);}
-		else			
-		{ COLOR = texture(TEXTURE, UV);}
+		if (optional_grad) 	{ COLOR.rgb = texture(gradient, UV).rgb;}
+		else			 	{ COLOR.rgb = texture(TEXTURE, UV).rgb;}
+
+		COLOR.a = 1. - transparency;
 	}

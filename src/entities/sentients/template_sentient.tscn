@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://qvbki1ipp72p"]
+[gd_scene load_steps=21 format=3 uid="uid://qvbki1ipp72p"]
 
 [ext_resource type="Script" uid="uid://jbydpt773v5a" path="res://src/entities/hostile/nav_entity.gd" id="1_l8d6l"]
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="2_xd2xn"]
@@ -16,6 +16,10 @@
 [ext_resource type="Script" uid="uid://dbo5xans8s5ib" path="res://src/entities/hostile/behaviour_states/chase.gd" id="13_hjdcm"]
 [ext_resource type="Script" uid="uid://cbg0uhsr4h72h" path="res://src/entities/hostile/behaviour_states/stare_at.gd" id="14_faqv6"]
 [ext_resource type="Script" uid="uid://sahjehrg3n8o" path="res://src/entities/hostile/behaviour_states/follow.gd" id="15_icb7j"]
+[ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="17_21guf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xd2xn"]
+size = Vector2(2, 2)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_18lqh"]
 blend_mode = 2
@@ -23,15 +27,23 @@ blend_mode = 2
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_18lqh"]
 size = Vector2(13, 4)
 
-[node name="TestNeutral" type="CharacterBody2D" node_paths=PackedStringArray("nav_agent", "stance_fsm", "behaviour_fsm")]
+[node name="template_neutral" type="CharacterBody2D" node_paths=PackedStringArray("nav_agent", "stance_fsm", "behaviour_fsm")]
 script = ExtResource("1_l8d6l")
 nav_agent = NodePath("nav")
 stance_fsm = NodePath("stance_fsm")
 behaviour_fsm = NodePath("behaviour_fsm")
 initial_speed = 34.3
 
+[node name="world_warp" type="Area2D" parent="."]
+disable_mode = 1
+collision_layer = 2147483648
+collision_mask = 2147483648
+
+[node name="_" type="CollisionShape2D" parent="world_warp"]
+shape = SubResource("RectangleShape2D_xd2xn")
+
 [node name="on_screen_enabler" type="VisibleOnScreenEnabler2D" parent="."]
-rect = Rect2(-50, -40, 100, 80)
+rect = Rect2(-120, -67.5, 240, 135)
 
 [node name="shadow_renderer" type="Sprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_18lqh")
@@ -60,7 +72,14 @@ shape = SubResource("RectangleShape2D_18lqh")
 
 [node name="nav" type="NavigationAgent2D" parent="."]
 target_desired_distance = 25.0
+navigation_layers = 2
 avoidance_enabled = true
+avoidance_layers = 10
+avoidance_mask = 10
+
+[node name="obstacle" type="NavigationObstacle2D" parent="."]
+radius = 15.0
+avoidance_layers = 14
 
 [node name="stance_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("7_2w8np")
@@ -94,11 +113,10 @@ metadata/_custom_type_script = "uid://co5edhtkgx3g8"
 script = ExtResource("10_w825i")
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
-[node name="WANDER" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "idle_timer", "path_timer_update")]
+[node name="WANDER" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "idle_timer")]
 script = ExtResource("11_iiqm4")
 stance_fsm = NodePath("../../stance_fsm")
 idle_timer = NodePath("idle_timer")
-path_timer_update = NodePath("../path_update")
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
 [node name="idle_timer" type="Timer" parent="behaviour_fsm/WANDER"]
@@ -123,3 +141,7 @@ metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 [node name="FOLLOW" type="Node" parent="behaviour_fsm"]
 script = ExtResource("15_icb7j")
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="sound_player" type="AudioStreamPlayer" parent="."]
+script = ExtResource("17_21guf")
+metadata/_custom_type_script = "uid://dgrha4aqsx4kh"

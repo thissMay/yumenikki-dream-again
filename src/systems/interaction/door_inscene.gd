@@ -24,7 +24,6 @@ func _draw() -> void:
 			target_door.target_door = self if target_door.parallel else target_door.target_door	
 			
 func _process(delta: float) -> void:
-	super(delta)
 	if Engine.is_editor_hint(): 
 		queue_redraw()
 		if target_door == self: target_door = null
@@ -36,8 +35,8 @@ func _interact() -> void:
 		Game.scene_manager.get_curr_scene().on_unload_request()
 		await GameManager.request_transition(ScreenTransition.fade_type.FADE_IN)
 		
-		PLInstance.teleport_player(target_door.get_spawn_point(), target_door.spawn_dir)
-		PLInstance.get_pl().reparent(target_door.get_parent())
+		Player.Instance.teleport_player(target_door.get_spawn_point(), target_door.spawn_dir)
+		Player.Instance.get_pl().reparent(target_door.get_parent())
 		
 		Game.scene_manager.get_curr_scene().on_load_request()
 		GameManager.request_transition(ScreenTransition.fade_type.FADE_OUT)

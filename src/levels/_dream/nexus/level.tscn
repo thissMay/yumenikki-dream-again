@@ -55,6 +55,7 @@ shader_parameter/uv_offset_initial = Vector2(0, 0)
 shader_parameter/offset_strength = 0.5
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_rdda4"]
 viewport_path = NodePath("panorama_vp")
@@ -183,90 +184,136 @@ y_sort_enabled = true
 
 [node name="apartment" parent="y_order/doors" instance=ExtResource("12_ftke6")]
 position = Vector2(160, 80)
+secret = null
 
 [node name="world_block" parent="y_order/doors" instance=ExtResource("12_ftke6")]
 position = Vector2(16, -64)
+secret = null
 
-[node name="renderer" parent="y_order/doors/world_block" index="3"]
+[node name="renderer" parent="y_order/doors/world_block" index="4"]
 texture = ExtResource("13_im3c1")
 
 [node name="world_eyeball" parent="y_order/doors" instance=ExtResource("12_ftke6")]
 position = Vector2(80, 464)
+secret = null
 
-[node name="renderer" parent="y_order/doors/world_eyeball" index="3"]
+[node name="spawn_point" parent="y_order/doors/world_eyeball" index="2"]
+scene_path = "uid://b67q2b5hm6tsu"
+
+[node name="renderer" parent="y_order/doors/world_eyeball" index="4"]
 texture = ExtResource("14_fvxdh")
 
 [node name="world_forest" parent="y_order/doors" instance=ExtResource("12_ftke6")]
 position = Vector2(240, -112)
+secret = null
 
-[node name="renderer" parent="y_order/doors/world_forest" index="3"]
+[node name="spawn_point" parent="y_order/doors/world_forest" index="2"]
+scene_path = "uid://j0sat4n1ufx1"
+
+[node name="renderer" parent="y_order/doors/world_forest" index="4"]
 texture = ExtResource("15_mnles")
 
 [node name="world_mural" parent="y_order/doors" instance=ExtResource("12_ftke6")]
 position = Vector2(240, 336)
+secret = null
 
-[node name="renderer" parent="y_order/doors/world_mural" index="3"]
+[node name="spawn_point" parent="y_order/doors/world_mural" index="2"]
+scene_path = "uid://d4buml4tyobvm"
+
+[node name="renderer" parent="y_order/doors/world_mural" index="4"]
 texture = ExtResource("16_tnhqj")
 
 [node name="world_number" parent="y_order/doors" instance=ExtResource("12_ftke6")]
 position = Vector2(448, -64)
+secret = null
 
-[node name="renderer" parent="y_order/doors/world_number" index="3"]
+[node name="spawn_point" parent="y_order/doors/world_number" index="2"]
+scene_path = "uid://dnjvpl85u4jl8"
+
+[node name="renderer" parent="y_order/doors/world_number" index="4"]
 texture = ExtResource("19_0iw03")
 
 [node name="world_graffiti" parent="y_order/doors" instance=ExtResource("12_ftke6")]
 position = Vector2(464, 256)
+secret = null
 
-[node name="renderer" parent="y_order/doors/world_graffiti" index="3"]
+[node name="spawn_point" parent="y_order/doors/world_graffiti" index="2"]
+scene_path = "uid://dyvqsvkfdlq8a"
+
+[node name="renderer" parent="y_order/doors/world_graffiti" index="4"]
 texture = ExtResource("17_55482")
 
 [node name="world_snow" parent="y_order/doors" instance=ExtResource("12_ftke6")]
 position = Vector2(32, 288)
+secret = null
 
-[node name="travel_to_scene" parent="y_order/doors/world_snow/on_interact" index="1"]
+[node name="spawn_point" parent="y_order/doors/world_snow" index="2"]
 scene_path = "uid://b1cl2pgrbvduk"
 
-[node name="renderer" parent="y_order/doors/world_snow" index="3"]
+[node name="renderer" parent="y_order/doors/world_snow" index="4"]
 texture = ExtResource("18_s60en")
 
 [node name="world_puddle" parent="y_order/doors" instance=ExtResource("12_ftke6")]
 position = Vector2(368, 416)
+secret = null
 
-[node name="renderer" parent="y_order/doors/world_puddle" index="3"]
+[node name="spawn_point" parent="y_order/doors/world_puddle" index="2"]
+scene_path = "uid://4qtk6nnecrel"
+
+[node name="renderer" parent="y_order/doors/world_puddle" index="4"]
 texture = ExtResource("19_65s2k")
 
 [node name="world_dark" parent="y_order/doors" instance=ExtResource("12_ftke6")]
 position = Vector2(-208, 64)
+secret = null
 
-[node name="renderer" parent="y_order/doors/world_dark" index="3"]
+[node name="spawn_point" parent="y_order/doors/world_dark" index="2"]
+scene_path = "uid://ct8ji25wno2g0"
+
+[node name="renderer" parent="y_order/doors/world_dark" index="4"]
 texture = ExtResource("20_ifpx3")
 
 [node name="world_candle" parent="y_order/doors" instance=ExtResource("12_ftke6")]
 position = Vector2(704, 96)
+secret = null
 
-[node name="renderer" parent="y_order/doors/world_candle" index="3"]
+[node name="spawn_point" parent="y_order/doors/world_candle" index="2"]
+scene_path = "uid://dem5ekbdkh84f"
+
+[node name="renderer" parent="y_order/doors/world_candle" index="4"]
 texture = ExtResource("21_4jpy7")
 
 [node name="world_shield" parent="y_order/doors" instance=ExtResource("12_ftke6")]
 position = Vector2(-416, 80)
+secret = null
 
-[node name="renderer" parent="y_order/doors/world_shield" index="3"]
+[node name="spawn_point" parent="y_order/doors/world_shield" index="2"]
+scene_path = "uid://d0sdg4uow1xul"
+
+[node name="renderer" parent="y_order/doors/world_shield" index="4"]
 texture = ExtResource("25_feke8")
 
 [node name="world_neon" parent="y_order/doors" instance=ExtResource("12_ftke6")]
 position = Vector2(336, 160)
+secret = null
 
-[node name="renderer" parent="y_order/doors/world_neon" index="3"]
+[node name="spawn_point" parent="y_order/doors/world_neon" index="2"]
+scene_path = "uid://0qgtp6ou1opf"
+
+[node name="renderer" parent="y_order/doors/world_neon" index="4"]
 texture = ExtResource("25_jy84i")
 hframes = 3
+frame = 2
 script = ExtResource("26_feke8")
 autoplay = true
 loop = true
 fps = 5.0
 frame_dimensions = Vector2i(17, 30)
 frame_h_count = 3
+progress = 2
 
 [editable path="camera"]
+[editable path="y_order/doors/apartment"]
 [editable path="y_order/doors/world_block"]
 [editable path="y_order/doors/world_eyeball"]
 [editable path="y_order/doors/world_forest"]

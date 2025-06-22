@@ -7,6 +7,9 @@ var fsm: FSM
 signal entered
 signal exited
 
+func _setup() -> void:
+	pass
+	
 func _init() -> void:
 	set_process(false)
 	set_physics_process(false)

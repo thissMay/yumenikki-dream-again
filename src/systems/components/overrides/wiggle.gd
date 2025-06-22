@@ -41,10 +41,7 @@ func _on_bypass_enabled() -> void:
 	receiver.affector.position = get_origin_pos()
 	receiver.affector.rotation_degrees = get_origin_rot()
 	
-func setup() -> void:
-	#if !Engine.is_editor_hint(): execute_visual = true
-	super()
-
+func _setup() -> void:
 	pos_init_x = receiver.affector.position.x
 	pos_init_y = receiver.affector.position.y
 	origin_rot = receiver.affector.rotation_degrees

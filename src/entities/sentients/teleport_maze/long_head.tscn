@@ -1,0 +1,130 @@
+[gd_scene load_steps=19 format=3 uid="uid://cnq4rqusaasbs"]
+
+[ext_resource type="Script" uid="uid://jbydpt773v5a" path="res://src/entities/hostile/nav_entity.gd" id="1_rsk7p"]
+[ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="2_p7ej7"]
+[ext_resource type="Texture2D" uid="uid://vwqbebihtfkc" path="res://src/entities/sentients/teleport_maze/long_head.png" id="3_xs8sg"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="4_iv4aa"]
+[ext_resource type="Script" uid="uid://dd0qxrsakskma" path="res://src/entities/component/sb_component_receiver.gd" id="5_1only"]
+[ext_resource type="Script" uid="uid://dyhtvuyxwohdq" path="res://src/entities/component/sb_sprite_handler.gd" id="6_gigan"]
+[ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/entities/sentient_fsm.gd" id="7_3xmpn"]
+[ext_resource type="Script" uid="uid://bhmqr5byqpscr" path="res://src/entities/hostile/stance_states/idle.gd" id="8_2b23e"]
+[ext_resource type="Script" uid="uid://bk8x1gghf4e05" path="res://src/entities/hostile/stance_states/walk.gd" id="9_s7tbw"]
+[ext_resource type="Script" uid="uid://qdqcvtymsa3v" path="res://src/entities/sentient_state.gd" id="10_l8gfd"]
+[ext_resource type="Script" uid="uid://rbvkxb3m2omw" path="res://src/entities/hostile/behaviour_states/idle.gd" id="11_tilrv"]
+[ext_resource type="Script" uid="uid://bj1oqttajdq2m" path="res://src/entities/hostile/behaviour_states/wander.gd" id="12_qox5w"]
+[ext_resource type="Script" uid="uid://clwsghva612ul" path="res://src/entities/hostile/behaviour_states/observe.gd" id="13_d06i3"]
+[ext_resource type="Script" uid="uid://dbo5xans8s5ib" path="res://src/entities/hostile/behaviour_states/chase.gd" id="14_iwy20"]
+[ext_resource type="Script" uid="uid://cbg0uhsr4h72h" path="res://src/entities/hostile/behaviour_states/stare_at.gd" id="15_bxjdo"]
+[ext_resource type="Script" uid="uid://sahjehrg3n8o" path="res://src/entities/hostile/behaviour_states/follow.gd" id="16_4ol1j"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_18lqh"]
+blend_mode = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_18lqh"]
+size = Vector2(13, 4)
+
+[node name="long_head" type="CharacterBody2D" node_paths=PackedStringArray("nav_agent", "stance_fsm", "behaviour_fsm")]
+script = ExtResource("1_rsk7p")
+nav_agent = NodePath("nav")
+stance_fsm = NodePath("stance_fsm")
+behaviour_fsm = NodePath("behaviour_fsm")
+initial_speed = 34.3
+
+[node name="on_screen_enabler" type="VisibleOnScreenEnabler2D" parent="."]
+rect = Rect2(-50, -40, 100, 80)
+
+[node name="shadow_renderer" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_18lqh")
+position = Vector2(0, 16)
+texture = ExtResource("2_p7ej7")
+offset = Vector2(0, -24)
+
+[node name="sprite_renderer" type="Sprite2D" parent="."]
+texture = ExtResource("3_xs8sg")
+hframes = 4
+frame = 1
+script = ExtResource("4_iv4aa")
+autoplay = true
+loop = true
+fps = 5.0
+frame_dimensions = Vector2i(15, 32)
+frame_h_count = 4
+progress = 1
+metadata/_custom_type_script = "uid://cdjphp77kgyqr"
+
+[node name="sb_components" type="Node2D" parent="."]
+script = ExtResource("5_1only")
+metadata/_custom_type_script = "uid://dd0qxrsakskma"
+
+[node name="sprite_handler" type="Node" parent="sb_components"]
+script = ExtResource("6_gigan")
+metadata/_custom_type_script = "uid://bgisym1hdeqgt"
+
+[node name="coll" type="CollisionShape2D" parent="."]
+position = Vector2(0, 14)
+shape = SubResource("RectangleShape2D_18lqh")
+
+[node name="nav" type="NavigationAgent2D" parent="."]
+target_desired_distance = 25.0
+avoidance_enabled = true
+
+[node name="stance_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("7_3xmpn")
+initial_state = NodePath("IDLE")
+metadata/_custom_type_script = "uid://co5edhtkgx3g8"
+
+[node name="IDLE" type="Node" parent="stance_fsm"]
+script = ExtResource("8_2b23e")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="WALK" type="Node" parent="stance_fsm"]
+script = ExtResource("9_s7tbw")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="RUN" type="Node" parent="stance_fsm"]
+script = ExtResource("10_l8gfd")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="TAUNT" type="Node" parent="stance_fsm"]
+script = ExtResource("10_l8gfd")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="behaviour_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("7_3xmpn")
+initial_state = NodePath("IDLE")
+metadata/_custom_type_script = "uid://co5edhtkgx3g8"
+
+[node name="path_update" type="Timer" parent="behaviour_fsm"]
+
+[node name="IDLE" type="Node" parent="behaviour_fsm"]
+script = ExtResource("11_tilrv")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="WANDER" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "idle_timer")]
+script = ExtResource("12_qox5w")
+stance_fsm = NodePath("../../stance_fsm")
+idle_timer = NodePath("idle_timer")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="idle_timer" type="Timer" parent="behaviour_fsm/WANDER"]
+
+[node name="OBSERVE" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "hesitance_timer")]
+script = ExtResource("13_d06i3")
+stance_fsm = NodePath("../../stance_fsm")
+hesitance_timer = NodePath("hesitance_timer")
+metadata/_custom_type_script = "uid://sd3feymdmkd6"
+
+[node name="hesitance_timer" type="Timer" parent="behaviour_fsm/OBSERVE"]
+
+[node name="CHASE" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("stance_fsm")]
+script = ExtResource("14_iwy20")
+stance_fsm = NodePath("../../stance_fsm")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="STARE_AT" type="Node" parent="behaviour_fsm"]
+script = ExtResource("15_bxjdo")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"
+
+[node name="FOLLOW" type="Node" parent="behaviour_fsm"]
+script = ExtResource("16_4ol1j")
+metadata/_custom_type_script = "uid://qdqcvtymsa3v"

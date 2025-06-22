@@ -2,7 +2,7 @@ extends Sequence
 
 var interactable: Interactable
 
-func _ready() -> void:
+func _ready() -> void: 
 	order = get_children()
 	interactable = get_parent()
 	

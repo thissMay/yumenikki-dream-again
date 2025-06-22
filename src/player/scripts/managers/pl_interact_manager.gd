@@ -5,33 +5,51 @@ extends SBComponent
 @export var ray_direction: Vector2
 @export var ray_distance: float = 35
 
-var interaction_cooldown: float = 1
+signal interactable_found
+var found: bool = false
+
+const COOL_DOWN = 1.5
+var interaction_cooldown: float = COOL_DOWN
 var cooldown: bool = false
 var curr_interactable: Interactable
+var prompt_icon: Sprite2D
 
 var closest_interactable_threshold: float = 100
 var interactables: Array[Interactable] 
 
 func _ready() -> void:
-
+	prompt_icon = $prompt
 	field = $field
+	
 	field.collision_layer = 2
 	field.collision_mask = 2
 
 	interactables.resize(5)
 	field.area_entered.connect(interactable_entered)
 	field.area_exited.connect(interactable_exited)
-	#raycast.target_position = (ray_direction * ray_distance)
+	
+	interactable_found.connect(func():
+		
+		)
+	
 func _update(delta: float) -> void:
 	handle_field()
 	field.rotation = sentient.get_dir().angle()
-	#if raycast: raycast.target_position = (ray_direction.normalized() * ray_distance)
 	
 	if cooldown: 
 		interaction_cooldown -= delta
 		if interaction_cooldown <= 0: 
 			cooldown = false 
-			interaction_cooldown = 5
+			interaction_cooldown = COOL_DOWN
+			
+	if (curr_interactable != null and 
+		!found and !curr_interactable.secret)	: found = true
+	else										: found = false
+
+func input_pass(event: InputEvent) -> void:
+	super(event)
+	if Input.is_action_just_pressed("interact"): handle_interaction()
+
 	
 func handle_field() -> void: 
 
@@ -69,3 +87,10 @@ func interactable_entered(_inact: Area2D) -> void:
 			break
 func interactable_exited(_inact: Area2D) -> void: 
 	interactables[interactables.find(_inact)] = null
+
+# ----
+
+func show_prompt(_show: bool) -> void: 
+	match _show:
+		true: pass
+		false: pass

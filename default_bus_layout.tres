@@ -1,10 +1,10 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://df6h8uubbv2wx"]
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://dydalctdfye48"]
 
 [sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_j3pel"]
 resource_name = "Distortion"
 
 [resource]
-bus/0/volume_db = -5.04224
+bus/0/volume_db = -4.50411
 bus/1/name = &"Distorted"
 bus/1/solo = false
 bus/1/mute = false
@@ -29,5 +29,5 @@ bus/4/name = &"Effects"
 bus/4/solo = false
 bus/4/mute = false
 bus/4/bypass_fx = false
-bus/4/volume_db = -0.130497
+bus/4/volume_db = 0.0694828
 bus/4/send = &"Distorted"

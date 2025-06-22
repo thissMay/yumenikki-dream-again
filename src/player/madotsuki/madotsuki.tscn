@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_3hhoi"]
 [ext_resource type="Script" uid="uid://dtqoa37rhrqdu" path="res://src/player/scripts/components/pl_mental_status.gd" id="6_mbimu"]
 [ext_resource type="Script" uid="uid://dd0qxrsakskma" path="res://src/entities/component/sb_component_receiver.gd" id="7_ps2wd"]
-[ext_resource type="Script" uid="uid://cs0aicp13761u" path="res://src/player/scripts/managers/pl_input_manager.gd" id="7_wc1wu"]
 [ext_resource type="Script" uid="uid://dklkysmgxwdv2" path="res://src/entities/component/sb_animator.gd" id="8_cin7d"]
 [ext_resource type="Texture2D" uid="uid://v1tx4oh6hb3y" path="res://src/player/madotsuki/display/default/_RESET_match.png" id="8_mbimu"]
 [ext_resource type="AnimationLibrary" uid="uid://bm1cor2werd5w" path="res://src/player/madotsuki/animation_dicts/emote.tres" id="9_m68sj"]
@@ -17,6 +16,7 @@
 [ext_resource type="Script" uid="uid://dh7dintxcyffh" path="res://src/player/scripts/managers/pl_interact_manager.gd" id="11_bof2k"]
 [ext_resource type="AnimationLibrary" uid="uid://jmtvl5nfo2wn" path="res://src/player/madotsuki/animation_dicts/reset.tres" id="11_wc1wu"]
 [ext_resource type="Script" uid="uid://dyhtvuyxwohdq" path="res://src/entities/component/sb_sprite_handler.gd" id="13_p5dbe"]
+[ext_resource type="Texture2D" uid="uid://cgt6yqo0ynnak" path="res://src/player/scripts/behaviour/interaction_prompt.png" id="17_cin7d"]
 [ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/entities/sentient_fsm.gd" id="18_rujao"]
 [ext_resource type="Script" uid="uid://co5edhtkgx3g8" path="res://src/systems/behaviour/fsm.gd" id="19_hy2th"]
 [ext_resource type="Script" uid="uid://bcy41p4huaij7" path="res://src/player/states/yn style/stamina/normal.gd" id="20_fr82v"]
@@ -100,9 +100,6 @@ script = ExtResource("7_ps2wd")
 [node name="mental_status" type="Node" parent="sb_components"]
 script = ExtResource("6_mbimu")
 
-[node name="input_manager" type="Node" parent="sb_components"]
-script = ExtResource("7_wc1wu")
-
 [node name="animation_manager" type="Node" parent="sb_components"]
 script = ExtResource("8_cin7d")
 
@@ -158,6 +155,13 @@ collision_mask = 2
 [node name="shape" type="CollisionShape2D" parent="sb_components/interaction_manager/field"]
 position = Vector2(17, -7.43094e-07)
 shape = SubResource("CapsuleShape2D_riukl")
+
+[node name="prompt" type="Sprite2D" parent="sb_components/interaction_manager"]
+visible = false
+top_level = true
+position = Vector2(0, -24)
+texture = ExtResource("17_cin7d")
+offset = Vector2(0, -36)
 
 [node name="fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("18_rujao")
@@ -227,6 +231,11 @@ collision_mask = 2147483648
 
 [node name="_" type="CollisionShape2D" parent="world_warp"]
 shape = SubResource("RectangleShape2D_r8oc4")
+
+[node name="nav_avoidance" type="NavigationObstacle2D" parent="."]
+radius = 25.0
+affect_navigation_mesh = true
+avoidance_layers = 8
 
 [node name="sound_player" type="AudioStreamPlayer" parent="."]
 bus = &"Effects"

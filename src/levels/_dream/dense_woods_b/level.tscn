@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://dhb4h12jpspjg"]
+[gd_scene load_steps=23 format=4 uid="uid://dhb4h12jpspjg"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_wjh5h"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_6hpsn"]
@@ -15,7 +15,9 @@
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="9_xynxk"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="10_wuq7m"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tilemaps/_common_objs.tres" id="11_c3ibc"]
+[ext_resource type="PackedScene" uid="uid://umbl6vr4s630" path="res://src/entities/sentients/red_jellyfish/red_jellyfish.tscn" id="12_bsddk"]
 [ext_resource type="Script" uid="uid://bbh7tjv0f6kad" path="res://src/systems/interaction/door_scenes.gd" id="13_ar0bk"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/spawn_point.gd" id="13_c7s3o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pemjj"]
 
@@ -75,7 +77,6 @@ down_disabled = true
 y_sort_enabled = true
 
 [node name="interactable" type="Area2D" parent="dense_woods_b"]
-process_mode = 3
 position = Vector2(344, 26)
 script = ExtResource("8_iii1a")
 area = true
@@ -88,15 +89,26 @@ process_mode = 4
 script = ExtResource("9_xynxk")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="go_to_mall" type="Node" parent="dense_woods_b/interactable/on_interact" node_paths=PackedStringArray("interactable")]
+[node name="go_to_mall" type="Node" parent="dense_woods_b/interactable/on_interact"]
 script = ExtResource("10_wuq7m")
-connection_id = "manhole"
-scene_path = "uid://bbrdx4chh535q"
-interactable = NodePath("../..")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="Madotsuki" parent="dense_woods_b" instance=ExtResource("2_i7lt2")]
 position = Vector2(384, 28)
+
+[node name="red_jellyfish" parent="dense_woods_b" instance=ExtResource("12_bsddk")]
+position = Vector2(1392, 280)
+
+[node name="spawn_point" type="Node2D" parent="dense_woods_b/red_jellyfish/interactable" index="0"]
+script = ExtResource("13_c7s3o")
+scene_path = "uid://dnuf6dan0x8o"
+connection_id = "jellyfish"
+metadata/_custom_type_script = "uid://ofyfa3d6ql28"
+
+[node name="travel_to_scene" type="Node" parent="dense_woods_b/red_jellyfish/interactable/on_interact" index="2" node_paths=PackedStringArray("spawn_point")]
+script = ExtResource("10_wuq7m")
+spawn_point = NodePath("../../spawn_point")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="grass" type="TileMapLayer" parent="dense_woods_b"]
 z_index = -2
@@ -161,3 +173,4 @@ metadata/_custom_type_script = "uid://bbh7tjv0f6kad"
 shape = SubResource("RectangleShape2D_ibb01")
 
 [editable path="camera"]
+[editable path="dense_woods_b/red_jellyfish"]

@@ -57,10 +57,8 @@ class SentientEntity:
 		assert(is_instance_of(self, SentientBase), "Error: SentientEntity must be a derivative of SentientBase!")
 	func _process(delta: float) -> void:
 		handle_decelleration()
-		
-		is_moving = (self as SentientBase).abs_velocity != Vector2.ZERO
-		(self as SentientBase).move_and_slide()
-		
+		is_moving = (self as SentientBase).abs_velocity != Vector2.ZERO	
+	
 		# --- apply forces on rigid bodies.
 		#for i in range((self as SentientBase).get_slide_collision_count()):
 			#var c = (self as SentientBase).get_slide_collision(i)

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://by08lkihfhbib"]
+
+[ext_resource type="PackedScene" uid="uid://qvbki1ipp72p" path="res://src/entities/sentients/template_sentient.tscn" id="1_8y8qt"]
+[ext_resource type="Texture2D" uid="uid://cr6xkkoy6mtbu" path="res://src/entities/sentients/neon/radio_head.png" id="2_8y8qt"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="3_hlcyi"]
+
+[node name="radio_head" instance=ExtResource("1_8y8qt")]
+
+[node name="sprite_renderer" parent="." index="3"]
+texture = ExtResource("2_8y8qt")
+hframes = 4
+script = ExtResource("3_hlcyi")
+autoplay = true
+loop = true
+reverse = false
+end_frame = false
+fps = 5.0
+frame_dimensions = Vector2i(23, 32)
+frame_h_count = 4
+
+[node name="behaviour_fsm" parent="." index="9" node_paths=PackedStringArray("initial_state")]
+initial_state = NodePath("WANDER")

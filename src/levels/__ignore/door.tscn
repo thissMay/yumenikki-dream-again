@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://crej0xx7uj05p"]
+[gd_scene load_steps=12 format=3 uid="uid://crej0xx7uj05p"]
 
 [ext_resource type="Texture2D" uid="uid://cyr3omgnv06ig" path="res://src/levels/__ignore/doors/door_apartment.png" id="1_2hf7w"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_cv7t1"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/spawn_point.gd" id="2_45h0u"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="2_lea3f"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="4_who8r"]
 [ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="5_67jxd"]
@@ -17,10 +18,16 @@ blend_mode = 2
 size = Vector2(16, 8)
 
 [node name="door_interactable" type="Area2D"]
+y_sort_enabled = true
 script = ExtResource("1_cv7t1")
 shape = SubResource("RectangleShape2D_76or2")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
+
+[node name="spawn_point" type="Node2D" parent="."]
+script = ExtResource("2_45h0u")
+spawn_point = Vector2(0, 25)
+metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="on_interact" type="Node" parent="."]
 script = ExtResource("2_lea3f")
@@ -32,8 +39,9 @@ sound = ExtResource("5_67jxd")
 pitch = 0.8
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="travel_to_scene" type="Node" parent="on_interact"]
+[node name="travel_to_scene" type="Node" parent="on_interact" node_paths=PackedStringArray("spawn_point")]
 script = ExtResource("5_76or2")
+spawn_point = NodePath("../../spawn_point")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="renderer" type="Sprite2D" parent="."]

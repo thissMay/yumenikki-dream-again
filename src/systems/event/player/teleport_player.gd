@@ -28,7 +28,7 @@ func _process(delta: float) -> void:
 
 func _execute() -> void:
 	if target != null:
-		PLInstance.teleport_player(target.global_position, dir)
-		if as_sibling: PLInstance.get_pl().reparent(target.get_parent().get_parent())
-		else: PLInstance.get_pl().reparent(target.get_parent())
+		Player.Instance.teleport_player(target.global_position, dir)
+		if as_sibling: Player.Instance.get_pl().reparent(target.get_parent().get_parent())
+		else: Player.Instance.get_pl().reparent(target.get_parent())
 		

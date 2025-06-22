@@ -35,21 +35,3 @@ func calculate_bpm() -> float:
 		MIN_BPM)
 	
 	return (clampf(eqn, MIN_BPM, MAX_BPM))
-
-# ---- sanity and adrenaline ----
-func set_adrenaline(_ad: float) -> void: 
-	PLInstance.adrenaline = clamp(_ad, 0 , MAX_ADRENA)
-	GameManager.EventManager.invoke_event("PLAYER_ADRENALINE_CHANGE", [_ad])
-func set_sanity(_sn: float) -> void: 
-	PLInstance.sanity = clamp(_sn, 0, MAX_SANITY)
-	GameManager.EventManager.invoke_event("PLAYER_SANITY_CHANGE", [_sn])
-	if get_sanity() > MIN_SANE_THRESHOLD: GameManager.EventManager.invoke_event("PLAYER_SANITY_SANE_STATE")
-	elif get_sanity() < MIN_INSANE_THRESHOLD: GameManager.EventManager.invoke_event("PLAYER_SANITY_INSANE_STATE")
-
-func change_adrenaline(_ad: float) -> void:
-	set_adrenaline(_ad + get_adrenaline())
-func change_sanity(_sn: float) -> void:
-	set_sanity(_sn + get_sanity())
-
-func get_adrenaline() -> float: return PLInstance.adrenaline
-func get_sanity() -> float: return PLInstance.sanity

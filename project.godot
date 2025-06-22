@@ -40,7 +40,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/autoload_setup/plugin.cfg", "res://addons/canvas_layer_preset/plugin.cfg", "res://addons/miscallenous/plugin.cfg")
+enabled=PackedStringArray("res://addons/autoload_setup/plugin.cfg", "res://addons/canvas_layer_preset/plugin.cfg", "res://addons/miscallenous/plugin.cfg", "res://addons/rect_resize/plugin.cfg")
 
 [file_customization]
 
@@ -68,6 +68,10 @@ folder_colors={
 2d_physics/layer_5="Presence"
 2d_physics/layer_6="Damage"
 2d_physics/layer_32="Warp Effectors"
+avoidance/layer_1="All"
+avoidance/layer_2="Wanderers"
+avoidance/layer_3="Chasers"
+avoidance/layer_4="Player"
 
 [physics]
 

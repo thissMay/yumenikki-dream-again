@@ -5,9 +5,11 @@ extends VisibleOnScreenNotifier2D
 
 var node: Node
 var visible_prior: bool = true
+var on_screen: bool:
+	get: return is_on_screen()
 
 func _ready() -> void:	
-	node = get_parent() 
+	node = get_child(0)
 	if node is CanvasItem: visible_prior = node.visible 
 
 	screen_entered.connect(_on_screen_enter)

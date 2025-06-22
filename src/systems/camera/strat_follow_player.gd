@@ -9,7 +9,7 @@ var look_ahead: Vector2
 var MAX_LOOK_AHEAD_PIXELS := Vector2(10, 10)
 
 func _setup(_cam: CameraHolder) -> void:
-	player = PLInstance.get_pl()
+	player = Player.Instance.get_pl()
 func _follow(_cam: CameraHolder, origin: Vector2, point: Vector2) -> void:
 	look_ahead = look_ahead.lerp(
 		(player.get_marker_direction() * look_ahead_distance).clamp(-MAX_LOOK_AHEAD_PIXELS, MAX_LOOK_AHEAD_PIXELS), 

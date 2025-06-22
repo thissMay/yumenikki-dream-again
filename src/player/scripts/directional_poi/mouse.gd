@@ -11,5 +11,5 @@ func _physics_update(_delta: float, _context: Variant = null) -> void:
 			
 	registered_vector = actual_mouse_pos.round()
 	
-	if PLInstance.get_pl():
+	if Player.Instance.get_pl():
 		_context.position = registered_vector

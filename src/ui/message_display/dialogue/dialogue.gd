@@ -8,7 +8,7 @@ func _additional() -> void:
 		next_button = GUIPanelButton.new()
 		next_button.text = "Next."
 		next_button.button.pressed.connect(
-			func(): GameManager.message_display_manager.proceed_current_message_display())
+			func(): MessageDisplayManager.instance.proceed_current_message_display())
 		buttons_container.add_child(next_button)
 
 func close() -> void: 

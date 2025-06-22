@@ -4,6 +4,12 @@ class_name SeamlessDetector
 extends Node2D
 
 var loop_count: int
+var sentients_to_be_looped := {
+	bound_side.UP : [],
+	bound_side.DOWN : [],
+	bound_side.RIGHT : [],
+	bound_side.LEFT : [],
+}
 
 const screen_size := Vector2i(480, 270)
 @export var tile_size: Vector2i = Vector2i(16, 16)
@@ -162,34 +168,48 @@ func player_entered_setup() -> void:
 	down.area_entered.connect(func(_p): player_hit_border(_p, bound_side.DOWN))
 	right.area_entered.connect(func(_p): player_hit_border(_p, bound_side.RIGHT))
 	left.area_entered.connect(func(_p): player_hit_border(_p, bound_side.LEFT))	
-func player_hit_border(_player: Area2D, _bound_side: bound_side) -> void: 
-	if is_instance_valid(_player) and PLInstance.get_pl() != null:
-		if _player == PLInstance.get_pl().world_warp:
-			GameManager.EventManager.invoke_event("WORLD_LOOP")
-			loop_count += 1
-			
-			match _bound_side:
-				bound_side.UP: _handle_player_warp_up(_player)
-				bound_side.DOWN: _handle_player_warp_down(_player)
-				bound_side.RIGHT: _handle_player_warp_right(_player)
-				bound_side.LEFT: _handle_player_warp_left(_player)
+	
+	up.body_entered.connect(func(_body: Node2D): handle_sentient_enter(_body, bound_side.UP))
+	down.body_entered.connect(func(_body: Node2D): handle_sentient_enter(_body, bound_side.DOWN))
+	right.body_entered.connect(func(_body: Node2D): handle_sentient_enter(_body, bound_side.RIGHT))
+	left.body_entered.connect(func(_body: Node2D): handle_sentient_enter(_body, bound_side.LEFT))
 
-func _handle_player_warp_left(_pl: Area2D) -> void: 
-	PLInstance.handle_player_world_warp(
-		Vector2(right.global_position.x - (tile_size.x * 3/2), _pl.global_position.y), 
-		PLInstance.get_pl().direction)
-func _handle_player_warp_right(_pl: Area2D) -> void: 
-	PLInstance.handle_player_world_warp(
-		Vector2(left.global_position.x + (tile_size.x * 3/2), _pl.global_position.y), 
-		PLInstance.get_pl().direction)
-func _handle_player_warp_up(_pl: Area2D) -> void: 
-	PLInstance.handle_player_world_warp(
-		Vector2(_pl.global_position.x, down.global_position.y + (tile_size.y * 3/2)), 
-		PLInstance.get_pl().direction)
-func _handle_player_warp_down(_pl: Area2D) -> void: 
-	PLInstance.handle_player_world_warp(
-		Vector2(_pl.global_position.x, up.global_position.y - (tile_size.y * 3/2)), 
-		PLInstance.get_pl().direction)
+	up.body_exited.connect(func(_body: Node2D): handle_sentient_exit(_body, bound_side.UP))
+	down.body_exited.connect(func(_body: Node2D): handle_sentient_exit(_body, bound_side.DOWN))
+	right.body_exited.connect(func(_body: Node2D): handle_sentient_exit(_body, bound_side.RIGHT))
+	left.body_exited.connect(func(_body: Node2D): handle_sentient_exit(_body, bound_side.LEFT))
+	
+		
+	
+func player_hit_border(_pl: Area2D, _bound_side: bound_side) -> void: 
+	if is_instance_valid(_pl) and Player.Instance.get_pl() != null:
+		if _pl == Player.Instance.get_pl().world_warp:
+
+			loop_count += 1
+			_handle_player_warp(_pl, _bound_side)
+
+
+func _handle_player_warp(_pl: Area2D, _side: bound_side) -> Vector2: 
+	var warp_vectors := {
+		bound_side.UP: Vector2(_pl.global_position.x, down.global_position.y + (tile_size.y * 3/2)),
+		bound_side.DOWN: Vector2(_pl.global_position.x, up.global_position.y - (tile_size.y * 3/2)),
+		bound_side.RIGHT: Vector2(left.global_position.x + (tile_size.x * 3/2), _pl.global_position.y),
+		bound_side.LEFT: Vector2(right.global_position.x - (tile_size.x * 3/2), _pl.global_position.y)
+	}
+	
+	var warp_vector: Vector2 = warp_vectors[_side]
+	Player.Instance.handle_player_world_warp(warp_vector,  Player.Instance.get_pl().direction)
+	GameManager.EventManager.invoke_event("WORLD_LOOP", [warp_vector])
+	return warp_vector
+
+func handle_sentient_enter(_wanderer: SentientBase, _side: bound_side) -> void:
+	if _wanderer is NavSentient:
+		sentients_to_be_looped[_side].append(_wanderer)
+func handle_sentient_exit(_wanderer: SentientBase, _side: bound_side) -> void:
+	if _wanderer is NavSentient:
+		print(sentients_to_be_looped[_side])
+		if _wanderer in sentients_to_be_looped[_side]: 
+			(sentients_to_be_looped[_side] as Array).remove_at((sentients_to_be_looped[_side] as Array).find(_wanderer))
 
 func set_bound_active(_bound: bound_side, _active: bool = true) -> void:
 	match _bound:

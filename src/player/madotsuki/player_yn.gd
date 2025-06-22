@@ -5,14 +5,12 @@ var audio_listener: AudioListener2D
 var sound_player: AudioStreamPlayer
 
 var footstep_manager: Node
-var input_manager: PLInput
 
 @onready var DEFAULT_EFFECT: PLEffect = load("res://src/player/madotsuki/effects/_none/_default.tres")
 
-var behaviour: PLBehaviour
+@onready var behaviour: PLBehaviour = load("res://src/player/madotsuki/effects/_none/_behaviour.tres")
 
 # ----> trait components
-var world_warp: Area2D
 
 var marker_look_at: Strategist
 var stamina_fsm: FSM
@@ -22,30 +20,25 @@ var mental_status: SBComponent
 var sprite_sheet: SerializableDict = preload("res://src/player/madotsuki/sprite_sheets/no_effect.tres")
 var action: PLAction 
 
-func _ready() -> void:
-	await super()
-	await Game.main_tree.physics_frame
-	equip(DEFAULT_EFFECT as PLEffect)
-		
+func _ready() -> void: super()
+
 func dependency_components() -> void:	
-	marker_look_at._setup()			# --- fsm; not player dependency but required
-	stamina_fsm._setup() 	# --- fsm; not player dependency but required
-	fsm._setup(self)			# --- fsm; not player dependency but required
-	
-	input_manager = components.get_component_by_name("input_manager")  
-	if components.get_component_by_name("health"):
-		components.get_component_by_name("health").took_damage.connect( 
-			func(_dmg: float):
-				GameManager.EventManager.invoke_event("PLAYER_HURT", [_dmg]))
-func mandatory_components() -> void:
 	audio_listener = $audio_listener
 	sound_player = $sound_player
 	
-	world_warp = $world_warp	
 	marker_look_at = $look_at
 	
 	fsm = $fsm
 	stamina_fsm = $fsm/stamina_fsm
+func dependency_setup() -> void:
+	marker_look_at._setup()			# --- fsm; not player dependency but required
+	stamina_fsm._setup() 	# --- fsm; not player dependency but required
+	fsm._setup(self)			# --- fsm; not player dependency but required
+	
+	if components.get_component_by_name("health"):
+		components.get_component_by_name("health").took_damage.connect( 
+			func(_dmg: float):
+				GameManager.EventManager.invoke_event("PLAYER_HURT", [_dmg]))
 
 # ---- direction handling ----
 func get_marker_direction() -> Vector2: return marker_look_at.position
@@ -63,26 +56,16 @@ func _physics_process(_delta: float) -> void:
 	stamina_fsm._physics_update(_delta)
 	if behaviour: behaviour._physics_update(self, _delta)
 	if fsm: fsm._physics_update(_delta)
-
 func _unhandled_input(event: InputEvent) -> void:
 	dependency_input(event)
 			
 	if event is InputEventKey && Global.input:
 		if fsm: fsm._input_pass(event)
 	
-		if (Global.input["key_pressed"] == KEY_SPACE and
-			Global.input["held_down"]):
-				perform_action(components.get_component_by_name("action_manager").primary_action)
-		
-		#if (Global.input["key_pressed"] == KEY_E &&
-			#Global.input["pressed_once"]) and components.get_component_by_name("interaction_manager"): 
-				#get_behaviour()._interact(self, components.get_component_by_name("interaction_manager").curr_interactable)
-
 func dependency_input(event: InputEvent) -> void:
 	if event is InputEventKey && Global.input:
 		if components != null: 
 			components._input_pass(event)
-
 #endregion
 
 #region EMOTES, UNIQUE, BEHAVIOUR
@@ -94,8 +77,7 @@ func cancel_action(_action: PLAction = action) -> void:
 
 func equip(_effect: PLEffect, _skip_anim: bool = false) -> void: 
 	components.get_component_by_name("equip_manager").equip(_effect, self, _skip_anim)
-	PLInstance.equipment_pending = _effect
-
+	Player.Instance.equipment_pending = _effect
 func deequip_effect(_skip_anim: bool = false) -> void: 
 	components.get_component_by_name("equip_manager").deequip(self, _skip_anim)
 	set_sprite_sheet(load(DEFAULT_EFFECT.sprite_override))
@@ -103,7 +85,9 @@ func deequip_effect(_skip_anim: bool = false) -> void:
 func set_behaviour(_beh: PLBehaviour) -> void:
 	behaviour = _beh
 func revert_def_behaviour() -> void: behaviour = DEFAULT_EFFECT.behaviour
-func get_behaviour() -> PLBehaviour: return behaviour
+func get_behaviour() -> PLBehaviour: 
+	if behaviour == null: return DEFAULT_EFFECT.behaviour
+	return behaviour
 #endregion
 
 #region STATES and ANIMATIONS

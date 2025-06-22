@@ -1,0 +1,105 @@
+[gd_scene load_steps=17 format=3 uid="uid://3rcijpl4bfm4"]
+
+[ext_resource type="PackedScene" uid="uid://qvbki1ipp72p" path="res://src/entities/sentients/template_sentient.tscn" id="1_orc3b"]
+[ext_resource type="Texture2D" uid="uid://omtelqffkiig" path="res://src/entities/sentients/barracks/walk.png" id="2_orc3b"]
+[ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="6_cj8vh"]
+[ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="7_44spc"]
+[ext_resource type="Script" uid="uid://b625qa76yabvd" path="res://src/systems/event/sprite/play_animation.gd" id="8_8dv4b"]
+[ext_resource type="Script" uid="uid://dklkysmgxwdv2" path="res://src/entities/component/sb_animator.gd" id="9_4v8pq"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="9_u4v1j"]
+[ext_resource type="AnimationLibrary" uid="uid://br0km4uq5dly" path="res://src/entities/sentients/animation_libs/pirori.tres" id="10_4v8pq"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="10_lpcqq"]
+[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="11_scd0i"]
+[ext_resource type="AudioStream" uid="uid://b5hchrfj5m2th" path="res://src/audio/se/voice_anoh-3.wav" id="12_w3fjo"]
+[ext_resource type="Script" uid="uid://crifn6lgacpv6" path="res://src/systems/sequence/game/on_state.gd" id="13_4v8pq"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m2dek"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jg6uj"]
+blend_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u4v1j"]
+size = Vector2(6, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_47kmh"]
+
+[node name="pirori" instance=ExtResource("1_orc3b")]
+
+[node name="sprite_renderer" parent="." index="3"]
+position = Vector2(0, -8)
+texture = ExtResource("2_orc3b")
+hframes = 8
+frame = 3
+frame_dimensions = Vector2i(48, 48)
+frame_h_count = 8
+progress = 3
+
+[node name="animation_manager" type="Node" parent="sb_components" index="1"]
+script = ExtResource("9_4v8pq")
+metadata/_custom_type_script = "uid://dklkysmgxwdv2"
+
+[node name="animation_player" type="AnimationPlayer" parent="sb_components/animation_manager" index="0"]
+libraries = {
+&"": SubResource("AnimationLibrary_m2dek"),
+&"pirori": ExtResource("10_4v8pq")
+}
+
+[node name="footstep_manager" type="Node2D" parent="sb_components" index="2"]
+material = SubResource("CanvasItemMaterial_jg6uj")
+script = ExtResource("6_cj8vh")
+
+[node name="sound_player" type="AudioStreamPlayer2D" parent="sb_components/footstep_manager" index="0"]
+max_distance = 750.0
+bus = &"Effects"
+script = ExtResource("7_44spc")
+metadata/_custom_type_script = "uid://b8o626ec7226k"
+
+[node name="terrain_detector" type="Area2D" parent="sb_components/footstep_manager" index="1"]
+collision_layer = 8
+collision_mask = 9
+
+[node name="col" type="CollisionShape2D" parent="sb_components/footstep_manager/terrain_detector" index="0"]
+position = Vector2(0, 13.5)
+shape = SubResource("RectangleShape2D_u4v1j")
+debug_color = Color(0.845999, 0.0997133, 0.874914, 0.42)
+
+[node name="on_state_changed" type="Node" parent="stance_fsm/IDLE" index="0"]
+script = ExtResource("13_4v8pq")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="play_animation" type="Node" parent="stance_fsm/IDLE/on_state_changed" index="0" node_paths=PackedStringArray("animator")]
+script = ExtResource("8_8dv4b")
+animator = NodePath("../../../../sb_components/animation_manager")
+animation_path = "pirori/idle"
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="on_state_changed" type="Node" parent="stance_fsm/WALK" index="0"]
+script = ExtResource("13_4v8pq")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="play_animation" type="Node" parent="stance_fsm/WALK/on_state_changed" index="0" node_paths=PackedStringArray("animator")]
+script = ExtResource("8_8dv4b")
+animator = NodePath("../../../../sb_components/animation_manager")
+animation_path = "pirori/walk"
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="behaviour_fsm" parent="." index="9" node_paths=PackedStringArray("initial_state")]
+initial_state = NodePath("WANDER")
+
+[node name="WANDER" parent="behaviour_fsm" index="2"]
+wander_radius = 35.0
+
+[node name="interactable" type="Area2D" parent="." index="11"]
+script = ExtResource("9_u4v1j")
+shape = SubResource("RectangleShape2D_47kmh")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
+metadata/_custom_type_script = "uid://bxh774473av7t"
+
+[node name="Sequence" type="Node" parent="interactable" index="2"]
+script = ExtResource("10_lpcqq")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="PlaySound" type="Node" parent="interactable/Sequence" index="0"]
+script = ExtResource("11_scd0i")
+sound = ExtResource("12_w3fjo")
+metadata/_custom_type_script = "uid://vk574kc3l7av"

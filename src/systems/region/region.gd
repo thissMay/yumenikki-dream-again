@@ -71,13 +71,16 @@ func _handle_player_enter() -> void: pass
 func _handle_player_exit() -> void: pass
 
 func handle_player_enter(_pl: Area2D) -> void: 
-	if _pl == PLInstance.get_pl().world_warp:
+	if _pl == Player.Instance.get_pl().world_warp:
 		_handle_player_enter()
-		player_enter_handle.emit(PLInstance.get_pl() if PLInstance.get_pl() != null else null)
+		player_enter_handle.emit(Player.Instance.get_pl() if Player.Instance.get_pl() != null else null)
 func handle_player_exit(_pl: Area2D) -> void: 
-	if _pl == PLInstance.get_pl().world_warp:
+	if _pl == Player.Instance.get_pl().world_warp:
 		_handle_player_exit()
-		player_exit_handle.emit(PLInstance.get_pl() if PLInstance.get_pl() != null else null)
+		player_exit_handle.emit(Player.Instance.get_pl() if Player.Instance.get_pl() != null else null)
+
+func handle_player_body_enter() -> void: pass
+func handle_player_body_exit() -> void: pass
 
 func handle_shape_size(_size: Vector2) -> void: 
 	if shape is	RectangleShape2D: (shape as RectangleShape2D).size = _size

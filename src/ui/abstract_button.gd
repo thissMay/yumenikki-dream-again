@@ -37,6 +37,7 @@ func _ready() -> void:
 	self.mouse_filter = Control.MOUSE_FILTER_PASS
 	set_button_toggle_mode(is_togglable)
 	button.size = self.size
+	button.focus_mode = Control.FOCUS_NONE
 	
 	button.pressed.connect(func(): pressed.emit())
 	button.mouse_entered.connect(_on_hover)

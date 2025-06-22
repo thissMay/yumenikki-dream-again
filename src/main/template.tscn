@@ -1,8 +1,9 @@
-[gd_scene load_steps=33 format=3 uid="uid://ra24ysq2f70c"]
+[gd_scene load_steps=38 format=3 uid="uid://ra24ysq2f70c"]
 
 [ext_resource type="Script" uid="uid://b2yjestmw6ux7" path="res://src/game/game_manager.gd" id="1_1weyd"]
 [ext_resource type="Environment" uid="uid://be4tedt15qnrp" path="res://src/main/environment_2d.tres" id="2_nfr70"]
 [ext_resource type="Script" uid="uid://bot0qrhchjod5" path="res://src/systems/game/time/time_manager.gd" id="2_yhp8d"]
+[ext_resource type="Script" uid="uid://cs0aicp13761u" path="res://src/systems/input/input_manager.gd" id="3_xyhoc"]
 [ext_resource type="Script" uid="uid://b28e410lfdesx" path="res://src/player/instance/pl_effect_player.gd" id="4_th8l7"]
 [ext_resource type="AudioStream" uid="uid://xxugef5ihpej" path="res://src/audio/se/effect_equip.WAV" id="5_arbwm"]
 [ext_resource type="Shader" uid="uid://dhvgpadvrk0e2" path="res://src/shaders/screen_overlay/vignette_blur.gdshader" id="5_n1fgk"]
@@ -10,6 +11,7 @@
 [ext_resource type="Script" uid="uid://ctbtfitoggtku" path="res://src/systems/components/component_receiver.gd" id="6_arbwm"]
 [ext_resource type="Script" uid="uid://6jmuo8r04t1" path="res://src/systems/behaviour/strat_fsm_hyb.gd" id="6_n5e32"]
 [ext_resource type="AudioStream" uid="uid://b5ua6uth0mp44" path="res://src/audio/se/effect_unequip.WAV" id="6_th8l7"]
+[ext_resource type="Script" uid="uid://co5edhtkgx3g8" path="res://src/systems/behaviour/fsm.gd" id="7_5wqcs"]
 [ext_resource type="Script" uid="uid://bkcfhq2u2bvbg" path="res://src/game/states/pregame.gd" id="7_pptqv"]
 [ext_resource type="Texture2D" uid="uid://daueebm63ch62" path="res://src/player/madotsuki/effects/effect_anim_petal_white.png" id="7_r0d38"]
 [ext_resource type="Script" uid="uid://drsdf6evorx0v" path="res://src/game/states/active.gd" id="8_j3xcn"]
@@ -28,6 +30,16 @@
 [ext_resource type="Script" uid="uid://bv8x8ui1ialx" path="res://src/systems/game/dream/real_state.gd" id="16_jhnr1"]
 [ext_resource type="Texture2D" uid="uid://co64pugf2as81" path="res://src/shaders/ui/cinematic_bars_grad.tres" id="16_v4uq4"]
 [ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="20_xyhoc"]
+[ext_resource type="Script" uid="uid://b5ml1807efr4t" path="res://src/game/states/sub_play.gd" id="22_xkyxq"]
+[ext_resource type="Script" uid="uid://bss18y7yx0sjl" path="res://src/game/states/cutscene.gd" id="23_5wqcs"]
+[ext_resource type="Script" uid="uid://cwji4a822mehj" path="res://src/ui/message_display/message_display_manager.gd" id="27_jhnr1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_73454"]
+shader = ExtResource("5_n1fgk")
+shader_parameter/blur_radius = 0.7
+shader_parameter/blur_amount = 0.0
+shader_parameter/blur_inner = 0.6
+shader_parameter/blur_outer = 0.75
 
 [sub_resource type="Animation" id="Animation_arbwm"]
 resource_name = "effect_deequip"
@@ -363,19 +375,15 @@ _data = {
 &"effect_equip": SubResource("Animation_ylvyo")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_73454"]
-shader = ExtResource("5_n1fgk")
-shader_parameter/blur_radius = 0.7
-shader_parameter/blur_amount = 0.0
-shader_parameter/blur_inner = 0.6
-shader_parameter/blur_outer = 0.75
-
 [node name="game_manager" type="Node"]
 process_mode = 3
 script = ExtResource("1_1weyd")
 
 [node name="global_screen_effect" type="WorldEnvironment" parent="."]
 environment = ExtResource("2_nfr70")
+
+[node name="input" type="Node" parent="."]
+script = ExtResource("3_xyhoc")
 
 [node name="fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("6_n5e32")
@@ -384,14 +392,45 @@ initial_state = NodePath("PREGAME")
 [node name="PREGAME" type="Node" parent="fsm"]
 script = ExtResource("7_pptqv")
 
-[node name="ACTIVE" type="Node" parent="fsm" node_paths=PackedStringArray("active_exclusive_cr")]
+[node name="ACTIVE" type="Node" parent="fsm" node_paths=PackedStringArray("active_exclusive_cr", "initial_fsm")]
 script = ExtResource("8_j3xcn")
 active_exclusive_cr = NodePath("active_state_components")
+initial_fsm = NodePath("fsm")
+
+[node name="fsm" type="Node" parent="fsm/ACTIVE" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("7_5wqcs")
+initial_state = NodePath("PLAY")
+metadata/_custom_type_script = "uid://co5edhtkgx3g8"
+
+[node name="PLAY" type="Node" parent="fsm/ACTIVE/fsm"]
+script = ExtResource("22_xkyxq")
+
+[node name="CUTSCENE" type="Node" parent="fsm/ACTIVE/fsm"]
+script = ExtResource("23_5wqcs")
 
 [node name="active_state_components" type="CanvasLayer" parent="fsm/ACTIVE"]
 layer = 10
 follow_viewport_enabled = true
 script = ExtResource("6_arbwm")
+independent = true
+
+[node name="screen_overlay" type="CanvasLayer" parent="fsm/ACTIVE/active_state_components"]
+layer = 10
+script = ExtResource("15_r0d38")
+
+[node name="fx" type="ColorRect" parent="fsm/ACTIVE/active_state_components/screen_overlay"]
+material = SubResource("ShaderMaterial_73454")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="sound" type="AudioStreamPlayer" parent="fsm/ACTIVE/active_state_components/screen_overlay"]
+bus = &"Effects"
+script = ExtResource("20_xyhoc")
+metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
 
 [node name="effect_equip_anim" type="Node2D" parent="fsm/ACTIVE/active_state_components" node_paths=PackedStringArray("animation_player")]
 script = ExtResource("4_th8l7")
@@ -429,39 +468,21 @@ bus = &"Effects"
 script = ExtResource("20_xyhoc")
 metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
 
-[node name="dream_manager" type="Node" parent="fsm/ACTIVE/active_state_components" node_paths=PackedStringArray("initial_state")]
+[node name="dream_fsm" type="Node" parent="fsm/ACTIVE/active_state_components" node_paths=PackedStringArray("initial_state")]
 script = ExtResource("13_3p7ss")
 initial_state = NodePath("NEUTRAL")
 
-[node name="NEUTRAL" type="Node" parent="fsm/ACTIVE/active_state_components/dream_manager"]
+[node name="NEUTRAL" type="Node" parent="fsm/ACTIVE/active_state_components/dream_fsm"]
 script = ExtResource("14_5gc60")
 
-[node name="DREAM" type="Node" parent="fsm/ACTIVE/active_state_components/dream_manager"]
+[node name="DREAM" type="Node" parent="fsm/ACTIVE/active_state_components/dream_fsm"]
 script = ExtResource("15_xyhoc")
 
-[node name="REAL" type="Node" parent="fsm/ACTIVE/active_state_components/dream_manager"]
+[node name="REAL" type="Node" parent="fsm/ACTIVE/active_state_components/dream_fsm"]
 script = ExtResource("16_jhnr1")
 
 [node name="time_manager" type="Node" parent="fsm/ACTIVE/active_state_components"]
 script = ExtResource("2_yhp8d")
-
-[node name="screen_overlay" type="CanvasLayer" parent="fsm/ACTIVE/active_state_components"]
-layer = 10
-script = ExtResource("15_r0d38")
-
-[node name="fx" type="ColorRect" parent="fsm/ACTIVE/active_state_components/screen_overlay"]
-material = SubResource("ShaderMaterial_73454")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="sound" type="AudioStreamPlayer" parent="fsm/ACTIVE/active_state_components/screen_overlay"]
-bus = &"Effects"
-script = ExtResource("20_xyhoc")
-metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
 
 [node name="chase_manager" type="Node" parent="fsm/ACTIVE/active_state_components"]
 script = ExtResource("16_arbwm")
@@ -497,6 +518,11 @@ follow_viewport_enabled = true
 [node name="always" type="CanvasLayer" parent="."]
 process_mode = 3
 layer = 25
+
+[node name="message_display_manager" type="Control" parent="always"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("27_jhnr1")
 
 [node name="pause" parent="always" instance=ExtResource("10_kqpe4")]
 visible = false

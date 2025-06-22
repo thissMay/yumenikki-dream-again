@@ -23,8 +23,5 @@ func exit_state() -> void:
 	Game.Application.resume()
 
 func input(event: InputEvent, ) -> void:
-	if event is InputEventKey && Global.input:
-		if Game.is_paused:
-			if (Global.input["key_pressed"] == KEY_ESCAPE &&
-				Global.input["pressed_once"]):
-					GameManager.pause_options(false)
+	if Input.is_action_just_pressed("esc_menu"):
+		if Game.is_paused: GameManager.pause_options(false)

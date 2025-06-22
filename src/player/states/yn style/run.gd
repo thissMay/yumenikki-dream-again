@@ -9,7 +9,7 @@ func enter_state() -> void:
 	super()
 
 func physics_update(_delta: float, ) -> void:
-	sentient.get_behaviour()._run(sentient, SentientController.get_input_vectors())
+	sentient.get_behaviour()._run(sentient, sentient.input)
  
 	if sentient.is_exhausted: 
 		sentient.force_change_state("walk")

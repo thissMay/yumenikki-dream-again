@@ -5,11 +5,11 @@ shader_type canvas_item;
 
 void vertex()
 {
-	UV = _vertex(UV, TEXTURE_PIXEL_SIZE, MODEL_MATRIX);
+	UV = _depth_vertex(UV, TEXTURE_PIXEL_SIZE);
 }
 
 void fragment()
 {
-	COLOR = _fragment(UV, TEXTURE);
+	COLOR = _linear_fragment(UV, TEXTURE);
 }
 

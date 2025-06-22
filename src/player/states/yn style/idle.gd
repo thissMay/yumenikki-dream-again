@@ -19,10 +19,6 @@ func physics_update(_delta: float) -> void:
 		sentient.stamina += _delta * (sentient.stamina_regen)
 	
 func input(event: InputEvent) -> void: 
-	if sentient.components.get_component_by_name("input_manager").key_pressed(
-		(event as InputEventKey).key_label, sentient.components.get_component_by_name("input_manager").keybinds.emote_key):
+	if Input.is_action_just_pressed("emote"):
 			sentient.perform_action(sentient.components.get_component_by_name("action_manager").emote)
 	
-	if (Global.input["key_pressed"] == KEY_Q and
-		Global.input["held_down"]):
-			pass

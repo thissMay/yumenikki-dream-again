@@ -24,12 +24,16 @@ func equip(_ef: PLEffect, _pl: Player, _skip_anim: bool = false) -> void:
 
 		GameManager.EventManager.invoke_event("PLAYER_EQUIP_SKIP_ANIM", [_skip_anim])
 		GameManager.EventManager.invoke_event("PLAYER_EQUIP", [_ef])
+		Player.Instance.equipment_pending = _ef
 		_ef._apply(_pl)
 		
 func deequip(_pl: Player, _skip_anim: bool = false, _skip_default: bool = false) -> void:
 	if effect_data:
-		_pl.components.get_component_by_name("action_manager").cancel_action(_pl.action, _pl, true)
+		GameManager.EventManager.invoke_event("PLAYER_EQUIP_SKIP_ANIM", [_skip_anim])
 		GameManager.EventManager.invoke_event("PLAYER_DEEQUIP", [effect_data])
+		Player.Instance.equipment_pending = null
+		
+		_pl.components.get_component_by_name("action_manager").cancel_action(_pl.action, _pl, true)
 
 		if effect_prefab != null: 
 			effect_prefab._exit(_pl)
@@ -37,7 +41,6 @@ func deequip(_pl: Player, _skip_anim: bool = false, _skip_default: bool = false)
 
 		effect_data._unapply(_pl)
 		effect_data = null
-		PLInstance.equipment_pending = null
 		
 		if _skip_default: return
 		equip(_pl.DEFAULT_EFFECT, _pl)

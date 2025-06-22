@@ -24,11 +24,9 @@ func _cancel(_pl: Player) -> void:
 
 
 func _input(_pl: Player, _input: InputEvent) -> void: 
-	if (
-		((Global.input["key_pressed"] == KEY_G and Global.input["held_down"]) 
-		or SentientController.get_input_vectors().abs().length() > 0)):
-			await _quit_emote(_pl)
-			_cancel(_pl)
+	if (Input.is_action_pressed("emote")  or _pl.input.length() > 0):
+		await _quit_emote(_pl)
+		_cancel(_pl)
 
 
 func get_enter_anim_path() -> String: 

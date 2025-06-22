@@ -52,6 +52,7 @@ func format(_spr: Texture2D = texture) -> void:
 		self.hframes = clamp(frame_h_count, 1, frame_h_count)
 		self.vframes = clamp(frame_v_count, 1, frame_v_count)
 func set_sprite(_spr: Texture2D) -> void:
+	if _spr == texture: return
 	format(_spr)
 	if _spr: texture = _spr
 

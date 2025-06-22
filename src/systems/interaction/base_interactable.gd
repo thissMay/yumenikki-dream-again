@@ -4,7 +4,8 @@ class_name Interactable
 extends AreaRegion
 
 @export_group("Flags")
-@export var detectable: bool = true
+@export var secret: bool = false
+
 @export var area: bool = false
 @export var only_once: bool = false
 @export var can_interact: bool = true

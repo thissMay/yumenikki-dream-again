@@ -15,7 +15,7 @@ uniform float ray_strength = 1.225;
 
 void vertex()
 {
-	UV = _vertex(UV, TEXTURE_PIXEL_SIZE);
+	UV = _depth_vertex(UV, TEXTURE_PIXEL_SIZE);
 }
 
 void fragment()

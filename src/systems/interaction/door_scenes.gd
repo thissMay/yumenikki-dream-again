@@ -7,7 +7,7 @@ extends Interactable
 
 func _ready() -> void:
 	super()
-	self.add_to_group("doors")
+	self.add_to_group("spawn_points")
 
 func _draw() -> void:
 	if Engine.is_editor_hint():
