@@ -2,6 +2,7 @@ shader_type canvas_item;
 render_mode world_vertex_coords, blend_add;
 
 #include "res://src/shaders/panorama/linear_base.gdshaderinc"
+#include "general_base.gdshaderinc"
 
 uniform sampler2D noise : repeat_enable;
 uniform vec3 color_overlay: source_color = vec3(1);

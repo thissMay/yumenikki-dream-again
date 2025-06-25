@@ -33,7 +33,8 @@ func deequip(_pl: Player, _skip_anim: bool = false, _skip_default: bool = false)
 		GameManager.EventManager.invoke_event("PLAYER_DEEQUIP", [effect_data])
 		Player.Instance.equipment_pending = null
 		
-		_pl.components.get_component_by_name("action_manager").cancel_action(_pl.action, _pl, true)
+		_pl.components.get_component_by_name("action_manager").cancel_action(
+			_pl.components.get_component_by_name("action_manager").curr_action, _pl, true)
 
 		if effect_prefab != null: 
 			effect_prefab._exit(_pl)
@@ -54,6 +55,5 @@ func _update(_delta: float) -> void:
 	
 func _input_pass(event: InputEvent) -> void: 
 	_input_effect(event, sentient)
-	if (Global.input["key_pressed"] == KEY_F and
-		Global.input["held_down"]):
-			equip(PLInventory.favourite_effect, sentient)
+	if Input.is_action_just_pressed("favourite_effect"):
+		equip(PLInventory.favourite_effect, sentient)

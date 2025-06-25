@@ -66,24 +66,6 @@ wig_y_strn = 5.0
 wig_pos_speed = 1.2
 metadata/_custom_type_script = "uid://bptlrkdn0tpua"
 
-[node name="door_interactable" parent="camera" instance=ExtResource("11_qwl4r")]
-position = Vector2(392, -528)
-
-[node name="spawn_point" parent="camera/door_interactable" index="2"]
-scene_path = "uid://dl25joalnmaxt"
-
-[node name="renderer" parent="camera/door_interactable" index="4"]
-texture = ExtResource("12_43bly")
-hframes = 3
-frame = 2
-script = ExtResource("13_k18mo")
-autoplay = true
-loop = true
-fps = 5.0
-frame_dimensions = Vector2i(17, 30)
-frame_h_count = 3
-progress = 2
-
 [node name="BGM" type="Node" parent="."]
 script = ExtResource("5_x4ruq")
 stream = ExtResource("6_xqiaf")
@@ -117,5 +99,21 @@ position = Vector2(336, -32)
 navigation_polygon = SubResource("NavigationPolygon_qwl4r")
 navigation_layers = 2
 
+[node name="door_interactable" parent="neon_floor" instance=ExtResource("11_qwl4r")]
+position = Vector2(392, -528)
+
+[node name="spawn_point" parent="neon_floor/door_interactable" index="2"]
+scene_path = "uid://dl25joalnmaxt"
+
+[node name="renderer" parent="neon_floor/door_interactable" index="4"]
+texture = ExtResource("12_43bly")
+hframes = 3
+script = ExtResource("13_k18mo")
+autoplay = true
+loop = true
+fps = 5.0
+frame_dimensions = Vector2i(17, 30)
+frame_h_count = 3
+
 [editable path="camera"]
-[editable path="camera/door_interactable"]
+[editable path="neon_floor/door_interactable"]

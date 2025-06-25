@@ -22,14 +22,16 @@ noise = SubResource("FastNoiseLite_8cbwq")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6jswv"]
 shader = ExtResource("5_6jswv")
-shader_parameter/transparency = 0.51
 shader_parameter/dirX = -1.0
 shader_parameter/dirY = 0.0
 shader_parameter/scroll_speed = 0.05
-shader_parameter/initial_uv_offset = Vector2(0, -0.68)
+shader_parameter/uv_offset_initial = Vector2(0, 0)
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, -0.68)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.51
 shader_parameter/noise = SubResource("NoiseTexture2D_6jswv")
 shader_parameter/color_overlay = Color(0.592351, 0.580878, 0.381491, 1)
 shader_parameter/color_overlay_intensity = 0.66
@@ -50,11 +52,14 @@ noise = SubResource("FastNoiseLite_6jswv")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y6mui"]
 shader = ExtResource("5_qjc4v")
+shader_parameter/uv_offset_initial = Vector2(0, 0)
+shader_parameter/offset_strength = 0.05
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
 shader_parameter/opacity = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_8cbwq")
 shader_parameter/scroll_speed = 0.015
-shader_parameter/offset_strength = 0.05
-shader_parameter/uv_offset = Vector2(0, 0)
 shader_parameter/gradient = SubResource("GradientTexture2D_rho35")
 shader_parameter/ray_strength = 1.225
 

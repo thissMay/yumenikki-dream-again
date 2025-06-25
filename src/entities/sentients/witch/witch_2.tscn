@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bc465ptnh0nh7"]
+
+[ext_resource type="PackedScene" uid="uid://qvbki1ipp72p" path="res://src/entities/sentients/template_sentient.tscn" id="1_vu6ae"]
+[ext_resource type="Texture2D" uid="uid://bfhkyvnx8xvdp" path="res://src/entities/sentients/witch/witch_2.png" id="2_vu6ae"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="3_jn7iu"]
+
+[node name="TestNeutral" instance=ExtResource("1_vu6ae")]
+
+[node name="sprite_renderer" parent="." index="3"]
+texture = ExtResource("2_vu6ae")
+hframes = 3
+script = ExtResource("3_jn7iu")
+autoplay = true
+loop = true
+reverse = false
+end_frame = false
+fps = 10.0
+frame_h_count = 3
+progress = 1

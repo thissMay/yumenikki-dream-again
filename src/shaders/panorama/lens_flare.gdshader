@@ -6,7 +6,6 @@ render_mode blend_add;
 #include "radial_base.gdshaderinc"
 
 uniform bool rotation = true;
-uniform float transparency = 0;
 
 uniform float max_opacity = 1;
 uniform float min_opacity = 0;

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bqpchlp7gdgcq"]
+
+[ext_resource type="Script" uid="uid://bcs1yota1fwly" path="res://src/player/madotsuki/effects/_none/_pinch.gd" id="1_ivaqt"]
+
+[resource]
+script = ExtResource("1_ivaqt")
+supported_states = {
+"idle": true,
+"run": false,
+"sneak": false,
+"walk": false
+}
+metadata/_custom_type_script = "uid://gqxupngqpt0n"

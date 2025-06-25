@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://hx52e5i78byf"]
+[gd_scene load_steps=43 format=4 uid="uid://hx52e5i78byf"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_6knvu"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="2_tq601"]
@@ -18,11 +18,18 @@
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="14_wlpfk"]
 [ext_resource type="TileSet" uid="uid://du5agmvlu6p41" path="res://src/levels/_dream/upper_abyss/tile_set.tres" id="15_idx74"]
 [ext_resource type="PackedScene" uid="uid://crej0xx7uj05p" path="res://src/levels/__ignore/door.tscn" id="17_uike6"]
-[ext_resource type="Texture2D" uid="uid://dmp6kq3mp7d78" path="res://game_icon.png" id="18_wd31y"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="23_fc2sj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_101a1"]
 shader = ExtResource("6_3s5hh")
+shader_parameter/dirX = 0.0
+shader_parameter/dirY = 0.0
+shader_parameter/scroll_speed = 0.0
+shader_parameter/uv_offset_initial = Vector2(0, 0)
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kjkby"]
 particles_animation = true
@@ -128,7 +135,6 @@ noise = SubResource("FastNoiseLite_6knvu")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8uplr"]
 shader = ExtResource("7_s2vuj")
-shader_parameter/type = 0
 shader_parameter/uv_offset_initial = Vector2(0, 0)
 shader_parameter/offset_strength = 0.05
 shader_parameter/offset_strength_x_influence = 1.0
@@ -148,14 +154,18 @@ noise = SubResource("FastNoiseLite_ly67i")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cw11x"]
 shader = ExtResource("8_rp7r0")
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
+shader_parameter/uv_offset_initial = Vector2(0, 0)
+shader_parameter/offset_strength = 1.0
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
 shader_parameter/dirX = 1.0
 shader_parameter/dirY = 1.0
 shader_parameter/scroll_speed = 0.105
 shader_parameter/noise_strength = 0.345
 shader_parameter/noise_fwd = SubResource("NoiseTexture2D_vprmw")
-shader_parameter/uv_offset = Vector2(0, 0)
-shader_parameter/offset_strength = 1.0
 
 [sub_resource type="Gradient" id="Gradient_ijr0l"]
 colors = PackedColorArray(0, 0, 0, 1, 0.570077, 0.692139, 0.956738, 1)
@@ -166,6 +176,7 @@ fill_from = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ijr0l"]
 shader = ExtResource("4_dh60x")
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 shader_parameter/optional_grad = true
 shader_parameter/gradient = SubResource("GradientTexture2D_6knvu")
@@ -284,13 +295,6 @@ tile_set = ExtResource("15_idx74")
 [node name="y_order" type="Node2D" parent="."]
 z_as_relative = false
 y_sort_enabled = true
-
-[node name="TextureRect" type="TextureRect" parent="y_order"]
-offset_left = 592.0
-offset_top = -288.0
-offset_right = 772.0
-offset_bottom = -108.0
-texture = ExtResource("18_wd31y")
 
 [node name="door" parent="y_order" instance=ExtResource("17_uike6")]
 position = Vector2(240, 120)

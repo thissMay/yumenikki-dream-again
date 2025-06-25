@@ -6,4 +6,10 @@
 [resource]
 script = ExtResource("1_p8ep6")
 sound = ExtResource("2_gdyhu")
+supported_states = {
+"idle": true,
+"run": true,
+"sneak": false,
+"walk": true
+}
 metadata/_custom_type_script = "uid://gqxupngqpt0n"

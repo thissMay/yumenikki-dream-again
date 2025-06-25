@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://dl7sdjmo0vbkt"]
+[gd_scene load_steps=34 format=4 uid="uid://dl7sdjmo0vbkt"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_5js63"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_flyuj"]
@@ -24,7 +24,12 @@
 gradient = SubResource("Gradient_1hvly")
 fill_to = Vector2(0, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_04jgb"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5vp0h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qkfd2"]
+size = Vector2(265, 230)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_8cbwq"]
 
@@ -34,14 +39,16 @@ noise = SubResource("FastNoiseLite_8cbwq")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6jswv"]
 shader = ExtResource("9_gfwn5")
-shader_parameter/transparency = 0.51
 shader_parameter/dirX = -1.0
 shader_parameter/dirY = 0.0
 shader_parameter/scroll_speed = 0.05
-shader_parameter/initial_uv_offset = Vector2(0, -0.68)
+shader_parameter/uv_offset_initial = Vector2(0, 0)
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, -0.68)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.51
 shader_parameter/noise = SubResource("NoiseTexture2D_y6mui")
 shader_parameter/color_overlay = Color(0.592351, 0.580878, 0.381491, 1)
 shader_parameter/color_overlay_intensity = 0.66
@@ -62,16 +69,24 @@ noise = SubResource("FastNoiseLite_6jswv")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y6mui"]
 shader = ExtResource("11_ai2lp")
+shader_parameter/uv_offset_initial = Vector2(0, 0)
+shader_parameter/offset_strength = 0.05
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
 shader_parameter/opacity = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_8cbwq")
 shader_parameter/scroll_speed = 0.015
-shader_parameter/offset_strength = 0.05
-shader_parameter/uv_offset = Vector2(0, 0)
 shader_parameter/gradient = SubResource("GradientTexture2D_rho35")
 shader_parameter/ray_strength = 1.225
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3jmax"]
 size = Vector2(8, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ft1xx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yv2s3"]
+size = Vector2(200, 120)
 
 [node name="room" type="Node2D"]
 script = ExtResource("1_5js63")
@@ -131,17 +146,19 @@ script = ExtResource("6_yuafm")
 spawn_point = Vector2(0, -30)
 spawn_dir = Vector2(0, -1)
 target_door = NodePath("../../balcony_dream/balcony/balc_to_room")
+shape = SubResource("RectangleShape2D_04jgb")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="room/room_to_balc"]
 shape = SubResource("RectangleShape2D_5vp0h")
 
 [node name="room_cam_region" type="Area2D" parent="room"]
-process_mode = 3
 position = Vector2(248, 120)
 script = ExtResource("7_fi45b")
 instant_cam_switch = true
 size = Vector2i(265, 230)
+shape = SubResource("RectangleShape2D_qkfd2")
 metadata/_custom_type_script = "uid://bgvtp4rm5gyus"
 
 [node name="balcony_dream" type="Node" parent="."]
@@ -222,17 +239,19 @@ position = Vector2(256, 120)
 script = ExtResource("6_yuafm")
 spawn_point = Vector2(0, 5.94)
 target_door = NodePath("../../../room/room_to_balc")
+shape = SubResource("RectangleShape2D_ft1xx")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="balcony_dream/balcony/balc_to_room"]
 shape = SubResource("RectangleShape2D_5vp0h")
 
 [node name="cam_region" type="Area2D" parent="balcony_dream/balcony"]
-process_mode = 3
 position = Vector2(248, 128)
 script = ExtResource("7_fi45b")
 instant_cam_switch = true
 size = Vector2i(200, 120)
+shape = SubResource("RectangleShape2D_yv2s3")
 metadata/_custom_type_script = "uid://bgvtp4rm5gyus"
 
 [editable path="camera"]

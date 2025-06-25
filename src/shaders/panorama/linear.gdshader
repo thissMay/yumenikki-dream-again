@@ -12,4 +12,3 @@ void fragment()
 {
 	COLOR = _linear_fragment(UV, TEXTURE);
 }
-

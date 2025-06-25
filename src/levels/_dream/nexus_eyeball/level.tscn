@@ -12,14 +12,13 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="9_4j00j"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="11_x4bpl"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="12_ppt66"]
-[ext_resource type="Script" uid="uid://b8vm7vkk5240d" path="res://src/systems/event/player/append_new_effect.gd" id="13_ppt66"]
+[ext_resource type="Script" uid="uid://b8vm7vkk5240d" path="res://src/systems/event/player/event_pl_append_effect.gd" id="13_ppt66"]
 [ext_resource type="Resource" uid="uid://bi65brqjolfb" path="res://src/player/madotsuki/effects/medamude/medamude.tres" id="14_04s3o"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="15_d5n0m"]
 [ext_resource type="AudioStream" uid="uid://berstp18uwqhm" path="res://src/audio/se/effect_found.WAV" id="16_fot1s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sthxv"]
 shader = ExtResource("2_odm8p")
-shader_parameter/transparency = 0.0
 shader_parameter/dirX = -1.0
 shader_parameter/dirY = 1.0
 shader_parameter/scroll_speed = 0.05

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://cwrdtbix8nr0o"]
+[gd_scene load_steps=21 format=4 uid="uid://cwrdtbix8nr0o"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_r5evf"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_kjp3u"]
@@ -18,7 +18,6 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_050gr"]
 shader = ExtResource("6_y4mp6")
-shader_parameter/transparency = 0.9
 shader_parameter/dirX = 0.0
 shader_parameter/dirY = 0.0
 shader_parameter/scroll_speed = 0.0
@@ -27,6 +26,8 @@ shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.9
 shader_parameter/world_texture = ExtResource("7_os0pt")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_7gxy6"]
@@ -34,9 +35,12 @@ vertices = PackedVector2Array(478, 230, 408.141, 230, 418, 220.141, 466, 186, 46
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 0, 3), PackedInt32Array(7, 3, 2, 8), PackedInt32Array(9, 10, 11, 12), PackedInt32Array(11, 13, 14, 15, 12), PackedInt32Array(9, 12, 16, 17), PackedInt32Array(18, 19, 20), PackedInt32Array(20, 21, 22, 18), PackedInt32Array(23, 18, 22, 24), PackedInt32Array(25, 23, 24, 26), PackedInt32Array(27, 28, 29, 30), PackedInt32Array(31, 27, 30, 32), PackedInt32Array(33, 31, 32, 34, 35, 36), PackedInt32Array(32, 37, 34), PackedInt32Array(34, 38, 39, 35)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-120, 0, -120, 72, -152, 104, -152, 144, -64, 144, -64, 104, -16, 48, -88, 48, -88, 0), PackedVector2Array(16, -144, 64, -192, 128, -192, 80, -144, 80, -48, 24, -48, 24, -104, 40, -120, 40, -144), PackedVector2Array(320, -160, 368, -208, 432, -208, 432, -128, 416, -104, 416, -48, 344, -48, 344, -96, 384, -96, 384, -112, 368, -112, 368, -104, 360, -104, 360, -144, 320, -144), PackedVector2Array(384, 240, 408, 216, 408, 192, 424, 176, 456, 176, 456, 152, 472, 136, 488, 136, 488, 240)])
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_35rjy"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6t0p7"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dxwru"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a71sk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h3a08"]
+size = Vector2(100, 20)
 
 [node name="barracks_settlement" type="Node"]
 script = ExtResource("1_r5evf")
@@ -102,7 +106,7 @@ navigation_layers = 2
 [node name="to_seahorse" type="Area2D" parent="y_order"]
 position = Vector2(-72, 344)
 script = ExtResource("11_6t0p7")
-shape = SubResource("RectangleShape2D_35rjy")
+shape = SubResource("RectangleShape2D_6t0p7")
 metadata/_custom_type_script = "uid://4dkyll6fxqod"
 
 [node name="spawn_point" type="Node2D" parent="y_order/to_seahorse"]
@@ -120,14 +124,15 @@ metadata/_custom_type_script = "uid://c1od80bn28h0l"
 script = ExtResource("14_2hqby")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="travel_to_scene" type="Node" parent="y_order/to_seahorse/sequence_region/enter"]
+[node name="travel_to_scene" type="Node" parent="y_order/to_seahorse/sequence_region/enter" node_paths=PackedStringArray("spawn_point")]
 script = ExtResource("15_43eek")
+spawn_point = NodePath("../../../spawn_point")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="to_mural" type="Area2D" parent="y_order"]
 position = Vector2(-112, -280)
 script = ExtResource("11_6t0p7")
-shape = SubResource("RectangleShape2D_dxwru")
+shape = SubResource("RectangleShape2D_a71sk")
 metadata/_custom_type_script = "uid://4dkyll6fxqod"
 
 [node name="spawn_point" type="Node2D" parent="y_order/to_mural"]
@@ -145,8 +150,40 @@ metadata/_custom_type_script = "uid://c1od80bn28h0l"
 script = ExtResource("14_2hqby")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="travel_to_scene" type="Node" parent="y_order/to_mural/sequence_region/enter"]
+[node name="travel_to_scene" type="Node" parent="y_order/to_mural/sequence_region/enter" node_paths=PackedStringArray("spawn_point")]
 script = ExtResource("15_43eek")
+spawn_point = NodePath("../../../spawn_point")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="to_wilderness" type="Area2D" parent="y_order"]
+position = Vector2(80, 408)
+script = ExtResource("11_6t0p7")
+size = Vector2i(100, 20)
+shape = SubResource("RectangleShape2D_h3a08")
+metadata/_custom_type_script = "uid://4dkyll6fxqod"
+
+[node name="from_wilderness" type="Node2D" parent="y_order/to_wilderness" node_paths=PackedStringArray("parent_instead_of_self")]
+position = Vector2(48, 0)
+script = ExtResource("12_a71sk")
+parent_instead_of_self = NodePath("..")
+as_sibling = true
+scene_path = "uid://cs8yn56f0t60a"
+spawn_point = Vector2(0, -20)
+spawn_dir = Vector2(0, -1)
+metadata/_custom_type_script = "uid://ofyfa3d6ql28"
+
+[node name="sequence_region" type="Node" parent="y_order/to_wilderness" node_paths=PackedStringArray("enter_sequence")]
+script = ExtResource("13_h3a08")
+enter_sequence = NodePath("enter")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="enter" type="Node" parent="y_order/to_wilderness/sequence_region"]
+script = ExtResource("14_2hqby")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="travel_to_scene" type="Node" parent="y_order/to_wilderness/sequence_region/enter" node_paths=PackedStringArray("spawn_point")]
+script = ExtResource("15_43eek")
+spawn_point = NodePath("../../../from_wilderness")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [editable path="camera"]

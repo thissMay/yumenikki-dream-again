@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PLEmote" load_steps=2 format=3 uid="uid://k3nnjl0mkdpx"]
+
+[ext_resource type="Script" uid="uid://48y120qdeepc" path="res://src/player/scripts/pl_emote.gd" id="1_ckoeq"]
+
+[resource]
+script = ExtResource("1_ckoeq")
+path = "emote/"
+emote_enter_anim = "dansen"
+emote_exit_anim = ""
+emote_speed = 1.0
+auto_exit = false
+metadata/_custom_type_script = "uid://48y120qdeepc"

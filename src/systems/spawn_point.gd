@@ -4,6 +4,7 @@ class_name SpawnPoint
 extends Node2D
 	
 @onready var spawn_texture: Texture2D = load("res://src/player/madotsuki/display/default/_RESET.png")
+@export var parent_instead_of_self: Node
 @export var as_sibling: bool = false
 	
 @export_file("*.tscn") var scene_path: String

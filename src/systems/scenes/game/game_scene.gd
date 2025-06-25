@@ -31,6 +31,6 @@ func _on_unload() -> void:
 	for _r in rules: _r.unapply_on_scene_unload()
 
 # ---- saving. 
-func save_scene() -> void: Game.Save.save_scene_data(self)
-func load_scene() -> void: Game.Save.load_scene_data(self)
+func save_scene() -> void: NodeSaveService.save_scene_data(self)
+func load_scene() -> void: NodeSaveService.load_scene_data(self)
 	

@@ -3,6 +3,7 @@ extends EditorPlugin
 
 
 func _enter_tree() -> void:
+	add_autoload_singleton("NodeSaveService", "res://src/systems/game/node_save_service.gd")
 	add_autoload_singleton("Game", "res://src/game/game.gd")
 	
 	add_autoload_singleton("GlobalPanoramaManager", "res://src/autoloads/panorama_system.gd")
@@ -18,6 +19,7 @@ func _enter_tree() -> void:
 	
 
 func _exit_tree() -> void:
+	remove_autoload_singleton("NodeSaveService")
 	remove_autoload_singleton("Game")
 	
 	remove_autoload_singleton("GlobalPanoramaManager")

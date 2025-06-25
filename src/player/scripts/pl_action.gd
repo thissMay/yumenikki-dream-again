@@ -1,6 +1,13 @@
 class_name PLAction
 extends Resource
 
+@export var supported_states := {
+	"idle" : true,
+	"walk" : false,
+	"run" : false,
+	"sneak" : false
+}
+
 # ---- initial
 func _enter(_pl: Player) -> void: pass
 func _exit(_pl: Player) -> void: pass

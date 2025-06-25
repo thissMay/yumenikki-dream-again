@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://qvbki1ipp72p"]
+[gd_scene load_steps=23 format=3 uid="uid://qvbki1ipp72p"]
 
 [ext_resource type="Script" uid="uid://jbydpt773v5a" path="res://src/entities/hostile/nav_entity.gd" id="1_l8d6l"]
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="2_xd2xn"]
@@ -13,8 +13,10 @@
 [ext_resource type="Script" uid="uid://rbvkxb3m2omw" path="res://src/entities/hostile/behaviour_states/idle.gd" id="10_w825i"]
 [ext_resource type="Script" uid="uid://bj1oqttajdq2m" path="res://src/entities/hostile/behaviour_states/wander.gd" id="11_iiqm4"]
 [ext_resource type="Script" uid="uid://clwsghva612ul" path="res://src/entities/hostile/behaviour_states/observe.gd" id="12_cbhm8"]
+[ext_resource type="Script" uid="uid://c4jf04237m0wj" path="res://src/entities/hostile/behaviour_states/wander_sub_idle.gd" id="13_33g5e"]
 [ext_resource type="Script" uid="uid://dbo5xans8s5ib" path="res://src/entities/hostile/behaviour_states/chase.gd" id="13_hjdcm"]
 [ext_resource type="Script" uid="uid://cbg0uhsr4h72h" path="res://src/entities/hostile/behaviour_states/stare_at.gd" id="14_faqv6"]
+[ext_resource type="Script" uid="uid://cgrlne63ptsn5" path="res://src/entities/hostile/behaviour_states/wander_sub_move.gd" id="14_yha0i"]
 [ext_resource type="Script" uid="uid://sahjehrg3n8o" path="res://src/entities/hostile/behaviour_states/follow.gd" id="15_icb7j"]
 [ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="17_21guf"]
 
@@ -71,15 +73,12 @@ position = Vector2(0, 14)
 shape = SubResource("RectangleShape2D_18lqh")
 
 [node name="nav" type="NavigationAgent2D" parent="."]
-target_desired_distance = 25.0
+target_desired_distance = 15.0
 navigation_layers = 2
 avoidance_enabled = true
+radius = 15.0
 avoidance_layers = 10
 avoidance_mask = 10
-
-[node name="obstacle" type="NavigationObstacle2D" parent="."]
-radius = 15.0
-avoidance_layers = 14
 
 [node name="stance_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("7_2w8np")
@@ -113,13 +112,22 @@ metadata/_custom_type_script = "uid://co5edhtkgx3g8"
 script = ExtResource("10_w825i")
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
-[node name="WANDER" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "idle_timer")]
+[node name="WANDER" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("initial_state_fsm")]
 script = ExtResource("11_iiqm4")
-stance_fsm = NodePath("../../stance_fsm")
-idle_timer = NodePath("idle_timer")
+initial_state_fsm = NodePath("WANDER_IDLE")
 metadata/_custom_type_script = "uid://qdqcvtymsa3v"
 
-[node name="idle_timer" type="Timer" parent="behaviour_fsm/WANDER"]
+[node name="WANDER_IDLE" type="Node" parent="behaviour_fsm/WANDER" node_paths=PackedStringArray("idle_timer", "repath_timer")]
+script = ExtResource("13_33g5e")
+idle_timer = NodePath("idle_timer")
+repath_timer = NodePath("repath_timer")
+
+[node name="idle_timer" type="Timer" parent="behaviour_fsm/WANDER/WANDER_IDLE"]
+
+[node name="repath_timer" type="Timer" parent="behaviour_fsm/WANDER/WANDER_IDLE"]
+
+[node name="WANDER_MOVE" type="Node" parent="behaviour_fsm/WANDER"]
+script = ExtResource("14_yha0i")
 
 [node name="OBSERVE" type="Node" parent="behaviour_fsm" node_paths=PackedStringArray("stance_fsm", "hesitance_timer")]
 script = ExtResource("12_cbhm8")

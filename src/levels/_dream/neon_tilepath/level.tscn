@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://qe3q4hhevgdu"]
+[gd_scene load_steps=22 format=4 uid="uid://qe3q4hhevgdu"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_h75dg"]
 [ext_resource type="TileSet" uid="uid://cdwf1q5unkp6r" path="res://src/levels/__ignore/tilemaps/neon_path.tres" id="2_cnnt0"]
@@ -8,6 +8,14 @@
 [ext_resource type="AudioStream" uid="uid://b8n3oeuudnpvm" path="res://src/audio/bgm/world_snow.ogg" id="6_a4nch"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="6_rs7jf"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="7_gbe6x"]
+[ext_resource type="PackedScene" uid="uid://b4efdoikr5o84" path="res://src/entities/sentients/animated_sentient.tscn" id="9_8sdby"]
+[ext_resource type="Texture2D" uid="uid://duwjwe2dxrpyn" path="res://src/entities/sentients/hell/hell_3.png" id="10_8mj7h"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="11_ld25y"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/spawn_point.gd" id="12_odkte"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="12_wof8k"]
+[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="14_rwgou"]
+[ext_resource type="AudioStream" uid="uid://btc4tvdxrt213" path="res://src/audio/se/se_rpgmaker_teleport.wav" id="15_2kx1l"]
+[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="16_rwgou"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vswhi"]
 
@@ -24,6 +32,13 @@ shader_parameter/noise = SubResource("NoiseTexture2D_y2e73")
 shader_parameter/offset_strength = 0.185
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ld25y"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_dkxgw"]
+vertices = PackedVector2Array(90, 59.8594, 88.1406, 58, 123.859, 58, 131.859, 66, 203.859, 66, 206, 68.1406, 206, 86, 90, 86)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7, 3), PackedInt32Array(3, 7, 0)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(80, 64, 80, 96, 216, 96, 216, 64, 208, 56, 136, 56, 128, 48, 64, 48)])
 
 [node name="neon_tilepath" type="Node"]
 script = ExtResource("1_h75dg")
@@ -63,13 +78,65 @@ tile_map_data = PackedByteArray("AAAcAAcAAAADAAMAAAAVABEAAAADAAMAAAARAA8AAAAAAAM
 tile_set = ExtResource("2_cnnt0")
 
 [node name="Madotsuki" parent="Node2D" instance=ExtResource("6_rs7jf")]
-position = Vector2(128, 64)
+position = Vector2(1424, 576)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Node2D"]
+[node name="hellspawn" parent="Node2D" instance=ExtResource("9_8sdby")]
+position = Vector2(120, 64)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node2D/StaticBody2D"]
+[node name="sprite_renderer" parent="Node2D/hellspawn" index="3"]
+texture = ExtResource("10_8mj7h")
+hframes = 4
+autoplay = true
+loop = true
+fps = 5.0
+frame_dimensions = Vector2i(20, 30)
+frame_h_count = 4
+
+[node name="behaviour_fsm" parent="Node2D/hellspawn" index="9" node_paths=PackedStringArray("initial_state")]
+initial_state = NodePath("WANDER")
+
+[node name="WANDER" parent="Node2D/hellspawn/behaviour_fsm" index="2"]
+wander_radius = 10.0
+
+[node name="Interactable" type="Area2D" parent="Node2D/hellspawn"]
+script = ExtResource("11_ld25y")
+size = Vector2i(20, 20)
+shape = SubResource("RectangleShape2D_ld25y")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
+metadata/_custom_type_script = "uid://bxh774473av7t"
+
+[node name="SpawnPoint" type="Node2D" parent="Node2D/hellspawn/Interactable" node_paths=PackedStringArray("parent_instead_of_self")]
+script = ExtResource("12_odkte")
+parent_instead_of_self = NodePath("../..")
+as_sibling = true
+scene_path = "uid://m50bp6u4vgts"
+metadata/_custom_type_script = "uid://ofyfa3d6ql28"
+
+[node name="Sequence" type="Node" parent="Node2D/hellspawn/Interactable"]
+script = ExtResource("12_wof8k")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="PlaySound" type="Node" parent="Node2D/hellspawn/Interactable/Sequence"]
+script = ExtResource("14_rwgou")
+sound = ExtResource("15_2kx1l")
+pitch = 1.5
+metadata/_custom_type_script = "uid://vk574kc3l7av"
+
+[node name="Event" type="Node" parent="Node2D/hellspawn/Interactable/Sequence" node_paths=PackedStringArray("spawn_point")]
+script = ExtResource("16_rwgou")
+spawn_point = NodePath("../../SpawnPoint")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="world_coll" type="StaticBody2D" parent="Node2D"]
+
+[node name="coll" type="CollisionPolygon2D" parent="Node2D/world_coll"]
 position = Vector2(0, 2)
 build_mode = 1
 polygon = PackedVector2Array(12, 34, 20, 42, 54, 42, 54, 44, 62, 52, 40, 52, 40, 54, 48, 62, 68, 62, 68, 64, 76, 72, 12, 72, 12, 74, 20, 82, 26, 82, 26, 84, 34, 92, 40, 92, 40, 94, 48, 102, 180, 102, 180, 104, 188, 112, 180, 112, 180, 114, 188, 122, 180, 122, 180, 124, 188, 132, 390, 132, 390, 134, 398, 142, 376, 142, 376, 144, 384, 152, 418, 152, 418, 154, 426, 162, 460, 162, 460, 164, 468, 172, 530, 172, 530, 174, 538, 182, 530, 182, 530, 184, 538, 192, 558, 192, 558, 194, 566, 202, 586, 202, 586, 204, 594, 212, 642, 212, 642, 214, 650, 222, 642, 222, 642, 224, 650, 232, 670, 232, 670, 234, 678, 242, 670, 242, 670, 244, 678, 252, 712, 252, 712, 254, 720, 262, 712, 262, 712, 264, 720, 272, 712, 272, 712, 274, 720, 282, 278, 282, 278, 284, 286, 292, -58, 292, -58, 294, -50, 302, -2, 302, -2, 304, 6, 312, -44, 312, -44, 314, -36, 322, -44, 322, -44, 324, -36, 332, -30, 332, -30, 334, -22, 342, -16, 342, -16, 344, -8, 352, -16, 352, -16, 354, -8, 362, -16, 362, -16, 364, -8, 372, 26, 372, 26, 374, 34, 382, 54, 382, 54, 384, 62, 392, 68, 392, 68, 394, 76, 402, 124, 402, 124, 404, 132, 412, 124, 412, 124, 414, 132, 422, 152, 422, 152, 424, 160, 432, 166, 432, 166, 434, 174, 442, 194, 442, 194, 444, 202, 452, 488, 452, 488, 454, 496, 462, 600, 462, 600, 464, 608, 472, 726, 472, 726, 474, 734, 482, 698, 482, 698, 484, 706, 492, 754, 492, 754, 494, 762, 502, 782, 502, 782, 504, 790, 512, 852, 512, 852, 514, 860, 522, 894, 522, 894, 524, 902, 532, 908, 532, 908, 534, 916, 542, 908, 542, 908, 544, 916, 552, 950, 552, 950, 554, 958, 562, 950, 562, 950, 564, 958, 572, 1006, 572, 1006, 574, 1014, 582, 1258, 582, 1258, 584, 1266, 592, 1384, 592, 1384, 594, 1392, 602, 1410, 602, 1420, 612, 1500, 612, 1500, 608, 1494, 602, 1500, 602, 1500, 598, 1494, 592, 1500, 592, 1500, 588, 1494, 582, 1458, 582, 1458, 578, 1452, 572, 1402, 572, 1402, 568, 1396, 562, 1234, 562, 1234, 558, 1228, 552, 1038, 552, 1038, 548, 1032, 542, 1038, 542, 1038, 538, 1032, 532, 996, 532, 996, 528, 990, 522, 968, 522, 968, 518, 962, 512, 940, 512, 940, 508, 934, 502, 940, 502, 940, 498, 934, 492, 828, 492, 828, 488, 822, 482, 786, 482, 786, 478, 780, 472, 772, 472, 772, 468, 766, 462, 716, 462, 716, 458, 710, 452, 758, 452, 758, 448, 752, 442, 814, 442, 814, 438, 808, 432, 534, 432, 534, 428, 528, 422, 520, 422, 520, 418, 514, 412, 506, 412, 506, 408, 500, 402, 506, 402, 506, 398, 500, 392, 492, 392, 492, 388, 486, 382, 478, 382, 478, 378, 472, 372, 478, 372, 478, 368, 472, 362, 478, 362, 478, 358, 472, 352, 464, 352, 464, 348, 458, 342, 450, 342, 450, 338, 444, 332, 450, 332, 450, 328, 444, 322, 436, 322, 436, 318, 430, 312, 548, 312, 548, 308, 542, 302, 730, 302, 730, 298, 724, 292, 828, 292, 828, 288, 822, 282, 870, 282, 870, 278, 864, 272, 898, 272, 898, 268, 892, 262, 856, 262, 856, 258, 850, 252, 898, 252, 898, 248, 892, 242, 730, 242, 730, 238, 724, 232, 716, 232, 716, 228, 710, 222, 688, 222, 688, 218, 682, 212, 660, 212, 660, 208, 654, 202, 674, 202, 674, 198, 668, 192, 632, 192, 632, 188, 626, 182, 712, 182, 712, 184, 720, 192, 726, 192, 726, 194, 734, 202, 768, 202, 768, 204, 776, 212, 842, 212, 842, 208, 836, 202, 828, 202, 828, 198, 822, 192, 786, 192, 786, 188, 780, 182, 800, 182, 800, 178, 794, 172, 786, 172, 786, 168, 780, 162, 492, 162, 492, 158, 486, 152, 506, 152, 506, 148, 500, 142, 506, 142, 506, 138, 500, 132, 464, 132, 464, 128, 458, 122, 408, 122, 408, 118, 402, 112, 380, 112, 380, 108, 374, 102, 268, 102, 268, 98, 262, 92, 240, 92, 240, 88, 234, 82, 254, 82, 254, 78, 248, 72, 254, 72, 254, 68, 248, 62, 240, 62, 240, 58, 234, 52, 142, 52, 142, 48, 136, 42, 86, 42, 86, 38, 80, 32, 12, 32)
 
+[node name="hell_spawn_wander_region" type="NavigationRegion2D" parent="Node2D"]
+navigation_polygon = SubResource("NavigationPolygon_dkxgw")
+navigation_layers = 2
+
 [editable path="camera"]
+[editable path="Node2D/hellspawn"]

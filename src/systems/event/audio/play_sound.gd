@@ -7,4 +7,5 @@ extends Event
 @export var pitch: float = 1
 
 func _execute() -> void:
-	AudioService.play_sound(sound, volume, pitch)
+	await AudioService.play_sound(sound, volume, pitch)
+	super()

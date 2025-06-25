@@ -8,13 +8,9 @@ var world_loop_listener: EventListener
 
 func _ready() -> void:
 	super()
-
 	var world_loop_listener := EventListener.new(["WORLD_LOOP"], false, self)	
+
+	pl_warped_left.connect(func():
+		if loop_record[bound_side.LEFT] >= 5: GameManager.change_scene_to(load(scene_path)) )
 	world_loop_listener.do_on_notify("WORLD_LOOP", func(): 
-		if loop_count > 5: hidden_thing.visible = true)
-
-			
-
-func _handle_player_warp_left(_pl: Area2D) -> void: 
-	super(_pl)
-	if loop_count >= 5: GameManager.change_scene_to(load(scene_path))
+		if loop_record[bound_side.LEFT] > 5: hidden_thing.visible = true)

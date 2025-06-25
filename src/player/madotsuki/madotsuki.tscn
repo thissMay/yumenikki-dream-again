@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=42 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/madotsuki/player_yn.gd" id="1_wub1p"]
 [ext_resource type="Script" uid="uid://32q36bskoln0" path="res://src/systems/behaviour/strategist.gd" id="2_c8hmm"]
@@ -19,15 +19,17 @@
 [ext_resource type="Texture2D" uid="uid://cgt6yqo0ynnak" path="res://src/player/scripts/behaviour/interaction_prompt.png" id="17_cin7d"]
 [ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/entities/sentient_fsm.gd" id="18_rujao"]
 [ext_resource type="Script" uid="uid://co5edhtkgx3g8" path="res://src/systems/behaviour/fsm.gd" id="19_hy2th"]
-[ext_resource type="Script" uid="uid://bcy41p4huaij7" path="res://src/player/states/yn style/stamina/normal.gd" id="20_fr82v"]
-[ext_resource type="Script" uid="uid://bk7ea81npilfk" path="res://src/player/states/yn style/stamina/exhausted.gd" id="21_5r1vc"]
-[ext_resource type="Script" uid="uid://copf228upsgds" path="res://src/player/states/yn style/idle.gd" id="22_e8irh"]
-[ext_resource type="Script" uid="uid://mw73mitc7ufu" path="res://src/player/states/yn style/walk.gd" id="24_ydgy1"]
-[ext_resource type="Script" uid="uid://ybbhtmvclmcj" path="res://src/player/states/yn style/run.gd" id="25_fc8o1"]
-[ext_resource type="Script" uid="uid://0gg3uqjct50j" path="res://src/player/states/yn style/sneak.gd" id="26_naf4t"]
-[ext_resource type="Script" uid="uid://bmml0v7khpsyf" path="res://src/player/states/yn style/climb.gd" id="27_xcxb0"]
-[ext_resource type="Script" uid="uid://s2qduwa65o" path="res://src/player/states/yn style/action.gd" id="28_4wyx3"]
+[ext_resource type="Script" uid="uid://bcy41p4huaij7" path="res://src/player/states/stamina/normal.gd" id="20_fr82v"]
+[ext_resource type="Script" uid="uid://bk7ea81npilfk" path="res://src/player/states/stamina/exhausted.gd" id="21_5r1vc"]
+[ext_resource type="Script" uid="uid://copf228upsgds" path="res://src/player/states/movement/idle.gd" id="22_e8irh"]
+[ext_resource type="Script" uid="uid://mw73mitc7ufu" path="res://src/player/states/movement/walk.gd" id="24_ydgy1"]
+[ext_resource type="Script" uid="uid://ybbhtmvclmcj" path="res://src/player/states/movement/run.gd" id="25_fc8o1"]
+[ext_resource type="Script" uid="uid://0gg3uqjct50j" path="res://src/player/states/movement/sneak.gd" id="26_naf4t"]
+[ext_resource type="Script" uid="uid://bmml0v7khpsyf" path="res://src/player/states/movement/climb.gd" id="27_xcxb0"]
+[ext_resource type="Script" uid="uid://s2qduwa65o" path="res://src/player/states/movement/action.gd" id="28_4wyx3"]
+[ext_resource type="Script" uid="uid://bywofys77444h" path="res://src/player/states/input/input.gd" id="28_ylvyo"]
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="29_1qwjo"]
+[ext_resource type="Script" uid="uid://dl2po1k6jifml" path="res://src/player/states/input/nav.gd" id="29_ylvyo"]
 [ext_resource type="Script" uid="uid://dgrha4aqsx4kh" path="res://src/systems/audio/sound_player.gd" id="30_cin7d"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="30_kknx7"]
 
@@ -85,10 +87,12 @@ blend_mode = 2
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r8oc4"]
 size = Vector2(2, 2)
 
-[node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("fsm")]
+[node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("stamina_fsm", "input_fsm", "fsm")]
 collision_layer = 5
 script = ExtResource("1_wub1p")
-fsm = NodePath("fsm")
+stamina_fsm = NodePath("stance_fsm/stamina_fsm")
+input_fsm = NodePath("input_fsm")
+fsm = NodePath("stance_fsm")
 
 [node name="look_at" type="Marker2D" parent="."]
 script = ExtResource("2_c8hmm")
@@ -163,39 +167,59 @@ position = Vector2(0, -24)
 texture = ExtResource("17_cin7d")
 offset = Vector2(0, -36)
 
-[node name="fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="stance_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("18_rujao")
 initial_state = NodePath("IDLE")
 
-[node name="stamina_fsm" type="Node" parent="fsm" node_paths=PackedStringArray("initial_state")]
+[node name="stamina_fsm" type="Node" parent="stance_fsm" node_paths=PackedStringArray("initial_state")]
 script = ExtResource("19_hy2th")
 initial_state = NodePath("NORMAL")
 
-[node name="NORMAL" type="Node" parent="fsm/stamina_fsm"]
+[node name="NORMAL" type="Node" parent="stance_fsm/stamina_fsm"]
 script = ExtResource("20_fr82v")
 
-[node name="EXHAUSTED" type="Node" parent="fsm/stamina_fsm"]
+[node name="EXHAUSTED" type="Node" parent="stance_fsm/stamina_fsm"]
 script = ExtResource("21_5r1vc")
 
-[node name="IDLE" type="Node" parent="fsm"]
+[node name="IDLE" type="Node" parent="stance_fsm"]
 script = ExtResource("22_e8irh")
 
-[node name="WALK" type="Node" parent="fsm"]
+[node name="WALK" type="Node" parent="stance_fsm"]
 script = ExtResource("24_ydgy1")
 
-[node name="RUN" type="Node" parent="fsm"]
+[node name="RUN" type="Node" parent="stance_fsm"]
 script = ExtResource("25_fc8o1")
 
-[node name="SNEAK" type="Node" parent="fsm"]
+[node name="SNEAK" type="Node" parent="stance_fsm"]
 script = ExtResource("26_naf4t")
 
-[node name="CLIMB" type="Node" parent="fsm"]
+[node name="CLIMB" type="Node" parent="stance_fsm"]
 script = ExtResource("27_xcxb0")
 
-[node name="ACTION" type="Node" parent="fsm"]
+[node name="ACTION" type="Node" parent="stance_fsm"]
 script = ExtResource("28_4wyx3")
 
+[node name="input_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("18_rujao")
+initial_state = NodePath("INPUT")
+metadata/_custom_type_script = "uid://sd3feymdmkd6"
+
+[node name="INPUT" type="Node" parent="input_fsm"]
+script = ExtResource("28_ylvyo")
+metadata/_custom_type_script = "uid://r0etyaq71dla"
+
+[node name="NAV" type="Node" parent="input_fsm"]
+script = ExtResource("29_ylvyo")
+metadata/_custom_type_script = "uid://r0etyaq71dla"
+
+[node name="nav" type="NavigationAgent2D" parent="."]
+path_desired_distance = 5.0
+navigation_layers = 8
+avoidance_enabled = true
+avoidance_layers = 2
+
 [node name="audio_listener" type="AudioListener2D" parent="."]
+current = true
 
 [node name="collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 13)

@@ -42,8 +42,9 @@ func update(_delta: float) -> void:
 			eqn += (
 				CameraHolder.instance.vel) / Vector2(Game.get_viewport_height(), Game.get_viewport_width()
 				)
+			RenderingServer.global_shader_parameter_set(
+			"uv_offset",  eqn)
 		elif warp_check: warp_check = false
 		
-		RenderingServer.global_shader_parameter_set(
-			"uv_offset",  eqn)
+
 			

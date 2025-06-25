@@ -5,5 +5,5 @@ func enter_state() -> void:
 	super()
 
 func physics_update(delta: float) -> void:
-	if sentient.abs_velocity.length() > 0: fsm._change_to_state("walk")
+	if sentient.speed > 0: fsm._change_to_state("walk")
 	

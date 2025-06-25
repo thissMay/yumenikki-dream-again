@@ -23,6 +23,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e4mse"]
 shader = ExtResource("8_5st6v")
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ar0bk"]

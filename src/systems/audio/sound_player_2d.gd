@@ -5,6 +5,9 @@ var pre_mute_vol: float = 0
 var pre_mute_pit: float = 1
 var was_playing: bool = false
 
+var distance_from_audio_listener: float
+var pitch_distance_multiplier = 1
+
 const ZERO_VOLUME = -50
 
 @export var muted: bool = false
@@ -52,3 +55,13 @@ func set_volume(_vol: float) -> void: self.volume_db = _vol
 
 # ---- getters ----
 func get_pitch() -> float: return self.pitch_scale
+
+# --- ---- 
+func _process(_delta: float) -> void:
+	if get_viewport().get_audio_listener_2d() == null: return
+	distance_from_audio_listener = (
+		get_viewport().get_audio_listener_2d().global_position - 
+		self.global_position).length()
+	
+	pitch_distance_multiplier = clampf(Game.get_viewport_dimens().length() / distance_from_audio_listener, 0.1, 1)
+	pitch_scale *= pitch_distance_multiplier

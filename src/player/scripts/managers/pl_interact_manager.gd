@@ -46,8 +46,7 @@ func _update(delta: float) -> void:
 		!found and !curr_interactable.secret)	: found = true
 	else										: found = false
 
-func input_pass(event: InputEvent) -> void:
-	super(event)
+func _input_pass(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("interact"): handle_interaction()
 
 	
@@ -86,7 +85,8 @@ func interactable_entered(_inact: Area2D) -> void:
 			if interactables[i] == null: interactables[i] = _inact
 			break
 func interactable_exited(_inact: Area2D) -> void: 
-	interactables[interactables.find(_inact)] = null
+	if _inact is Interactable:
+		interactables[interactables.find(_inact)] = null
 
 # ----
 

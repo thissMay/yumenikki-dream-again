@@ -173,12 +173,12 @@ shader_parameter/contrast = 0.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x31xm"]
 shader = ExtResource("2_f6805")
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 shader_parameter/optional_grad = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kisvh"]
 shader = ExtResource("5_2m1ok")
-shader_parameter/transparency = 0.0
 shader_parameter/dirX = 0.0
 shader_parameter/dirY = 0.0
 shader_parameter/scroll_speed = 0.0
@@ -390,14 +390,14 @@ texture = ExtResource("12_tlelv")
 position = Vector2(-29, -15)
 texture = ExtResource("20_ub6k2")
 hframes = 3
-frame = 2
+frame = 1
 script = ExtResource("21_cgott")
 autoplay = true
 loop = true
 fps = 9.0
 frame_dimensions = Vector2i(32, 22)
 frame_h_count = 3
-progress = 2
+progress = 1
 metadata/_custom_type_script = "uid://cdjphp77kgyqr"
 
 [node name="eye_r" type="Sprite2D" parent="display/white_petal_stats/mado"]
@@ -405,12 +405,14 @@ position = Vector2(29, -15)
 texture = ExtResource("20_ub6k2")
 flip_h = true
 hframes = 3
+frame = 1
 script = ExtResource("21_cgott")
 autoplay = true
 loop = true
 fps = 8.0
 frame_dimensions = Vector2i(32, 22)
 frame_h_count = 3
+progress = 1
 metadata/_custom_type_script = "uid://cdjphp77kgyqr"
 
 [node name="stats" type="Sprite2D" parent="display/white_petal_stats"]
@@ -430,24 +432,24 @@ grow_vertical = 2
 [node name="separator" type="HBoxContainer" parent="select"]
 layout_mode = 2
 
-[node name="white_petal" type="Control" parent="select/separator"]
-custom_minimum_size = Vector2(27, 14)
-layout_mode = 2
-mouse_filter = 1
-script = ExtResource("17_2m1ok")
-texture = ExtResource("17_qtnvx")
-frame_dimensions = Vector2i(27, 14)
-style = 1
-hover_cell = 1
-press_cell = 2
-metadata/_custom_type_script = "uid://bqp8xu5yrv1tn"
-
 [node name="pink_petal" type="Control" parent="select/separator"]
 custom_minimum_size = Vector2(27, 14)
 layout_mode = 2
 mouse_filter = 1
 script = ExtResource("17_2m1ok")
 texture = ExtResource("27_cgott")
+frame_dimensions = Vector2i(27, 14)
+style = 1
+hover_cell = 1
+press_cell = 2
+metadata/_custom_type_script = "uid://bqp8xu5yrv1tn"
+
+[node name="white_petal" type="Control" parent="select/separator"]
+custom_minimum_size = Vector2(27, 14)
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("17_2m1ok")
+texture = ExtResource("17_qtnvx")
 frame_dimensions = Vector2i(27, 14)
 style = 1
 hover_cell = 1

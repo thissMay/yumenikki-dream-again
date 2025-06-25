@@ -34,10 +34,13 @@ func set_secondary_action(_second_action: PLAction) -> void: secondary_action = 
 func set_curr_action(_action: PLAction) -> void: curr_action = _action
 
 func perform_action(_action: PLAction, _pl: Player) -> void: 
-	if _action and can_action: 
-		did_something.emit()
-		set_curr_action(_action)
-		_action._perform(_pl)
+	if _action and can_action:
+		if (_pl.fsm._get_curr_state_name() in _action.supported_states and 
+			_action.supported_states[_pl.fsm._get_curr_state_name()]): 
+			
+			did_something.emit()
+			set_curr_action(_action)
+			_action._perform(_pl)
 func cancel_action(_action: PLAction, _pl: Player, _force: bool = false) -> void: 
 	if _action and (can_action or _force):
 		_action._cancel(_pl)
@@ -58,6 +61,12 @@ func handle_action_update(_delta: float) -> void: if curr_action: curr_action._u
 
 func _physics_update(_delta: float) -> void: handle_action_phys_update(_delta)
 func _update(_delta: float) -> void: handle_action_update(_delta)
+func input_pass(event: InputEvent) -> void:
+	super(event)
+	if Input.is_action_just_pressed("primary_action"):
+		sentient.fsm
+		perform_action(primary_action, sentient)
+	elif Input.is_action_just_pressed("secondary_action"): perform_action(secondary_action, sentient)
 
 # ---- action executes / cancels ----
 func flag_false_can_action() -> void: 

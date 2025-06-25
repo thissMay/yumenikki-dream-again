@@ -19,9 +19,13 @@ metadata/_custom_type_script = "uid://5cuh5yuxk174"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yqjyt"]
 shader = ExtResource("3_f0ess")
+shader_parameter/uv_offset_initial = Vector2(0, 0)
 shader_parameter/offset_strength = 1.0
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_sk800"]
 
@@ -37,9 +41,11 @@ noise = SubResource("FastNoiseLite_yqjyt")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8d4q6"]
 shader = ExtResource("5_60ane")
+shader_parameter/uv_offset_initial = Vector2(0, 0)
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
 shader_parameter/offSet = 0.0
 shader_parameter/YDistortion = 1.0
 shader_parameter/waterNoise = SubResource("NoiseTexture2D_0lgmp")
@@ -90,7 +96,7 @@ texture = SubResource("GradientTexture2D_60ane")
 [node name="camera" parent="." instance=ExtResource("2_rb84o")]
 
 [node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../y_order/Madotsuki")
+target = NodePath("../../y_order/madotsuki")
 
 [node name="BGM" type="Node" parent="."]
 script = ExtResource("3_31d28")
@@ -100,8 +106,8 @@ metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 [node name="y_order" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="Madotsuki" parent="y_order" instance=ExtResource("6_ewkx2")]
-position = Vector2(-112, 128)
+[node name="madotsuki" parent="y_order" instance=ExtResource("6_ewkx2")]
+position = Vector2(-176, 64)
 
 [node name="orange_murals" type="TileMapLayer" parent="y_order"]
 y_sort_enabled = true
@@ -119,4 +125,3 @@ tile_map_data = PackedByteArray("AAAfAA8AAAAAAAYAAAAFABsAAAAAAAYAAAAHABQAAAAAAAY
 tile_set = ExtResource("8_ewkx2")
 
 [editable path="camera"]
-[editable path="y_order/Madotsuki"]

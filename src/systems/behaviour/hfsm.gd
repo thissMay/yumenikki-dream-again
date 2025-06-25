@@ -17,8 +17,6 @@ func _setup() -> void:
 		
 	if initial_fsm != null: curr_fsm = initial_fsm
 			
-func _enter() -> void	: pass
-func _exit() -> void	: pass
 
 func _init(init_fsm: FSM = null) -> void: 
 	super()
@@ -40,12 +38,8 @@ func _change_to_fsm(_new: StringName) -> void:
 func _has_fsm(_fsm_name: String) -> bool: return _fsm_name in fsm_dict
 
 # --- state behaviour
-func enter_state() -> void:
-	super()
-	_enter()
-func exit_state() -> void:
-	super()
-	_exit()
+func enter_state() -> void: super()
+func exit_state() -> void: super()
 
 func _change_to_state(_new: StringName) -> void: curr_fsm._change_to_state(_new)
 

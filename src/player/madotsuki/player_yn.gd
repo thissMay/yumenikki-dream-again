@@ -12,8 +12,9 @@ var footstep_manager: Node
 
 # ----> trait components
 
+@export var stamina_fsm: FSM
+@export var input_fsm: SentientFSM
 var marker_look_at: Strategist
-var stamina_fsm: FSM
 
 var mental_status: SBComponent
 
@@ -27,12 +28,11 @@ func dependency_components() -> void:
 	sound_player = $sound_player
 	
 	marker_look_at = $look_at
-	
-	fsm = $fsm
-	stamina_fsm = $fsm/stamina_fsm
+
 func dependency_setup() -> void:
 	marker_look_at._setup()			# --- fsm; not player dependency but required
 	stamina_fsm._setup() 	# --- fsm; not player dependency but required
+	input_fsm._setup(self) 	# --- fsm; not player dependency but required
 	fsm._setup(self)			# --- fsm; not player dependency but required
 	
 	if components.get_component_by_name("health"):
@@ -50,6 +50,7 @@ func set_marker_direction_mode(_new_mode: Strategy) -> void:
 func _process(_delta: float) -> void:	
 	super(_delta)
 	handle_noise()
+	input_fsm._update(_delta)
 	if fsm: fsm._update(_delta)
 func _physics_process(_delta: float) -> void:
 	super(_delta)

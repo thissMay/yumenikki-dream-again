@@ -3,7 +3,18 @@
 class_name SeamlessDetector
 extends Node2D
 
-var loop_count: int
+signal pl_warped_right
+signal pl_warped_left
+signal pl_warped_up
+signal pl_warped_down
+
+
+var loop_record  := {
+	bound_side.UP: 0,
+	bound_side.DOWN: 0,
+	bound_side.RIGHT: 0,
+	bound_side.LEFT: 0,
+}
 var sentients_to_be_looped := {
 	bound_side.UP : [],
 	bound_side.DOWN : [],
@@ -65,6 +76,20 @@ enum loop {LOOP, DISABLED}
 @export var  horizontal_size: Vector2i
 @export var  vertical_size: Vector2i
 
+# ----
+var v_size: Vector2
+var h_size: Vector2
+var v_size_mirrored: Vector2
+var h_size_mirrored: Vector2
+var pos_up_overshoot: Vector2
+var pos_down_overshoot: Vector2
+var pos_up_mirrored: Vector2
+var pos_down_mirrored: Vector2
+var pos_left_overshoot: Vector2
+var pos_right_overshoot: Vector2
+var pos_left_mirror: Vector2
+var pos_right_mirror: Vector2
+
 func _ready() -> void: 
 	if !Engine.is_editor_hint(): 
 		resize(boundary_size)
@@ -84,25 +109,25 @@ func _draw() -> void:
 	if Engine.is_editor_hint():
 		# ---- outer warp bounds
 		
-		var v_size := Vector2i(boundary_size.x + 480 , clampf(min_boundary_size.y / 2 + tile_size.y * 2, 0, 300))
-		var h_size := Vector2i(clampf(min_boundary_size.x / 2 + tile_size.x * 2, 0, 500), min_boundary_size.y + clampf(min_boundary_size.y / 2 + tile_size.y * 2, 0, 300) * 7)
+		v_size = Vector2i(boundary_size.x + 480 , clampf(min_boundary_size.y / 2 + tile_size.y * 2, 0, 300))
+		h_size = Vector2i(clampf(min_boundary_size.x / 2 + tile_size.x * 2, 0, 500), min_boundary_size.y + clampf(min_boundary_size.y / 2 + tile_size.y * 2, 0, 300) * 7)
 		
-		var v_size_mirrored := Vector2i(boundary_size.x + 480, clampf(min_boundary_size.y / 2 + tile_size.y * 2, 0, 300))
-		var h_size_mirrored := Vector2i(h_size.x, boundary_size.y)
+		v_size_mirrored = Vector2i(boundary_size.x + 480, clampf(min_boundary_size.y / 2 + tile_size.y * 2, 0, 300))
+		h_size_mirrored = Vector2i(h_size.x, boundary_size.y)
 		
-		var pos_up_overshoot := Vector2(up.position.x - v_size.x / 2, up.position.y - tile_size.y / 2)
-		var pos_down_overshoot := Vector2(down.position.x - v_size.x / 2, down.position.y * 2 - v_size.y + tile_size.y)
+		pos_up_overshoot = Vector2(up.position.x - v_size.x / 2, up.position.y - tile_size.y / 2)
+		pos_down_overshoot = Vector2(down.position.x - v_size.x / 2, down.position.y * 2 - v_size.y + tile_size.y)
 		
-		var pos_up_mirrored := Vector2(up.position.x - v_size.x / 2 , up.position.y - (tile_size.y * 3/2))
-		var pos_down_mirrored := Vector2(down.position.x - v_size.x / 2 , down.position.y + (tile_size.y * 3/2))
+		pos_up_mirrored = Vector2(up.position.x - v_size.x / 2 , up.position.y - (tile_size.y * 3/2))
+		pos_down_mirrored = Vector2(down.position.x - v_size.x / 2 , down.position.y + (tile_size.y * 3/2))
 		
 		# ---
 		
-		var pos_left_overshoot := Vector2(left.position.x - min_boundary_size.x / 2 - (tile_size.x * 3/2) , left.position.y - h_size.y / 2 )
-		var pos_right_overshoot := Vector2(right.position.x + min_boundary_size.x / 2 + (tile_size.x * 3/2) , right.position.y - h_size.y / 2 )
+		pos_left_overshoot = Vector2(left.position.x - min_boundary_size.x / 2 - (tile_size.x * 3/2) , left.position.y - h_size.y / 2 )
+		pos_right_overshoot = Vector2(right.position.x + min_boundary_size.x / 2 + (tile_size.x * 3/2) , right.position.y - h_size.y / 2 )
 		
-		var pos_left_mirror := Vector2(right.position.x - (tile_size.x * 3/2), right.position.y - boundary_size.y / 2)
-		var pos_right_mirror := Vector2(left.position.x + (tile_size.x * 3/2), left.position.y - boundary_size.y / 2)
+		pos_left_mirror = Vector2(right.position.x - (tile_size.x * 3/2), right.position.y - boundary_size.y / 2)
+		pos_right_mirror = Vector2(left.position.x + (tile_size.x * 3/2), left.position.y - boundary_size.y / 2)
 		
 		
 		# --- up and down
@@ -164,10 +189,18 @@ func resize(new_size: Vector2) -> void:
 		(left_bound.shape as RectangleShape2D).size.y / 2)
 
 func player_entered_setup() -> void:
-	up.area_entered.connect(func(_p): player_hit_border(_p, bound_side.UP))
-	down.area_entered.connect(func(_p): player_hit_border(_p, bound_side.DOWN))
-	right.area_entered.connect(func(_p): player_hit_border(_p, bound_side.RIGHT))
-	left.area_entered.connect(func(_p): player_hit_border(_p, bound_side.LEFT))	
+	up.area_entered.connect(func(_p): 
+		player_hit_border(_p, bound_side.UP)
+		pl_warped_up.emit())
+	down.area_entered.connect(func(_p): 
+		player_hit_border(_p, bound_side.DOWN)
+		pl_warped_down.emit())
+	right.area_entered.connect(func(_p): 
+		player_hit_border(_p, bound_side.RIGHT)
+		pl_warped_right.emit())
+	left.area_entered.connect(func(_p): 
+		player_hit_border(_p, bound_side.LEFT)
+		pl_warped_left.emit())	
 	
 	up.body_entered.connect(func(_body: Node2D): handle_sentient_enter(_body, bound_side.UP))
 	down.body_entered.connect(func(_body: Node2D): handle_sentient_enter(_body, bound_side.DOWN))
@@ -179,27 +212,37 @@ func player_entered_setup() -> void:
 	right.body_exited.connect(func(_body: Node2D): handle_sentient_exit(_body, bound_side.RIGHT))
 	left.body_exited.connect(func(_body: Node2D): handle_sentient_exit(_body, bound_side.LEFT))
 	
-		
 	
 func player_hit_border(_pl: Area2D, _bound_side: bound_side) -> void: 
 	if is_instance_valid(_pl) and Player.Instance.get_pl() != null:
 		if _pl == Player.Instance.get_pl().world_warp:
+			if CameraHolder.instance: 
+				CameraHolder.instance.global_position = Player.Instance.get_pl().global_position
+			
+			_handle_sentient_warp(Player.Instance.get_pl(), _bound_side)
+			loop_record[_bound_side] += 1
+			GameManager.EventManager.invoke_event(
+				"WORLD_LOOP", [get_warp_vectors_of_sentient(Player.Instance.get_pl())[_bound_side]])
+			
 
-			loop_count += 1
-			_handle_player_warp(_pl, _bound_side)
 
-
-func _handle_player_warp(_pl: Area2D, _side: bound_side) -> Vector2: 
+func get_warp_vectors_of_sentient(_sentient: SentientBase) -> Dictionary:
 	var warp_vectors := {
-		bound_side.UP: Vector2(_pl.global_position.x, down.global_position.y + (tile_size.y * 3/2)),
-		bound_side.DOWN: Vector2(_pl.global_position.x, up.global_position.y - (tile_size.y * 3/2)),
-		bound_side.RIGHT: Vector2(left.global_position.x + (tile_size.x * 3/2), _pl.global_position.y),
-		bound_side.LEFT: Vector2(right.global_position.x - (tile_size.x * 3/2), _pl.global_position.y)
+		bound_side.UP: Vector2(_sentient.global_position.x, down.global_position.y + (tile_size.y * 3/2)),
+		bound_side.DOWN: Vector2(_sentient.global_position.x, up.global_position.y - (tile_size.y * 3/2)),
+		bound_side.RIGHT: Vector2(left.global_position.x + (tile_size.x * 3/2), _sentient.global_position.y),
+		bound_side.LEFT: Vector2(right.global_position.x - (tile_size.x * 3/2), _sentient.global_position.y)
 	}
-	
+	return warp_vectors
+
+
+func _handle_sentient_warp(_sentient: SentientBase, _side: bound_side) -> Vector2: 
+	var warp_vectors := get_warp_vectors_of_sentient(_sentient)
 	var warp_vector: Vector2 = warp_vectors[_side]
-	Player.Instance.handle_player_world_warp(warp_vector,  Player.Instance.get_pl().direction)
-	GameManager.EventManager.invoke_event("WORLD_LOOP", [warp_vector])
+	
+	_sentient.global_position = warp_vector
+	_sentient.set_dir.call_deferred(_sentient.direction)
+	
 	return warp_vector
 
 func handle_sentient_enter(_wanderer: SentientBase, _side: bound_side) -> void:

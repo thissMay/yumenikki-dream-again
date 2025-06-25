@@ -25,19 +25,21 @@ func _ready() -> void:
 		set_process(false)
 
 func _draw() -> void:
-	match loop_type:
-		type.VERTICAL:
-			
-			draw_rect(
-				Rect2(
-					Vector2(-(region.shape.b - region.shape.a).x / 2, 0 - tile_size.y * 2), 
-					Vector2((region.shape.b - region.shape.a).x, tile_size.y)),
-					Color(Color.RED, 0.2))
-			draw_rect(
-				Rect2(
-					Vector2(-(region.shape.b - region.shape.a).x / 2, 0 + tile_size.y), 
-					Vector2((region.shape.b - region.shape.a).x, tile_size.y)),
-					Color(Color.BLUE, 0.2))
+	if Engine.is_editor_hint():
+		if region == null: return
+		match loop_type:
+			type.VERTICAL:
+				
+				draw_rect(
+					Rect2(
+						Vector2(-(region.shape.b - region.shape.a).x / 2, 0 - tile_size.y * 2), 
+						Vector2((region.shape.b - region.shape.a).x, tile_size.y)),
+						Color(Color.RED, 0.2))
+				draw_rect(
+					Rect2(
+						Vector2(-(region.shape.b - region.shape.a).x / 2, 0 + tile_size.y), 
+						Vector2((region.shape.b - region.shape.a).x, tile_size.y)),
+						Color(Color.BLUE, 0.2))
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint(): 
@@ -45,6 +47,7 @@ func _process(delta: float) -> void:
 
 	
 func player_entered_setup() -> void:
+	if region == null: return
 	region.player_enter_handle.connect(func(_p): player_hit_border(_p))
 	
 func player_hit_border(_player: Player) -> void: 

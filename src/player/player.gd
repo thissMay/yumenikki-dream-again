@@ -52,7 +52,6 @@ func _enter_tree() -> void:
 	GameManager.EventManager.invoke_event("PLAYER_UPDATED")
 	
 func _process(delta: float) -> void:
-	input = InputManager.vector_input
 	super(delta)
 
 class Instance:
@@ -82,8 +81,13 @@ class Instance:
 					GameManager.EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id):
 						
 						teleport_player(points.get_spawn_point(), points.spawn_dir, true)
-						if points.as_sibling: _pl.reparent(points.get_parent())
-						else: _pl.reparent(points)
+						if points.parent_instead_of_self != null:
+							if points.as_sibling: _pl.reparent(points.parent_instead_of_self.get_parent())
+							else: _pl.reparent(points.parent_instead_of_self)
+
+						else:
+							if points.as_sibling: _pl.reparent(points.get_parent())
+							else: _pl.reparent(points)
 						
 						door_went_flag = false
 			)

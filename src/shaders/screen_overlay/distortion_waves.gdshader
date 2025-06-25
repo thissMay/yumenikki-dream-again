@@ -1,22 +1,20 @@
 shader_type canvas_item;
+//render_mode world_vertex_coords;
 
+#include "res://src/shaders/panorama/general_base.gdshaderinc"
+#include "res://src/shaders/panorama/depth_base.gdshaderinc"
+#include "res://src/shaders/panorama/linear_base.gdshaderinc"
 
 uniform sampler2D screen_texture : hint_screen_texture;
 
-uniform float transparency : hint_range(0, 1.0, 0.1) = 0;
-uniform float dirX : hint_range(-1.0, 1.0, 0.1);
-uniform float dirY : hint_range(-1.0, 1.0, 0.1);
-uniform float scroll_speed : hint_range(-0.085, 0.5, 0.01 ) = 0.25;
 
 uniform float noise_strength : hint_range(-0.085, 1, 0.01 ) = 0.025;
 uniform sampler2D noise_fwd : repeat_enable;
 
-uniform vec2 uv_offset = vec2(0);
-uniform float offset_strength = 1;
 
 void vertex()
 {
-	UV = (MODEL_MATRIX * vec4(UV, TEXTURE_PIXEL_SIZE)).xy + (uv_offset * offset_strength);
+	UV = _depth_vertex(UV, TEXTURE_PIXEL_SIZE);
 }
 
 void fragment()

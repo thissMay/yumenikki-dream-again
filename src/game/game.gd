@@ -47,7 +47,6 @@ func _ready() -> void:
 	
 	Engine.max_fps = 60
 	
-	Game.Save.load_data()
 	
 	true_time_scale = Engine.time_scale
 
@@ -143,20 +142,8 @@ class Save:
 		"read_warning" : false},
 	"player" : {},
 	"scene" : {}}
-	
-	static func save_scene_data(_scene: SceneNode) -> void: 
-		var node_savers = Game.get_group_arr("node_savers") as Array[NodeSaver]
-		data["scene"][_scene.name] = {"data" : null, "id" : _scene.id}
-		for ns in node_savers: 
-			if ns != null: data["scene"][_scene.name]["data"] = ns.save_data()		
-	static func load_scene_data(_scene: SceneNode) -> void:
-		var node_savers = Game.get_group_arr("node_savers") as Array[NodeSaver]
-		if data["scene"].has(_scene.name):
-			for ns in node_savers: 
-				if ns != null: ns.load_data(_scene)
-	
+		
 	const SAVE_PATH := "user://save.json"
-	const AUTOSAVE_INTERVAL = 90
 	
 	static func save_data() -> Error:
 		
@@ -242,6 +229,7 @@ class Config:
 class Application: 
 	static func quit(): 
 		Music.fade_out()
+		Ambience.fade_out()
 		Optimization.set_max_fps(30)
 		await Game.Save.save_data()
 		await GameManager.request_transition(ScreenTransition.fade_type.FADE_IN)

@@ -21,7 +21,7 @@ blend_mode = 1
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u4v1j"]
 size = Vector2(6, 3)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_47kmh"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lpcqq"]
 
 [node name="pirori" instance=ExtResource("1_orc3b")]
 
@@ -63,6 +63,9 @@ position = Vector2(0, 13.5)
 shape = SubResource("RectangleShape2D_u4v1j")
 debug_color = Color(0.845999, 0.0997133, 0.874914, 0.42)
 
+[node name="nav" parent="." index="6"]
+debug_enabled = true
+
 [node name="on_state_changed" type="Node" parent="stance_fsm/IDLE" index="0"]
 script = ExtResource("13_4v8pq")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
@@ -83,19 +86,19 @@ animator = NodePath("../../../../sb_components/animation_manager")
 animation_path = "pirori/walk"
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="behaviour_fsm" parent="." index="9" node_paths=PackedStringArray("initial_state")]
+[node name="behaviour_fsm" parent="." index="8" node_paths=PackedStringArray("initial_state")]
 initial_state = NodePath("WANDER")
 
 [node name="WANDER" parent="behaviour_fsm" index="2"]
 wander_radius = 35.0
 
-[node name="interactable" type="Area2D" parent="." index="11"]
+[node name="interactable" type="Area2D" parent="." index="10"]
 script = ExtResource("9_u4v1j")
-shape = SubResource("RectangleShape2D_47kmh")
+shape = SubResource("RectangleShape2D_lpcqq")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="Sequence" type="Node" parent="interactable" index="2"]
+[node name="Sequence" type="Node" parent="interactable" index="0"]
 script = ExtResource("10_lpcqq")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 

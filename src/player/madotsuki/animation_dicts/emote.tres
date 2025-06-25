@@ -1,4 +1,4 @@
-[gd_resource type="AnimationLibrary" load_steps=15 format=3 uid="uid://bm1cor2werd5w"]
+[gd_resource type="AnimationLibrary" load_steps=17 format=3 uid="uid://bm1cor2werd5w"]
 
 [ext_resource type="Texture2D" uid="uid://d4i48avg5j1dg" path="res://src/player/madotsuki/display/cat/gesture.png" id="1_kpkma"]
 [ext_resource type="AudioStream" uid="uid://du5x1lok1mk78" path="res://src/audio/se/se_cloth_foley_3.wav" id="2_ixmb4"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dvmf5dneeyi23" path="res://src/player/madotsuki/display/default/sit.png" id="6_6o6td"]
 [ext_resource type="AudioStream" uid="uid://cwbsiscenoxfx" path="res://src/audio/se/se_cloth_foley_2.wav" id="7_dxry4"]
 [ext_resource type="Texture2D" uid="uid://b7wes4n6knano" path="res://src/player/madotsuki/display/hand/teleport.png" id="8_5w8d5"]
+[ext_resource type="Texture2D" uid="uid://dt0b3unu3sv16" path="res://src/player/madotsuki/display/default/dansen.png" id="9_ly3ai"]
 
 [sub_resource type="Animation" id="Animation_kt2ol"]
 resource_name = "cat"
@@ -71,6 +72,36 @@ tracks/3/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_qgfnh"]
+resource_name = "dansen"
+length = 0.6
+loop_mode = 1
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../sprite_renderer:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("9_ly3ai")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../sprite_renderer:progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
 [sub_resource type="Animation" id="Animation_ly3ai"]
 resource_name = "hand_teleport"
 length = 1.2
@@ -117,7 +148,7 @@ tracks/2/use_blend = true
 
 [sub_resource type="Animation" id="Animation_6o6td"]
 resource_name = "neon_dansen"
-length = 0.72
+length = 0.6
 loop_mode = 1
 step = 0.03
 tracks/0/type = "value"
@@ -139,7 +170,7 @@ tracks/1/path = NodePath("../../sprite_renderer:progress")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.12, 0.24, 0.36, 0.48, 0.6),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
@@ -272,6 +303,7 @@ tracks/2/keys = {
 [resource]
 _data = {
 &"cat": SubResource("Animation_kt2ol"),
+&"dansen": SubResource("Animation_qgfnh"),
 &"hand_teleport": SubResource("Animation_ly3ai"),
 &"neon_dansen": SubResource("Animation_6o6td"),
 &"pinch": SubResource("Animation_k5aq2"),

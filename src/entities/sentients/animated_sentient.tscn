@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://qvbki1ipp72p" path="res://src/entities/sentients/template_sentient.tscn" id="1_6gk1q"]
 [ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="2_ae50f"]
 
-[node name="TestNeutral" instance=ExtResource("1_6gk1q")]
+[node name="animated_sentient_template" instance=ExtResource("1_6gk1q")]
 
 [node name="sprite_renderer" parent="." index="3"]
 script = ExtResource("2_ae50f")

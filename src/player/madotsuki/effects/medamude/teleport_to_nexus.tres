@@ -4,4 +4,10 @@
 
 [resource]
 script = ExtResource("1_lgjcx")
+supported_states = {
+"idle": true,
+"run": false,
+"sneak": false,
+"walk": false
+}
 metadata/_custom_type_script = "uid://gqxupngqpt0n"

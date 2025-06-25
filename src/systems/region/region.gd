@@ -60,12 +60,17 @@ func _ready() -> void:
 			
 		self.area_entered.connect(handle_player_enter)
 		self.area_exited.connect(handle_player_exit)
+		
+		rect.position = (rect.shape.size / 2)
 	
 	self.set_process(true)
 	_setup()
 
 func _setup() -> void:
 	pass
+func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		rect.position = (rect.shape.size / 2)
 
 func _handle_player_enter() -> void: pass
 func _handle_player_exit() -> void: pass
@@ -78,9 +83,6 @@ func handle_player_exit(_pl: Area2D) -> void:
 	if _pl == Player.Instance.get_pl().world_warp:
 		_handle_player_exit()
 		player_exit_handle.emit(Player.Instance.get_pl() if Player.Instance.get_pl() != null else null)
-
-func handle_player_body_enter() -> void: pass
-func handle_player_body_exit() -> void: pass
 
 func handle_shape_size(_size: Vector2) -> void: 
 	if shape is	RectangleShape2D: (shape as RectangleShape2D).size = _size

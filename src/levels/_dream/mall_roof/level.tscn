@@ -18,7 +18,8 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_toq1w"]
 shader = ExtResource("5_6f305")
-shader_parameter/type = 0
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.0
 shader_parameter/uv_offset_initial = Vector2(0, 0)
 shader_parameter/offset_strength = 0.1
 shader_parameter/offset_strength_x_influence = 1.0
@@ -26,9 +27,10 @@ shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
 shader_parameter/uv_rotation_speed = 1.0
 shader_parameter/uv_rotation_pivot = Vector2(0.5, 0.5)
-shader_parameter/transparency = 0.0
+shader_parameter/rotation = true
 shader_parameter/max_opacity = 0.8
 shader_parameter/min_opacity = 0.5
+shader_parameter/flicker_speed = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7v2m1"]
 shader = ExtResource("8_v1ba0")
@@ -41,12 +43,13 @@ shader_parameter/fade = 0.7
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_njj3g"]
 shader = ExtResource("7_dbtor")
-shader_parameter/type = 0
 shader_parameter/uv_offset_initial = Vector2(0, 0)
 shader_parameter/offset_strength = 0.2
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.0
 
 [sub_resource type="Gradient" id="Gradient_njj3g"]
 
@@ -99,6 +102,11 @@ offset_right = 546.0
 offset_bottom = 277.0
 texture = ExtResource("7_njj3g")
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
+position = Vector2(-24, -6)
+color = Color(0.366537, 0.214132, 0.261743, 1)
+
 [node name="Node2D" type="Node2D" parent="."]
 y_sort_enabled = true
 
@@ -113,10 +121,6 @@ shadow_color = Color(0.006, 0.006, 0.006, 0)
 shadow_item_cull_mask = 5
 texture = SubResource("GradientTexture2D_toq1w")
 offset = Vector2(-14.1215, 6.44894)
-
-[node name="CanvasModulate" type="CanvasModulate" parent="Node2D"]
-position = Vector2(-24, -6)
-color = Color(0.366537, 0.214132, 0.261743, 1)
 
 [node name="roof_borders_b" type="TileMapLayer" parent="Node2D"]
 y_sort_enabled = true
@@ -156,19 +160,19 @@ z_index = 2
 position = Vector2(186, 146)
 texture = ExtResource("12_3rima")
 hframes = 7
-frame = 3
+frame = 5
 script = ExtResource("13_v1ba0")
 autoplay = true
 loop = true
 fps = 10.0
 frame_dimensions = Vector2i(16, 16)
 frame_h_count = 7
-progress = 3
+progress = 5
 metadata/_custom_type_script = "uid://cdjphp77kgyqr"
 
 [node name="CamDeadzone" type="Area2D" parent="Node2D"]
 process_mode = 3
-position = Vector2(304, 170)
+position = Vector2(16, 0)
 script = ExtResource("15_7v2m1")
 size = Vector2i(600, 300)
 shape = SubResource("RectangleShape2D_cknl0")

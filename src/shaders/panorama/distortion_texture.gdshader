@@ -1,5 +1,8 @@
 shader_type canvas_item;
+
+#include "res://src/shaders/panorama/general_base.gdshaderinc"
 #include "res://src/shaders/panorama/linear_base.gdshaderinc"
+#include "depth_base.gdshaderinc"
 
 uniform bool texture_scroll = false;
 
@@ -10,7 +13,7 @@ uniform sampler2D noise_fwd : repeat_enable;
 
 void vertex()
 {
-	UV =  _vertex(UV, TEXTURE_PIXEL_SIZE, MODEL_MATRIX);
+	UV =  _depth_vertex(UV, TEXTURE_PIXEL_SIZE);
 }
 
 void fragment()

@@ -2,7 +2,7 @@ class_name State
 extends Node
 
 @export var transitionable: bool = true
-var fsm: FSM
+var fsm: Node
 
 signal entered
 signal exited

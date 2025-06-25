@@ -12,7 +12,6 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1j6sw"]
 shader = ExtResource("2_hscin")
-shader_parameter/transparency = 0.0
 shader_parameter/dirX = -1.0
 shader_parameter/dirY = 1.0
 shader_parameter/scroll_speed = 0.03

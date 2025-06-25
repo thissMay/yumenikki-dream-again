@@ -99,8 +99,8 @@ func load_scene(scene: PackedScene, root_node: Node, backup_root_node: Node = nu
 
 func get_curr_scene() -> SceneNode: return scene_node
 
-func get_curr_packed_scene() -> PackedScene: return null
-func get_prev_packed_scene() -> PackedScene: return null
+func get_curr_packed_scene() -> PackedScene: return scene_node_packed
+func get_prev_packed_scene() -> PackedScene: return prev_scene_ps
 
 func get_curr_additive_packed_scene() -> PackedScene: return null
 func get_prev_additive_packed_scene() -> PackedScene: return null

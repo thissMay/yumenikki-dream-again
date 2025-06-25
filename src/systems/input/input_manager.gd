@@ -51,4 +51,5 @@ class Keybind:
 		"secondary_action" 	: { "key" : [InputAction.new(KEY_X)], "command" : []},
 		
 		"inventory" 		: { "key" : [InputAction.new(KEY_ALT)], "command" : []},
+		"favourite_effect" 	: { "key" : [InputAction.new(KEY_F)], "command" : []},
 		}

@@ -9,9 +9,10 @@ extends AreaRegion
 
 func _draw() -> void:
 	if Engine.is_editor_hint():
-		draw_rect(Rect2(marker.position - Vector2(240, 135), Vector2(480, 270)), Color.RED, false, 2)
+		draw_rect(Rect2(rect.position - Vector2(240, 135), Vector2(480, 270)), Color.RED, false, 2)
 	
 func _process(delta: float) -> void:
+	super(delta)
 	if Engine.is_editor_hint():
 		queue_redraw()
 		

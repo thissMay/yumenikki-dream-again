@@ -1,7 +1,6 @@
 class_name PLEffect
 extends Resource
 
-
 @export_group("Information")
 @export var name: String = ""
 @export var desc: String = ""

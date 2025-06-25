@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="7_tckbb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_76or2"]
+size = Vector2(0, 0)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_45h0u"]
 blend_mode = 2
@@ -18,14 +19,15 @@ blend_mode = 2
 size = Vector2(16, 8)
 
 [node name="door_interactable" type="Area2D"]
-y_sort_enabled = true
 script = ExtResource("1_cv7t1")
 shape = SubResource("RectangleShape2D_76or2")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="spawn_point" type="Node2D" parent="."]
+[node name="spawn_point" type="Node2D" parent="." node_paths=PackedStringArray("parent_instead_of_self")]
 script = ExtResource("2_45h0u")
+parent_instead_of_self = NodePath("..")
+as_sibling = true
 spawn_point = Vector2(0, 25)
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
