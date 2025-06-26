@@ -8,6 +8,9 @@ const PRE_GAME_SCENES := [
 	"res://src/scenes/pre_menu.tscn",
 	"res://src/levels/menu/level.tscn"
 	]
+const MENU_SCENES := [
+	"res://src/levels/_neutral/menu/menu.tscn"
+]
 
 # ---- ----
 static var bloom: bool = false
@@ -64,12 +67,13 @@ func setup() -> void:
 	cinematic_bars.size.y = 360
 	
 	if Game.scene_manager.scene_node_packed:  
-		if !Game.scene_manager.scene_node_packed.resource_path in PRE_GAME_SCENES: change_to_state("active")
-		else: change_to_state("pregame")
+		if (
+			Game.scene_manager.scene_node_packed.resource_path in PRE_GAME_SCENES or
+			Game.scene_manager.scene_node_packed.resource_path in MENU_SCENES): change_to_state("pregame")
+		else: change_to_state("active")
 	
 	global_screen_effect.environment.glow_enabled = bloom
 	
-	Player.Instance.setup()
 
 # ---- game functionality ----
 static func pause_options(_pause: bool = true) -> void:

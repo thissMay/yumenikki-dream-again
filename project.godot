@@ -11,6 +11,14 @@ config_version=5
 [application]
 
 config/name="YUME NIKKI - demake"
+config/description="In the depth of the abyss, where no sound can be heard..
+far down below, in the void of darkness, a light glows bright.
+When all thought hope was lost, amongst the creatures of the abyss arises the returned.
+the return of a legend, of a long-spoken myth... the return of the might.
+
+Dream Again, little one, for there are more days yet to come.
+For once the sun sleeps on the verge of your world, it will be all forever done."
+config/version="PREALPHA - 00"
 run/main_scene="uid://l5hlafq1udx4"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="uid://dmp6kq3mp7d78"
@@ -41,7 +49,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/autoload_setup/plugin.cfg", "res://addons/canvas_layer_preset/plugin.cfg", "res://addons/collision_shape_offsetter/plugin.cfg", "res://addons/miscallenous/plugin.cfg")
+enabled=PackedStringArray("res://addons/autoload_setup/plugin.cfg", "res://addons/canvas_layer_preset/plugin.cfg", "res://addons/miscallenous/plugin.cfg")
 
 [file_customization]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://crej0xx7uj05p"]
+[gd_scene load_steps=18 format=3 uid="uid://crej0xx7uj05p"]
 
 [ext_resource type="Texture2D" uid="uid://cyr3omgnv06ig" path="res://src/levels/__ignore/doors/door_apartment.png" id="1_2hf7w"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_cv7t1"]
@@ -7,7 +7,9 @@
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="4_who8r"]
 [ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="5_67jxd"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="5_76or2"]
+[ext_resource type="Script" uid="uid://dlp3m6fps0h2j" path="res://src/systems/event/animation/play_animation.gd" id="7_e2ltu"]
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="7_tckbb"]
+[ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="8_bxvt1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_76or2"]
 size = Vector2(0, 0)
@@ -17,6 +19,47 @@ blend_mode = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv7t1"]
 size = Vector2(16, 8)
+
+[sub_resource type="Animation" id="Animation_orvon"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("renderer:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_e2ltu"]
+resource_name = "close"
+
+[sub_resource type="Animation" id="Animation_4eec8"]
+resource_name = "new_animation"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("renderer:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_48qyx"]
+_data = {
+&"RESET": SubResource("Animation_orvon"),
+&"close": SubResource("Animation_e2ltu"),
+&"open": SubResource("Animation_4eec8")
+}
 
 [node name="door_interactable" type="Area2D"]
 script = ExtResource("1_cv7t1")
@@ -34,11 +77,18 @@ metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 [node name="on_interact" type="Node" parent="."]
 script = ExtResource("2_lea3f")
 
+[node name="play_animation" type="Node" parent="on_interact" node_paths=PackedStringArray("animator")]
+script = ExtResource("7_e2ltu")
+animator = NodePath("../../animation")
+animation_path = "open"
+wait_til_finished = false
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
 [node name="play_sound" type="Node" parent="on_interact"]
 script = ExtResource("4_who8r")
-emit_at_finish = true
 sound = ExtResource("5_67jxd")
 pitch = 0.8
+wait_til_finished = true
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="travel_to_scene" type="Node" parent="on_interact" node_paths=PackedStringArray("spawn_point")]
@@ -48,6 +98,10 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="renderer" type="Sprite2D" parent="."]
 texture = ExtResource("1_2hf7w")
+hframes = 3
+script = ExtResource("8_bxvt1")
+frame_dimensions = Vector2i(17, 30)
+frame_h_count = 3
 
 [node name="shadow_renderer" type="Sprite2D" parent="renderer"]
 show_behind_parent = true
@@ -60,3 +114,8 @@ position = Vector2(0, 12)
 
 [node name="shape" type="CollisionShape2D" parent="coll"]
 shape = SubResource("RectangleShape2D_cv7t1")
+
+[node name="animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_48qyx")
+}

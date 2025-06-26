@@ -1,14 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://umbl6vr4s630"]
+[gd_scene load_steps=17 format=3 uid="uid://umbl6vr4s630"]
 
 [ext_resource type="PackedScene" uid="uid://qvbki1ipp72p" path="res://src/entities/sentients/template_sentient.tscn" id="1_4xce7"]
-[ext_resource type="Texture2D" uid="uid://cfciqqbav65d7" path="res://src/entities/sentients/red_jellyfish/idle.png" id="2_btpse"]
+[ext_resource type="Texture2D" uid="uid://b2wf3y71rd5l8" path="res://src/entities/sentients/red_jellyfish/flap.png" id="2_4xce7"]
 [ext_resource type="Script" uid="uid://dklkysmgxwdv2" path="res://src/entities/component/sb_animator.gd" id="3_5ta14"]
 [ext_resource type="AnimationLibrary" uid="uid://ckrlxt13tw453" path="res://src/entities/sentients/animation_libs/red_jellyfish.tres" id="4_muomx"]
 [ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="5_ggkqq"]
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_xgabx"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="7_3epvr"]
-[ext_resource type="Script" uid="uid://b625qa76yabvd" path="res://src/systems/event/sprite/play_animation.gd" id="8_w8d0c"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="9_58hj0"]
+[ext_resource type="Script" uid="uid://dlp3m6fps0h2j" path="res://src/systems/event/animation/play_animation.gd" id="10_btpse"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="10_dsey1"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="11_bibj7"]
 [ext_resource type="AudioStream" uid="uid://i75icu3fpkca" path="res://src/audio/se/jellyfish_teleport-1.WAV" id="12_1tlec"]
@@ -19,15 +19,29 @@ blend_mode = 1
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u4v1j"]
 size = Vector2(6, 3)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_4fibb"]
-radius = 15.0
+[sub_resource type="GDScript" id="GDScript_5ta14"]
+script/source = "extends Event
+
+@export var animator: SentientAnimator
+@export var animation_path: String
+@export var animation_speed: float = 1
+@export var animation_backwards: bool = false
+
+func _execute() -> void:
+	await animator.play_animation(animation_path, animation_speed, animation_backwards)
+	super()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4xce7"]
 
 [node name="red_jellyfish" instance=ExtResource("1_4xce7")]
 
 [node name="sprite_renderer" parent="." index="3"]
 position = Vector2(0, -8)
-texture = ExtResource("2_btpse")
+texture = ExtResource("2_4xce7")
+hframes = 7
 frame_dimensions = Vector2i(42, 42)
+frame_h_count = 7
 
 [node name="animation_manager" type="Node" parent="sb_components" index="1"]
 script = ExtResource("3_5ta14")
@@ -62,7 +76,7 @@ script = ExtResource("7_3epvr")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="play_animation" type="Node" parent="stance_fsm/IDLE/on_state_changed" index="0" node_paths=PackedStringArray("animator")]
-script = ExtResource("8_w8d0c")
+script = SubResource("GDScript_5ta14")
 animator = NodePath("../../../../sb_components/animation_manager")
 animation_path = "pirori/idle"
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
@@ -72,31 +86,29 @@ script = ExtResource("7_3epvr")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="play_animation" type="Node" parent="stance_fsm/WALK/on_state_changed" index="0" node_paths=PackedStringArray("animator")]
-script = ExtResource("8_w8d0c")
+script = SubResource("GDScript_5ta14")
 animator = NodePath("../../../../sb_components/animation_manager")
 animation_path = "pirori/walk"
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="interactable" type="Area2D" parent="." index="10"]
-position = Vector2(0, -4)
+[node name="Interactable" type="Area2D" parent="." index="10"]
 script = ExtResource("9_58hj0")
-only_once = true
-size = Vector2i(15, 0)
-shape = SubResource("CircleShape2D_4fibb")
+shape = SubResource("RectangleShape2D_4xce7")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="on_interact" type="Node" parent="interactable" index="2"]
+[node name="on_interact" type="Node" parent="Interactable" index="2"]
 script = ExtResource("10_dsey1")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="play_sound" type="Node" parent="interactable/on_interact" index="0"]
-script = ExtResource("11_bibj7")
-sound = ExtResource("12_1tlec")
+[node name="play_animation" type="Node" parent="Interactable/on_interact" index="0" node_paths=PackedStringArray("animator")]
+script = ExtResource("10_btpse")
+animator = NodePath("../../../sb_components/animation_manager/animation_player")
+animation_path = "red_jellyfish/flap"
+wait_til_finished = false
 metadata/_custom_type_script = "uid://vk574kc3l7av"
 
-[node name="play_animation" type="Node" parent="interactable/on_interact" index="1" node_paths=PackedStringArray("animator")]
-script = ExtResource("8_w8d0c")
-animator = NodePath("../../../sb_components/animation_manager")
-animation_path = "red_jellyfish/flap"
+[node name="play_sound" type="Node" parent="Interactable/on_interact" index="1"]
+script = ExtResource("11_bibj7")
+sound = ExtResource("12_1tlec")
 metadata/_custom_type_script = "uid://vk574kc3l7av"

@@ -133,26 +133,26 @@ func _draw() -> void:
 		# --- up and down
 		if !up_disabled or !down_disabled:
 			# ---- down overshoot
-			draw_rect(Rect2(pos_down_overshoot, v_size), Color(Color.AQUA, .275))
+			draw_rect(Rect2(pos_down_overshoot, v_size), Color(Color.AQUA, .32))
 			# ---- up overshoot
-			draw_rect(Rect2(pos_up_overshoot , v_size), Color(Color.BLUE, .275))
+			draw_rect(Rect2(pos_up_overshoot , v_size), Color(Color.BLUE, .32))
 			# ---- down mirrored
-			draw_rect(Rect2(pos_down_mirrored, v_size_mirrored), Color(Color.BLUE, .275))
+			draw_rect(Rect2(pos_down_mirrored, v_size_mirrored), Color(Color.BLUE, .32))
 			# ---- up mirrored
-			draw_rect(Rect2(pos_up_mirrored, Vector2(v_size_mirrored.x, -v_size_mirrored.y)), Color(Color.AQUA, .275)) 
+			draw_rect(Rect2(pos_up_mirrored, Vector2(v_size_mirrored.x, -v_size_mirrored.y)), Color(Color.AQUA, .32)) 
 			
 			draw_string(preload("res://fonts/FIRACODE-VARIABLEFONT_WGHT.TTF"), Vector2(boundary_size.x / 2, up.position.y + tile_size.y / 2), "LOOK AHEAD, WARP UP", HORIZONTAL_ALIGNMENT_CENTER, -1, 32, )
 			draw_string(preload("res://fonts/FIRACODE-VARIABLEFONT_WGHT.TTF"), Vector2(boundary_size.x / 2, down.position.y + tile_size.y * 2), "WARP UP", HORIZONTAL_ALIGNMENT_CENTER, -1, 32, )
 		
 		# --- right and left
 		if !right_disabled or !left_disabled:
-			draw_rect(Rect2(Vector2(pos_right_overshoot.x - h_size.x, -tile_size.y * 10 ), Vector2(h_size.x, boundary_size.y + tile_size.y * 20 )), Color(Color.RED, .275)) # ---- right overshoot
-			draw_rect(Rect2(Vector2(pos_left_overshoot.x, -tile_size.y * 10), Vector2(h_size.x, boundary_size.y + tile_size.y * 20 )), Color(Color.CORNFLOWER_BLUE, .275)) # ---- left overshoot
+			draw_rect(Rect2(Vector2(pos_right_overshoot.x - h_size.x, -tile_size.y * 10 ), Vector2(h_size.x, boundary_size.y + tile_size.y * 20 )), Color(Color.RED, .32)) # ---- right overshoot
+			draw_rect(Rect2(Vector2(pos_left_overshoot.x, -tile_size.y * 10), Vector2(h_size.x, boundary_size.y + tile_size.y * 20 )), Color(Color.CORNFLOWER_BLUE, .32)) # ---- left overshoot
 			
 			# ----> RIGHT
 			
-			draw_rect(Rect2(left.position.x + (tile_size.x * 3/2), left.position.y - boundary_size.y / 2, h_size_mirrored.x, h_size_mirrored.y), Color(Color.RED, .275)) # ---- right mirrored
-			draw_rect(Rect2(right.position.x - (tile_size.x * 3/2), right.position.y - boundary_size.y / 2, -h_size_mirrored.x , h_size_mirrored.y), Color(Color.CORNFLOWER_BLUE, .275)) # ---- left mirrored
+			draw_rect(Rect2(left.position.x + (tile_size.x * 3/2), left.position.y - boundary_size.y / 2, h_size_mirrored.x, h_size_mirrored.y), Color(Color.RED, .32)) # ---- right mirrored
+			draw_rect(Rect2(right.position.x - (tile_size.x * 3/2), right.position.y - boundary_size.y / 2, -h_size_mirrored.x , h_size_mirrored.y), Color(Color.CORNFLOWER_BLUE, .32)) # ---- left mirrored
 			
 			draw_string(preload("res://fonts/FIRACODE-VARIABLEFONT_WGHT.TTF"), Vector2(right.position.x, boundary_size.y / 2), "LOOK AHEAD, WARP RIGHT", HORIZONTAL_ALIGNMENT_CENTER, -1, 32, )
 			draw_string(preload("res://fonts/FIRACODE-VARIABLEFONT_WGHT.TTF"), Vector2(left.position.x, boundary_size.y / 2), "WARP RIGHT", HORIZONTAL_ALIGNMENT_CENTER, -1, 32, )

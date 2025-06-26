@@ -217,9 +217,8 @@ process_material = SubResource("ParticleProcessMaterial_h6ajk")
 
 [node name="cam_layer" parent="." instance=ExtResource("14_wlpfk")]
 
-[node name="camera_handler" parent="cam_layer" index="0" node_paths=PackedStringArray("target")]
+[node name="camera_handler" parent="cam_layer" index="0"]
 position = Vector2(213, 120)
-target = NodePath("../../y_order/Satsuki")
 
 [node name="bigger_jellifishies" type="GPUParticles2D" parent="cam_layer/camera_handler/camera_overlay" index="0"]
 y_sort_enabled = true
@@ -299,15 +298,6 @@ y_sort_enabled = true
 [node name="door" parent="y_order" instance=ExtResource("17_uike6")]
 position = Vector2(240, 120)
 
-[node name="m_meadows" parent="y_order" instance=ExtResource("17_uike6")]
-position = Vector2(336, -336)
-
-[node name="m_meadows_loop" parent="y_order" instance=ExtResource("17_uike6")]
-position = Vector2(336, 528)
-
-[node name="Satsuki" parent="y_order" instance=ExtResource("2_tq601")]
-position = Vector2(224, 128)
-
 [node name="jellies" type="Node2D" parent="y_order"]
 visible = false
 
@@ -325,5 +315,8 @@ position = Vector2(-72, -360)
 
 [node name="medium_jellyfish5" parent="y_order/jellies" instance=ExtResource("12_3veyl")]
 position = Vector2(-72, 504)
+
+[node name="madotsuki" parent="." instance=ExtResource("2_tq601")]
+position = Vector2(240, 144)
 
 [editable path="cam_layer"]

@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/may_yta_fire-exit.ogg-aa77dff61f21606fb0bbb81
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

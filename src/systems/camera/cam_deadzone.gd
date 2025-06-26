@@ -21,6 +21,7 @@ func _ready() -> void:
 		set_physics_process(true)
 		set_process(false)
 		
+	if size < Vector2i(480, 270): size = Vector2i(480, 270)
 	
 func _physics_process(delta: float) -> void:
 	if in_deadzone and CameraHolder.instance != null:

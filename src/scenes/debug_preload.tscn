@@ -56,8 +56,6 @@ func _ready() -> void:
 	await handle_shader_precompile()
 	await handle_scenes_precompile()
 	
-
-	GameManager.change_to_state(\"pregame\")
 	if Game.Save.read_data_value(\"read_warning\"): GameManager.change_scene_to(preload(\"res://src/levels/_neutral/menu/menu.tscn\"))
 	else: GameManager.change_scene_to(preload(\"res://src/scenes/pre_menu.tscn\"))
 
@@ -69,14 +67,12 @@ func gather_all_shaders() -> void:
 	res_cached_shader_file = FileAccess.open(\"res://\" + CACHED_SHADER_FILE_PATH, FileAccess.WRITE)
 	
 	for i in DirAccess.get_files_at(SHADERS_PATH):
-		await Game.main_tree.process_frame
 		if (i.ends_with(\".gdshader\")): 
 			shaders.append(SHADERS_PATH + i)
 			user_cached_shader_file.store_line(JSON.stringify(SHADERS_PATH + i))
 			res_cached_shader_file.store_line(JSON.stringify(SHADERS_PATH + i))
 	
 	for i in DirAccess.get_directories_at(SHADERS_PATH):
-		await Game.main_tree.process_frame
 		for j in DirAccess.get_files_at(SHADERS_PATH + i):
 			if (j.ends_with(\".gdshader\")): 
 				shaders.append(SHADERS_PATH + i + \"/\" + j)
@@ -125,7 +121,6 @@ func handle_shader_precompile() -> void:
 	var json_content: String = \"\"
 	
 	while !(curr_shader_line.is_empty()):
-		await Game.main_tree.process_frame
 		json_content = JSON.parse_string(curr_shader_line)
 		
 		if load(json_content): 
@@ -141,7 +136,6 @@ func handle_scenes_precompile() -> void:
 	var json_content: String = \"\"
 	
 	while !(curr_scenes_line.is_empty()):
-		await Game.main_tree.process_frame
 		json_content = JSON.parse_string(curr_scenes_line)
 		
 		if load(json_content): 
@@ -171,7 +165,6 @@ color = Color(0, 0, 0, 1)
 position = Vector2(240, 196)
 texture = ExtResource("2_nlmqr")
 hframes = 4
-frame = 2
 script = ExtResource("3_d62i2")
 autoplay = true
 loop = true

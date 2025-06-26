@@ -175,6 +175,12 @@ tile_set = ExtResource("10_for1j")
 [node name="Madotsuki" parent="y_order" instance=ExtResource("6_d44x6")]
 position = Vector2(208, 160)
 
+[node name="igloo_1" type="Node2D" parent="y_order"]
+
+[node name="igloo_2" type="Node2D" parent="y_order"]
+
+[node name="igloo_to_upper-abyss" type="Node2D" parent="y_order"]
+
 [node name="seamless_detector" parent="." instance=ExtResource("4_8mlla")]
 position = Vector2(-32, -16)
 expansion = Vector2i(90, 70)

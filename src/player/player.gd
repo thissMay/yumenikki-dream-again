@@ -68,7 +68,6 @@ class Instance:
 	static var equipment_pending: PLEffect
 
 	static func setup() -> void: 	
-		get_pl().equip(get_pl().DEFAULT_EFFECT)
 		print("FUCK")
 		
 		door_listener = EventListener.new(["PLAYER_DOOR_USED", "SCENE_CHANGE_SUCCESS"], true)

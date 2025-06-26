@@ -4,13 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://omtelqffkiig" path="res://src/entities/sentients/barracks/walk.png" id="2_orc3b"]
 [ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="6_cj8vh"]
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="7_44spc"]
-[ext_resource type="Script" uid="uid://b625qa76yabvd" path="res://src/systems/event/sprite/play_animation.gd" id="8_8dv4b"]
+[ext_resource type="Script" uid="uid://dlp3m6fps0h2j" path="res://src/systems/event/animation/play_animation.gd" id="8_u4v1j"]
 [ext_resource type="Script" uid="uid://dklkysmgxwdv2" path="res://src/entities/component/sb_animator.gd" id="9_4v8pq"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="9_u4v1j"]
 [ext_resource type="AnimationLibrary" uid="uid://br0km4uq5dly" path="res://src/entities/sentients/animation_libs/pirori.tres" id="10_4v8pq"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="10_lpcqq"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="11_scd0i"]
-[ext_resource type="AudioStream" uid="uid://b5hchrfj5m2th" path="res://src/audio/se/voice_anoh-3.wav" id="12_w3fjo"]
+[ext_resource type="AudioStream" uid="uid://btc4tvdxrt213" path="res://src/audio/se/se_rpgmaker_teleport.wav" id="12_u4v1j"]
 [ext_resource type="Script" uid="uid://crifn6lgacpv6" path="res://src/systems/sequence/game/on_state.gd" id="13_4v8pq"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m2dek"]
@@ -63,16 +63,13 @@ position = Vector2(0, 13.5)
 shape = SubResource("RectangleShape2D_u4v1j")
 debug_color = Color(0.845999, 0.0997133, 0.874914, 0.42)
 
-[node name="nav" parent="." index="6"]
-debug_enabled = true
-
 [node name="on_state_changed" type="Node" parent="stance_fsm/IDLE" index="0"]
 script = ExtResource("13_4v8pq")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="play_animation" type="Node" parent="stance_fsm/IDLE/on_state_changed" index="0" node_paths=PackedStringArray("animator")]
-script = ExtResource("8_8dv4b")
-animator = NodePath("../../../../sb_components/animation_manager")
+script = ExtResource("8_u4v1j")
+animator = NodePath("../../../../sb_components/animation_manager/animation_player")
 animation_path = "pirori/idle"
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -81,8 +78,8 @@ script = ExtResource("13_4v8pq")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="play_animation" type="Node" parent="stance_fsm/WALK/on_state_changed" index="0" node_paths=PackedStringArray("animator")]
-script = ExtResource("8_8dv4b")
-animator = NodePath("../../../../sb_components/animation_manager")
+script = ExtResource("8_u4v1j")
+animator = NodePath("../../../../sb_components/animation_manager/animation_player")
 animation_path = "pirori/walk"
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
@@ -104,5 +101,5 @@ metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
 [node name="PlaySound" type="Node" parent="interactable/Sequence" index="0"]
 script = ExtResource("11_scd0i")
-sound = ExtResource("12_w3fjo")
+sound = ExtResource("12_u4v1j")
 metadata/_custom_type_script = "uid://vk574kc3l7av"

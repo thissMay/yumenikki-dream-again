@@ -5,7 +5,8 @@ extends SBComponent
 @export var ray_direction: Vector2
 @export var ray_distance: float = 35
 
-signal interactable_found
+signal interactable_found(interactable)
+signal interactable_lost()
 var found: bool = false
 
 const COOL_DOWN = 1.5
@@ -28,8 +29,14 @@ func _ready() -> void:
 	field.area_entered.connect(interactable_entered)
 	field.area_exited.connect(interactable_exited)
 	
-	interactable_found.connect(func():
-		
+	interactable_found.connect(func(interactable):
+		AudioService.play_sound(load("res://src/audio/se/se_interaction_prompt.wav"), 0.8, 0.8)
+		prompt_icon.global_position = interactable.global_position
+		prompt_icon.visible = true
+		)
+	interactable_lost.connect(func():
+		print("peanits")
+		prompt_icon.visible = false
 		)
 	
 func _update(delta: float) -> void:
@@ -43,8 +50,12 @@ func _update(delta: float) -> void:
 			interaction_cooldown = COOL_DOWN
 			
 	if (curr_interactable != null and 
-		!found and !curr_interactable.secret)	: found = true
-	else										: found = false
+		!found and !curr_interactable.secret)	: 
+			interactable_found.emit(curr_interactable)
+			found = true
+	elif found and curr_interactable == null: 
+		interactable_lost.emit()
+		found = false
 
 func _input_pass(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("interact"): handle_interaction()

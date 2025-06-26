@@ -1,8 +1,8 @@
 extends Event
 
 @export var animator: SpriteSheetFormatterAnimated
-@export var animation_backwards: bool = false
+@export var sprite_sheet: Texture2D
 
 func _execute() -> void:
-	animator.play(animator.texture, animation_backwards)
+	animator.set_sprite(sprite_sheet)
 	super()

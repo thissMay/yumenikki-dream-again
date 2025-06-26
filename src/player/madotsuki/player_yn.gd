@@ -21,7 +21,9 @@ var mental_status: SBComponent
 var sprite_sheet: SerializableDict = preload("res://src/player/madotsuki/sprite_sheets/no_effect.tres")
 var action: PLAction 
 
-func _ready() -> void: super()
+func _ready() -> void: 
+	super()
+
 
 func dependency_components() -> void:	
 	audio_listener = $audio_listener
@@ -30,6 +32,9 @@ func dependency_components() -> void:
 	marker_look_at = $look_at
 
 func dependency_setup() -> void:
+	if Instance.equipment_pending == null:
+		equip(DEFAULT_EFFECT)
+	
 	marker_look_at._setup()			# --- fsm; not player dependency but required
 	stamina_fsm._setup() 	# --- fsm; not player dependency but required
 	input_fsm._setup(self) 	# --- fsm; not player dependency but required

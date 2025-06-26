@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/may_yta_starlight-lanes.ogg-4556a327dc5384321
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

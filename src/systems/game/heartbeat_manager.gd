@@ -42,7 +42,6 @@ func _update(delta: float) -> void:
 			"Distorted", 0, 
 			"drive", (0.003 * (bpm - 60)))
 
-
 func set_active(_active: bool = true) -> void:
 	if !_active:
 		sound_player.volume_db = -50

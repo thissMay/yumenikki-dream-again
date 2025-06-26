@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/may_yta_ominous-alley.ogg-e0870251ff26db8a9b9
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

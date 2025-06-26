@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/may_yta_candlebath.ogg-4600cda40fb15e99bc67cd
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

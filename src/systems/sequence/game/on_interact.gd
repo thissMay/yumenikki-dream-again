@@ -1,3 +1,4 @@
+class_name OnInteract
 extends Sequence
 
 var interactable: Interactable

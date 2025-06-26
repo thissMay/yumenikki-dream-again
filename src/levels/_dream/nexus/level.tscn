@@ -184,10 +184,23 @@ position = Vector2(336, 32)
 [node name="forest_world" parent="y_order" instance=ExtResource("12_ftke6")]
 position = Vector2(192, 144)
 
-[node name="candle_world" parent="." instance=ExtResource("12_ftke6")]
+[node name="candle_world" parent="y_order" instance=ExtResource("12_ftke6")]
 position = Vector2(144, 400)
 
-[node name="puddle_world" parent="." instance=ExtResource("12_ftke6")]
+[node name="puddle_world" parent="y_order" instance=ExtResource("12_ftke6")]
 position = Vector2(64, 272)
 
+[node name="shield_folk_world" parent="y_order" instance=ExtResource("12_ftke6")]
+position = Vector2(128, 464)
+
+[node name="eye_world" parent="y_order" instance=ExtResource("12_ftke6")]
+position = Vector2(256, 480)
+
+[node name="apartment" parent="y_order" instance=ExtResource("12_ftke6")]
+position = Vector2(128, 448)
+
+[node name="graffiti_world" parent="y_order" instance=ExtResource("12_ftke6")]
+position = Vector2(192, 448)
+
 [editable path="camera"]
+[editable path="y_order/graffiti_world"]

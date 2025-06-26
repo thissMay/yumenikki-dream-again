@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c30tca8ol6ugo"]
+[gd_scene load_steps=15 format=3 uid="uid://c30tca8ol6ugo"]
 
 [ext_resource type="Texture2D" uid="uid://jyyt5bquldaa" path="res://src/images/panorama/glow_sea.png" id="2_juckd"]
 [ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="2_k0aey"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="3_juckd"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="4_tcehx"]
 [ext_resource type="Script" uid="uid://d3r72epfndsge" path="res://src/autoloads/panorama_system.gd" id="6_v2jl3"]
+[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="7_tcehx"]
+[ext_resource type="AudioStream" uid="uid://b2e6121pglq8s" path="res://src/audio/bgm/may_yta_running-river.ogg" id="8_qwet7"]
 
 [sub_resource type="GDScript" id="GDScript_x008i"]
 resource_name = "premenu"
@@ -26,14 +28,14 @@ func _ready() -> void:
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k0aey"]
 shader = ExtResource("4_tcehx")
-shader_parameter/transparency = 0.0
 shader_parameter/dirX = 1.0
 shader_parameter/dirY = 1.0
 shader_parameter/scroll_speed = 0.02
-shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/uv_offset_initial = Vector2(0, 0)
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
 
 [sub_resource type="Curve" id="Curve_o2rco"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.8496, 0.0, 0, 0]
@@ -48,7 +50,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="pre_menu" type="Node" node_paths=PackedStringArray("proceed")]
 script = SubResource("GDScript_x008i")
-scene_path = "uid://c04slc7ycspa5"
+scene_path = "uid://btg3e240ltjxx"
 proceed = NodePath("warning/Control/VBoxContainer/proceed")
 metadata/_custom_type_script = "uid://dcos3dvfrola8"
 
@@ -81,6 +83,8 @@ color_ramp = SubResource("Gradient_05aq0")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -10.0
+offset_right = 10.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -112,9 +116,12 @@ layout_mode = 2
 mouse_filter = 2
 bbcode_enabled = true
 text = "This project is just a tribute to Kikiyama's original Yume Nikki project. This is NOT the original Yume Nikki.
-The project  at its current state does not contain all [color=yellow]events, effects and worlds[/color].
+The project  at its current state does not contain the following: [color=yellow]events, effects all the worlds, and saving[/color].
+(yes I know, I will provide game updates in the following weeks)
 
-More updates may be added to compensate for any missing world, effect, events, etc. 
+This game is labelled as pre-alpha. The game's continuity and
+support is subject to change, however, updates will be added to compensate missing game elemented.  
+
 Thank you for your understanding!
 "
 fit_content = true
@@ -122,14 +129,20 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="proceed" type="Control" parent="warning/Control/VBoxContainer"]
-custom_minimum_size = Vector2(421, 25)
+custom_minimum_size = Vector2(300, 25)
 layout_mode = 2
 theme = ExtResource("2_k0aey")
 script = ExtResource("3_juckd")
 button_display_texture = SubResource("CanvasTexture_kfffw")
-min_size = Vector2(421, 25)
-true_size = Vector2(421, 25)
+min_size = Vector2(300, 25)
+true_size = Vector2(396, 25)
 text = "Continue"
 panel_display_texture = SubResource("CanvasTexture_wghfn")
 panel_display_color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="BGM" type="Node" parent="."]
+script = ExtResource("7_tcehx")
+stream = ExtResource("8_qwet7")
+pitch = 0.7
+metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
