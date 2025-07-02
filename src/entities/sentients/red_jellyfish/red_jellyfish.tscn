@@ -93,6 +93,7 @@ metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="Interactable" type="Area2D" parent="." index="10"]
 script = ExtResource("9_58hj0")
+size = Vector2i(0, 0)
 shape = SubResource("RectangleShape2D_4xce7")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"

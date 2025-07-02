@@ -8,15 +8,16 @@ var data := {"prop" : {} }
 
 
 # ---- load (props) ----
-func load_data() -> Error:
+func load_data(_scene: SceneNode) -> Error:
 	parent = get_parent()
 	if parent == null: return ERR_UNAVAILABLE
 		
 	# we are going to fetch it from game lol.
 	
 	if properties:
-		for prop in Game.data["scene"][Game.scene_manager.get_curr_scene().name]["data"]["prop"]:
-			parent.set_indexed(prop, Game.data["scene"][Game.scene_manager.get_curr_scene().name]["data"]["prop"].get(prop))
+		var saved_data = NodeSaveService.data["scene"][_scene.name]["data"]["prop"]
+		for prop in saved_data:
+			parent.set_indexed(prop, saved_data.get(prop))
 			
 		return OK
 	return ERR_DOES_NOT_EXIST

@@ -1,0 +1,150 @@
+[gd_scene load_steps=16 format=3 uid="uid://d16fq6x3pv6mv"]
+
+[ext_resource type="PackedScene" uid="uid://qvbki1ipp72p" path="res://src/entities/sentients/template_sentient.tscn" id="1_molju"]
+[ext_resource type="Texture2D" uid="uid://vn6paag4ef7l" path="res://src/entities/sentients/effects/lantern.png" id="2_ta76c"]
+[ext_resource type="Script" uid="uid://dklkysmgxwdv2" path="res://src/entities/component/sb_animator.gd" id="3_xui3l"]
+[ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="5_5j888"]
+[ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_grvug"]
+[ext_resource type="Script" uid="uid://crifn6lgacpv6" path="res://src/systems/sequence/game/on_state.gd" id="7_addxj"]
+[ext_resource type="PackedScene" uid="uid://36fsvg2ttglw" path="res://src/levels/__ignore/template_effect_collect.tscn" id="8_d620m"]
+[ext_resource type="Script" uid="uid://dlp3m6fps0h2j" path="res://src/systems/event/animation/play_animation.gd" id="8_smbp0"]
+[ext_resource type="Resource" uid="uid://dtb7ixtykb6a0" path="res://src/player/madotsuki/effects/lamp/lamp.tres" id="9_4o1dq"]
+
+[sub_resource type="Animation" id="Animation_n4eku"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../sprite_renderer:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_dgnhl"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../sprite_renderer:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_82eub"]
+resource_name = "walk"
+length = 0.5
+loop_mode = 2
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../sprite_renderer:progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vfqoi"]
+_data = {
+&"RESET": SubResource("Animation_n4eku"),
+&"idle": SubResource("Animation_dgnhl"),
+&"walk": SubResource("Animation_82eub")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jg6uj"]
+blend_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u4v1j"]
+size = Vector2(6, 3)
+
+[node name="lantern" instance=ExtResource("1_molju")]
+
+[node name="sprite_renderer" parent="." index="3"]
+position = Vector2(0, 4)
+texture = ExtResource("2_ta76c")
+hframes = 3
+vframes = 3
+frame_dimensions = Vector2i(24, 24)
+frame_h_count = 3
+frame_v_count = 3
+
+[node name="animation_manager" type="Node" parent="sb_components" index="1"]
+script = ExtResource("3_xui3l")
+metadata/_custom_type_script = "uid://dklkysmgxwdv2"
+
+[node name="animation_player" type="AnimationPlayer" parent="sb_components/animation_manager" index="0"]
+libraries = {
+&"": SubResource("AnimationLibrary_vfqoi")
+}
+
+[node name="footstep_manager" type="Node2D" parent="sb_components" index="2"]
+material = SubResource("CanvasItemMaterial_jg6uj")
+script = ExtResource("5_5j888")
+
+[node name="sound_player" type="AudioStreamPlayer2D" parent="sb_components/footstep_manager" index="0"]
+max_distance = 750.0
+bus = &"Effects"
+script = ExtResource("6_grvug")
+metadata/_custom_type_script = "uid://b8o626ec7226k"
+
+[node name="terrain_detector" type="Area2D" parent="sb_components/footstep_manager" index="1"]
+collision_layer = 8
+collision_mask = 9
+
+[node name="col" type="CollisionShape2D" parent="sb_components/footstep_manager/terrain_detector" index="0"]
+position = Vector2(0, 13.5)
+shape = SubResource("RectangleShape2D_u4v1j")
+debug_color = Color(0.845999, 0.0997133, 0.874914, 0.42)
+
+[node name="on_state_changed" type="Node" parent="stance_fsm/IDLE" index="0"]
+script = ExtResource("7_addxj")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="play_animation" type="Node" parent="stance_fsm/IDLE/on_state_changed" index="0" node_paths=PackedStringArray("animator")]
+script = ExtResource("8_smbp0")
+animator = NodePath("../../../../sb_components/animation_manager/animation_player")
+animation_path = &"idle"
+wait_til_finished = false
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="on_state_changed" type="Node" parent="stance_fsm/WALK" index="0"]
+script = ExtResource("7_addxj")
+metadata/_custom_type_script = "uid://c1od80bn28h0l"
+
+[node name="play_animation" type="Node" parent="stance_fsm/WALK/on_state_changed" index="0" node_paths=PackedStringArray("animator")]
+script = ExtResource("8_smbp0")
+animator = NodePath("../../../../sb_components/animation_manager/animation_player")
+animation_path = &"walk"
+wait_til_finished = false
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="behaviour_fsm" parent="." index="8" node_paths=PackedStringArray("initial_state")]
+initial_state = NodePath("WANDER")
+
+[node name="WANDER" parent="behaviour_fsm" index="2"]
+max_wait_time = 2.0
+wander_radius = 20.0
+
+[node name="effect_collectable" parent="." index="10" instance=ExtResource("8_d620m")]
+
+[node name="append_effect" parent="effect_collectable/on_interact" index="0"]
+effect = ExtResource("9_4o1dq")
+
+[node name="notification" parent="effect_collectable/on_interact" index="2"]
+texts = Array[String](["Effect Collect!... Lamp!"])
+
+[editable path="effect_collectable"]

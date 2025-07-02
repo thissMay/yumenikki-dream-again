@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://dgcff10ohhvo7"]
+[gd_scene load_steps=20 format=4 uid="uid://dgcff10ohhvo7"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_fu6ox"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_7ddji"]
@@ -15,13 +15,19 @@
 [ext_resource type="Script" uid="uid://bokon3yk8g4bw" path="res://src/systems/utils/on_screen_notifier.gd" id="9_8lxbn"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="12_sigku"]
 [ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/camera/sequence_region.gd" id="14_lju3l"]
-[ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/systems/region/region.gd" id="17_t3e8h"]
+[ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/player/region.gd" id="17_t3e8h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yon0t"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3gy64"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tio2d"]
 size = Vector2(1525, 80)
 
 [node name="dense_woods" type="Node"]
 script = ExtResource("1_fu6ox")
+load_transition = SubResource("ShaderMaterial_yon0t")
+unload_transition = SubResource("ShaderMaterial_3gy64")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="BGM" type="Node" parent="."]

@@ -10,8 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="7_m3153"]
 [ext_resource type="Texture2D" uid="uid://c8k1sxkde80gi" path="res://src/images/panorama/clouds.png" id="7_os0pt"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tilemaps/_common_objs.tres" id="10_xfl1x"]
-[ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/systems/region/region.gd" id="11_6t0p7"]
-[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/spawn_point.gd" id="12_a71sk"]
+[ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/player/region.gd" id="11_6t0p7"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="12_a71sk"]
 [ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/camera/sequence_region.gd" id="13_h3a08"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="14_2hqby"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="15_43eek"]
@@ -111,7 +111,6 @@ metadata/_custom_type_script = "uid://4dkyll6fxqod"
 
 [node name="spawn_point" type="Node2D" parent="y_order/to_seahorse"]
 script = ExtResource("12_a71sk")
-spawn_point = Vector2(20, 0)
 spawn_dir = Vector2(1, 0)
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
@@ -124,9 +123,8 @@ metadata/_custom_type_script = "uid://c1od80bn28h0l"
 script = ExtResource("14_2hqby")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="travel_to_scene" type="Node" parent="y_order/to_seahorse/sequence_region/enter" node_paths=PackedStringArray("spawn_point")]
+[node name="travel_to_scene" type="Node" parent="y_order/to_seahorse/sequence_region/enter"]
 script = ExtResource("15_43eek")
-spawn_point = NodePath("../../../spawn_point")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="to_mural" type="Area2D" parent="y_order"]
@@ -137,7 +135,6 @@ metadata/_custom_type_script = "uid://4dkyll6fxqod"
 
 [node name="spawn_point" type="Node2D" parent="y_order/to_mural"]
 script = ExtResource("12_a71sk")
-spawn_point = Vector2(20, 0)
 spawn_dir = Vector2(1, 0)
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
@@ -150,9 +147,8 @@ metadata/_custom_type_script = "uid://c1od80bn28h0l"
 script = ExtResource("14_2hqby")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="travel_to_scene" type="Node" parent="y_order/to_mural/sequence_region/enter" node_paths=PackedStringArray("spawn_point")]
+[node name="travel_to_scene" type="Node" parent="y_order/to_mural/sequence_region/enter"]
 script = ExtResource("15_43eek")
-spawn_point = NodePath("../../../spawn_point")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="to_wilderness" type="Area2D" parent="y_order"]
@@ -167,8 +163,6 @@ position = Vector2(48, 0)
 script = ExtResource("12_a71sk")
 parent_instead_of_self = NodePath("..")
 as_sibling = true
-scene_path = "uid://cs8yn56f0t60a"
-spawn_point = Vector2(0, -20)
 spawn_dir = Vector2(0, -1)
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
@@ -181,9 +175,8 @@ metadata/_custom_type_script = "uid://c1od80bn28h0l"
 script = ExtResource("14_2hqby")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="travel_to_scene" type="Node" parent="y_order/to_wilderness/sequence_region/enter" node_paths=PackedStringArray("spawn_point")]
+[node name="travel_to_scene" type="Node" parent="y_order/to_wilderness/sequence_region/enter"]
 script = ExtResource("15_43eek")
-spawn_point = NodePath("../../../from_wilderness")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [editable path="camera"]

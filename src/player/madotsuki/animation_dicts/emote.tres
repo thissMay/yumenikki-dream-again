@@ -1,4 +1,4 @@
-[gd_resource type="AnimationLibrary" load_steps=17 format=3 uid="uid://bm1cor2werd5w"]
+[gd_resource type="AnimationLibrary" load_steps=18 format=3 uid="uid://bm1cor2werd5w"]
 
 [ext_resource type="Texture2D" uid="uid://d4i48avg5j1dg" path="res://src/player/madotsuki/display/cat/gesture.png" id="1_kpkma"]
 [ext_resource type="AudioStream" uid="uid://du5x1lok1mk78" path="res://src/audio/se/se_cloth_foley_3.wav" id="2_ixmb4"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dvmf5dneeyi23" path="res://src/player/madotsuki/display/default/sit.png" id="6_6o6td"]
 [ext_resource type="AudioStream" uid="uid://cwbsiscenoxfx" path="res://src/audio/se/se_cloth_foley_2.wav" id="7_dxry4"]
 [ext_resource type="Texture2D" uid="uid://b7wes4n6knano" path="res://src/player/madotsuki/display/hand/teleport.png" id="8_5w8d5"]
+[ext_resource type="AudioStream" uid="uid://1u5rrr0cx8ad" path="res://src/audio/se/pinch.WAV" id="8_qgfnh"]
 [ext_resource type="Texture2D" uid="uid://dt0b3unu3sv16" path="res://src/player/madotsuki/display/default/dansen.png" id="9_ly3ai"]
 
 [sub_resource type="Animation" id="Animation_kt2ol"]
@@ -197,8 +198,12 @@ tracks/1/path = NodePath("../../sound_player")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"clips": [],
-"times": PackedFloat32Array()
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("8_qgfnh")
+}],
+"times": PackedFloat32Array(0.6)
 }
 tracks/1/use_blend = true
 tracks/2/type = "value"
@@ -208,10 +213,10 @@ tracks/2/path = NodePath("../../sprite_renderer:progress")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.366667, 0.466667, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.366667, 0.466667, 0.6, 0.7, 0.8, 0.9, 0.966667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 }
 
 [sub_resource type="Animation" id="Animation_dxry4"]

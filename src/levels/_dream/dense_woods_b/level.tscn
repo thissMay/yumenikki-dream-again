@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="10_wuq7m"]
 [ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tilemaps/_common_objs.tres" id="11_c3ibc"]
 [ext_resource type="PackedScene" uid="uid://umbl6vr4s630" path="res://src/entities/sentients/red_jellyfish/red_jellyfish.tscn" id="12_bsddk"]
-[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/spawn_point.gd" id="13_c7s3o"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="13_c7s3o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pemjj"]
 

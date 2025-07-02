@@ -40,7 +40,7 @@ var displacement: Vector2
 var in_range: bool
 
 
-func _update(delta: float) -> void: 
+func _update(_delta: float) -> void: 
 	if !(suspicion_region != null and suspicion_region.shape is CircleShape2D): return
 	
 	radius = suspicion_region.shape.radius 

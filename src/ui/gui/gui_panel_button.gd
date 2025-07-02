@@ -6,7 +6,7 @@ extends GUIPanel
 @export_category("Button Properties")
 
 # ---- constants ----
-var button_display_texture_shader: Shader = preload("res://src/shaders/ui/button_texture_grad_mask.gdshader")
+const  button_display_texture_shader: Shader = preload("res://src/shaders/ui/button_texture_grad_mask.gdshader")
 
 # ---- common vars ----
 @export_group("Button Visuals")
@@ -17,15 +17,10 @@ var button_display_texture_shader: Shader = preload("res://src/shaders/ui/button
 		if main_container != null: 
 			if _ov: main_container.add_theme_stylebox_override("panel", _ov)
 			else: main_container.remove_theme_stylebox_override("panel")
-@export var button_display_texture: Texture = CanvasTexture.new():
-	set(_t):
-		button_display_texture = _t
-		set_button_texture(_t)
+@export var button_display_texture: Texture = CanvasTexture.new()
 
 @export_group("Color Visuals")
-
 var curr_color = Color.WHITE
-
 @export var normal_color = Color(1, 1, 1, 1)
 @export var hover_color: Color = Color(1, 0.0, 0.23, 1)
 @export var disabled_color: Color = Color(0.35, 0.35, 0.45) 
@@ -36,92 +31,78 @@ var curr_color = Color.WHITE
 @export var unique_data: Resource
 
 # ---- signals ----
+var is_toggled: bool = false
+
 signal pressed
 signal toggled(_truth)
 signal hover_entered
 signal hover_exited
 
-
-# ---- inner button components ---- 
-var button: BaseButton
+@export var button: BaseButton
 var modu_tw: Tween
 var disp_tw: Tween
 
 # ---- flags ---- 
 @export_group("Flags")
-var is_toggled: bool = false
-@export var is_togglable: bool = false:
-	set(_tog):
-		is_togglable = _tog
-		if Engine.is_editor_hint(): set_button_toggle_mode(_tog)
-@export var disabled: bool = false
 
-func _init() -> void:
-	button = BaseButton.new()
-	super()
-func _ready() -> void: 
-	super()
-	set_active(!disabled)
-	set_button_toggle_mode(is_togglable)
+func _ready() -> void:
+	await super()
+	
+	set_active(true)
 	panel_display_color = normal_color
 	visibility_changed.connect(
 		func():
 			unhover_animation()
 			set_modulate(curr_color))
 
+	display_bg.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	display_bg.size_flags_vertical = Control.SIZE_FILL
+	
 	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	button.focus_mode = Control.FOCUS_NONE
+	
+	if Engine.is_editor_hint():
+		set_text(text)
+		set_button_modulate(curr_color)
+		set_size(true_size)
 		
-func _components_children_setup() -> void: 
-	super()
+func _additional_setup() -> void:	
+	self.mouse_filter = Control.MOUSE_FILTER_PASS
 	
 	display_bg.texture = button_display_texture
 	display_bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	display_bg.stretch_mode = TextureRect.STRETCH_SCALE
-		
-	main_container.add_child(button)
-func _component_name_setups() -> void:
-	super()
-	button.name = "button"
-
-func _post_ready_setup() -> void:
-	display_bg.size_flags_horizontal = true
-	display_bg.size_flags_horizontal = false
-
-func _setup() -> void:	
-	super()
 	
 	button.mouse_entered.connect(_on_hover)
 	button.mouse_exited.connect(_on_unhover)
 	button.button_down.connect(_on_press)
+	
+	display_bg.size_flags_horizontal = true
+	display_bg.size_flags_horizontal = false
 
 # --- visual & general behaviour functions ---
 func _on_hover() -> void: 
-	if !disabled:
-		hover_entered.emit()
-		AudioService.play_sound(preload("res://src/audio/ui/ui_button_hover.wav"), .5)
-		hover_animation()
-		set_button_modulate(hover_color)
+	hover_entered.emit()
+	AudioService.play_sound(preload("res://src/audio/ui/ui_button_hover.wav"), .5)
+	hover_animation()
+	set_button_modulate(hover_color)
 func _on_unhover() -> void: 
-	if !disabled:
-		hover_exited.emit()
-		AudioService.play_sound(preload("res://src/audio/ui/ui_button_unhover.wav"), .5)
-		unhover_animation()
-		set_button_modulate(normal_color)
-
+	hover_exited.emit()
+	AudioService.play_sound(preload("res://src/audio/ui/ui_button_unhover.wav"), .5)
+	unhover_animation()
+	set_button_modulate(normal_color)
 func _on_press() -> void: 
-	if !disabled:
-		AudioService.play_sound(preload("res://src/audio/ui/ui_button_press.wav"))
-		await press_animation()
-		pressed.emit.call_deferred()
+	AudioService.play_sound(preload("res://src/audio/ui/ui_button_press.wav"))
+	await press_animation()
+	pressed.emit.call_deferred()
 
-		if is_togglable:
-			is_toggled = !is_toggled
-			
-			if is_toggled: _on_toggle()
-			else: _on_untoggle() 
-			
-			toggled.emit(is_toggled)
+	if button.toggle_mode:
+		is_toggled = !is_toggled
+		
+		if is_toggled: _on_toggle()
+		else: _on_untoggle() 
+		
+		toggled.emit(is_toggled)
 	
 func _on_toggle() -> void: 
 	button.mouse_entered.disconnect(_on_hover)
@@ -170,12 +151,6 @@ func unpress_animation() -> void:
 	set_button_modulate(normal_color)
 
 # --- setter functions ---
-func set_button_texture(_texture: Texture2D) -> void:
-	display_bg.texture = _texture
-func set_button_texture_display_shader(_shader: Shader) -> void:
-	if display_bg != null:
-		display_bg.material = ShaderMaterial.new()
-		display_bg.material.shader = _shader
 
 func set_button_modulate(
 	_modu: Color, 
@@ -195,16 +170,14 @@ func set_button_modulate(
 	modu_tw.tween_method(set_modulate, self.modulate, _modu, dur * get_process_delta_time())
 		
 	await modu_tw.finished
-
-
 func set_button_toggle_mode(_toggle: bool) -> void:
 	if button != null:
 		button.toggle_mode = _toggle
 
-func set_active(_a: bool) -> void:
-	button.disabled = !_a
-	self.disabled = !_a
-	match _a:
+func set_active(_active: bool) -> void:
+	button.disabled = !_active
+	self.disabled = !_active
+	match _active:
 		true: set_button_modulate(normal_color)
 		false: set_button_modulate(disabled_color)
 

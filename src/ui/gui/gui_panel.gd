@@ -44,15 +44,14 @@ var DEFAULT_PANEL_DISPLAY_TEXTURE := CanvasTexture.new()
 
 # ---- common vars ----
 @export_group("Panel Visuals")
-@export var custom_theme: bool = false
 @export var text: String = "placeholder":
 	set(_t):
 		text = _t
-		set_display_text(_t)
+		if Engine.is_editor_hint(): set_display_text(_t)
 @export var icon: Texture2D = null:
 	set(i): 
 		icon = i
-		set_icon(i)
+		if Engine.is_editor_hint(): set_icon(i)
 
 @export var panel_stylebox_override: StyleBoxTexture:
 	set(_ov):
@@ -60,80 +59,40 @@ var DEFAULT_PANEL_DISPLAY_TEXTURE := CanvasTexture.new()
 		if main_container != null: 
 			if _ov: main_container.add_theme_stylebox_override("panel", _ov)
 			else: main_container.remove_theme_stylebox_override("panel")
-@export var panel_display_texture: Texture2D = DEFAULT_PANEL_DISPLAY_TEXTURE:
-	set(_texture):
-		panel_display_texture = _texture
-		if _texture: display_bg.texture = _texture
-		else: display_bg.texture = DEFAULT_PANEL_DISPLAY_TEXTURE
-@export var panel_display_color: Color = DEFAULT_DISPLAY_BG_COLOR:
-	set(_c):
-		panel_display_color = _c
-		set_panel_modulate(_c)
+@export var panel_display_texture: Texture2D = DEFAULT_PANEL_DISPLAY_TEXTURE
+@export var panel_display_color: Color = DEFAULT_DISPLAY_BG_COLOR
 @export var panel_display_shader: Shader = DEFAULT_PANEL_DISPLAY_SHADER:
 	set(_shader):
 		panel_display_shader = _shader
 		set_panel_texture_display_shader(panel_display_shader)
 
 # ---- inner button components ---- 
-var display_bg: TextureRect
+@export var display_bg: TextureRect
 
-var main_container: PanelContainer
-var inner_main_container: CenterContainer
-var icon_content_seperator: HBoxContainer
+@export var main_container: PanelContainer
+@export var inner_main_container: CenterContainer
+@export var icon_content_seperator: HBoxContainer
 
-var margin_container: MarginContainer
-var icon_display_container: CenterContainer
-var icon_display: TextureRect
+@export var margin_container: MarginContainer
+@export var icon_display_container: CenterContainer
+@export var icon_display: TextureRect
 
-var text_display: Label
+@export var text_display: Label
 
-func _init() -> void:
-	display_bg = TextureRect.new()
-	
-	main_container = PanelContainer.new()
-	inner_main_container = CenterContainer.new()
-	icon_content_seperator = HBoxContainer.new()
-	
-	icon_display_container = CenterContainer.new()
-	icon_display = TextureRect.new() 
-	
-	margin_container = MarginContainer.new()
-	text_display = Label.new()
-	
-	_components_children_setup()
 func _ready() -> void: 
-	if !custom_theme: self.theme = preload("res://src/code_theme.tres")
-	resize_panel(self.size)
-	_setup()
-	_post_ready_setup()
-	
-	set_panel_modulate(panel_display_color)
-
-func _components_children_setup() -> void: 
-	self.add_child(main_container)
-	
-	main_container.add_child(display_bg)
-	main_container.add_child(margin_container)
-	
-	margin_container.add_child(icon_content_seperator)
-	
-	icon_content_seperator.add_child(icon_display_container)
-	icon_content_seperator.add_child(inner_main_container)
-	icon_display_container.add_child(icon_display)
-	
-	inner_main_container.add_child(text_display)
-
-func _component_name_setups() -> void:
-	main_container.name = "main_container"
-	inner_main_container.name = "inner_main_container"
-	icon_content_seperator.name = "icon_content_seperator"
-	icon_display_container.name = "icon_display_container"
-	icon_display.name = "icon_display"
-	display_bg.name = "button_display_bg"
-	margin_container.name = "margin_container"
-
-func _setup() -> void:
+	if theme == null: self.theme = preload("res://src/code_theme.tres")
+	if Engine.is_editor_hint():
+		await _core_setup()
+		resize_panel(self.size)
+		set_panel_modulate(panel_display_color)
+		
+	if !Engine.is_editor_hint():
+		_additional_setup()
+		
+func _additional_setup() -> void: pass
+func _core_setup() -> void:
 	main_container.size = self.size
+	main_container.set_anchors_preset(Control.PRESET_FULL_RECT)
 		
 	self.resized.connect(func(): main_container.size = self.size)
 	main_container.resized.connect(func(): resize_panel(main_container.size))
@@ -160,21 +119,19 @@ func _setup() -> void:
 	margin_container.add_theme_constant_override("margin_bottom", 2)
 	margin_container.add_theme_constant_override("margin_right", 4)
 	margin_container.add_theme_constant_override("margin_left", 4)
-		
-	#set_icon(icon)
-	set_panel_texture_display_shader(panel_display_shader)
 	
-	_component_name_setups()	
-func _post_ready_setup() -> void:
 	display_bg.texture = CanvasTexture.new()
 	display_bg.size_flags_horizontal = true
 	display_bg.size.y = main_container.size.x
 	display_bg.size.y = main_container.size.y
+		
+	set_icon(icon)
+	set_panel_texture_display_shader(panel_display_shader)
 	
 # --- setter functions ---
 func set_icon(_icon: Texture2D) -> void: 
-	icon_display.texture = _icon
-	icon_display_container.visible = (icon_display.texture != null)
+	if icon_display != null: icon_display.texture = _icon
+	if icon_display_container != null: icon_display_container.visible = (icon_display.texture != null)
 	
 func set_panel_texture_display_shader(_shader: Shader) -> void:
 	if display_bg != null:
@@ -185,7 +142,8 @@ func set_panel_modulate(_modu: Color) -> void:
 	display_bg.modulate = _modu
 	
 func set_text(_t: String) -> void: text = _t
-func set_display_text(_t: String) -> void: text_display.text = _t
+func set_display_text(_t: String) -> void: 
+	if text_display != null: text_display.text = _t
 
 func set_min_size(_new: Vector2) -> void: min_size = _new
 func set_max_size(_new: Vector2) -> void: max_size = _new

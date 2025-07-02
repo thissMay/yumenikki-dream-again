@@ -1,30 +1,160 @@
-[gd_scene load_steps=6 format=3 uid="uid://dq11omgyd2frp"]
+[gd_scene load_steps=9 format=3 uid="uid://dq11omgyd2frp"]
 
-[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ik2bo"]
-[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/camera/cam_deadzone.gd" id="2_hnna6"]
-[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="3_e7a25"]
-[ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_e7a25"]
+[ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="2_f6176"]
+[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="3_f6176"]
+[ext_resource type="Shader" uid="uid://bhdcejnx8m6be" path="res://src/shaders/ui/button_texture_grad_mask.gdshader" id="4_gl07r"]
+[ext_resource type="LabelSettings" uid="uid://dbxux4dchsxxt" path="res://src/global_label_settings.tres" id="5_mrv35"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ubj2b"]
-size = Vector2(480, 270)
+[sub_resource type="CanvasTexture" id="CanvasTexture_kciqk"]
 
-[node name="2" type="Node"]
-script = ExtResource("1_ik2bo")
-metadata/_custom_type_script = "uid://b1ofr4umso5jf"
+[sub_resource type="CanvasTexture" id="CanvasTexture_f6176"]
 
-[node name="CamDeadzone" type="Area2D" parent="."]
-process_mode = 3
-script = ExtResource("2_hnna6")
-size = Vector2i(480, 270)
-shape = SubResource("RectangleShape2D_ubj2b")
-metadata/_custom_type_script = "uid://btgm8okupfro7"
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gl07r"]
+shader = ExtResource("4_gl07r")
+shader_parameter/first_color = Color(0, 0, 0, 1)
+shader_parameter/second_color = Color(0, 0, 0, 0)
+shader_parameter/position = 0.0
+shader_parameter/size = 1.0
+shader_parameter/angle = 0.0
 
-[node name="madotsuki" parent="." instance=ExtResource("3_e7a25")]
-position = Vector2(-352, 0)
+[sub_resource type="CanvasTexture" id="CanvasTexture_mrv35"]
 
-[node name="camera" parent="." instance=ExtResource("4_e7a25")]
+[node name="transition" type="Node"]
 
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../madotsuki")
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(70, 25)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 70.0
+offset_bottom = 40.0
+theme = ExtResource("2_f6176")
+script = ExtResource("3_f6176")
+button_display_texture = SubResource("CanvasTexture_kciqk")
+button = Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":0.0,"anchor_bottom":0.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":2,"shortcut_context":null,"theme":null,"theme_type_variation":&"","disabled":false,"toggle_mode":false,"button_pressed":false,"action_mode":1,"button_mask":1,"keep_pressed_outside":false,"button_group":null,"shortcut":null,"shortcut_feedback":true,"shortcut_in_tooltip":true,"script":null)
 
-[editable path="camera"]
+true_size = Vector2(70, 40)
+panel_display_texture = SubResource("CanvasTexture_f6176")
+panel_display_color = Color(1, 1, 1, 1)
+display_bg = Object(TextureRect,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":0.0,"anchor_bottom":0.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":40.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":0,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","texture":null,"expand_mode":1,"stretch_mode":0,"flip_h":false,"flip_v":false,"script":null)
+
+main_container = Object(PanelContainer,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":0.0,"anchor_bottom":0.0,"offset_left":0.0,"offset_top":0.0,"offset_right":70.0,"offset_bottom":40.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","script":null)
+
+inner_main_container = Object(CenterContainer,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":0.0,"anchor_bottom":0.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","use_top_left":false,"script":null)
+
+icon_content_seperator = Object(HBoxContainer,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":0.0,"anchor_bottom":0.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","alignment":0,"script":null)
+
+margin_container = Object(MarginContainer,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":0.0,"anchor_bottom":0.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","theme_override_constants/margin_left":4,"theme_override_constants/margin_top":2,"theme_override_constants/margin_right":4,"theme_override_constants/margin_bottom":2,"script":null)
+
+icon_display_container = Object(CenterContainer,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":false,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":0.0,"anchor_bottom":0.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","use_top_left":false,"script":null)
+
+icon_display = Object(TextureRect,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":0.0,"anchor_bottom":0.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","texture":null,"expand_mode":0,"stretch_mode":0,"flip_h":false,"flip_v":false,"script":null)
+
+text_display = Object(Label,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":0.0,"anchor_bottom":0.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":4,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","text":"placeholder","label_settings":ExtResource("5_mrv35"),"horizontal_alignment":1,"vertical_alignment":1,"autowrap_mode":0,"justification_flags":163,"paragraph_separator":"\\n","clip_text":false,"text_overrun_behavior":0,"ellipsis_char":"…","uppercase":false,"tab_stops":PackedFloat32Array(),"lines_skipped":0,"max_lines_visible":-1,"visible_characters":-1,"visible_characters_behavior":0,"visible_ratio":1.0,"text_direction":0,"language":"","structured_text_bidi_override":0,"structured_text_bidi_override_options":[],"script":null)
+
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="main_container" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_right = 70.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="display_bg" type="TextureRect" parent="Control/main_container"]
+modulate = Color(0, 0, 0, 1)
+material = SubResource("ShaderMaterial_gl07r")
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = SubResource("CanvasTexture_mrv35")
+expand_mode = 1
+
+[node name="margin_container" type="MarginContainer" parent="Control/main_container"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="icon_content_seperator" type="HBoxContainer" parent="Control/main_container/margin_container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="icon_display_container" type="CenterContainer" parent="Control/main_container/margin_container/icon_content_seperator"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+
+[node name="icon_display" type="TextureRect" parent="Control/main_container/margin_container/icon_content_seperator/icon_display_container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="inner_main_container" type="CenterContainer" parent="Control/main_container/margin_container/icon_content_seperator"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="text_display" type="Label" parent="Control/main_container/margin_container/icon_content_seperator/inner_main_container"]
+layout_mode = 2
+text = "placeholder"
+label_settings = ExtResource("5_mrv35")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="button" type="BaseButton" parent="Control/main_container"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+tooltip_auto_translate_mode = 0
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 2
+theme = null
+theme_type_variation = &""
+disabled = false
+toggle_mode = false
+button_pressed = false
+action_mode = 1
+button_mask = 1
+keep_pressed_outside = false
+button_group = null
+shortcut = null
+shortcut_feedback = true
+shortcut_in_tooltip = true
+script = null

@@ -6,9 +6,11 @@ extends Event
 @export var fade_colour: Color = Color.BLACK
 
 func _execute() -> void:
+	if !wait_til_finished: finished.emit.call_deferred()
 	await ScreenTransition.request_transition(
 		fade_type, 
 		fade_colour, 
 		fade_speed, 
 		fade_shader)
-	super()
+	
+	if wait_til_finished: finished.emit.call_deferred()

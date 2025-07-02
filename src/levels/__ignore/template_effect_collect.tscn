@@ -1,0 +1,55 @@
+[gd_scene load_steps=11 format=3 uid="uid://36fsvg2ttglw"]
+
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_b3i0q"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="2_cnxb5"]
+[ext_resource type="Script" uid="uid://b8vm7vkk5240d" path="res://src/systems/event/player/event_pl_append_effect.gd" id="3_ksobs"]
+[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="3_rhkvi"]
+[ext_resource type="AudioStream" uid="uid://berstp18uwqhm" path="res://src/audio/se/effect_found.WAV" id="4_a8id6"]
+[ext_resource type="Script" uid="uid://bueabxwtsde8h" path="res://src/systems/event/message/open_message.gd" id="5_a8id6"]
+[ext_resource type="Script" uid="uid://ct0tihw5baew2" path="res://src/systems/event/node/set_interactable.gd" id="6_6xq3u"]
+[ext_resource type="Script" uid="uid://bdm7kig80eqqk" path="res://src/systems/save/save_node_properties.gd" id="7_55c36"]
+[ext_resource type="Script" uid="uid://dyaslht461mw2" path="res://src/systems/event/game/wait_seconds.gd" id="9_rhkvi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_diemx"]
+size = Vector2(15, 15)
+
+[node name="effect_collectable" type="Area2D"]
+script = ExtResource("1_b3i0q")
+secret = true
+centred = true
+shape = SubResource("RectangleShape2D_diemx")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
+metadata/_custom_type_script = "uid://bxh774473av7t"
+
+[node name="on_interact" type="Node" parent="."]
+script = ExtResource("2_cnxb5")
+metadata/_custom_type_script = "uid://bkadpjx8csm75"
+
+[node name="append_effect" type="Node" parent="on_interact"]
+script = ExtResource("3_ksobs")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="play_sound" type="Node" parent="on_interact"]
+script = ExtResource("3_rhkvi")
+sound = ExtResource("4_a8id6")
+metadata/_custom_type_script = "uid://vk574kc3l7av"
+
+[node name="notification" type="Node" parent="on_interact"]
+script = ExtResource("5_a8id6")
+texts = Array[String](["[PLACEHOLDER]"])
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="set_interactable_inactive" type="Node" parent="on_interact" node_paths=PackedStringArray("interactable")]
+script = ExtResource("6_6xq3u")
+interactable = NodePath("../..")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="wait_seconds" type="Node" parent="on_interact"]
+script = ExtResource("9_rhkvi")
+seconds = 3.0
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="save_node_data" type="Node" parent="."]
+script = ExtResource("7_55c36")
+properties = Array[String](["can_interact"])
+metadata/_custom_type_script = "uid://bdm7kig80eqqk"

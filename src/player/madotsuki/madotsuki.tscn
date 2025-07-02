@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=43 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/madotsuki/player_yn.gd" id="1_wub1p"]
 [ext_resource type="Script" uid="uid://32q36bskoln0" path="res://src/systems/behaviour/strategist.gd" id="2_c8hmm"]
@@ -78,14 +78,17 @@ size = Vector2(6, 3)
 radius = 11.0
 height = 34.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7co0"]
-size = Vector2(10, 4)
-
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qcosp"]
 blend_mode = 2
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7co0"]
+size = Vector2(10, 4)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r8oc4"]
 size = Vector2(2, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ylvyo"]
+size = Vector2(16, 26)
 
 [node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("stamina_fsm", "input_fsm", "fsm")]
 collision_layer = 5
@@ -163,9 +166,10 @@ shape = SubResource("CapsuleShape2D_riukl")
 [node name="prompt" type="Sprite2D" parent="sb_components/interaction_manager"]
 visible = false
 top_level = true
+z_index = 5
 position = Vector2(0, -24)
 texture = ExtResource("17_cin7d")
-offset = Vector2(0, -36)
+offset = Vector2(0, -16)
 
 [node name="stance_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("18_rujao")
@@ -221,19 +225,16 @@ avoidance_layers = 2
 [node name="audio_listener" type="AudioListener2D" parent="."]
 current = true
 
-[node name="collision" type="CollisionShape2D" parent="."]
-position = Vector2(0, 13)
-shape = SubResource("RectangleShape2D_w7co0")
-
 [node name="shadow_renderer" type="Sprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_qcosp")
-position = Vector2(0, -8)
+position = Vector2(0, 16)
 texture = ExtResource("29_1qwjo")
+offset = Vector2(0, -22)
 
 [node name="sprite_renderer" type="Sprite2D" parent="."]
 clip_children = 2
 use_parent_material = true
-position = Vector2(0, 14)
+position = Vector2(0, 16)
 texture = ExtResource("8_mbimu")
 offset = Vector2(0, -24)
 script = ExtResource("30_kknx7")
@@ -248,6 +249,10 @@ offset_top = -48.0
 offset_right = 24.0
 color = Color(1, 1, 1, 0)
 
+[node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 13)
+shape = SubResource("RectangleShape2D_w7co0")
+
 [node name="world_warp" type="Area2D" parent="."]
 disable_mode = 1
 collision_layer = 2147483648
@@ -255,6 +260,15 @@ collision_mask = 2147483648
 
 [node name="_" type="CollisionShape2D" parent="world_warp"]
 shape = SubResource("RectangleShape2D_r8oc4")
+
+[node name="presence" type="Area2D" parent="."]
+disable_mode = 1
+collision_layer = 1073741824
+collision_mask = 1073741824
+
+[node name="_" type="CollisionShape2D" parent="presence"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_ylvyo")
 
 [node name="nav_avoidance" type="NavigationObstacle2D" parent="."]
 radius = 25.0

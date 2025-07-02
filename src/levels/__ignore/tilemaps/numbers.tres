@@ -64,11 +64,15 @@ texture = ExtResource("1_jofri")
 0:9/size_in_atlas = Vector2i(2, 4)
 0:9/0 = 0
 0:9/0/texture_origin = Vector2i(-8, -8)
+0:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(21.3333, 8, -8, 37.3333, -8, 40, 24, 8, 24, -24, -8, -24, -8, -21.3333, 21.3333, -21.3333)
 2:9/size_in_atlas = Vector2i(2, 4)
 2:9/0 = 0
 2:9/0/texture_origin = Vector2i(-8, -8)
+2:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 24, 40, 24, 37.3333, -5.33333, 8, -5.33333, -21.3333, 24, -21.3333, 24, -24, -8, -24)
 1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 0, 8, 0, 8, 8, -8, 8)
 1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 0, 0, 16, -16, 16)
 
 [resource]
 physics_layer_0/collision_layer = 1

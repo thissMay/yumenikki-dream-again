@@ -165,6 +165,7 @@ color = Color(0, 0, 0, 1)
 position = Vector2(240, 196)
 texture = ExtResource("2_nlmqr")
 hframes = 4
+frame = 2
 script = ExtResource("3_d62i2")
 autoplay = true
 loop = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://mpqvqvnj0b71"]
+[gd_scene load_steps=15 format=4 uid="uid://mpqvqvnj0b71"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_lxfos"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_fkhbq"]
@@ -11,7 +11,6 @@
 [ext_resource type="Shader" uid="uid://5k0375eqfw0q" path="res://src/shaders/masks/sub.gdshader" id="8_3nswl"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="8_5vei8"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/camera/cam_deadzone.gd" id="10_3nswl"]
-[ext_resource type="Script" uid="uid://bbh7tjv0f6kad" path="res://src/systems/interaction/door_scenes.gd" id="12_d15rp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d15rp"]
 shader = ExtResource("7_oeolx")
@@ -23,10 +22,11 @@ shader_parameter/vignette_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oeolx"]
 shader = ExtResource("8_3nswl")
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mo1qq"]
-size = Vector2(32, 96)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_naoxy"]
+size = Vector2(2200, 2000)
 
 [node name="dark_woods" type="Node"]
 script = ExtResource("1_lxfos")
@@ -66,6 +66,9 @@ target = NodePath("../../dark_woods/Madotsuki")
 [node name="overlay_1" parent="camera/camera_handler/camera_overlay" index="1"]
 material = SubResource("ShaderMaterial_d15rp")
 
+[node name="overall_modulate" type="CanvasModulate" parent="."]
+color = Color(0.299547, 0.299547, 0.299547, 1)
+
 [node name="dark_woods" type="Node2D" parent="."]
 
 [node name="eyes" type="TileMapLayer" parent="dark_woods"]
@@ -98,30 +101,12 @@ tile_set = ExtResource("7_jpgby")
 [node name="Madotsuki" parent="dark_woods" instance=ExtResource("8_5vei8")]
 position = Vector2(0, 64)
 
-[node name="CamDeadzone" type="Area2D" parent="dark_woods"]
+[node name="deadzone" type="Area2D" parent="dark_woods"]
 process_mode = 3
-position = Vector2(1024, 848)
+position = Vector2(-80, -64)
 script = ExtResource("10_3nswl")
 size = Vector2i(2200, 2000)
+shape = SubResource("RectangleShape2D_naoxy")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
-
-[node name="CanvasModulate" type="CanvasModulate" parent="dark_woods"]
-color = Color(0.299547, 0.299547, 0.299547, 1)
-
-[node name="to_dense_woods" type="Area2D" parent="dark_woods"]
-position = Vector2(-64, 64)
-script = ExtResource("12_d15rp")
-metadata/_custom_type_script = "uid://bbh7tjv0f6kad"
-
-[node name="coll" type="CollisionShape2D" parent="dark_woods/to_dense_woods"]
-shape = SubResource("RectangleShape2D_mo1qq")
-
-[node name="to_train" type="Area2D" parent="dark_woods"]
-position = Vector2(-48, 1456)
-script = ExtResource("12_d15rp")
-metadata/_custom_type_script = "uid://bbh7tjv0f6kad"
-
-[node name="coll" type="CollisionShape2D" parent="dark_woods/to_train"]
-shape = SubResource("RectangleShape2D_mo1qq")
 
 [editable path="camera"]

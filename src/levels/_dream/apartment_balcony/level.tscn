@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://he4hpqrfbk5w"]
+[gd_scene load_steps=47 format=3 uid="uid://he4hpqrfbk5w"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_v0g1x"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_f8of1"]
@@ -21,6 +21,10 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="21_2vk4d"]
 [ext_resource type="Script" uid="uid://bbh7tjv0f6kad" path="res://src/systems/interaction/door_scenes.gd" id="23_8rvh6"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_twfnl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_viai5"]
+
 [sub_resource type="Resource" id="Resource_mgo11"]
 metadata/__load_path__ = "res://src/audio/bgm/luff_yta_goldfish-march.ogg"
 
@@ -39,11 +43,14 @@ noise = SubResource("FastNoiseLite_sla7v")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7uquv"]
 shader = ExtResource("15_6011g")
+shader_parameter/uv_offset_initial = Vector2(0, 0)
+shader_parameter/offset_strength = 0.05
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
 shader_parameter/opacity = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_7otd0")
 shader_parameter/scroll_speed = 0.05
-shader_parameter/offset_strength = 0.05
-shader_parameter/uv_offset = Vector2(0, 0)
 shader_parameter/gradient = SubResource("GradientTexture2D_42e87")
 shader_parameter/ray_strength = 1.225
 
@@ -57,14 +64,18 @@ noise = SubResource("FastNoiseLite_tdu7n")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8wcub"]
 shader = ExtResource("16_jqpo4")
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
+shader_parameter/uv_offset_initial = Vector2(0, 0)
+shader_parameter/offset_strength = 1.0
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
 shader_parameter/dirX = 1.0
 shader_parameter/dirY = 1.0
 shader_parameter/scroll_speed = 0.255
 shader_parameter/noise_strength = 0.165
 shader_parameter/noise_fwd = SubResource("NoiseTexture2D_hi0md")
-shader_parameter/uv_offset = Vector2(0, 0)
-shader_parameter/offset_strength = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6tu8p"]
 shader = ExtResource("8_db0b4")
@@ -83,14 +94,16 @@ noise = SubResource("FastNoiseLite_0jot5")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_42e87"]
 shader = ExtResource("13_dtquc")
-shader_parameter/transparency = 0.0
 shader_parameter/dirX = 1.0
 shader_parameter/dirY = 0.0
 shader_parameter/scroll_speed = 0.1
-shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/uv_offset_initial = Vector2(0, 0)
 shader_parameter/offset_strength = 1.0
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.0
 shader_parameter/noise = SubResource("NoiseTexture2D_sxiqe")
 shader_parameter/color_overlay = Color(0.226808, 0.000729795, 0.124129, 1)
 shader_parameter/color_overlay_intensity = 2.855
@@ -164,6 +177,12 @@ size = Vector2(20, 13)
 
 [node name="sane_balcony" type="Node"]
 script = ExtResource("1_v0g1x")
+scene_load_seq = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":Resource("res://src/systems/sequence/sequence_interface.gd"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
+
+scene_unload_seq = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":Resource("res://src/systems/sequence/sequence_interface.gd"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
+
+load_transition = SubResource("ShaderMaterial_twfnl")
+unload_transition = SubResource("ShaderMaterial_viai5")
 metadata/_edit_vertical_guides_ = [-341.0]
 
 [node name="BGM" type="Node" parent="."]

@@ -14,6 +14,5 @@ static func _new(_name, _id, _icon) -> PromptOptionButton:
 	
 	return option_button
 func _ready() -> void:
-	super()
 	self.name = "prompt_option_button"
 	self.text = option_name

@@ -6,7 +6,6 @@ class_name Wiggle extends Component
 
 var timeelapsed: float
 
-
 @export_group("Rotational Wiggle")
 var origin_rot: float
 var got_origin_rot: bool = false
@@ -69,7 +68,7 @@ func _physics_update(_delta: float) -> void:
 			pos_init_y, 
 			wig_y_strn * sin(1.25 * timeelapsed * wig_pos_speed) + pos_init_y, 
 			_delta * wig_y_strn)
-
+		
 		if !ignore_rotation:
 			receiver.affector.rotation_degrees = lerp(receiver.affector.rotation_degrees, sin(timeelapsed * wig_rot_speed) * wig_rot_strn, _delta)
 

@@ -25,3 +25,5 @@ func _execute() -> void:
 		sound_override,
 		speed_override,
 		reset_texts)
+		
+	super()

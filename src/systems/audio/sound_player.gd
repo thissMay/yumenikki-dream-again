@@ -48,7 +48,9 @@ func unmute() -> void:
 func set_timescale_factor(_fac: float) -> void: self.timescale_factor = _fac
 
 func set_pitch(_pitch: float) -> void: self.pitch_scale = clampf(_pitch, 0.1, 5)
-func set_volume(_vol: float) -> void: self.volume_db = _vol
+func set_volume(_vol: float) -> void: 
+	_vol = clampf(_vol, 0, 1)
+	self.volume_db = linear_to_db(_vol)
 
 # ---- getters ----
 func get_pitch() -> float: return self.pitch_scale

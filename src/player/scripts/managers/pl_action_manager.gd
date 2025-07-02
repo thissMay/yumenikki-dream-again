@@ -63,9 +63,7 @@ func _physics_update(_delta: float) -> void: handle_action_phys_update(_delta)
 func _update(_delta: float) -> void: handle_action_update(_delta)
 func input_pass(event: InputEvent) -> void:
 	super(event)
-	if Input.is_action_just_pressed("primary_action"):
-		sentient.fsm
-		perform_action(primary_action, sentient)
+	if Input.is_action_just_pressed("primary_action"): perform_action(primary_action, sentient)
 	elif Input.is_action_just_pressed("secondary_action"): perform_action(secondary_action, sentient)
 
 # ---- action executes / cancels ----

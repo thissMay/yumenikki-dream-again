@@ -8,12 +8,13 @@ var viewport_size := Vector2()
 var eqn := Vector2()
 
 var warp_check: bool = false
-var warp_listener: EventListener
+var panorama_update: EventListener
 var total_uv_offset := Vector2()
 
 func setup() -> void:
-	warp_listener = EventListener.new(["WORLD_LOOP"], false, self)
-	warp_listener.do_on_notify("WORLD_LOOP", func(): warp_check = true)
+	panorama_update = EventListener.new(["WORLD_LOOP", "SCENE_CHANGE_SUCCESS"], false, self)
+	panorama_update.do_on_notify("WORLD_LOOP", func(): warp_check = true)
+	panorama_update.do_on_notify("SCENE_CHANGE_SUCCESS", func(): eqn = Vector2.ZERO)
 	
 	initial_screen_centre = (
 		Game.main_viewport.get_camera_2d().get_screen_center_position()

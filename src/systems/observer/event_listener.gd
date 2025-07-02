@@ -1,5 +1,5 @@
 class_name EventListener
-extends Object
+extends RefCounted
 
 var events_listening_to: Array[String]
 

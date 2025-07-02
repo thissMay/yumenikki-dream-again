@@ -55,9 +55,9 @@ var zoom_tween: Tween
 
 # ---- target
 @export_group("Target Properties")
-@export var target: Node
-var curr_target: Node
-var prev_target: Node
+@export var target: CanvasItem
+var curr_target: CanvasItem
+var prev_target: CanvasItem
 
 var switching_to_target: bool = false
 var switching_duration: float = 0.325
@@ -95,7 +95,7 @@ func _ready() -> void:
 		if !target: target = self ## ensures that its going to be static at least.
 		await Game.main_tree.process_frame
 		
-		assert(target is Node2D || target is Control)
+		assert(target is CanvasItem)
 		global_position = target.global_position
 		if shake_comp == null: shake_comp = CamShake.new(self.cam)
 		shake_comp.cam = self.cam
@@ -149,8 +149,8 @@ func set_target(_target: Node, _instant: bool = false) -> void:
 	if _target:
 		target = _target
 		
-		if target is Node2D: set_follow_strategy(follow_lerp if !motion_reduction else default)
 		if target is SentientBase: set_follow_strategy(follow_player if !motion_reduction else default)
+		else: set_follow_strategy(follow_lerp if !motion_reduction else default)
 		
 		if curr_target: prev_target = curr_target
 		curr_target = _target

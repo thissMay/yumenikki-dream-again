@@ -395,23 +395,39 @@ script = ExtResource("7_pptqv")
 [node name="ACTIVE" type="Node" parent="fsm" node_paths=PackedStringArray("active_exclusive_cr", "initial_fsm")]
 script = ExtResource("8_j3xcn")
 active_exclusive_cr = NodePath("active_state_components")
-initial_fsm = NodePath("fsm")
+initial_fsm = NodePath("ACTIVE_FSM")
 
-[node name="fsm" type="Node" parent="fsm/ACTIVE" node_paths=PackedStringArray("initial_state")]
+[node name="ACTIVE_FSM" type="Node" parent="fsm/ACTIVE" node_paths=PackedStringArray("initial_state")]
 script = ExtResource("7_5wqcs")
 initial_state = NodePath("PLAY")
 metadata/_custom_type_script = "uid://co5edhtkgx3g8"
 
-[node name="PLAY" type="Node" parent="fsm/ACTIVE/fsm"]
+[node name="PLAY" type="Node" parent="fsm/ACTIVE/ACTIVE_FSM" node_paths=PackedStringArray("dream_manager")]
 script = ExtResource("22_xkyxq")
+dream_manager = NodePath("dream_fsm")
 
-[node name="CUTSCENE" type="Node" parent="fsm/ACTIVE/fsm"]
+[node name="dream_fsm" type="Node" parent="fsm/ACTIVE/ACTIVE_FSM/PLAY" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("13_3p7ss")
+initial_state = NodePath("NEUTRAL")
+
+[node name="NEUTRAL" type="Node" parent="fsm/ACTIVE/ACTIVE_FSM/PLAY/dream_fsm"]
+script = ExtResource("14_5gc60")
+
+[node name="DREAM" type="Node" parent="fsm/ACTIVE/ACTIVE_FSM/PLAY/dream_fsm"]
+script = ExtResource("15_xyhoc")
+
+[node name="REAL" type="Node" parent="fsm/ACTIVE/ACTIVE_FSM/PLAY/dream_fsm"]
+script = ExtResource("16_jhnr1")
+
+[node name="CUTSCENE" type="Node" parent="fsm/ACTIVE/ACTIVE_FSM" node_paths=PackedStringArray("dream_fsm")]
 script = ExtResource("23_5wqcs")
+dream_fsm = NodePath("../PLAY/dream_fsm")
 
 [node name="active_state_components" type="CanvasLayer" parent="fsm/ACTIVE"]
 layer = 10
 follow_viewport_enabled = true
 script = ExtResource("6_arbwm")
+bypass = true
 independent = true
 
 [node name="screen_overlay" type="CanvasLayer" parent="fsm/ACTIVE/active_state_components"]
@@ -428,6 +444,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="sound" type="AudioStreamPlayer" parent="fsm/ACTIVE/active_state_components/screen_overlay"]
+volume_db = -80.0
 bus = &"Effects"
 script = ExtResource("20_xyhoc")
 metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
@@ -467,19 +484,6 @@ texture = ExtResource("7_r0d38")
 bus = &"Effects"
 script = ExtResource("20_xyhoc")
 metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
-
-[node name="dream_fsm" type="Node" parent="fsm/ACTIVE/active_state_components" node_paths=PackedStringArray("initial_state")]
-script = ExtResource("13_3p7ss")
-initial_state = NodePath("NEUTRAL")
-
-[node name="NEUTRAL" type="Node" parent="fsm/ACTIVE/active_state_components/dream_fsm"]
-script = ExtResource("14_5gc60")
-
-[node name="DREAM" type="Node" parent="fsm/ACTIVE/active_state_components/dream_fsm"]
-script = ExtResource("15_xyhoc")
-
-[node name="REAL" type="Node" parent="fsm/ACTIVE/active_state_components/dream_fsm"]
-script = ExtResource("16_jhnr1")
 
 [node name="time_manager" type="Node" parent="fsm/ACTIVE/active_state_components"]
 script = ExtResource("2_yhp8d")

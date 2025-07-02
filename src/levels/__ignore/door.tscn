@@ -1,13 +1,12 @@
-[gd_scene load_steps=18 format=3 uid="uid://crej0xx7uj05p"]
+[gd_scene load_steps=13 format=3 uid="uid://bku0eqinjwowa"]
 
 [ext_resource type="Texture2D" uid="uid://cyr3omgnv06ig" path="res://src/levels/__ignore/doors/door_apartment.png" id="1_2hf7w"]
 [ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="1_cv7t1"]
-[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/spawn_point.gd" id="2_45h0u"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="2_45h0u"]
 [ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="2_lea3f"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="4_who8r"]
 [ext_resource type="AudioStream" uid="uid://p5t2ct7rs8t3" path="res://src/audio/se/door_open.WAV" id="5_67jxd"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="5_76or2"]
-[ext_resource type="Script" uid="uid://dlp3m6fps0h2j" path="res://src/systems/event/animation/play_animation.gd" id="7_e2ltu"]
 [ext_resource type="Texture2D" uid="uid://05eixr261ttf" path="res://src/entities/shadow.png" id="7_tckbb"]
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="8_bxvt1"]
 
@@ -20,81 +19,34 @@ blend_mode = 2
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv7t1"]
 size = Vector2(16, 8)
 
-[sub_resource type="Animation" id="Animation_orvon"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("renderer:progress")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_e2ltu"]
-resource_name = "close"
-
-[sub_resource type="Animation" id="Animation_4eec8"]
-resource_name = "new_animation"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("renderer:progress")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [0, 1, 2]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_48qyx"]
-_data = {
-&"RESET": SubResource("Animation_orvon"),
-&"close": SubResource("Animation_e2ltu"),
-&"open": SubResource("Animation_4eec8")
-}
-
 [node name="door_interactable" type="Area2D"]
 script = ExtResource("1_cv7t1")
+on_interact = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":4,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("2_lea3f"),"deferred":false,"wait_til_finished":true)
+
 shape = SubResource("RectangleShape2D_76or2")
 debug_colour = Color(0.9, 0, 0.7, 0.3)
 metadata/_custom_type_script = "uid://bxh774473av7t"
 
-[node name="spawn_point" type="Node2D" parent="." node_paths=PackedStringArray("parent_instead_of_self")]
-script = ExtResource("2_45h0u")
-parent_instead_of_self = NodePath("..")
-as_sibling = true
-spawn_point = Vector2(0, 25)
-metadata/_custom_type_script = "uid://ofyfa3d6ql28"
-
 [node name="on_interact" type="Node" parent="."]
+process_mode = 4
 script = ExtResource("2_lea3f")
-
-[node name="play_animation" type="Node" parent="on_interact" node_paths=PackedStringArray("animator")]
-script = ExtResource("7_e2ltu")
-animator = NodePath("../../animation")
-animation_path = "open"
-wait_til_finished = false
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [node name="play_sound" type="Node" parent="on_interact"]
 script = ExtResource("4_who8r")
 sound = ExtResource("5_67jxd")
 pitch = 0.8
-wait_til_finished = true
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
-[node name="travel_to_scene" type="Node" parent="on_interact" node_paths=PackedStringArray("spawn_point")]
+[node name="travel_to_scene" type="Node" parent="on_interact"]
 script = ExtResource("5_76or2")
-spawn_point = NodePath("../../spawn_point")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="spawn_point" type="Node2D" parent="." node_paths=PackedStringArray("parent_instead_of_self")]
+position = Vector2(0, 12)
+script = ExtResource("2_45h0u")
+parent_instead_of_self = NodePath("..")
+as_sibling = true
+metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
 [node name="renderer" type="Sprite2D" parent="."]
 texture = ExtResource("1_2hf7w")
@@ -114,8 +66,3 @@ position = Vector2(0, 12)
 
 [node name="shape" type="CollisionShape2D" parent="coll"]
 shape = SubResource("RectangleShape2D_cv7t1")
-
-[node name="animation" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_48qyx")
-}

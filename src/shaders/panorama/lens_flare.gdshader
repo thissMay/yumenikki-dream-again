@@ -15,7 +15,7 @@ float random () {
     float r = 0.;
 	for (int i = 0; i <= 10; i += 1)
 		{
-			r = abs(sin(sqrt(float(i * 2)) * TIME / 2.813)) - abs(cos(float(i) * flicker_speed *  TIME / 17.23));
+			r = abs(sin(sqrt(float(i * 2)) * TIME / 2.813)) - abs(cos(float(i) *  (TIME / 17.23) * flicker_speed));
 		}
 	return clamp(1.3 * r + (transparency), min_opacity, max_opacity);
 }

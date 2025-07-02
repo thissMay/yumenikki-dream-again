@@ -1,31 +1,42 @@
-[gd_scene load_steps=17 format=3 uid="uid://btg3e240ltjxx"]
+[gd_scene load_steps=19 format=3 uid="uid://btg3e240ltjxx"]
 
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="1_bs40n"]
 [ext_resource type="AudioStream" uid="uid://c2l2mic8iusdu" path="res://src/audio/bgm/title.WAV" id="2_f6dtr"]
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="3_5atdl"]
+[ext_resource type="PackedScene" uid="uid://7gkxfsran1js" path="res://src/scenes/credits.tscn" id="3_k4drn"]
 [ext_resource type="Texture2D" uid="uid://dgilrv0qps4ve" path="res://src/levels/_neutral/menu/title.png" id="4_egbxm"]
 [ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="5_dms37"]
 [ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="6_s36j7"]
-[ext_resource type="Script" uid="uid://sptd6yjcf24k" path="res://src/ui/abstract_button.gd" id="7_cqhuh"]
+[ext_resource type="Shader" uid="uid://hsx1wbnb1rif" path="res://src/shaders/screen_overlay/bw_invert_blur.gdshader" id="9_omn5r"]
 
 [sub_resource type="GDScript" id="GDScript_h18ho"]
 resource_name = "menu"
 script/source = "extends GameScene
 
 @export var button_new_game: GUIPanelButton
-@export var button_continue: GUIPanelButton
+@export var button_credits: GUIPanelButton
 @export var button_settings: GUIPanelButton
 @export var button_quit: GUIPanelButton
 
+@export var credits_go_back: GUIPanelButton
+@export var credits_panel: Control
+
 func _ready() -> void:
+	
 	super()
-	button_new_game.pressed.connect(func(): pass)
-	button_continue.pressed.connect(func(): pass)
+	button_new_game.pressed.connect(func(): 
+		GameManager.change_scene_to(load(\"res://src/levels/_real/real_room_balc/level.tscn\"))
+		GameManager.change_to_state(\"active\"))
+	button_credits.pressed.connect(func(): credits_panel.visible = true)
 	button_settings.pressed.connect(func(): GameManager.show_options(true))
-	button_quit.pressed.connect(func(): pass)
+	button_quit.pressed.connect(func(): Game.Application.quit())
+	
+	credits_go_back.pressed.connect(func(): credits_panel.visible = false)
 	
 func _on_load() -> void: 
 	super()
+	GameManager.change_to_state(\"pregame\")
+	
 	GameManager.options.quit_to_desktop.set_active(false)
 	GameManager.options.quit_to_menu.set_active(false)
 	print(GameManager.options.quit_to_desktop.disabled)
@@ -40,28 +51,37 @@ func _on_unload() -> void:
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_rkpo7"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_s5fon"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_ec13o"]
-
 [sub_resource type="CanvasTexture" id="CanvasTexture_6p2qj"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_nvx5g"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_s5fon"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ec13o"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_km2j4"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_uocsa"]
 
-[node name="menu" type="Node2D" node_paths=PackedStringArray("button_new_game", "button_continue", "button_settings", "button_quit")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jissf"]
+shader = ExtResource("9_omn5r")
+shader_parameter/blur_amount = 1.5
+shader_parameter/pixel_size = 400.0
+shader_parameter/contrast = 1.14
+
+[node name="menu" type="Node2D" node_paths=PackedStringArray("button_new_game", "button_credits", "button_settings", "button_quit", "credits_go_back", "credits_panel")]
 script = SubResource("GDScript_h18ho")
 button_new_game = NodePath("ui/menu/new_game")
-button_continue = NodePath("ui/menu/dream_diary")
+button_credits = NodePath("ui/menu/credits")
 button_settings = NodePath("ui/menu/options")
 button_quit = NodePath("ui/menu/exit")
+credits_go_back = NodePath("ui/credtis_panel/PanelContainer/MarginContainer/VBoxContainer/go_back")
+credits_panel = NodePath("ui/credtis_panel")
 
 [node name="BGM" type="Node" parent="."]
 script = ExtResource("1_bs40n")
 stream = ExtResource("2_f6dtr")
+pitch = 0.8
 metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 
 [node name="ui" type="CanvasLayer" parent="."]
@@ -95,19 +115,6 @@ panel_display_texture = SubResource("CanvasTexture_rkpo7")
 panel_display_color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://dhvrb58iweuo0"
 
-[node name="dream_diary" type="Control" parent="ui/menu"]
-custom_minimum_size = Vector2(116, 22)
-layout_mode = 2
-theme = ExtResource("5_dms37")
-script = ExtResource("6_s36j7")
-button_display_texture = SubResource("CanvasTexture_s5fon")
-min_size = Vector2(116, 22)
-true_size = Vector2(116, 22)
-text = "Dream Diary"
-panel_display_texture = SubResource("CanvasTexture_ec13o")
-panel_display_color = Color(1, 1, 1, 1)
-metadata/_custom_type_script = "uid://dhvrb58iweuo0"
-
 [node name="options" type="Control" parent="ui/menu"]
 custom_minimum_size = Vector2(116, 22)
 layout_mode = 2
@@ -118,6 +125,19 @@ min_size = Vector2(116, 22)
 true_size = Vector2(116, 22)
 text = "Settings"
 panel_display_texture = SubResource("CanvasTexture_nvx5g")
+panel_display_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="credits" type="Control" parent="ui/menu"]
+custom_minimum_size = Vector2(116, 22)
+layout_mode = 2
+theme = ExtResource("5_dms37")
+script = ExtResource("6_s36j7")
+button_display_texture = SubResource("CanvasTexture_s5fon")
+min_size = Vector2(116, 22)
+true_size = Vector2(116, 22)
+text = "Credits"
+panel_display_texture = SubResource("CanvasTexture_ec13o")
 panel_display_color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://dhvrb58iweuo0"
 
@@ -139,10 +159,12 @@ layout_mode = 2
 
 [node name="game_ver" type="Label" parent="ui/menu"]
 layout_mode = 2
-text = "VERSION: pre-alpha 0"
+text = "VERSION: pre-alpha"
 
-[node name="AbstractButton" type="Control" parent="ui/menu"]
-layout_mode = 2
-mouse_filter = 1
-script = ExtResource("7_cqhuh")
-metadata/_custom_type_script = "uid://sptd6yjcf24k"
+[node name="credtis_panel" parent="ui" instance=ExtResource("3_k4drn")]
+visible = false
+
+[node name="ColorRect" parent="ui/credtis_panel" index="0"]
+material = SubResource("ShaderMaterial_jissf")
+
+[editable path="ui/credtis_panel"]

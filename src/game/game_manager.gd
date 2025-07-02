@@ -12,6 +12,8 @@ const MENU_SCENES := [
 	"res://src/levels/_neutral/menu/menu.tscn"
 ]
 
+var scene_changed_listener: EventListener
+
 # ---- ----
 static var bloom: bool = false
 
@@ -45,18 +47,19 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if game_fsm: game_fsm._input_pass(event)
 func setup() -> void:
+	scene_changed_listener = EventListener.new(["SCENE_CHANGE_SUCCESS"], false, self)
 	player_hud = PLHUD.instance
 	
-	global_screen_effect = get_node("global_screen_effect")
-	pausable_parent = get_node("pausable")
-	always_parent = get_node("always")
-	ui_parent = get_node("always/ui")
-	game_fsm = get_node("fsm")
+	global_screen_effect 	= get_node("global_screen_effect")
+	pausable_parent 		= get_node("pausable")
+	always_parent 			= get_node("always")
+	game_fsm 				= get_node("fsm")
 	
-	options = $always/pause
 	
-	cinematic_ui = $always/cinematic
-	cinematic_bars = $always/cinematic/cinematic_bars
+	ui_parent 				= get_node("always/ui")
+	options 				= get_node("always/pause")
+	cinematic_ui 			= get_node("always/cinematic")
+	cinematic_bars 			= get_node("always/cinematic/cinematic_bars")
 
 	game_fsm._setup()
 	
@@ -66,14 +69,21 @@ func setup() -> void:
 	cinematic_bars.position.y = -45
 	cinematic_bars.size.y = 360
 	
-	if Game.scene_manager.scene_node_packed:  
-		if (
-			Game.scene_manager.scene_node_packed.resource_path in PRE_GAME_SCENES or
-			Game.scene_manager.scene_node_packed.resource_path in MENU_SCENES): change_to_state("pregame")
-		else: change_to_state("active")
+	scene_changed_listener.do_on_notify(
+		"SCENE_CHANGE_SUCCESS", check_current_game_state)
+	check_current_game_state()
 	
 	global_screen_effect.environment.glow_enabled = bloom
 	
+	
+static func check_current_game_state() -> void:
+	if Game.scene_manager.scene_node_packed:  
+		if (
+			Game.scene_manager.scene_node_packed.resource_path in PRE_GAME_SCENES or
+			Game.scene_manager.scene_node_packed.resource_path in MENU_SCENES): 
+				change_to_state("pregame")
+		else: 
+			change_to_state("active")
 
 # ---- game functionality ----
 static func pause_options(_pause: bool = true) -> void:
@@ -167,6 +177,7 @@ class EventManager:
 				remove_listener(GameManager.event_ids[_id]["subscribers"][i], _id)
 	static func get_event_param(_id: String) -> Array[Variant]:
 		if !(_id in GameManager.event_ids): create_event(_id)
+		if (GameManager.event_ids[_id]["params"] as Array).is_empty(): return [null]
 		return GameManager.event_ids[_id]["params"]
 
 	static func return_all_listeners(_id: String) -> Array[EventListener]: 

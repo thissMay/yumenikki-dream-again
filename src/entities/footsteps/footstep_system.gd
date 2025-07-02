@@ -35,7 +35,7 @@ enum mat {
 	GRAVEL 		= 11
 	}
 var curr_material: mat
-const GROUND_MAT_DICT := {
+var GROUND_MAT_DICT := {
 	mat.NULL 		: preload("res://src/audio/footsteps/null.tres"), 		# --- 0
 	mat.CONCRETE 	: preload("res://src/audio/footsteps/concrete.tres"),	# --- 1
 	mat.WOOD		: preload("res://src/audio/footsteps/wood.tres"),		# --- 2
@@ -47,7 +47,7 @@ const GROUND_MAT_DICT := {
 	mat.CLOTH 		: preload("res://src/audio/footsteps/cloth.tres"),		# --- 8
 	mat.GLASS 		: preload("res://src/audio/footsteps/glass.tres"),		# --- 9
 	mat.DIRT_FLESH 	: preload("res://src/audio/footsteps/dirt_flesh.tres"),	# --- 10
-	mat.GRAVEL 		: preload("res://src/audio/footsteps/gravel.tres"),	# --- 10
+	mat.GRAVEL 		: preload("res://src/audio/footsteps/gravel.tres"),	# --- 11
 	}
 
 var DEFAULT_FOOTSTEP: AudioStreamWAV = preload("res://src/audio/se/footstep_null-1.wav")
@@ -111,7 +111,7 @@ func _on_body_shape_entered(
 	body_shape_index: int, 
 	local_shape_index: int) -> void:
 		
-		if body is TileMapLayer:
+		if body is FootstepTileMap:
 			multiple_floors.append(body)
 			
 			var tile_coords: Vector2i
@@ -128,18 +128,7 @@ func _on_body_shape_entered(
 					floor_priority = floors
 					break
 	
-
-			if cell_tile_data:
-				material_id = cell_tile_data.get_custom_data("material") if cell_tile_data.has_custom_data("material") else 0
 			
-			curr_material = material_id
-			
-			if cell_tile_data:
-				if cell_tile_data.has_custom_data("custom_sound"):
-					sound_to_be_played = cell_tile_data.get_custom_data("custom_sound")
-				else:
-					sound_to_be_played = GROUND_MAT_DICT[curr_material].pick_random()
-								
 				if transparent_surfaces[curr_material]: sentient.shadow_renderer.visible = false
 				else: sentient.shadow_renderer.visible = true	
 				

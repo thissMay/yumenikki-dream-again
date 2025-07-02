@@ -1,0 +1,76 @@
+[gd_scene load_steps=12 format=4 uid="uid://dnh41fsltbilo"]
+
+[ext_resource type="Texture2D" uid="uid://emb20h3qe8rj" path="res://src/levels/_dream/balcony/balcony_base.png" id="1_argc3"]
+[ext_resource type="Texture2D" uid="uid://bcaws1jajinjy" path="res://src/levels/_dream/balcony/coat_hander.png" id="2_dh07j"]
+[ext_resource type="Texture2D" uid="uid://chk8hbfa8jypl" path="res://src/levels/_dream/balcony/rails.png" id="3_1fq43"]
+[ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/camera/cam_deadzone.gd" id="4_vgsl5"]
+[ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/player/region.gd" id="5_dh07j"]
+[ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/camera/sequence_region.gd" id="6_1fq43"]
+[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tilemaps/_common_objs.tres" id="7_vgsl5"]
+[ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="8_w5pro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3jmax"]
+size = Vector2(8, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kaihn"]
+size = Vector2(480, 270)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1fq43"]
+size = Vector2(176, 64)
+
+[node name="balcony" type="Node2D"]
+y_sort_enabled = true
+
+[node name="coll" type="StaticBody2D" parent="."]
+
+[node name="coll" type="CollisionPolygon2D" parent="coll"]
+build_mode = 1
+polygon = PackedVector2Array(160, 192, 160, 136, 200, 136, 200, 112, 288, 112, 288, 136, 336, 136, 336, 192)
+
+[node name="_hanger_1" type="CollisionShape2D" parent="coll"]
+position = Vector2(256, 168)
+shape = SubResource("RectangleShape2D_3jmax")
+
+[node name="_hanger_2" type="CollisionShape2D" parent="coll"]
+position = Vector2(304, 168)
+shape = SubResource("RectangleShape2D_3jmax")
+
+[node name="_" type="CanvasGroup" parent="."]
+y_sort_enabled = true
+
+[node name="balcony" type="Sprite2D" parent="_"]
+z_index = -1
+position = Vector2(248, 128)
+texture = ExtResource("1_argc3")
+
+[node name="coat_hanger" type="Sprite2D" parent="_"]
+position = Vector2(280, 152)
+texture = ExtResource("2_dh07j")
+
+[node name="rails" type="Sprite2D" parent="_"]
+position = Vector2(248, 180)
+texture = ExtResource("3_1fq43")
+
+[node name="balcony_deadzone" type="Area2D" parent="."]
+process_mode = 3
+position = Vector2(0, -8)
+script = ExtResource("4_vgsl5")
+size = Vector2i(480, 270)
+shape = SubResource("RectangleShape2D_kaihn")
+metadata/_custom_type_script = "uid://btgm8okupfro7"
+
+[node name="balcony_region" type="Area2D" parent="."]
+position = Vector2(160, 120)
+script = ExtResource("5_dh07j")
+size = Vector2i(176, 64)
+shape = SubResource("RectangleShape2D_1fq43")
+metadata/_custom_type_script = "uid://4dkyll6fxqod"
+
+[node name="sequence_region" type="Node" parent="balcony_region"]
+script = ExtResource("6_1fq43")
+metadata/_custom_type_script = "uid://f4sb25g3gpic"
+
+[node name="collision" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAJAAcAAQABAAEAAAAJAAgAAQABAAEAAAAJAAkAAQABAAEAAAAJAAoAAQABAAEAAAAJAAsAAQABAAEAAAAJAAwAAQABAAEAAAAKAAwAAQABAAEAAAALAAwAAQABAAEAAAAMAAwAAQABAAEAAAANAAwAAQABAAEAAAAOAAwAAQABAAEAAAAPAAwAAQABAAEAAAAQAAwAAQABAAEAAAARAAwAAQABAAEAAAASAAwAAQABAAEAAAATAAwAAQABAAEAAAAUAAwAAQABAAEAAAAVAAwAAQABAAEAAAAVAAsAAQABAAEAAAAVAAoAAQABAAEAAAAVAAkAAQABAAEAAAAVAAgAAQABAAEAAAAVAAcAAQABAAEAAAAUAAcAAQABAAEAAAATAAcAAQABAAEAAAASAAcAAQABAAEAAAARAAcAAQABAAEAAAAQAAcAAQABAAEAAAAPAAcAAQABAAEAAAAOAAcAAQABAAEAAAANAAcAAQABAAEAAAAMAAcAAQABAAEAAAALAAcAAQABAAEAAAAKAAcAAQABAAEAAAALAAgAAQAAAAIAAAAKAAgAAQAAAAIAAAASAAgAAQAAAAIAAAATAAgAAQAAAAIAAAAUAAgAAQAAAAIAAAA=")
+tile_set = ExtResource("7_vgsl5")
+script = ExtResource("8_w5pro")

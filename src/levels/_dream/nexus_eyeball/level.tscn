@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://b67q2b5hm6tsu"]
+[gd_scene load_steps=14 format=4 uid="uid://b67q2b5hm6tsu"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_inoc5"]
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="2_odm8p"]
@@ -9,13 +9,9 @@
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="5_cu3a0"]
 [ext_resource type="TileSet" uid="uid://ucja6rk8c0dh" path="res://src/levels/__ignore/tilemaps/eyeball.tres" id="5_pagnx"]
 [ext_resource type="AudioStream" uid="uid://dexpefjcufc0b" path="res://src/audio/bgm/world_eyeball.ogg" id="6_jutn4"]
+[ext_resource type="PackedScene" uid="uid://36fsvg2ttglw" path="res://src/levels/__ignore/template_effect_collect.tscn" id="7_wt78e"]
+[ext_resource type="Resource" uid="uid://bi65brqjolfb" path="res://src/player/madotsuki/effects/medamude/medamude.tres" id="8_x4bpl"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="9_4j00j"]
-[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="11_x4bpl"]
-[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="12_ppt66"]
-[ext_resource type="Script" uid="uid://b8vm7vkk5240d" path="res://src/systems/event/player/event_pl_append_effect.gd" id="13_ppt66"]
-[ext_resource type="Resource" uid="uid://bi65brqjolfb" path="res://src/player/madotsuki/effects/medamude/medamude.tres" id="14_04s3o"]
-[ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="15_d5n0m"]
-[ext_resource type="AudioStream" uid="uid://berstp18uwqhm" path="res://src/audio/se/effect_found.WAV" id="16_fot1s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sthxv"]
 shader = ExtResource("2_odm8p")
@@ -27,9 +23,6 @@ shader_parameter/offset_strength = 0.15
 shader_parameter/offset_strength_x_influence = 1.0
 shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5n0m"]
-size = Vector2(20, 50)
 
 [node name="eyeball_world" type="Node"]
 script = ExtResource("1_inoc5")
@@ -58,8 +51,20 @@ target = NodePath("../../y_order/Madotsuki")
 [node name="y_order" type="Node2D" parent="."]
 y_sort_enabled = true
 
+[node name="medamaude" parent="y_order" instance=ExtResource("7_wt78e")]
+position = Vector2(1056, 192)
+
+[node name="append_effect" parent="y_order/medamaude/on_interact" index="0"]
+effect = ExtResource("8_x4bpl")
+
+[node name="notification" parent="y_order/medamaude/on_interact" index="2"]
+texts = Array[String](["Effect Collect!... Medamaude!"])
+
 [node name="nexus" parent="y_order" instance=ExtResource("3_07q2v")]
 position = Vector2(60, 15)
+
+[node name="scene_traversal" parent="y_order/nexus" index="2"]
+scene_path = "uid://dl25joalnmaxt"
 
 [node name="tilemap" type="TileMapLayer" parent="y_order"]
 y_sort_enabled = true
@@ -77,26 +82,6 @@ min_boundary_size = Vector2i(480, 270)
 [node name="Madotsuki" parent="y_order" instance=ExtResource("9_4j00j")]
 position = Vector2(75, 45)
 
-[node name="Interactable" type="Area2D" parent="y_order"]
-position = Vector2(1056, 216)
-script = ExtResource("11_x4bpl")
-size = Vector2i(20, 50)
-shape = SubResource("RectangleShape2D_d5n0m")
-debug_colour = Color(0.9, 0, 0.7, 0.3)
-metadata/_custom_type_script = "uid://bxh774473av7t"
-
-[node name="Sequence" type="Node" parent="y_order/Interactable"]
-script = ExtResource("12_ppt66")
-metadata/_custom_type_script = "uid://c1od80bn28h0l"
-
-[node name="Event" type="Node" parent="y_order/Interactable/Sequence"]
-script = ExtResource("13_ppt66")
-effect = ExtResource("14_04s3o")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
-[node name="play_sound" type="Node" parent="y_order/Interactable/Sequence"]
-script = ExtResource("15_d5n0m")
-sound = ExtResource("16_fot1s")
-metadata/_custom_type_script = "uid://0v2nidb8jsha"
-
 [editable path="camera"]
+[editable path="y_order/medamaude"]
+[editable path="y_order/nexus"]

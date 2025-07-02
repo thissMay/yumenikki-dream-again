@@ -1,10 +1,11 @@
 extends Event
 
-@export var spawn_point: SpawnPoint
+@export var scene_traversal: SceneTraversal
 var interactable: Node2D
 
 func _execute() -> void:
 	super()
-	if spawn_point == null: return 
-	GameManager.EventManager.invoke_event("PLAYER_DOOR_USED", [spawn_point.connection_id])
-	GameManager.change_scene_to(load(spawn_point.scene_path))
+	if scene_traversal == null: return 
+	
+	GameManager.EventManager.invoke_event("PLAYER_DOOR_USED", [scene_traversal.connection_id])
+	GameManager.change_scene_to(load(scene_traversal.scene_path))

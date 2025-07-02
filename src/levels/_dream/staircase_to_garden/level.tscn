@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://dxkoljia1meul"]
+[gd_scene load_steps=32 format=4 uid="uid://dxkoljia1meul"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_6xaa2"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="2_qj4la"]
@@ -14,11 +14,12 @@
 [ext_resource type="Shader" uid="uid://cqc638thw4csm" path="res://src/shaders/masks/multiply.gdshader" id="9_11tov"]
 [ext_resource type="Texture2D" uid="uid://je4i3rhyniaw" path="res://src/images/panorama/morning_sun.png" id="10_qygai"]
 [ext_resource type="Script" uid="uid://btgm8okupfro7" path="res://src/systems/camera/cam_deadzone.gd" id="14_0tda1"]
-[ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/systems/region/region.gd" id="15_qygai"]
-[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/spawn_point.gd" id="16_luqd2"]
+[ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/player/region.gd" id="15_qygai"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="16_luqd2"]
 [ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/camera/sequence_region.gd" id="17_3v13o"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequence/sequence_interface.gd" id="18_bx2sr"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="19_mdkvj"]
+[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="20_luqd2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_luqd2"]
 shader = ExtResource("5_0tda1")
@@ -181,19 +182,17 @@ shape = SubResource("RectangleShape2D_u42id")
 metadata/_custom_type_script = "uid://btgm8okupfro7"
 
 [node name="to_wilderness" type="Area2D" parent="stair_case"]
-position = Vector2(64, 272)
+position = Vector2(48, 280)
 script = ExtResource("15_qygai")
 size = Vector2i(30, 50)
 shape = SubResource("RectangleShape2D_qba8d")
 metadata/_custom_type_script = "uid://4dkyll6fxqod"
 
 [node name="spawn_point" type="Node2D" parent="stair_case/to_wilderness" node_paths=PackedStringArray("parent_instead_of_self")]
-position = Vector2(16, 16)
+position = Vector2(48, -16)
 script = ExtResource("16_luqd2")
 parent_instead_of_self = NodePath("..")
 as_sibling = true
-scene_path = "uid://cs8yn56f0t60a"
-spawn_point = Vector2(25, -25)
 spawn_dir = Vector2(1, 0)
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
@@ -206,25 +205,37 @@ metadata/_custom_type_script = "uid://f4sb25g3gpic"
 script = ExtResource("18_bx2sr")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="travel_to" type="Node" parent="stair_case/to_wilderness/sequence/enter" node_paths=PackedStringArray("spawn_point")]
+[node name="travel_to" type="Node" parent="stair_case/to_wilderness/sequence/enter" node_paths=PackedStringArray("scene_traversal")]
 script = ExtResource("19_mdkvj")
-spawn_point = NodePath("../../../spawn_point")
+scene_traversal = NodePath("../../../wilderness")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
+[node name="wilderness" type="Node" parent="stair_case/to_wilderness" node_paths=PackedStringArray("spawn_point")]
+script = ExtResource("20_luqd2")
+scene_path = "uid://cs8yn56f0t60a"
+connection_id = "wilderness"
+spawn_point = NodePath("../spawn_point")
+metadata/_custom_type_script = "uid://dkbhr01xbyr60"
+
 [node name="to_sky_garden" type="Area2D" parent="stair_case"]
-position = Vector2(1248, -896)
+position = Vector2(1240, -896)
 script = ExtResource("15_qygai")
 size = Vector2i(20, 35)
 shape = SubResource("RectangleShape2D_qygai")
 metadata/_custom_type_script = "uid://4dkyll6fxqod"
 
+[node name="to_garden" type="Node" parent="stair_case/to_sky_garden" node_paths=PackedStringArray("spawn_point")]
+script = ExtResource("20_luqd2")
+scene_path = "uid://d78nmmv8xxj"
+connection_id = "sky_garden"
+spawn_point = NodePath("../spawn_point")
+metadata/_custom_type_script = "uid://dkbhr01xbyr60"
+
 [node name="spawn_point" type="Node2D" parent="stair_case/to_sky_garden" node_paths=PackedStringArray("parent_instead_of_self")]
-position = Vector2(16, 16)
+position = Vector2(-16, 40)
 script = ExtResource("16_luqd2")
 parent_instead_of_self = NodePath("..")
 as_sibling = true
-scene_path = "uid://d78nmmv8xxj"
-spawn_point = Vector2(-25, 20)
 spawn_dir = Vector2(-1, 0)
 metadata/_custom_type_script = "uid://ofyfa3d6ql28"
 
@@ -237,9 +248,9 @@ metadata/_custom_type_script = "uid://f4sb25g3gpic"
 script = ExtResource("18_bx2sr")
 metadata/_custom_type_script = "uid://c1od80bn28h0l"
 
-[node name="travel_to" type="Node" parent="stair_case/to_sky_garden/sequence/enter" node_paths=PackedStringArray("spawn_point")]
+[node name="travel_to" type="Node" parent="stair_case/to_sky_garden/sequence/enter" node_paths=PackedStringArray("scene_traversal")]
 script = ExtResource("19_mdkvj")
-spawn_point = NodePath("../../../spawn_point")
+scene_traversal = NodePath("../../../to_garden")
 metadata/_custom_type_script = "uid://0v2nidb8jsha"
 
 [editable path="camera"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://4qtk6nnecrel"]
+[gd_scene load_steps=25 format=4 uid="uid://4qtk6nnecrel"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_7eh56"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_61b85"]
@@ -7,9 +7,18 @@
 [ext_resource type="Shader" uid="uid://bwrguqumtsyrq" path="res://src/shaders/masks/sprite.gdshader" id="4_61b85"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="4_a2suj"]
 [ext_resource type="Texture2D" uid="uid://d21ss1ocopvp0" path="res://src/images/panorama/puddle_panorama.png" id="4_d3qgj"]
+[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tilemaps/_common_objs.tres" id="5_3k7cl"]
 [ext_resource type="TileSet" uid="uid://t43wqgdupoji" path="res://src/levels/__ignore/tilemaps/puddle.tres" id="7_61b85"]
 [ext_resource type="PackedScene" uid="uid://djnomncx1otsq" path="res://src/systems/seamless_detector.tscn" id="9_0jnag"]
 [ext_resource type="PackedScene" uid="uid://crej0xx7uj05p" path="res://src/levels/__ignore/door.tscn" id="10_qjk5i"]
+[ext_resource type="Texture2D" uid="uid://wb452l434jgy" path="res://src/levels/__ignore/doors/door_puddle.png" id="11_1bnqm"]
+[ext_resource type="Script" uid="uid://bxh774473av7t" path="res://src/systems/interaction/base_interactable.gd" id="12_l01gf"]
+[ext_resource type="Script" uid="uid://bkadpjx8csm75" path="res://src/systems/sequence/game/on_interact.gd" id="13_no4b8"]
+[ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/event/scene/travel_to_scene.gd" id="14_qiu13"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="15_0q71x"]
+[ext_resource type="Script" uid="uid://dkbhr01xbyr60" path="res://src/systems/components/independent/scene_traversal.gd" id="16_gop38"]
+[ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="18_qiu13"]
+[ext_resource type="PackedScene" uid="uid://d16fq6x3pv6mv" path="res://src/entities/sentients/effects/lantern.tscn" id="19_0q71x"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0jnag"]
 shader = ExtResource("4_61b85")
@@ -25,6 +34,20 @@ shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
 shader_parameter/world_texture = ExtResource("4_d3qgj")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4ptl"]
+size = Vector2(42, 42)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0q71x"]
+size = Vector2(16, 32)
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_no4b8"]
+vertices = PackedVector2Array(1670, 438, 1546, 438, 1546, 258, 1670, 258)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1536, 248, 1536, 448, 1680, 448, 1680, 248)])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qiu13"]
+size = Vector2(16, 32)
+
 [node name="puddle_world" type="Node"]
 script = ExtResource("1_7eh56")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
@@ -32,7 +55,7 @@ metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 [node name="camera" parent="." instance=ExtResource("2_61b85")]
 
 [node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../Madotsuki")
+target = NodePath("../../puddle_loop/Madotsuki")
 
 [node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
 layer = -30
@@ -50,26 +73,125 @@ script = ExtResource("2_j13fa")
 stream = ExtResource("4_0jnag")
 metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 
-[node name="puddle" type="TileMapLayer" parent="."]
+[node name="puddle_loop" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="to_dense_woods_a" type="TileMapLayer" parent="puddle_loop"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AABJABoAAAAGAAAAAAA=")
+tile_set = ExtResource("5_3k7cl")
+
+[node name="puddle" type="TileMapLayer" parent="puddle_loop"]
 clip_children = 2
-z_index = -1
+y_sort_enabled = true
 material = SubResource("ShaderMaterial_0jnag")
 tile_map_data = PackedByteArray("AAAJAAUAAAACAAIAAAAYAAsAAAACAAIAAAAaAAYAAAACAAIAAAAUAAgAAAACAAIAAAASAAoAAAACAAIAAAAXABAAAAAEAAIAAAAhAA4AAAACAAMAAAAiABIAAAAEAAQAAAADABQAAAACAAMAAAAIABMAAAAEAAIAAAAFABEAAAAEAAIAAAAEAAgAAAACAAQAAAARAAIAAAACAAMAAAAlACEAAAAEAAQAAAA1ABQAAAACAAQAAAA0ABoAAAAEAAIAAAATABkAAAACAAMAAAA6AAcAAAADAAMAAAA3AAUAAAAEAAIAAABMACAAAAACAAQAAABDAA0AAAAEAAIAAAA5AB8AAAACAAIAAAAzACMAAAAEAAIAAAAuAAIAAAACAAIAAABbAAcAAAAEAAIAAABUABQAAAADAAMAAABZACUAAAADAAMAAABZAB0AAAAEAAIAAABlABIAAAACAAMAAABkABIAAAACAAQAAABhACEAAAACAAQAAABAABgAAAAEAAIAAAAWAB0AAAADAAMAAAAnABYAAAACAAQAAAAtAAoAAAACAAIAAAAnAAYAAAAEAAIAAABHAAYAAAAEAAIAAABLAAwAAAACAAQAAABIAAIAAAAEAAIAAABYAP7/AAAEAAQAAABVAAoAAAAEAAIAAABvABkAAAACAAMAAABtAAMAAAACAAQAAABtAAcAAAACAAIAAABnAAAAAAAEAAIAAABvABIAAAACAAMAAABnABsAAAACAAMAAABqAB4AAAACAAQAAABrAA4AAAADAAMAAAD//xIAAAACAAQAAAAAABIAAAACAAMAAAACAAAAAAAEAAIAAAACABsAAAACAAMAAAAGAA4AAAADAAMAAAAIAAMAAAACAAQAAAAIAAcAAAACAAIAAAAKABIAAAACAAMAAAAKABkAAAACAAMAAAAOACEAAAAEAAQAAAAHACMAAAAEAAQAAAAcACQAAAACAAMAAAAeABkAAAADAAMAAAABAO7/AAADAAMAAAAHAO//AAADAAMAAAAIAO3/AAACAAIAAAAMAPX/AAAEAAIAAAAWAOz/AAACAAMAAAAaAO3/AAACAAMAAAAiAPb/AAADAAMAAAApAOz/AAAEAAIAAAAsAP7/AAAEAAQAAAAtAPD/AAACAAQAAAAwAPb/AAADAAMAAAA9AOz/AAACAAQAAABDAPX/AAADAAMAAABHAOv/AAACAAIAAABJAO3/AAACAAIAAABJAP//AAADAAMAAABPAP7/AAACAAIAAABRAOz/AAACAAMAAABWAPD/AAAEAAIAAABWAAAAAAADAAMAAABXAPD/AAACAAMAAABYAPb/AAAEAAQAAABsAO//AAADAAMAAABtAO3/AAACAAIAAAACAPn/AAACAAQAAAAEAPz/AAACAAQAAAAPAPr/AAAEAAQAAAApAPv/AAADAAMAAAAsAPn/AAACAAQAAAA5AP7/AAADAAMAAAA/APn/AAACAAMAAABBAPr/AAACAAMAAABFAP7/AAACAAIAAABJAPr/AAACAAQAAABKAPr/AAAEAAIAAABZAP3/AAAEAAQAAABnAPn/AAACAAQAAABpAPz/AAACAAQAAADa/+z/AAACAAMAAADd/xQAAAADAAMAAADe/woAAAAEAAIAAADf//D/AAAEAAIAAADf/wAAAAADAAMAAADg//D/AAACAAMAAADh//b/AAAEAAQAAADh//7/AAAEAAQAAADi//3/AAAEAAQAAADi/x0AAAAEAAIAAADi/yUAAAADAAMAAADk/wcAAAAEAAIAAADq/yEAAAACAAQAAADt/xIAAAACAAQAAADu/xIAAAACAAMAAADw//n/AAACAAQAAADw/wAAAAAEAAIAAADw/xsAAAACAAMAAADy//z/AAACAAQAAADz/x4AAAACAAQAAAD0/w4AAAADAAMAAAD1/+//AAADAAMAAAD2/+3/AAACAAIAAAD2/wMAAAACAAQAAAD2/wcAAAACAAIAAAD4/xIAAAACAAMAAAD4/xkAAAACAAMAAADa/ygAAAACAAMAAADf/ywAAAAEAAIAAADf/zwAAAADAAMAAADg/ywAAAACAAMAAADh/zIAAAAEAAQAAADh/zoAAAAEAAQAAADi/zkAAAAEAAQAAADw/zUAAAACAAQAAADw/zwAAAAEAAIAAADy/zgAAAACAAQAAAD1/ysAAAADAAMAAAD2/ykAAAACAAIAAAABACoAAAADAAMAAAACADUAAAACAAQAAAACADwAAAAEAAIAAAAEADgAAAACAAQAAAAHACsAAAADAAMAAAAIACkAAAACAAIAAAAMADEAAAAEAAIAAAAPADYAAAAEAAQAAAAWACgAAAACAAMAAAAaACkAAAACAAMAAAAiADIAAAADAAMAAAApACgAAAAEAAIAAAApADcAAAADAAMAAAAsADUAAAACAAQAAAAsADoAAAAEAAQAAAAtACwAAAACAAQAAAAwADIAAAADAAMAAAA5ADoAAAADAAMAAAA9ACgAAAACAAQAAAA/ADUAAAACAAMAAABBADYAAAACAAMAAABDADEAAAADAAMAAABFADoAAAACAAIAAABHACcAAAACAAIAAABJACkAAAACAAIAAABJADYAAAACAAQAAABJADsAAAADAAMAAABKADYAAAAEAAIAAABPADoAAAACAAIAAABRACgAAAACAAMAAABWACwAAAAEAAIAAABWADwAAAADAAMAAABXACwAAAACAAMAAABYADIAAAAEAAQAAABYADoAAAAEAAQAAABZADkAAAAEAAQAAABnADUAAAACAAQAAABnADwAAAAEAAIAAABpADgAAAACAAQAAABsACsAAAADAAMAAABtACkAAAACAAIAAAA=")
 tile_set = ExtResource("7_61b85")
 
-[node name="lamp" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAfABgAAAADAAAAAAArAAwAAAADAAAAAABNAAYAAAADAAAAAABdABcAAAADAAAAAABBABoAAAADAAAAAABUACUAAAADAAAAAAA0ADYAAAACAAAAAAAhAC0AAAADAAAAAAAFADYAAAADAAAAAAAJACMAAAADAAAAAAD//xYAAAADAAAAAAABAA0AAAADAAAAAAAUAP3/AAADAAAAAABkAAsAAAACAAAAAAAMAC0AAAACAAAAAAAzAPH/AAADAAAAAAAMAPL/AAADAAAAAABIAPz/AAACAAAAAABqAPT/AAACAAAAAABbAAIAAAADAAAAAABwABsAAAADAAAAAABpADQAAAADAAAAAABmACUAAAADAAAAAADt/wsAAAACAAAAAADv/yUAAAADAAAAAADy/zQAAAADAAAAAADz//T/AAACAAAAAAD5/xsAAAADAAAAAADd/yUAAAADAAAAAADk/wIAAAADAAAAAADm/xcAAAADAAAAAAA=")
-tile_set = ExtResource("7_61b85")
+[node name="lamp" type="TileMapLayer" parent="puddle_loop"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAfABgAAAALAAAAAABNAAYAAAALAAAAAABdABcAAAALAAAAAABBABoAAAALAAAAAABUACUAAAALAAAAAAA0ADYAAAAKAAAAAAAhAC0AAAALAAAAAAAFADYAAAALAAAAAAAJACMAAAALAAAAAAD//xYAAAALAAAAAAABAA0AAAALAAAAAAAUAP3/AAALAAAAAABkAAsAAAAKAAAAAAAMAC0AAAAKAAAAAAAzAPH/AAALAAAAAAAMAPL/AAALAAAAAABIAPz/AAAKAAAAAABqAPT/AAAKAAAAAABbAAIAAAALAAAAAABwABsAAAALAAAAAABpADQAAAALAAAAAABmACUAAAALAAAAAADt/wsAAAAKAAAAAADv/yUAAAALAAAAAADy/zQAAAALAAAAAADz//T/AAAKAAAAAAD5/xsAAAALAAAAAADd/yUAAAALAAAAAADk/wIAAAALAAAAAADm/xcAAAALAAAAAAArAA0AAAAKAAAAAAA=")
+tile_set = ExtResource("5_3k7cl")
 
-[node name="Madotsuki" parent="." instance=ExtResource("4_a2suj")]
+[node name="Madotsuki" parent="puddle_loop" instance=ExtResource("4_a2suj")]
 position = Vector2(210, 120)
 
-[node name="seamless_detector" parent="." instance=ExtResource("9_0jnag")]
+[node name="door_interactable" parent="puddle_loop" instance=ExtResource("10_qjk5i")]
+position = Vector2(240, 136)
+
+[node name="scene_traversal" parent="puddle_loop/door_interactable" index="2"]
+scene_path = "uid://dl25joalnmaxt"
+
+[node name="renderer" parent="puddle_loop/door_interactable" index="6"]
+texture = ExtResource("11_1bnqm")
+hframes = 1
+frame_h_count = 1
+
+[node name="to_dense_woods_A" type="Area2D" parent="puddle_loop"]
+position = Vector2(1176, 424)
+script = ExtResource("12_l01gf")
+centred = true
+size = Vector2i(42, 42)
+shape = SubResource("RectangleShape2D_j4ptl")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
+metadata/_custom_type_script = "uid://bxh774473av7t"
+
+[node name="OnInteract" type="Node" parent="puddle_loop/to_dense_woods_A"]
+script = ExtResource("13_no4b8")
+metadata/_custom_type_script = "uid://bkadpjx8csm75"
+
+[node name="Event" type="Node" parent="puddle_loop/to_dense_woods_A/OnInteract" node_paths=PackedStringArray("scene_traversal")]
+script = ExtResource("14_qiu13")
+scene_traversal = NodePath("../../to_dense_woods")
+metadata/_custom_type_script = "uid://0v2nidb8jsha"
+
+[node name="from_dense_woods" type="Node2D" parent="puddle_loop/to_dense_woods_A" node_paths=PackedStringArray("parent_instead_of_self")]
+position = Vector2(-32, 16)
+script = ExtResource("15_0q71x")
+parent_instead_of_self = NodePath("..")
+as_sibling = true
+metadata/_custom_type_script = "uid://ofyfa3d6ql28"
+
+[node name="to_dense_woods" type="Node" parent="puddle_loop/to_dense_woods_A" node_paths=PackedStringArray("spawn_point")]
+script = ExtResource("16_gop38")
+scene_path = "uid://dgcff10ohhvo7"
+connection_id = "pink_box"
+spawn_point = NodePath("../from_dense_woods")
+metadata/_custom_type_script = "uid://dkbhr01xbyr60"
+
+[node name="seamless_detector" parent="puddle_loop" instance=ExtResource("9_0jnag")]
 position = Vector2(-336, -176)
 expansion = Vector2i(90, 45)
 boundary_size = Vector2i(1920, 976)
 
-[node name="door_interactable" parent="." instance=ExtResource("10_qjk5i")]
-position = Vector2(240, 136)
+[node name="to_lantern_loop" type="Area2D" parent="puddle_loop" node_paths=PackedStringArray("spawn_point", "target_door")]
+position = Vector2(696, 208)
+script = ExtResource("18_qiu13")
+spawn_point = NodePath("spawn_point")
+target_door = NodePath("../../lantern_loop/to_puddle_loop")
+spawn_dir_vector = Vector2(0, 1)
+spawn_pos_vector = Vector2(0, 36)
+parallel = true
+centred = true
+size = Vector2i(16, 32)
+shape = SubResource("RectangleShape2D_0q71x")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
+metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="lantern_loop" type="Node2D" parent="."]
+y_sort_enabled = true
+position = Vector2(984, -240)
+
+[node name="seamless_detector" parent="lantern_loop" instance=ExtResource("9_0jnag")]
+position = Vector2(1240, 64)
+expansion = Vector2i(24, 20)
+boundary_size = Vector2i(864, 576)
+
+[node name="lamps" type="TileMapLayer" parent="lantern_loop"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AABVABcAAAAKAAAAAABlACEAAAALAAAAAABuABYAAAAKAAAAAABGABIAAAAKAAAAAABWACcAAAALAAAAAABFACwAAAAKAAAAAABpABcAAAAKAAAAAABKAB8AAAAKAAAAAABSAA8AAAAKAAAAAABdACsAAAAKAAAAAABhAC0AAAAKAAAAAABxACIAAAAKAAAAAABVAB4AAAAKAAAAAAB6ACwAAAAKAAAAAAB7ABIAAAAKAAAAAAB/AB8AAAAKAAAAAACHAA8AAAAKAAAAAACKABcAAAAKAAAAAACKAB4AAAAKAAAAAACLACcAAAALAAAAAABFAAkAAAAKAAAAAABKAPz/AAAKAAAAAABVAPv/AAAKAAAAAABWAAQAAAALAAAAAABdAAgAAAAKAAAAAABhAAoAAAAKAAAAAABlAP7/AAALAAAAAABxAP//AAAKAAAAAAB6AAkAAAAKAAAAAAB/APz/AAAKAAAAAACKAPv/AAAKAAAAAACLAAQAAAALAAAAAAA=")
+tile_set = ExtResource("5_3k7cl")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="lantern_loop"]
+navigation_polygon = SubResource("NavigationPolygon_no4b8")
+navigation_layers = 2
+
+[node name="to_puddle_loop" type="Area2D" parent="lantern_loop" node_paths=PackedStringArray("spawn_point", "target_door")]
+position = Vector2(1320, 256)
+script = ExtResource("18_qiu13")
+spawn_point = NodePath("spawn_point")
+target_door = NodePath("../../puddle_loop/to_lantern_loop")
+spawn_dir_vector = Vector2(0, 1)
+spawn_pos_vector = Vector2(0, 36)
+parallel = true
+centred = true
+size = Vector2i(16, 32)
+shape = SubResource("RectangleShape2D_qiu13")
+debug_colour = Color(0.9, 0, 0.7, 0.3)
+metadata/_custom_type_script = "uid://bau5lvtg1mbkj"
+
+[node name="lantern" parent="lantern_loop" instance=ExtResource("19_0q71x")]
+position = Vector2(1616, 336)
 
 [editable path="camera"]
+[editable path="puddle_loop/door_interactable"]

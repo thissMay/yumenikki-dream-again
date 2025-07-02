@@ -1,0 +1,30 @@
+[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://cwp7v2lqsy58c"]
+
+[ext_resource type="Texture2D" uid="uid://dnk4hyhcaj62t" path="res://src/levels/_dream/rose_field/sprites/jaw_skull.png" id="1_upg8y"]
+[ext_resource type="Texture2D" uid="uid://cvvqlvoukprvr" path="res://src/levels/_dream/rose_field/sprites/rose_skull.png" id="2_i5jci"]
+[ext_resource type="Texture2D" uid="uid://bcnbmw4r0w70p" path="res://src/levels/_dream/rose_field/sprites/small_skull.png" id="3_wwut5"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1bojp"]
+texture = ExtResource("1_upg8y")
+separation = Vector2i(0, 102)
+texture_region_size = Vector2i(102, 44)
+0:0/0 = 0
+0:0/0/y_sort_origin = 20
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nww67"]
+texture = ExtResource("2_i5jci")
+texture_region_size = Vector2i(104, 110)
+0:0/0 = 0
+0:0/0/y_sort_origin = 40
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_upkxl"]
+texture = ExtResource("3_wwut5")
+texture_region_size = Vector2i(50, 50)
+0:0/0 = 0
+0:0/0/y_sort_origin = 20
+
+[resource]
+tile_size = Vector2i(32, 24)
+sources/1 = SubResource("TileSetAtlasSource_nww67")
+sources/2 = SubResource("TileSetAtlasSource_upkxl")
+sources/0 = SubResource("TileSetAtlasSource_1bojp")

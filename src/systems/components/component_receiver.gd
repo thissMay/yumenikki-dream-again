@@ -17,7 +17,8 @@ func _ready() -> void:
 	components = get_children()
 	set_independent(independent)
 	for component in components: 
-		if component and component is Component: component._setup()
+		if component and component is Component: 
+			component._setup()
 func set_bypass(_by: bool) -> void: bypass = _by
 
 func _process(delta: float) -> void: _update(delta)

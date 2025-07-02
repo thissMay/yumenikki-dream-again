@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://clyak4figgq17"]
+[gd_scene load_steps=34 format=4 uid="uid://clyak4figgq17"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ri5tq"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_7xq5b"]
@@ -12,11 +12,15 @@
 [ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="8_4e8ta"]
 [ext_resource type="Shader" uid="uid://b0qym6r6rs7ns" path="res://src/shaders/panorama/linear_additive.gdshader" id="11_yqxsb"]
 [ext_resource type="Texture2D" uid="uid://cm6iimafcot25" path="res://src/images/panorama/face.png" id="12_8vgs5"]
+[ext_resource type="TileSet" uid="uid://b0kyfgy4bib24" path="res://src/levels/__ignore/tilemaps/_common_objs.tres" id="13_f2y3w"]
 [ext_resource type="Texture2D" uid="uid://dryh7yr1eq7o" path="res://src/levels/_dream/fly_swarm/sprites/warning.png" id="14_powk2"]
 [ext_resource type="TileSet" uid="uid://bqmlmtywcj6oe" path="res://src/levels/_dream/fly_swarm/tilemaps/flies.tres" id="17_67ob7"]
 [ext_resource type="Texture2D" uid="uid://csaqgs4uhvfaw" path="res://src/levels/_dream/fly_swarm/sprites/floor.png" id="18_21ng7"]
+[ext_resource type="PackedScene" uid="uid://crej0xx7uj05p" path="res://src/levels/__ignore/door.tscn" id="18_aswm8"]
 [ext_resource type="Texture2D" uid="uid://cpkt2rc64171c" path="res://src/levels/_dream/fly_swarm/sprites/misc.png" id="19_qnsyk"]
 [ext_resource type="Texture2D" uid="uid://itkq6v7b7bm0" path="res://src/levels/_dream/fly_swarm/sprites/stop.png" id="19_wrbgk"]
+[ext_resource type="PackedScene" uid="uid://36fsvg2ttglw" path="res://src/levels/__ignore/template_effect_collect.tscn" id="20_qwi2n"]
+[ext_resource type="Resource" uid="uid://c7vdqqrvfrv78" path="res://src/player/madotsuki/effects/earring/earring.tres" id="21_w36fr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rfra1"]
 shader = ExtResource("4_tjms7")
@@ -128,14 +132,16 @@ metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 script = ExtResource("2_fec3j")
 stream = ExtResource("4_nvj2j")
 vol = 3.0
-pitch = 0.44
+pitch = 0.6
 metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 
 [node name="camera" parent="." instance=ExtResource("2_7xq5b")]
 
+[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../Node2D/madotsuki")
+
 [node name="Wiggle" type="Node" parent="camera/camera_handler/marker/camera/components_receiver" index="0"]
 script = ExtResource("8_4e8ta")
-ignore_rotation = false
 
 [node name="overlay_1" parent="camera/camera_handler/camera_overlay" index="0"]
 material = SubResource("ShaderMaterial_rfra1")
@@ -160,6 +166,10 @@ y_sort_enabled = true
 
 [node name="madotsuki" parent="Node2D" instance=ExtResource("5_fj7r3")]
 position = Vector2(232, 144)
+
+[node name="sally\'s_earring" type="TileMapLayer" parent="Node2D"]
+tile_map_data = PackedByteArray("AAApAP7/AAASABIAAAA=")
+tile_set = ExtResource("13_f2y3w")
 
 [node name="big_signs_b" type="TileMapLayer" parent="Node2D"]
 z_index = -2
@@ -209,4 +219,22 @@ polygon = PackedVector2Array(390, 260, -117, 520, -39, 560, 0, 540, 39, 560, 78,
 build_mode = 1
 polygon = PackedVector2Array(-507, 40, -468, 60, -507, 80, -156, 260, -195, 280, -78, 340, -117, 360, -78, 380, -117, 400, -78, 420, -195, 480, -156, 500, -234, 540, -78, 620, -39, 600, 0, 620, 39, 600, 78, 620, 117, 600, 156, 620, 195, 600, 234, 620, 546, 460, 507, 440, 624, 380, 663, 400, 975, 240, 702, 100, 741, 80, 702, 60, 741, 40, 702, 20, 741, 0, 546, -100, 507, -80, 468, -100, 429, -80, 390, -100, 351, -80, 312, -100, 273, -80, 234, -100, 195, -80, 156, -100, 117, -80, -39, -160, -273, -40, -312, -60)
 
+[node name="door_interactable" parent="." instance=ExtResource("18_aswm8")]
+position = Vector2(248, 88)
+
+[node name="scene_traversal" parent="door_interactable" index="2"]
+scene_path = "uid://dnjvpl85u4jl8"
+connection_id = "fly"
+
+[node name="effect_collectable" parent="." instance=ExtResource("20_qwi2n")]
+position = Vector2(664, -24)
+
+[node name="append_effect" parent="effect_collectable/on_interact" index="1"]
+effect = ExtResource("21_w36fr")
+
+[node name="notification" parent="effect_collectable/on_interact" index="3"]
+texts = Array[String](["Effect Collect!... Sally's Earring!"])
+
 [editable path="camera"]
+[editable path="door_interactable"]
+[editable path="effect_collectable"]

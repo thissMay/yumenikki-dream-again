@@ -20,9 +20,9 @@ class_name Component extends Node
 
 func _ready() -> void: 
 	if receiver != null: return
-
 	if get_parent() is ComponentReceiver: 
 		receiver = get_parent()
+
 		if !receiver.bypass_enabled.is_connected(_on_bypass_enabled): 
 			receiver.bypass_enabled.connect(_on_bypass_enabled)
 		if !receiver.bypass_lifted.is_connected(_on_bypass_lifted): 

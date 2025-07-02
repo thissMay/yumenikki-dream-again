@@ -5,7 +5,7 @@ extends SoundPlayer
 ## container for any ambience stream player instances.
 const MUSIC_DICT := {
 	"stream" : null, 
-	"volume" : 0, 
+	"volume" : 1, 
 	"pitch" : 1, 
 	"carry_over": false}
 
@@ -29,18 +29,19 @@ func play_sound(
 	_vol: float = 1, 
 	_pitch: float = 1, 
 	forget_after: bool = false) -> void:
-
+	
 	if playing: set_music_dict(pending_music, _stream, _vol, _pitch)
 		
 	set_music_dict(prev_music, curr_music["stream"], curr_music["volume"], curr_music["pitch"])
 	set_music_dict(curr_music, _stream, _vol, _pitch)
 	
 	if same_as_previous():
-		lerp_pitch(get_bgm_pitch(), self.pitch_scale)
-		lerp_volume(get_bgm_volume(), self.volume_db)
+		tween_pitch(get_bgm_pitch(), self.pitch_scale)
+		tween_volume(get_bgm_volume(), self.volume_db)
 	
 	else:
 		set_pitch(get_bgm_pitch())
+		
 		fade_in()
 		set_stream(get_bgm_stream()) 
 		self.play()
@@ -67,12 +68,12 @@ func get_bgm_pitch() -> float:  return curr_music["pitch"]
 func get_bgm_stream() -> AudioStream: return curr_music["stream"]
 
 # ---- setters ----
-func lerp_pitch(_pitch: float, _from: float = self.pitch_scale) -> void:
+func tween_pitch(_pitch: float, _from: float = self.pitch_scale) -> void:
 	if pitch_tween != null: pitch_tween.kill()
 	pitch_tween = self.create_tween()	
 	pitch_tween.tween_method(set_pitch, _from, _pitch, 1)
 	await pitch_tween.finished
-func lerp_volume(_vol: float, _from: float = self.volume_db) -> void:
+func tween_volume(_vol: float, _from: float = self.volume_db) -> void:
 	if vol_tween != null: vol_tween.kill()
 	vol_tween = self.create_tween()	
 	vol_tween.tween_method(set_volume, _from, _vol, 1)
@@ -80,12 +81,9 @@ func lerp_volume(_vol: float, _from: float = self.volume_db) -> void:
 
 # ---- music control ----
 func fade_in() -> void:
-	if self.volume_db > -49: 
-		await lerp_volume(get_bgm_volume(), self.volume_db)
-		return
-	await lerp_volume(get_bgm_volume(), -50)
+	await tween_volume(get_bgm_volume(), 0)
 func fade_out() -> void:
-	await lerp_volume(-50, self.volume_db)
+	await tween_volume(0, db_to_linear(self.volume_db))
 	stop()
 
 # ---- logic ----

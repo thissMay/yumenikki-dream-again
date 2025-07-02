@@ -45,6 +45,7 @@ class Keybind:
 		"move_right" 		: { "key" : [ InputAction.new(KEY_RIGHT), InputAction.new(KEY_D) ], "command" : []},
 		"move_left" 		: { "key" : [ InputAction.new(KEY_LEFT), InputAction.new(KEY_A) ], "command" : []},
 		
+		"pinch" 			: { "key" : [InputAction.new(KEY_Q)], "command" : []},
 		"interact" 			: { "key" : [InputAction.new(KEY_E)], "command" : []},
 		"emote" 			: { "key" : [InputAction.new(KEY_G)], "command" : []},
 		"primary_action"	: { "key" : [InputAction.new(KEY_Z)], "command" : []},

@@ -56,7 +56,9 @@ func setup() -> void:
 	resume.pressed.connect(
 		func(): 
 			Game.Config.save_settings_data()
-			GameManager.pause_options(false))
+			GameManager.pause_options(false)
+			GameManager.show_options(false)
+			)
 
 #func on_show() -> void:
 	#if Game.scene_manager.scene_node_packed == load("res://src/scenes/menu/menu.tscn"):

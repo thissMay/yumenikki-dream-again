@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://c0vm1tnq7h1j2"]
+
+[ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="1_calo3"]
+[ext_resource type="Script" uid="uid://jjde6h1103p5" path="res://src/ui/gui/gui_panel.gd" id="2_calo3"]
+[ext_resource type="Shader" uid="uid://bhdcejnx8m6be" path="res://src/shaders/ui/button_texture_grad_mask.gdshader" id="3_6cm1k"]
+[ext_resource type="LabelSettings" uid="uid://dbxux4dchsxxt" path="res://src/global_label_settings.tres" id="4_t2mh1"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ix8fw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6cm1k"]
+shader = ExtResource("3_6cm1k")
+shader_parameter/first_color = Color(0, 0, 0, 1)
+shader_parameter/second_color = Color(0, 0, 0, 0)
+shader_parameter/position = 0.0
+shader_parameter/size = 1.0
+shader_parameter/angle = 0.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_t2mh1"]
+
+[node name="template_panel" type="Control" node_paths=PackedStringArray("display_bg", "main_container", "inner_main_container", "icon_content_seperator", "margin_container", "icon_display_container", "icon_display", "text_display")]
+custom_minimum_size = Vector2(70, 25)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 80.0
+offset_bottom = 25.0
+theme = ExtResource("1_calo3")
+script = ExtResource("2_calo3")
+true_size = Vector2(80, 25)
+panel_display_texture = SubResource("CanvasTexture_ix8fw")
+panel_display_color = Color(1, 1, 1, 1)
+display_bg = NodePath("main_container/display_bg")
+main_container = NodePath("main_container")
+inner_main_container = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container")
+icon_content_seperator = NodePath("main_container/margin_container/icon_content_seperator")
+margin_container = NodePath("main_container/margin_container")
+icon_display_container = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container")
+icon_display = NodePath("main_container/margin_container/icon_content_seperator/icon_display_container/icon_display")
+text_display = NodePath("main_container/margin_container/icon_content_seperator/inner_main_container/text_display")
+metadata/_custom_type_script = "uid://dhvrb58iweuo0"
+
+[node name="main_container" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="display_bg" type="TextureRect" parent="main_container"]
+material = SubResource("ShaderMaterial_6cm1k")
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("CanvasTexture_t2mh1")
+expand_mode = 1
+
+[node name="margin_container" type="MarginContainer" parent="main_container"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="icon_content_seperator" type="HBoxContainer" parent="main_container/margin_container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="icon_display_container" type="CenterContainer" parent="main_container/margin_container/icon_content_seperator"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+
+[node name="icon_display" type="TextureRect" parent="main_container/margin_container/icon_content_seperator/icon_display_container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="inner_main_container" type="CenterContainer" parent="main_container/margin_container/icon_content_seperator"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="text_display" type="Label" parent="main_container/margin_container/icon_content_seperator/inner_main_container"]
+layout_mode = 2
+text = "placeholder"
+label_settings = ExtResource("4_t2mh1")
+horizontal_alignment = 1
+vertical_alignment = 1

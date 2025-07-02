@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://dl25joalnmaxt"]
+[gd_scene load_steps=33 format=4 uid="uid://dl25joalnmaxt"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_0iw03"]
 [ext_resource type="Shader" uid="uid://dhykg54peq185" path="res://src/shaders/panorama/radial.gdshader" id="2_6vasg"]
@@ -12,8 +12,19 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/madotsuki/madotsuki.tscn" id="10_scjaa"]
 [ext_resource type="TileSet" uid="uid://crsr3gx0s6ht5" path="res://src/levels/__ignore/tilemaps/apartment.tres" id="11_r2slo"]
 [ext_resource type="PackedScene" uid="uid://crej0xx7uj05p" path="res://src/levels/__ignore/door.tscn" id="12_ftke6"]
+[ext_resource type="Texture2D" uid="uid://dkxu0pw6gxo3f" path="res://src/levels/__ignore/doors/door_mural.png" id="15_awmci"]
+[ext_resource type="Texture2D" uid="uid://dqeshbkbbqv3j" path="res://src/levels/__ignore/doors/door_snow.png" id="15_csax6"]
+[ext_resource type="Texture2D" uid="uid://cpwcyuu2p36ri" path="res://src/levels/__ignore/doors/door_numbers.png" id="15_ua88q"]
+[ext_resource type="Texture2D" uid="uid://cycu3tgkj5mjl" path="res://src/levels/__ignore/doors/door_dark.png" id="18_r03w1"]
+[ext_resource type="Texture2D" uid="uid://qg21qe8skrt5" path="res://src/levels/__ignore/doors/door_neon.png" id="19_kv8np"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="20_kv8np"]
+[ext_resource type="Texture2D" uid="uid://dr7f1rsayw4om" path="res://src/levels/__ignore/doors/door_candle.png" id="22_2xg7o"]
 [ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="22_v60ia"]
+[ext_resource type="Texture2D" uid="uid://wb452l434jgy" path="res://src/levels/__ignore/doors/door_puddle.png" id="23_bqcf3"]
 [ext_resource type="AudioStream" uid="uid://blvfuo72u6lrh" path="res://src/audio/bgm/-1 - Drifting Thoughts.ogg" id="23_mah0q"]
+[ext_resource type="Texture2D" uid="uid://ub6vwdilgxwn" path="res://src/levels/__ignore/doors/door_shield-folk.png" id="24_0iw03"]
+[ext_resource type="Texture2D" uid="uid://cua8v3f5c3bwi" path="res://src/levels/__ignore/doors/door_eyeball.png" id="25_6vasg"]
+[ext_resource type="Texture2D" uid="uid://p030n5rywk1s" path="res://src/levels/__ignore/doors/door_grafitti.png" id="26_jy84i"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qtvl2"]
 shader = ExtResource("2_6vasg")
@@ -63,7 +74,6 @@ metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 [node name="BGM" type="Node" parent="."]
 script = ExtResource("22_v60ia")
 stream = ExtResource("23_mah0q")
-vol = -5.0
 pitch = 0.8
 metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
 
@@ -168,39 +178,136 @@ tile_map_data = PackedByteArray("AAD7/xMAAAACAAMAAAD8/xMAAAACAAMAAAD8/xIAAAACAAM
 tile_set = ExtResource("11_r2slo")
 
 [node name="snow_world" parent="y_order" instance=ExtResource("12_ftke6")]
+position = Vector2(0, -88)
+
+[node name="scene_traversal" parent="y_order/snow_world" index="2"]
+scene_path = "uid://b1cl2pgrbvduk"
+
+[node name="renderer" parent="y_order/snow_world" index="6"]
+texture = ExtResource("15_csax6")
+hframes = 1
+frame_h_count = 1
 
 [node name="number_world" parent="y_order" instance=ExtResource("12_ftke6")]
-position = Vector2(192, 288)
+position = Vector2(168, -104)
+
+[node name="scene_traversal" parent="y_order/number_world" index="2"]
+scene_path = "uid://dnjvpl85u4jl8"
+
+[node name="renderer" parent="y_order/number_world" index="6"]
+texture = ExtResource("15_ua88q")
+hframes = 1
+frame_h_count = 1
 
 [node name="mural_world" parent="y_order" instance=ExtResource("12_ftke6")]
-position = Vector2(224, 112)
+position = Vector2(456, -88)
+
+[node name="scene_traversal" parent="y_order/mural_world" index="2"]
+scene_path = "uid://d4buml4tyobvm"
+
+[node name="renderer" parent="y_order/mural_world" index="6"]
+texture = ExtResource("15_awmci")
+hframes = 1
+frame_h_count = 1
 
 [node name="dark_world" parent="y_order" instance=ExtResource("12_ftke6")]
-position = Vector2(80, 224)
+position = Vector2(544, 104)
+
+[node name="scene_traversal" parent="y_order/dark_world" index="2"]
+scene_path = "uid://ct8ji25wno2g0"
+
+[node name="renderer" parent="y_order/dark_world" index="6"]
+texture = ExtResource("18_r03w1")
+hframes = 1
+frame_h_count = 1
 
 [node name="neon_world" parent="y_order" instance=ExtResource("12_ftke6")]
-position = Vector2(336, 32)
+position = Vector2(728, 64)
 
-[node name="forest_world" parent="y_order" instance=ExtResource("12_ftke6")]
-position = Vector2(192, 144)
+[node name="scene_traversal" parent="y_order/neon_world" index="2"]
+scene_path = "uid://0qgtp6ou1opf"
+
+[node name="renderer" parent="y_order/neon_world" index="6"]
+texture = ExtResource("19_kv8np")
+frame = 2
+script = ExtResource("20_kv8np")
+autoplay = true
+loop = true
+reverse = false
+end_frame = false
+fps = 5.0
 
 [node name="candle_world" parent="y_order" instance=ExtResource("12_ftke6")]
-position = Vector2(144, 400)
+position = Vector2(-240, 56)
+
+[node name="scene_traversal" parent="y_order/candle_world" index="2"]
+scene_path = "uid://dem5ekbdkh84f"
+
+[node name="renderer" parent="y_order/candle_world" index="6"]
+texture = ExtResource("22_2xg7o")
+hframes = 1
+frame_h_count = 1
 
 [node name="puddle_world" parent="y_order" instance=ExtResource("12_ftke6")]
-position = Vector2(64, 272)
+position = Vector2(-8, 280)
+
+[node name="scene_traversal" parent="y_order/puddle_world" index="2"]
+scene_path = "uid://4qtk6nnecrel"
+
+[node name="renderer" parent="y_order/puddle_world" index="6"]
+texture = ExtResource("23_bqcf3")
+hframes = 1
+frame_h_count = 1
 
 [node name="shield_folk_world" parent="y_order" instance=ExtResource("12_ftke6")]
-position = Vector2(128, 464)
+position = Vector2(248, 328)
+
+[node name="scene_traversal" parent="y_order/shield_folk_world" index="2"]
+scene_path = "uid://d0sdg4uow1xul"
+
+[node name="renderer" parent="y_order/shield_folk_world" index="6"]
+texture = ExtResource("24_0iw03")
+hframes = 1
+frame_h_count = 1
 
 [node name="eye_world" parent="y_order" instance=ExtResource("12_ftke6")]
-position = Vector2(256, 480)
+position = Vector2(480, 240)
+
+[node name="scene_traversal" parent="y_order/eye_world" index="2"]
+scene_path = "uid://b67q2b5hm6tsu"
+
+[node name="renderer" parent="y_order/eye_world" index="6"]
+texture = ExtResource("25_6vasg")
+hframes = 1
+frame_h_count = 1
 
 [node name="apartment" parent="y_order" instance=ExtResource("12_ftke6")]
-position = Vector2(128, 448)
+position = Vector2(240, 96)
+
+[node name="scene_traversal" parent="y_order/apartment" index="2"]
+scene_path = "uid://dl7sdjmo0vbkt"
+connection_id = "apartment"
 
 [node name="graffiti_world" parent="y_order" instance=ExtResource("12_ftke6")]
-position = Vector2(192, 448)
+position = Vector2(160, 72)
+
+[node name="scene_traversal" parent="y_order/graffiti_world" index="2"]
+scene_path = "uid://dyvqsvkfdlq8a"
+
+[node name="renderer" parent="y_order/graffiti_world" index="6"]
+texture = ExtResource("26_jy84i")
+hframes = 1
+frame_h_count = 1
 
 [editable path="camera"]
+[editable path="y_order/snow_world"]
+[editable path="y_order/number_world"]
+[editable path="y_order/mural_world"]
+[editable path="y_order/dark_world"]
+[editable path="y_order/neon_world"]
+[editable path="y_order/candle_world"]
+[editable path="y_order/puddle_world"]
+[editable path="y_order/shield_folk_world"]
+[editable path="y_order/eye_world"]
+[editable path="y_order/apartment"]
 [editable path="y_order/graffiti_world"]

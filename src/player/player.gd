@@ -54,6 +54,22 @@ func _enter_tree() -> void:
 func _process(delta: float) -> void:
 	super(delta)
 
+class Data:
+	static var data: Dictionary = {		
+		"data" : 
+			{
+			"innocent_killed" : 0,
+			"hostile_killed" : 0,
+			},
+		"effects" : null,
+		}
+		
+	static func update_effects_data(_effects_data: Array[PLEffect]) -> void: 
+		data["effects"] = _effects_data
+	static func get_data() -> Dictionary: return data
+	static func set_data(_data: Dictionary) -> Error:
+		data = _data
+		return OK
 class Instance:
 	static var _pl: Player 
 	
@@ -68,20 +84,19 @@ class Instance:
 	static var equipment_pending: PLEffect
 
 	static func setup() -> void: 	
-		print("FUCK")
-		
 		door_listener = EventListener.new(["PLAYER_DOOR_USED", "SCENE_CHANGE_SUCCESS"], true)
 		door_listener.do_on_notify("PLAYER_DOOR_USED", func(): door_went_flag = true)
 		door_listener.do_on_notify("SCENE_CHANGE_SUCCESS", func(): 
-			for points in Game.get_group_arr("spawn_points"):
+			
+			for points: SpawnPoint in Game.get_group_arr("spawn_points"):
 				if (
 					load(points.scene_path) == Game.scene_manager.prev_scene_ps and 
 					door_went_flag and
 					GameManager.EventManager.get_event_param("PLAYER_DOOR_USED")[0] == points.connection_id):
 						
-						teleport_player(points.get_spawn_point(), points.spawn_dir, true)
+						teleport_player(points.global_position, points.spawn_dir, true)
 						if points.parent_instead_of_self != null:
-							if points.as_sibling: _pl.reparent(points.parent_instead_of_self.get_parent())
+							if points.as_sibling: _pl.reparent(points.spawn_point.parent_instead_of_self.get_parent())
 							else: _pl.reparent(points.parent_instead_of_self)
 
 						else:
@@ -103,13 +118,13 @@ class Instance:
 	static func teleport_player(_pos: Vector2, _dir: Vector2, w_camera: bool = false) -> void:
 		if get_pl():
 			get_pl().global_position = _pos
-			get_pl().set_dir.call_deferred(_dir)
+			get_pl().direction = (_dir)
 			if w_camera and CameraHolder.instance.target == get_pl(): 
 				CameraHolder.instance.global_position = get_pl().global_position
 	static func handle_player_world_warp(_pos: Vector2, _dir: Vector2) -> void:
 		if get_pl():
 			get_pl().global_position = _pos
-			get_pl().set_dir.call_deferred(_dir)
+			get_pl().direction = (_dir)
 			if CameraHolder.instance: 
 				CameraHolder.instance.global_position = get_pl().global_position
 	
@@ -122,14 +137,3 @@ class Instance:
 	static func is_moving() -> bool:
 		if pl_exists(): return _pl.is_moving
 		return pl_exists()
-	
-	static func save_data() -> Error: 
-		var data := {
-			"data" : 
-				{
-					"innocent_killed" : 0,
-					"hostile_killed" : 0,
-				},
-			"effects" : [],
-		}
-		return OK

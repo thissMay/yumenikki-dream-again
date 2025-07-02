@@ -20,10 +20,17 @@ texture = ExtResource("1_wg2rt")
 0:3/animation_frame_2/duration = 1.0
 0:3/animation_frame_3/duration = 1.0
 0:3/0 = 0
+0:3/0/y_sort_origin = 8
 0:1/0 = 0
+0:1/0/y_sort_origin = -8
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -8, 4, -8, 4, 8, -4, 8)
 1:1/0 = 0
+1:1/0/y_sort_origin = -12
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -8, 4, -8, 4, 4, -4, 4)
 2:1/0 = 0
 2:2/0 = 0
+2:2/0/y_sort_origin = -6
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -8, 4, -8, 4, 8, -4, 8)
 3:0/size_in_atlas = Vector2i(2, 3)
 3:0/0 = 0
 5:0/size_in_atlas = Vector2i(3, 3)
@@ -31,6 +38,7 @@ texture = ExtResource("1_wg2rt")
 
 [resource]
 tile_size = Vector2i(8, 16)
+physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_3cbfc")
 pattern_0 = SubResource("TileMapPattern_pf0t7")
 pattern_1 = SubResource("TileMapPattern_owe3b")

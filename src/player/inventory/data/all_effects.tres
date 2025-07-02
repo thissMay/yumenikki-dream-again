@@ -1,15 +1,16 @@
-[gd_resource type="Resource" script_class="PLInventoryData" load_steps=9 format=3 uid="uid://clalopt11aeiq"]
+[gd_resource type="Resource" script_class="PLInventoryData" load_steps=10 format=3 uid="uid://clalopt11aeiq"]
 
 [ext_resource type="Script" uid="uid://cycsi2jsiuie0" path="res://src/player/scripts/pl_effect.gd" id="1_5u4px"]
 [ext_resource type="Resource" uid="uid://c7vdqqrvfrv78" path="res://src/player/madotsuki/effects/earring/earring.tres" id="2_umyly"]
 [ext_resource type="Resource" uid="uid://w1ycqdwy7pk8" path="res://src/player/madotsuki/effects/bike/bike.tres" id="3_whws0"]
 [ext_resource type="Resource" uid="uid://b3ej66fhp7a0e" path="res://src/player/madotsuki/effects/cat/cat.tres" id="4_nqydv"]
 [ext_resource type="Resource" uid="uid://bi65brqjolfb" path="res://src/player/madotsuki/effects/medamude/medamude.tres" id="5_857tm"]
-[ext_resource type="Resource" uid="uid://caen3plrw7hok" path="res://src/player/madotsuki/effects/knife/knife.tres" id="6_os2ta"]
 [ext_resource type="Resource" uid="uid://dtb7ixtykb6a0" path="res://src/player/madotsuki/effects/lamp/lamp.tres" id="7_n07s2"]
+[ext_resource type="Resource" uid="uid://ncax1yyo23go" path="res://src/player/madotsuki/effects/neon/neon.tres" id="7_umyly"]
+[ext_resource type="Resource" uid="uid://dee3tybqqh0yj" path="res://src/player/madotsuki/effects/nopperabou/nopperabou.tres" id="8_whws0"]
 [ext_resource type="Script" uid="uid://bub475hm2s16o" path="res://src/player/inventory/data/pl_inventory_data.gd" id="8_yus6h"]
 
 [resource]
 script = ExtResource("8_yus6h")
-effects = Array[ExtResource("1_5u4px")]([ExtResource("2_umyly"), ExtResource("3_whws0"), ExtResource("4_nqydv"), ExtResource("5_857tm"), ExtResource("6_os2ta"), ExtResource("7_n07s2")])
+effects = Array[ExtResource("1_5u4px")]([ExtResource("3_whws0"), ExtResource("4_nqydv"), ExtResource("2_umyly"), ExtResource("7_n07s2"), ExtResource("5_857tm"), ExtResource("7_umyly"), ExtResource("8_whws0")])
 metadata/_custom_type_script = "uid://bub475hm2s16o"

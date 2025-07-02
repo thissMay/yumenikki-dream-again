@@ -21,8 +21,8 @@ script/source = "extends SceneNode
 
 func _ready() -> void:
 	super()
+	Game.Save.data[\"game\"][\"read_warning\"] = true
 	proceed.pressed.connect(func(): GameManager.change_scene_to(load(scene_path)))
-	Game.Save.change_data_value(\"read_warning\", true)
 	
 "
 
@@ -122,6 +122,8 @@ The project  at its current state does not contain the following: [color=yellow]
 This game is labelled as pre-alpha. The game's continuity and
 support is subject to change, however, updates will be added to compensate missing game elemented.  
 
+It's also important to note; THIS GAME IS ALL EXPLORATION AND THERE IS NO END GOAL CURRENTLY. 
+
 Thank you for your understanding!
 "
 fit_content = true
@@ -129,12 +131,12 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="proceed" type="Control" parent="warning/Control/VBoxContainer"]
-custom_minimum_size = Vector2(300, 25)
+custom_minimum_size = Vector2(396, 25)
 layout_mode = 2
 theme = ExtResource("2_k0aey")
 script = ExtResource("3_juckd")
 button_display_texture = SubResource("CanvasTexture_kfffw")
-min_size = Vector2(300, 25)
+min_size = Vector2(396, 25)
 true_size = Vector2(396, 25)
 text = "Continue"
 panel_display_texture = SubResource("CanvasTexture_wghfn")

@@ -43,11 +43,11 @@ func interact() -> void:
 	if only_once and can_interact:
 		can_interact = false
 		_interact()
-		interacted.emit.call_deferred()
+		interacted.emit()
 		
 	elif can_interact:
 		_interact()
-		interacted.emit.call_deferred()
+		interacted.emit()
 
 
 func _handle_player_enter() -> void: 

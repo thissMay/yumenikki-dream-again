@@ -83,7 +83,8 @@ func open(_position: Vector2) -> void:
 		text_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 		
-func close() -> void: 
+func close() -> void:
+	text_container.text = ""
 	await close_animation()
 	
 func display_text(

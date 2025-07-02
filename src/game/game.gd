@@ -40,23 +40,21 @@ func singleton_setup() -> void:
 	scene_manager = SceneManager.new()
 
 func _ready() -> void:	
+	if Engine.is_editor_hint(): return
+	
 	if Optimization.override_godot_default_settings:
 		Optimization.setup_overridden_project_settings()
 	
 	singleton_setup()
-	
-	Engine.max_fps = 60
-	
-	
-	true_time_scale = Engine.time_scale
-
 	viewport_setup()
-	root = get_tree().root
 	
+	root = get_tree().root
 	main_window = get_tree().root.get_window()
 	main_viewport = get_tree().root.get_viewport()
 	main_tree = get_tree()
-		
+	
+	true_time_scale = Engine.time_scale
+
 	render_server_setup()
 	window_setup()
 	
@@ -69,7 +67,6 @@ func _ready() -> void:
 	
 	scene_manager.setup()
 	GlobalPanoramaManager.setup()
-	
 func _process(delta: float) -> void: 
 	Game.scene_manager.handle_background_loading_upon_request(Game.scene_manager.scene_node_packed)
 	GlobalPanoramaManager.update(delta)
@@ -87,6 +84,7 @@ func instantiate_game_manager() -> void:
 	else:
 		game_manager.reparent(self)
 # ---- display / window setup ---- 
+
 func viewport_setup() -> void:
 	viewport_width = get_viewport_width()
 	viewport_length = get_viewport_height()
@@ -108,7 +106,6 @@ func get_viewport_height() -> int: return ProjectSettings.get("display/window/si
 
 func get_viewport_dimens() -> Vector2: return Vector2(viewport_width, viewport_length)
 
-
 func lerp_timescale(_new: float):
 	var t_tween := self.create_tween() 
 	true_time_scale = _new
@@ -122,34 +119,41 @@ func get_real_delta() -> float:
 	return (true_time_scale / Engine.max_fps)
 func get_real_timescale() -> float:
 	return true_time_scale
-
 func get_timescale() -> float: return Engine.time_scale
-# ---- node manipulation ----
-func get_node_obj(_node_path: NodePath) -> Node: return get_node(_node_path)
-func set_node_active(_n: Node, _active: bool): pass
-func deattach_node_from(_n: Node, _parent: Node, _new_parent: Node): pass
 
+# ---- node manipulation ----
 func get_group_arr(_name: String) -> Array: 
 	if main_tree.has_group(_name):
 		return main_tree.get_nodes_in_group(_name)
 	return []
 	
 class Save:
+	extends GameSubClass
 	static var data := {
 	"game" : {
-		"version" : "prev_00_01",
-		"id" : 0,
+		"version" : "00",
 		"read_warning" : false},
 	"player" : {},
 	"scene" : {}}
 		
 	const SAVE_PATH := "user://save.json"
+	const SAVE_DIR := "user://save/"
+	
+	static func _setup() -> void:
+		if DirAccess.dir_exists_absolute("user://save"): pass
+		else: DirAccess.make_dir_absolute("user://save")
 	
 	static func save_data() -> Error:
 		
 		var save_file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+		var save_data := Dictionary(data)
 		
-		save_file.store_string(JSON.stringify(data))
+		save_data["game"]["version"] = ProjectSettings.get_setting("application/config/version")
+		save_data["player"] = Player.Data.get_data()
+		save_data["scene"] = NodeSaveService.get_data()
+		
+		print(save_file.get_path())
+		save_file.store_string(JSON.stringify(save_data))
 		save_file.close()
 		save_file = null
 		
@@ -165,7 +169,16 @@ class Save:
 			load_file.close()
 			load_file = null
 			
+			Player.Data.set_data(content["player"])
+			NodeSaveService.set_data(content["scene"])
+			
 		else: return ERR_CANT_OPEN
+		return OK
+
+	static func clear_data() -> Error:
+		data["player"] = {}
+		data["scene"] = {}
+		data["game"]["read_warning"] = false
 		return OK
 
 	static func change_data_value(_key: String, _val: Variant) -> void:
@@ -227,10 +240,11 @@ class Config:
 			return config_data.get_value(_section, _setting)
 		return _default
 class Application: 
+	extends GameSubClass
 	static func quit(): 
+		Optimization.set_max_fps(30)
 		Music.fade_out()
 		Ambience.fade_out()
-		Optimization.set_max_fps(30)
 		await Game.Save.save_data()
 		await GameManager.request_transition(ScreenTransition.fade_type.FADE_IN)
 		Game.main_tree.quit.call_deferred()
@@ -280,11 +294,20 @@ class Optimization:
 		RenderingServer.viewport_set_default_canvas_item_texture_repeat(
 			Game.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_REPEAT_ENABLED)
 		RenderingServer.viewport_set_default_canvas_item_texture_filter(
-			Game.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)
-			
+			Game.main_window.get_viewport_rid(), RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)	
 			
 		Game.main_window.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 		Game.main_window.canvas_item_default_texture_repeat = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_REPEAT_ENABLED
 		Game.main_window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	static func set_max_fps(_max_fps: int) -> void:
 		Engine.max_fps = _max_fps
+class Directory:
+	static func is_path_in_dir(_path: String, _dir: String) -> bool:
+		var dir_content = DirAccess.get_directories_at(_dir)
+		print(dir_content)
+		return _path in dir_content
+	static func is_path_in_folder(_path: String) -> bool:
+		return false
+
+class GameSubClass:
+	static func _setup() -> void: pass

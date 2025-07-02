@@ -23,6 +23,7 @@ var mouse_pos: Vector2
 
 func _ready() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS	
+	self.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	Input.set_custom_mouse_cursor(preload("res://src/images/mouse/mouse_normal.png"), Input.CURSOR_ARROW)
 	Input.set_custom_mouse_cursor(preload("res://src/images/mouse/mouse_hover.png"), Input.CURSOR_POINTING_HAND)
 

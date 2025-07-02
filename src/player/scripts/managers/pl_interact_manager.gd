@@ -35,7 +35,6 @@ func _ready() -> void:
 		prompt_icon.visible = true
 		)
 	interactable_lost.connect(func():
-		print("peanits")
 		prompt_icon.visible = false
 		)
 	

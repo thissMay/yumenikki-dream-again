@@ -202,15 +202,15 @@ func player_entered_setup() -> void:
 		player_hit_border(_p, bound_side.LEFT)
 		pl_warped_left.emit())	
 	
-	up.body_entered.connect(func(_body: Node2D): handle_sentient_enter(_body, bound_side.UP))
-	down.body_entered.connect(func(_body: Node2D): handle_sentient_enter(_body, bound_side.DOWN))
-	right.body_entered.connect(func(_body: Node2D): handle_sentient_enter(_body, bound_side.RIGHT))
-	left.body_entered.connect(func(_body: Node2D): handle_sentient_enter(_body, bound_side.LEFT))
+	up.body_entered.connect(func(_body: NavSentient): handle_sentient_enter(_body, bound_side.UP))
+	down.body_entered.connect(func(_body: NavSentient): handle_sentient_enter(_body, bound_side.DOWN))
+	right.body_entered.connect(func(_body: NavSentient): handle_sentient_enter(_body, bound_side.RIGHT))
+	left.body_entered.connect(func(_body: NavSentient): handle_sentient_enter(_body, bound_side.LEFT))
 
-	up.body_exited.connect(func(_body: Node2D): handle_sentient_exit(_body, bound_side.UP))
-	down.body_exited.connect(func(_body: Node2D): handle_sentient_exit(_body, bound_side.DOWN))
-	right.body_exited.connect(func(_body: Node2D): handle_sentient_exit(_body, bound_side.RIGHT))
-	left.body_exited.connect(func(_body: Node2D): handle_sentient_exit(_body, bound_side.LEFT))
+	up.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.UP))
+	down.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.DOWN))
+	right.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.RIGHT))
+	left.body_exited.connect(func(_body: NavSentient): handle_sentient_exit(_body, bound_side.LEFT))
 	
 	
 func player_hit_border(_pl: Area2D, _bound_side: bound_side) -> void: 
@@ -241,7 +241,7 @@ func _handle_sentient_warp(_sentient: SentientBase, _side: bound_side) -> Vector
 	var warp_vector: Vector2 = warp_vectors[_side]
 	
 	_sentient.global_position = warp_vector
-	_sentient.set_dir.call_deferred(_sentient.direction)
+	_sentient.direction = (_sentient.direction)
 	
 	return warp_vector
 

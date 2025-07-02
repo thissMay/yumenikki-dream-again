@@ -4,7 +4,7 @@ extends Sequence
 var interactable: Interactable
 
 func _ready() -> void: 
-	order = get_children()
+	super()
 	interactable = get_parent()
 	
 	if interactable != null and interactable is Interactable:

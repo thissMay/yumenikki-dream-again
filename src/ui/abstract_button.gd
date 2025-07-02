@@ -4,11 +4,7 @@ class_name AbstractButton
 extends Control
 
 @export_group("Flags")
-var is_toggled: bool = false
-@export var is_togglable: bool = false:
-	set(_tog):
-		is_togglable = _tog
-		if Engine.is_editor_hint(): set_button_toggle_mode(_tog)
+
 @export var active: bool = true:
 	set(_a): 
 		active = _a
@@ -23,36 +19,32 @@ signal toggled(_truth)
 signal hover_entered
 signal hover_exited
 
-# ---- instantiation ----
-func _components_setup_instantiation() -> void:
-	button = BaseButton.new()
-func _components_setup_children() -> void:
-	self.add_child(button)
-func _component_setup_name() -> void:
-	button.name = "button"
+@export_storage var button: BaseButton # pretty much needed.
+var is_toggled: bool = false
 
+# ---- instantiation ----
 # ---- initialisation ----
 func _ready() -> void:
 	_setup()
-	self.mouse_filter = Control.MOUSE_FILTER_PASS
-	set_button_toggle_mode(is_togglable)
-	button.size = self.size
-	button.focus_mode = Control.FOCUS_NONE
-	
-	button.pressed.connect(func(): pressed.emit())
-	button.mouse_entered.connect(_on_hover)
-	button.mouse_exited.connect(_on_unhover)
-	button.button_down.connect(_on_press)
-	
+	self.mouse_filter = Control.MOUSE_FILTER_PASS	
 	set_active(active)
-	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	
 func _setup() -> void:
-	_components_setup_instantiation()
-	_components_setup_children()
-	_component_setup_name()
+	button = GlobalUtils.get_child_node_or_null(self, "button")
+	if button == null: 
+		button = await GlobalUtils.add_child_node(self, Button.new(), "button")
+		button.size = self.size
+		button.focus_mode = Control.FOCUS_NONE
+		
+		button.pressed.connect(func(): pressed.emit())
+		button.mouse_entered.connect(_on_hover)
+		button.mouse_exited.connect(_on_unhover)
+		button.button_down.connect(_on_press)
+		button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		
+		button.set_anchors_preset(PRESET_FULL_RECT)
 
 # ---- required components / button functionality ----
-var button: BaseButton # pretty much needed.
 
 func _on_hover() -> void: pass
 func _on_unhover() -> void: pass
@@ -63,7 +55,7 @@ func _on_toggle() -> void: pass
 func _on_untoggle() -> void: pass
 
 func set_active(_active: bool) -> void:
-	button.disabled = !_active
+	if button != null: button.disabled = !_active
 func set_button_toggle_mode(_toggle: bool) -> void:
 	if button: button.toggle_mode = _toggle
 
@@ -72,10 +64,8 @@ func untoggle() -> void:
 	_on_unhover()
 	_on_untoggle()
 	toggled.emit(false)
-	is_toggled = false
 func toggle() -> void:
 	button.button_pressed = true
 	_on_hover()
 	_on_toggle()
 	toggled.emit(true)
-	is_toggled = true

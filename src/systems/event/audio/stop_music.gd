@@ -4,5 +4,6 @@ extends Event
 @export var abrupt: bool = false
 
 func _execute() -> void:
-	Music.fadeout_current_music(true, abrupt)
-	finished.emit()
+	if !wait_til_finished: super()
+	await Music.fade_out()
+	if wait_til_finished: super()

@@ -1,0 +1,279 @@
+[gd_scene load_steps=23 format=3 uid="uid://dslcsa2eloa1c"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_r5nps"]
+[ext_resource type="Texture2D" uid="uid://dh772bsjsu38l" path="res://src/scenes/save/arm_selection.png" id="2_kdm6a"]
+[ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="2_tpwl2"]
+[ext_resource type="Texture2D" uid="uid://23r5ntk6t2nl" path="res://src/images/panorama/aurora_galaxy_blur.png" id="3_ixo6f"]
+[ext_resource type="Shader" uid="uid://bqp8m8worpqyn" path="res://src/shaders/panorama/linear_fog.gdshader" id="4_ctqsg"]
+[ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="4_lviw6"]
+[ext_resource type="Texture2D" uid="uid://cgkm4gcpsetqk" path="res://src/scenes/save/mado.png" id="5_hgjum"]
+[ext_resource type="Texture2D" uid="uid://jyyt5bquldaa" path="res://src/images/panorama/glow_sea.png" id="5_i2l66"]
+[ext_resource type="Shader" uid="uid://dosa7qbgxuqjd" path="res://src/shaders/screen_overlay/vignette_rgb_abberation.gdshader" id="6_ctqsg"]
+[ext_resource type="Texture2D" uid="uid://bggdrftc57x03" path="res://src/scenes/save/save_file_selection.png" id="6_eui38"]
+[ext_resource type="Texture2D" uid="uid://dnrisi42q1kne" path="res://src/scenes/save/save_title.png" id="6_v0tbb"]
+[ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="8_eui38"]
+[ext_resource type="Script" uid="uid://ctbtfitoggtku" path="res://src/systems/components/component_receiver.gd" id="11_k7iwd"]
+[ext_resource type="PackedScene" uid="uid://mcaw5oms6f1t" path="res://src/scenes/save/save_button.tscn" id="13_tpwl2"]
+[ext_resource type="Script" uid="uid://sptd6yjcf24k" path="res://src/ui/abstract_button.gd" id="14_ixo6f"]
+[ext_resource type="Texture2D" uid="uid://dttusfhffjajv" path="res://src/scenes/save/mado_eye.png" id="16_427to"]
+[ext_resource type="Script" uid="uid://cdjphp77kgyqr" path="res://src/systems/utils/spritesheet_formatter_animated.gd" id="17_rgmiv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_427to"]
+shader = ExtResource("2_tpwl2")
+shader_parameter/dirX = -1.0
+shader_parameter/dirY = -1.0
+shader_parameter/scroll_speed = 0.1
+shader_parameter/uv_offset_initial = Vector2(0, 0)
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rgmiv"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jf6pj"]
+noise = SubResource("FastNoiseLite_rgmiv")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2m3qo"]
+shader = ExtResource("4_ctqsg")
+shader_parameter/dirX = 1.0
+shader_parameter/dirY = 1.0
+shader_parameter/scroll_speed = 0.03
+shader_parameter/uv_offset_initial = Vector2(0, 0)
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_x_influence = 1.0
+shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
+shader_parameter/transparency = 0.0
+shader_parameter/noise = SubResource("NoiseTexture2D_jf6pj")
+shader_parameter/color_overlay = Color(1, 1, 1, 1)
+shader_parameter/color_overlay_intensity = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i2l66"]
+shader = ExtResource("6_ctqsg")
+shader_parameter/r_displacement = Vector2(2, 0)
+shader_parameter/g_displacement = Vector2(0, 0)
+shader_parameter/b_displacement = Vector2(-2, 0)
+shader_parameter/height = 1.0
+shader_parameter/width = 1.0
+shader_parameter/fade = 0.7
+
+[node name="save" type="Node"]
+script = ExtResource("1_r5nps")
+metadata/_custom_type_script = "uid://b1ofr4umso5jf"
+
+[node name="panorama (bottom_layer)" type="CanvasLayer" parent="."]
+layer = -30
+
+[node name="aurora_bg" type="TextureRect" parent="panorama (bottom_layer)"]
+material = SubResource("ShaderMaterial_427to")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_ixo6f")
+expand_mode = 1
+
+[node name="noise_fog" type="TextureRect" parent="panorama (bottom_layer)"]
+material = SubResource("ShaderMaterial_2m3qo")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_i2l66")
+expand_mode = 1
+
+[node name="screen_overlay" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="TextureRect" type="ColorRect" parent="screen_overlay"]
+material = SubResource("ShaderMaterial_i2l66")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ArmSelection" type="Sprite2D" parent="."]
+position = Vector2(128, 264)
+texture = ExtResource("2_kdm6a")
+centered = false
+offset = Vector2(-32, -88)
+
+[node name="ComponentReceiver" type="Node" parent="ArmSelection" node_paths=PackedStringArray("affector")]
+script = ExtResource("11_k7iwd")
+affector = NodePath("..")
+independent = true
+metadata/_custom_type_script = "uid://ctbtfitoggtku"
+
+[node name="Wiggle" type="Node" parent="ArmSelection/ComponentReceiver"]
+script = ExtResource("8_eui38")
+wig_x_strn = 8.0
+wig_y_strn = 3.0
+wig_pos_speed = 0.9
+ignore_rotation = false
+metadata/_custom_type_script = "uid://bptlrkdn0tpua"
+
+[node name="SaveTitle" type="Sprite2D" parent="."]
+position = Vector2(192, 56)
+texture = ExtResource("6_v0tbb")
+
+[node name="ComponentReceiver" type="Node" parent="SaveTitle" node_paths=PackedStringArray("affector")]
+script = ExtResource("11_k7iwd")
+affector = NodePath("..")
+independent = true
+metadata/_custom_type_script = "uid://ctbtfitoggtku"
+
+[node name="Wiggle" type="Node" parent="SaveTitle/ComponentReceiver"]
+script = ExtResource("8_eui38")
+wig_x_strn = 0.0
+wig_y_strn = 10.0
+metadata/_custom_type_script = "uid://bptlrkdn0tpua"
+
+[node name="Mado" type="Sprite2D" parent="."]
+position = Vector2(0, 38)
+texture = ExtResource("5_hgjum")
+centered = false
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("4_lviw6")
+
+[node name="SaveFileSelection" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 328.0
+offset_top = 128.0
+offset_right = 440.0
+offset_bottom = 240.0
+texture = ExtResource("6_eui38")
+
+[node name="save_1" parent="Control" instance=ExtResource("13_tpwl2")]
+offset_left = 304.0
+offset_top = 168.0
+offset_right = 456.0
+offset_bottom = 208.0
+
+[node name="save_2" parent="Control" instance=ExtResource("13_tpwl2")]
+offset_left = 304.0
+offset_top = 80.0
+offset_right = 456.0
+offset_bottom = 120.0
+
+[node name="save_3" parent="Control" instance=ExtResource("13_tpwl2")]
+offset_left = 304.0
+offset_top = 32.0
+offset_right = 456.0
+offset_bottom = 72.0
+
+[node name="AbstractButton" type="Control" parent="Control"]
+anchors_preset = 0
+offset_left = 358.0
+offset_top = 128.0
+offset_right = 410.0
+offset_bottom = 152.0
+mouse_filter = 1
+script = ExtResource("14_ixo6f")
+button = Object(BaseButton,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":2,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":0,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"localize_numeral_system":true,"tooltip_text":"","tooltip_auto_translate_mode":0,"focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":2,"shortcut_context":null,"theme":null,"theme_type_variation":&"","disabled":false,"toggle_mode":false,"button_pressed":false,"action_mode":1,"button_mask":1,"keep_pressed_outside":false,"button_group":null,"shortcut":null,"shortcut_feedback":true,"shortcut_in_tooltip":true,"script":null)
+
+metadata/_custom_type_script = "uid://sptd6yjcf24k"
+
+[node name="button" type="BaseButton" parent="Control/AbstractButton"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+tooltip_auto_translate_mode = 0
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 2
+theme = null
+theme_type_variation = &""
+disabled = false
+toggle_mode = false
+button_pressed = false
+action_mode = 1
+button_mask = 1
+keep_pressed_outside = false
+button_group = null
+shortcut = null
+shortcut_feedback = true
+shortcut_in_tooltip = true
+script = null
+
+[node name="SpriteSheetFormatterAnimated" type="Sprite2D" parent="."]
+position = Vector2(70, 108)
+texture = ExtResource("16_427to")
+centered = false
+vframes = 17
+frame = 8
+script = ExtResource("17_rgmiv")
+autoplay = true
+loop = true
+fps = 10.0
+strip_style = 1
+frame_dimensions = Vector2i(26, 13)
+frame_v_count = 17
+progress = 9
+metadata/_custom_type_script = "uid://cdjphp77kgyqr"

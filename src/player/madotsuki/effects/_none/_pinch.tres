@@ -4,10 +4,5 @@
 
 [resource]
 script = ExtResource("1_ivaqt")
-supported_states = {
-"idle": true,
-"run": false,
-"sneak": false,
-"walk": false
-}
+supported_states = null
 metadata/_custom_type_script = "uid://gqxupngqpt0n"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c2sv1637gh6ub"]
+[gd_scene load_steps=17 format=3 uid="uid://c2sv1637gh6ub"]
 
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_fn14o"]
 [ext_resource type="Texture2D" uid="uid://cqg1xufl2vdws" path="res://src/images/ui/pause_menu_audio_label.png" id="1_t1lch"]
@@ -11,10 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://blvyuf03e1vtu" path="res://src/images/ui/pause_menu_graphics_label.png" id="5_miamw"]
 [ext_resource type="Texture2D" uid="uid://ughikbo5ohj1" path="res://src/images/ui/pause_menu_brdrless.png" id="7_ru7ox"]
 [ext_resource type="Texture2D" uid="uid://cw6tqhm75cps5" path="res://src/images/ui/pause_menu_fll_screen.png" id="8_3ybno"]
-[ext_resource type="Theme" uid="uid://bbm2vcixqf0gs" path="res://src/code_theme.tres" id="11_4sckj"]
 [ext_resource type="Texture2D" uid="uid://c2ayjno1f8c0e" path="res://src/images/ui/cam_reduction.png" id="12_co110"]
-[ext_resource type="Script" uid="uid://dhvrb58iweuo0" path="res://src/ui/gui/gui_panel_button.gd" id="12_ukw3d"]
 [ext_resource type="Texture2D" uid="uid://bdynsmwkraqma" path="res://src/images/ui/bloom.png" id="13_co110"]
+[ext_resource type="PackedScene" uid="uid://cyop6et4da0in" path="res://src/ui/template_button.tscn" id="14_fn14o"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_644m3"]
 shader = ExtResource("2_bagrl")
@@ -24,18 +23,6 @@ shader_parameter/blur_inner = 0.0
 shader_parameter/blur_outer = 0.0
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_iqcri"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_onin4"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_4sckj"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_spgs3"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_ahd7c"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_l17fe"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_fn14o"]
 
 [node name="pause_menu" type="Control" node_paths=PackedStringArray("music_slider", "amb_slider", "sfx_slider", "borderless", "full_screen", "cam_reduction", "bloom", "resume", "quit_to_menu", "quit_to_desktop")]
 layout_mode = 3
@@ -230,38 +217,20 @@ theme_override_constants/margin_bottom = 20
 [node name="VBoxContainer" type="VBoxContainer" parent="container/_e"]
 layout_mode = 2
 
-[node name="resume" type="Container" parent="container/_e/VBoxContainer"]
-custom_minimum_size = Vector2(96, 25)
+[node name="resume" parent="container/_e/VBoxContainer" instance=ExtResource("14_fn14o")]
+custom_minimum_size = Vector2(80, 25)
 layout_mode = 2
-theme = ExtResource("11_4sckj")
-script = ExtResource("12_ukw3d")
-button_display_texture = SubResource("CanvasTexture_onin4")
-min_size = Vector2(96, 25)
-true_size = Vector2(96, 25)
-text = "Resume + Save Settings"
-panel_display_texture = SubResource("CanvasTexture_4sckj")
-panel_display_color = Color(1, 1, 1, 1)
+min_size = Vector2(80, 25)
+text = "Resume"
 
-[node name="quit_to_menu" type="Container" parent="container/_e/VBoxContainer"]
-custom_minimum_size = Vector2(96, 25)
+[node name="quit_to_menu" parent="container/_e/VBoxContainer" instance=ExtResource("14_fn14o")]
+custom_minimum_size = Vector2(80, 25)
 layout_mode = 2
-theme = ExtResource("11_4sckj")
-script = ExtResource("12_ukw3d")
-button_display_texture = SubResource("CanvasTexture_spgs3")
-min_size = Vector2(96, 25)
-true_size = Vector2(96, 25)
+min_size = Vector2(80, 25)
 text = "Quit to Menu"
-panel_display_texture = SubResource("CanvasTexture_ahd7c")
-panel_display_color = Color(1, 1, 1, 1)
 
-[node name="quit_to_desktop" type="Container" parent="container/_e/VBoxContainer"]
-custom_minimum_size = Vector2(96, 25)
+[node name="quit_to_desktop" parent="container/_e/VBoxContainer" instance=ExtResource("14_fn14o")]
+custom_minimum_size = Vector2(80, 25)
 layout_mode = 2
-theme = ExtResource("11_4sckj")
-script = ExtResource("12_ukw3d")
-button_display_texture = SubResource("CanvasTexture_l17fe")
-min_size = Vector2(96, 25)
-true_size = Vector2(96, 25)
+min_size = Vector2(80, 25)
 text = "Quit to Desktop"
-panel_display_texture = SubResource("CanvasTexture_fn14o")
-panel_display_color = Color(1, 1, 1, 1)

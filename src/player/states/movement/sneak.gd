@@ -8,7 +8,6 @@ func enter_state() -> void:
 	
 	super()
 func exit_state() -> void:
-	sentient.noise_multi = 1
 	super()
 	
 func update(_delta: float, ) -> void:

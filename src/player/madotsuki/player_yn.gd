@@ -28,13 +28,13 @@ func _ready() -> void:
 func dependency_components() -> void:	
 	audio_listener = $audio_listener
 	sound_player = $sound_player
-	
 	marker_look_at = $look_at
 
+	
 func dependency_setup() -> void:
 	if Instance.equipment_pending == null:
-		equip(DEFAULT_EFFECT)
-	
+		equip.call_deferred(DEFAULT_EFFECT)
+		
 	marker_look_at._setup()			# --- fsm; not player dependency but required
 	stamina_fsm._setup() 	# --- fsm; not player dependency but required
 	input_fsm._setup(self) 	# --- fsm; not player dependency but required

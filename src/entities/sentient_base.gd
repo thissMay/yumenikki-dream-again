@@ -82,15 +82,12 @@ func get_dir() -> Vector2:
 func get_lerped_dir() -> Vector2: 
 	return self.lerped_direction
 
-func set_dir(_dir: Vector2) -> void: 
-	direction = _dir.normalized()
 func lerp_dir(_dir: Vector2, interpolation_multi: float = 1) -> void:
 	if _dir != Vector2.ZERO: 
 		lerped_direction = lerped_direction.lerp(_dir, interpolation_multi)
-
 func look_at_dir(_dir: Vector2) -> void: 
 	if _dir != Vector2.ZERO: 
-		direction = _dir.normalized()
+		direction = _dir
 		lerp_dir(_dir, TRANS_WEIGHT)
 #endregion
 

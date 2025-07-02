@@ -12,7 +12,7 @@
 [ext_resource type="Shader" uid="uid://dqxrs4a4y611c" path="res://src/shaders/panorama/linear.gdshader" id="5_kues0"]
 [ext_resource type="Shader" uid="uid://20gve0q01un3" path="res://src/shaders/screen_overlay/distortion_waves.gdshader" id="9_ea6g4"]
 [ext_resource type="Script" uid="uid://br3wayftgqqpo" path="res://src/systems/sequence/game/on_game_event.gd" id="10_5fm2a"]
-[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/spawn_point.gd" id="10_57bbv"]
+[ext_resource type="Script" uid="uid://ofyfa3d6ql28" path="res://src/systems/components/independent/spawn_point.gd" id="10_57bbv"]
 [ext_resource type="Script" uid="uid://vk574kc3l7av" path="res://src/systems/event/audio/play_sound.gd" id="11_svsfr"]
 [ext_resource type="AudioStream" uid="uid://dso8pw0y7eu6k" path="res://src/audio/se/teleport_maze.WAV" id="12_5fm2a"]
 [ext_resource type="Script" uid="uid://bau5lvtg1mbkj" path="res://src/systems/interaction/door_inscene.gd" id="13_bsaik"]
