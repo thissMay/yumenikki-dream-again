@@ -42,8 +42,8 @@ var switch_duration: float = .35
 
 @export_subgroup("Rotation TIlt")
 @export var rot_curve: 		Curve = preload("res://src/systems/camera/rotational_wiggle_curve.tres")
-@export var rot_strength: 	float = .9
-@export var rot_speed: 		float = 2.5
+@export var rot_strength: 	float = .7
+@export var rot_speed: 		float = 8.5
 
 static var motion_reduction: bool = false:
 	set(_reduction):
@@ -270,9 +270,9 @@ class STRAT_FOLLOW_SENTIENT:
 	var player: Player
 	var calculated: Vector2
 
-	var look_ahead_distance: float = 10
+	var look_ahead_distance: float = 30
 	var look_ahead: Vector2
-	var MAX_LOOK_AHEAD_PIXELS := Vector2(10, 10)
+	var MAX_LOOK_AHEAD_PIXELS := Vector2(15, 5)
 
 	func _setup(_cam: CameraHolder) -> void:
 		player = Player.Instance.get_pl()

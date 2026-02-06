@@ -7,7 +7,10 @@ var pre_mute_vol: float = 0
 var pre_mute_pit: float = 1
 var was_playing: bool = false
 
-const ZERO_VOLUME = -50
+const ZERO_VOLUME_LIN 	= 0
+const ZERO_VOLUME_DB 	= -80
+
+var vol_max_clamp: float = INF
 
 @export var muted: bool = false
 @export var affected_by_timescale: bool = false:
@@ -26,27 +29,24 @@ func _ready() -> void:
 func play_sound(
 	_stream: AudioStream, 
 	_vol: float = 1, 
-	_pitch: float = 1, 
-	_forget_after: bool = false) -> void:
-	if _stream and not muted: 
+	_pitch: float = 1) -> void:
+	if _stream and !muted: 
 		if ResourceLoader.exists(_stream.resource_path):
 			if playing: stop()
-			stream = _stream
-			volume_db = linear_to_db(_vol)
-			pitch_scale = _pitch
+			
+			stream 			= _stream
+			volume_linear 	= _vol
+			pitch_scale 	= _pitch
+			
 			play()
 			await finished
 func mute() -> void: 
-	pre_mute_vol = volume_db
-	pre_mute_pit = pitch_scale
+	pre_mute_vol 	= volume_linear
+	pre_mute_pit 	= pitch_scale
+	volume_linear 	= ZERO_VOLUME_LIN
 	
-	volume_db = ZERO_VOLUME
-	was_playing = playing
-	stop()
 func unmute() -> void:
-	if was_playing: play()
-	volume_db = pre_mute_vol
-	pitch_scale = pre_mute_pit
+	volume_linear 	= pre_mute_vol
 #
 #func _draw() -> void:
 	#if Engine.is_editor_hint():

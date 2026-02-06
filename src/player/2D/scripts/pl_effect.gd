@@ -7,7 +7,6 @@ extends Resource
 # ill show you what it has mostly.
 # idk tbh 
 
-
 @export_group("Action Overrides")
 
 @export var override_primary_action: PLAction

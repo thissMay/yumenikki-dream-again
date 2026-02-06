@@ -274,6 +274,7 @@ position = Vector2(0, 135)
 texture = ExtResource("1_1btln")
 
 [node name="pink_petal_effects" type="Control" parent="display"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -444,7 +445,6 @@ shortcut_in_tooltip = true
 script = null
 
 [node name="white_petal_stats" type="Control" parent="display"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

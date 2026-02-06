@@ -1,0 +1,23 @@
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://cno7r0ecf2jww"]
+
+[ext_resource type="Texture2D" uid="uid://dq58yqsopwfaf" path="res://src/levels/_dream/prismatic_funk/sprites/cube_l.png" id="2_uw600"]
+[ext_resource type="Texture2D" uid="uid://cpglp1yc4j05i" path="res://src/levels/_dream/prismatic_funk/sprites/cube_s.png" id="3_kowyi"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2d7n"]
+texture = ExtResource("2_uw600")
+texture_region_size = Vector2i(67, 79)
+0:0/0 = 0
+0:0/0/y_sort_origin = 5
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 0, 35, 20, 0, 40, -35, 20)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aq7pv"]
+texture = ExtResource("3_kowyi")
+texture_region_size = Vector2i(38, 44)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 0, 21, 10, 0, 20, -21, 10)
+
+[resource]
+tile_size = Vector2i(28, 20)
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_h2d7n")
+sources/2 = SubResource("TileSetAtlasSource_aq7pv")

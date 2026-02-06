@@ -1,28 +1,20 @@
-[gd_scene load_steps=45 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=35 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/2D/madotsuki/player_yn.gd" id="1_wub1p"]
 [ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="2_f263f"]
-[ext_resource type="Script" uid="uid://5yx7vlyaocq" path="res://src/entities/component/sb_health.gd" id="5_2gyta"]
 [ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="5_xe7mj"]
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_3hhoi"]
 [ext_resource type="Script" uid="uid://dtqoa37rhrqdu" path="res://src/player/2D/scripts/components/pl_mental_status.gd" id="6_mbimu"]
 [ext_resource type="Script" uid="uid://dd0qxrsakskma" path="res://src/entities/component/sb_component_receiver.gd" id="7_ps2wd"]
-[ext_resource type="AnimationLibrary" uid="uid://yubpgajftv6v" path="res://src/player/2D/madotsuki/animation_libs/action.tres" id="8_57bvo"]
 [ext_resource type="Script" uid="uid://dklkysmgxwdv2" path="res://src/entities/component/sb_animator.gd" id="8_cin7d"]
 [ext_resource type="Texture2D" uid="uid://v1tx4oh6hb3y" path="res://src/player/2D/madotsuki/display/default/_RESET_match.png" id="8_mbimu"]
-[ext_resource type="AnimationLibrary" uid="uid://bm1cor2werd5w" path="res://src/player/2D/madotsuki/animation_libs/emote.tres" id="9_m68sj"]
 [ext_resource type="Script" uid="uid://cb08xjc16uxc7" path="res://src/player/2D/scripts/managers/pl_equip_manager.gd" id="9_y4vx3"]
-[ext_resource type="AnimationLibrary" uid="uid://beo0dtar63jr7" path="res://src/player/2D/madotsuki/animation_libs/normal.tres" id="10_mbimu"]
 [ext_resource type="Script" uid="uid://ce1ox7oil4djt" path="res://src/player/2D/scripts/managers/pl_action_manager.gd" id="10_rhwps"]
 [ext_resource type="Script" uid="uid://dh7dintxcyffh" path="res://src/player/2D/scripts/managers/pl_interact_manager.gd" id="11_bof2k"]
-[ext_resource type="AnimationLibrary" uid="uid://jmtvl5nfo2wn" path="res://src/player/2D/madotsuki/animation_libs/reset.tres" id="11_wc1wu"]
 [ext_resource type="Script" uid="uid://dyhtvuyxwohdq" path="res://src/entities/component/sb_sprite_handler.gd" id="13_p5dbe"]
 [ext_resource type="Texture2D" uid="uid://cgt6yqo0ynnak" path="res://src/player/2D/scripts/behaviour/interaction_prompt.png" id="17_cin7d"]
-[ext_resource type="Script" uid="uid://ckdi4htcyco6l" path="res://src/entities/component/sb_sprint.gd" id="18_k7c3c"]
 [ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/systems/tools/FSM/sentient_fsm.gd" id="18_rujao"]
 [ext_resource type="Script" uid="uid://du8llo3s6lchk" path="res://src/entities/component/sb_input.gd" id="19_57bvo"]
-[ext_resource type="Script" uid="uid://bcy41p4huaij7" path="res://src/player/2D/scripts/states/stamina/normal.gd" id="20_fr82v"]
-[ext_resource type="Script" uid="uid://bk7ea81npilfk" path="res://src/player/2D/scripts/states/stamina/exhausted.gd" id="21_5r1vc"]
 [ext_resource type="Script" uid="uid://copf228upsgds" path="res://src/player/2D/scripts/states/movement/state_pl_idle.gd" id="22_e8irh"]
 [ext_resource type="Script" uid="uid://8lqdoulxnowh" path="res://src/player/2D/scripts/states/movement/super_state_pl_move.gd" id="24_t8l7d"]
 [ext_resource type="Script" uid="uid://mw73mitc7ufu" path="res://src/player/2D/scripts/states/movement/state_pl_walk.gd" id="24_ydgy1"]
@@ -35,42 +27,10 @@
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="30_kknx7"]
 [ext_resource type="Script" uid="uid://bnajku7ggsr2q" path="res://src/systems/world_loop/loopable_component.gd" id="35_bfa5j"]
 
-[sub_resource type="Resource" id="Resource_57bvo"]
+[sub_resource type="Resource" id="Resource_s1ygo"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
 script = ExtResource("2_f263f")
-
-[sub_resource type="Animation" id="Animation_m68sj"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../../sprite_container/sprite_renderer:progress")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../../sprite_container/sprite_renderer:texture")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("8_mbimu")]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_m68sj"]
-_data = {
-&"RESET": SubResource("Animation_m68sj")
-}
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mbimu"]
 blend_mode = 1
@@ -93,24 +53,17 @@ size = Vector2(2, 2)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ylvyo"]
 size = Vector2(16, 26)
 
-[node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("stamina_fsm", "fsm", "sprite_renderer", "shadow_renderer")]
+[node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("stance_fsm", "sprite_renderer", "shadow_renderer")]
 collision_layer = 5
 motion_mode = 1
 script = ExtResource("1_wub1p")
-stamina_fsm = NodePath("stamina_fsm")
-fsm = NodePath("stance_fsm")
-values = SubResource("Resource_57bvo")
+stance_fsm = NodePath("stance_fsm")
+values = SubResource("Resource_s1ygo")
 sprite_renderer = NodePath("sprite_container/sprite_renderer")
 shadow_renderer = NodePath("sprite_container/shadow_renderer")
 
 [node name="sb_components" type="Node2D" parent="."]
 script = ExtResource("7_ps2wd")
-
-[node name="health" type="Node2D" parent="sb_components"]
-script = ExtResource("5_2gyta")
-
-[node name="blood_particles" type="CPUParticles2D" parent="sb_components/health"]
-emitting = false
 
 [node name="mental_status" type="Node" parent="sb_components"]
 script = ExtResource("6_mbimu")
@@ -119,13 +72,6 @@ script = ExtResource("6_mbimu")
 script = ExtResource("8_cin7d")
 
 [node name="animation_player" type="AnimationPlayer" parent="sb_components/animation_manager"]
-libraries = {
-&"": SubResource("AnimationLibrary_m68sj"),
-&"action": ExtResource("8_57bvo"),
-&"emote": ExtResource("9_m68sj"),
-&"normal": ExtResource("10_mbimu"),
-&"reset": ExtResource("11_wc1wu")
-}
 playback_auto_capture = false
 
 [node name="action_manager" type="Node" parent="sb_components" node_paths=PackedStringArray("cooldown_timer")]
@@ -183,61 +129,36 @@ script = ExtResource("13_p5dbe")
 sprite_container = NodePath("../../sprite_container")
 metadata/_custom_type_script = "uid://bgisym1hdeqgt"
 
-[node name="sprint_manager" type="Node" parent="sb_components" node_paths=PackedStringArray("stamina_fsm")]
-script = ExtResource("18_k7c3c")
-stamina_fsm = NodePath("../../stamina_fsm")
-metadata/_custom_type_script = "uid://ckdi4htcyco6l"
-
 [node name="input" type="Node" parent="sb_components"]
 script = ExtResource("19_57bvo")
 metadata/_custom_type_script = "uid://du8llo3s6lchk"
-
-[node name="stamina_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
-script = ExtResource("18_rujao")
-initial_state = NodePath("NORMAL")
-
-[node name="NORMAL" type="Node" parent="stamina_fsm" node_paths=PackedStringArray("transitions")]
-script = ExtResource("20_fr82v")
-transitions = [NodePath("../EXHAUSTED")]
-
-[node name="EXHAUSTED" type="Node" parent="stamina_fsm" node_paths=PackedStringArray("transitions")]
-script = ExtResource("21_5r1vc")
-transitions = [NodePath("../NORMAL")]
 
 [node name="stance_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("18_rujao")
 initial_state = NodePath("IDLE")
 
-[node name="IDLE" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
+[node name="IDLE" type="Node" parent="stance_fsm"]
 script = ExtResource("22_e8irh")
-transitions = [NodePath("../MOVE"), NodePath("../ACTION")]
 
-[node name="MOVE" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
+[node name="MOVE" type="Node" parent="stance_fsm"]
 script = ExtResource("24_t8l7d")
-transitions = [NodePath("../IDLE"), NodePath("../ACTION")]
 metadata/_custom_type_script = "uid://528ddyxm13yn"
 
-[node name="WALK" type="Node" parent="stance_fsm/MOVE" node_paths=PackedStringArray("transitions")]
+[node name="WALK" type="Node" parent="stance_fsm/MOVE"]
 script = ExtResource("24_ydgy1")
-transitions = [NodePath("../SPRINT"), NodePath("../SNEAK")]
 
-[node name="SPRINT" type="Node" parent="stance_fsm/MOVE" node_paths=PackedStringArray("sb_sprint", "transitions")]
+[node name="SPRINT" type="Node" parent="stance_fsm/MOVE" node_paths=PackedStringArray("sb_sprint")]
 script = ExtResource("25_fc8o1")
-sb_sprint = NodePath("../../../sb_components/sprint_manager")
-transitions = [NodePath("../WALK")]
+sb_sprint = NodePath("")
 
-[node name="SNEAK" type="Node" parent="stance_fsm/MOVE" node_paths=PackedStringArray("transitions")]
+[node name="SNEAK" type="Node" parent="stance_fsm/MOVE"]
 script = ExtResource("26_naf4t")
-transitions = [NodePath("../WALK")]
 
 [node name="CLIMB" type="Node" parent="stance_fsm"]
 script = ExtResource("27_xcxb0")
 
-[node name="ACTION" type="Node" parent="stance_fsm" node_paths=PackedStringArray("transitions")]
+[node name="ACTION" type="Node" parent="stance_fsm"]
 script = ExtResource("28_4wyx3")
-transitions = [NodePath("../IDLE"), NodePath("../MOVE")]
-
-[node name="movement_fsm" type="Node" parent="."]
 
 [node name="nav" type="NavigationAgent2D" parent="."]
 path_desired_distance = 5.0
@@ -300,6 +221,6 @@ metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
 y_sort_enabled = true
 script = ExtResource("35_bfa5j")
 target = NodePath("..")
-children = [NodePath("../sb_components"), NodePath("../stamina_fsm"), NodePath("../stance_fsm"), NodePath("../movement_fsm"), NodePath("../nav"), NodePath("../audio_listener"), NodePath("../sprite_container"), NodePath("../collision"), NodePath("../centre_trigger"), NodePath("../region_trigger"), NodePath("../sound_player")]
+children = [NodePath("../sb_components"), NodePath("../stance_fsm"), NodePath("../nav"), NodePath("../audio_listener"), NodePath("../sprite_container"), NodePath("../collision"), NodePath("../centre_trigger"), NodePath("../region_trigger"), NodePath("../sound_player")]
 do_not_dupe = true
 metadata/_custom_type_script = "uid://bnajku7ggsr2q"

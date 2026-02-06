@@ -2,15 +2,12 @@ class_name PLBehaviour
 extends Resource
 
 # ---- movement ----
-func _idle		(_pl: Player, _delta: float) -> void: 
-	if 	_pl.stamina < _pl.MAX_STAMINA:
-		_pl.stamina += _delta * (_pl.values.stamina_regen)
+func _idle		(_pl: Player, _delta: float) -> void:  pass
+
 func _walk		(_pl: Player, _delta: float) -> void:  
 	_pl.handle_direction(_pl.dir_input)
 	_pl.noise_multi 		= _pl.values.walk_noise_multi
 	
-	if _pl.is_exhausted:  	_pl.speed_multiplier = Player.EXHAUST_MULTI
-	else:					_pl.speed_multiplier = _pl.values.walk_multi
 		
 func _run		(_pl: Player, _delta: float) -> void:  
 	_pl.handle_direction(_pl.vel_input)

@@ -15,4 +15,3 @@ func _state_update(_delta: float) -> void:
 
 func _state_physics_update(_delta: float) -> void:
 	sentient.get_behaviour()._run(sentient, _delta)
-	sb_sprint.drain(_delta)

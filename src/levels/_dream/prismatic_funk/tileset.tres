@@ -1,0 +1,19 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://b0pnuibnkce5j"]
+
+[ext_resource type="Texture2D" uid="uid://b8vh1da57nakk" path="res://src/levels/_dream/prismatic_funk/sprites/tile.png" id="1_fcrib"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lm1xs"]
+texture = ExtResource("1_fcrib")
+texture_region_size = Vector2i(56, 40)
+0:0/0 = 0
+0:0/0/z_index = -1
+0:1/animation_columns = 4
+0:1/animation_frame_0/duration = 1.0
+0:1/animation_frame_1/duration = 1.0
+0:1/animation_frame_2/duration = 1.0
+0:1/0 = 0
+0:1/0/z_index = -1
+
+[resource]
+tile_size = Vector2i(56, 40)
+sources/0 = SubResource("TileSetAtlasSource_lm1xs")

@@ -1,4 +1,4 @@
-[gd_resource type="AnimationLibrary" load_steps=4 format=3 uid="uid://br0km4uq5dly"]
+[gd_resource type="AnimationLibrary" format=3 uid="uid://br0km4uq5dly"]
 
 [ext_resource type="Texture2D" uid="uid://omtelqffkiig" path="res://src/entities/sentients/barracks/walk.png" id="1_w1b0y"]
 

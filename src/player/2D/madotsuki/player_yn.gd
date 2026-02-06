@@ -6,13 +6,11 @@ extends Player
 
 # - dependencies.
 @export_category("Top-down Exclusive")
-@export var stamina_fsm: FSM
+@export var stance_fsm: FSM
 @export var can_pinch: bool = true
 
 var audio_listener: AudioListener2D
 var sound_player: AudioStreamPlayer
-
-var disable_stamina_drain: bool = false
 
 # - trait components
 var global_components: SBComponentReceiver
@@ -54,23 +52,22 @@ func dependency_components() -> void:
 	audio_listener = $audio_listener
 	sound_player = $sound_player
 func dependency_setup() -> void:
-	fsm.		_setup(self)			# --- fsm; 
-	stamina_fsm._setup(self)			# --- stm fsm; 
+	stance_fsm.		_setup(self)			# --- stance_fsm; 
 
 func _update(_delta: float) -> void:	
 	super(_delta)
-	if fsm: fsm._update(_delta)
+	if stance_fsm: stance_fsm._update(_delta)
 	if global_components != null: global_components._update(_delta)
 func _physics_update(_delta: float) -> void:
 	super(_delta)
-	if fsm: fsm._physics_update(_delta)
+	if stance_fsm: stance_fsm._physics_update(_delta)
 	if global_components != null: global_components._physics_update(_delta)
 func _sb_input(event: InputEvent) -> void:
 	if Input.is_physical_key_pressed(KEY_Q) and can_pinch: 
 		perform_action(PLActionManager.PINCH_PRESS_ACTION)
 		
 	if components != null: 	components._input_pass(event)
-	if fsm != null: 		fsm._input_pass(event)
+	if stance_fsm != null: 		stance_fsm._input_pass(event)
 	
 func perform_action(_action: PLAction) -> void:
 	if components.bypass or !components.get_component_by_name(Components.ACTION).active: return

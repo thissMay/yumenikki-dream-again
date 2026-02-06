@@ -1,0 +1,30 @@
+[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://b7cx31v160f7m"]
+
+[ext_resource type="Texture2D" uid="uid://cmfbfsmhqpi7j" path="res://src/levels/_dream/traffic_hall/sprites/street_lights.png" id="1_dmy86"]
+[ext_resource type="Texture2D" uid="uid://pfu8jnbmrh1g" path="res://src/levels/_dream/traffic_hall/sprites/traffic_lights.png" id="2_gaa77"]
+[ext_resource type="Texture2D" uid="uid://c48722u2a7ywf" path="res://src/levels/_dream/traffic_hall/sprites/pedestrian_signal.png" id="3_c7w8e"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_84hpn"]
+texture = ExtResource("1_dmy86")
+texture_region_size = Vector2i(100, 200)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 50)
+0:0/0/y_sort_origin = 40
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(45.8333, -35.4167, 50, -35.4167, 50, -29.1667, 45.8333, -29.1667)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_clvlm"]
+texture = ExtResource("2_gaa77")
+texture_region_size = Vector2i(25, 25)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gufqq"]
+texture = ExtResource("3_c7w8e")
+texture_region_size = Vector2i(13, 40)
+0:0/0 = 0
+1:0/0 = 0
+
+[resource]
+tile_size = Vector2i(50, 25)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_84hpn")
+sources/1 = SubResource("TileSetAtlasSource_clvlm")
+sources/2 = SubResource("TileSetAtlasSource_gufqq")
