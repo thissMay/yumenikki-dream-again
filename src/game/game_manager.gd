@@ -7,7 +7,6 @@ const STATE_ACTIVE 				:= "active"
 const STATE_PAUSE 				:= "pause"
 const STATE_SWITCHING_SCENES 	:= "changing_scenes"
 
-# -- 
 static var bloom: bool = false
 
 static var global_screen_effect: WorldEnvironment

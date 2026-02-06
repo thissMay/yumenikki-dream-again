@@ -64,7 +64,6 @@ static var event_ids := {
 		"PLAYER_EMOTE" : {},
 		"PLAYER_INTERACT" : {},
 		"PLAYER_HURT" : {},
-		"PLAYER_STAMINA_CHANGE" : {},
 		"PLAYER_WAKE_UP" : {},
 		
 		"PLAYER_EQUIP" : {},

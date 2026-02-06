@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://cpqq48f7d0ihq"]
+[gd_resource type="TileSet" format=3 uid="uid://cpqq48f7d0ihq"]
 
 [ext_resource type="Texture2D" uid="uid://2i2m5q4tuxrv" path="res://src/levels/__ignore/tile_atlas/teleportation_maze.png" id="1_2bmhk"]
 [ext_resource type="PackedScene" uid="uid://ch75jxgwep7lu" path="res://src/entities/sentients/teleport_maze/short_head.tscn" id="2_ya4kk"]

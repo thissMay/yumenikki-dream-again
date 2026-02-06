@@ -1,49 +1,52 @@
-[gd_scene load_steps=36 format=4 uid="uid://fy7ltowqs546"]
+[gd_scene load_steps=28 format=4 uid="uid://fy7ltowqs546"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_lmxqw"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="2_2i47j"]
 [ext_resource type="Texture2D" uid="uid://bxj6fihryk3ea" path="res://src/levels/_dream/rose_field/sprites/tilemap.png" id="2_ct8qg"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="3_k3e6d"]
-[ext_resource type="AudioStream" uid="uid://b6mtbauq1ex02" path="res://src/audio/bgm/silas_lumentorch.ogg" id="3_pgbku"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="4_f5725"]
-[ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="7_6b0yc"]
 [ext_resource type="Shader" uid="uid://crclnnrqddewa" path="res://src/shaders/panorama/depth.gdshader" id="7_gva83"]
-[ext_resource type="Shader" uid="uid://dosa7qbgxuqjd" path="res://src/shaders/screen_overlay/vignette_rgb_abberation.gdshader" id="8_42ven"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="7_ny7c4"]
 [ext_resource type="Texture2D" uid="uid://b5kega2e65tcq" path="res://src/images/panorama/eyes.png" id="8_b8t17"]
-[ext_resource type="Shader" uid="uid://dv1dx75w12wav" path="res://src/shaders/screen_overlay/vignette_dark.gdshader" id="8_ro470"]
-[ext_resource type="Shader" uid="uid://brem0ley6fcra" path="res://src/shaders/panorama/depth_additive.gdshader" id="10_khrf1"]
+[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="9_4ulpg"]
 [ext_resource type="TileSet" uid="uid://dxtgmficcsio2" path="res://src/levels/_dream/rose_field/rosetree_tileset.tres" id="16_h0shn"]
 [ext_resource type="Shader" uid="uid://20gve0q01un3" path="res://src/shaders/screen_overlay/distortion_waves.gdshader" id="17_di1vj"]
 [ext_resource type="TileSet" uid="uid://cwp7v2lqsy58c" path="res://src/levels/_dream/rose_field/skulls_tileset.tres" id="17_e7st4"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_33rxm"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ovfic"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2i47j"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_avjb8"]
+texture = ExtResource("2_ct8qg")
+texture_region_size = Vector2i(32, 24)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -12, 16, -12, 16, 12, -16, 12)
+0:0/0/custom_data_0 = 4
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -12, 16, -12, 16, 12, -16, 12)
+0:1/0/custom_data_0 = 4
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -12, 16, -12, 16, 12, -16, 12)
+1:1/0/custom_data_0 = 4
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -12, 16, -12, 16, 12, -16, 12)
+1:0/0/custom_data_0 = 4
+2:0/size_in_atlas = Vector2i(2, 2)
+2:0/0 = 0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uw602"]
-shader = ExtResource("10_khrf1")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 10.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
-shader_parameter/initial_uv_offset = Vector2(0, 0)
+[sub_resource type="TileSet" id="TileSet_5gbu7"]
+tile_size = Vector2i(32, 24)
+physics_layer_0/collision_layer = 8
+physics_layer_0/collision_mask = 9
+custom_data_layer_0/name = "material"
+custom_data_layer_0/type = 2
+sources/0 = SubResource("TileSetAtlasSource_avjb8")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dndr4"]
-shader = ExtResource("8_42ven")
-shader_parameter/r_displacement = Vector2(7, 0)
-shader_parameter/g_displacement = Vector2(0, 0)
-shader_parameter/b_displacement = Vector2(-7, 0)
-shader_parameter/height = 1.0
-shader_parameter/width = 1.0
-shader_parameter/fade = 0.7
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7058c"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_f1cav"]
-shader = ExtResource("8_ro470")
-shader_parameter/inner_radius = 0.1
-shader_parameter/outer_radius = 1.0
-shader_parameter/vignette_strength = 1.0
-shader_parameter/dither_strength = 0.03
-shader_parameter/vignette_color = Color(0, 0, 0, 1)
+[sub_resource type="Resource" id="Resource_3ihtl"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("7_ny7c4")
 
 [sub_resource type="Shader" id="Shader_kth22"]
 code = "shader_type canvas_item;
@@ -106,161 +109,60 @@ shader_parameter/offset_strength = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o2yww"]
 shader = ExtResource("7_gva83")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.024
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 0.024
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
+shader_parameter/optional_gradient = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uhqwn"]
 shader = ExtResource("7_gva83")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.042
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 0.042
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
+shader_parameter/optional_gradient = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j0v8e"]
 shader = ExtResource("7_gva83")
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 0.1
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 0.1
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
+shader_parameter/optional_gradient = false
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_h0aq6"]
 noise_type = 0
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q2vl2"]
-seamless = true
 noise = SubResource("FastNoiseLite_h0aq6")
+seamless = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vtsot"]
 shader = ExtResource("17_di1vj")
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
-shader_parameter/uv_offset_initial = Vector2(0, 0)
-shader_parameter/offset_strength = 1.0
-shader_parameter/offset_strength_x_influence = 1.0
-shader_parameter/offset_strength_y_influence = 1.0
+shader_parameter/optional_gradient = false
 shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 1.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/dirX = 0.7
 shader_parameter/dirY = 0.4
 shader_parameter/scroll_speed = 0.325
 shader_parameter/noise_strength = 0.225
 shader_parameter/noise_fwd = SubResource("NoiseTexture2D_q2vl2")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ovfic"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_avjb8"]
-texture = ExtResource("2_ct8qg")
-texture_region_size = Vector2i(32, 24)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -12, 16, -12, 16, 12, -16, 12)
-0:0/0/custom_data_0 = 4
-0:1/0 = 0
-0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -12, 16, -12, 16, 12, -16, 12)
-0:1/0/custom_data_0 = 4
-1:1/0 = 0
-1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -12, 16, -12, 16, 12, -16, 12)
-1:1/0/custom_data_0 = 4
-1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -12, 16, -12, 16, 12, -16, 12)
-1:0/0/custom_data_0 = 4
-2:0/size_in_atlas = Vector2i(2, 2)
-2:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_5gbu7"]
-tile_size = Vector2i(32, 24)
-physics_layer_0/collision_layer = 8
-physics_layer_0/collision_mask = 9
-custom_data_layer_0/name = "material"
-custom_data_layer_0/type = 2
-sources/0 = SubResource("TileSetAtlasSource_avjb8")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7058c"]
-
-[node name="rose" type="Node"]
+[node name="rose" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_lmxqw")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("2_2i47j"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
-
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("2_2i47j"),"order":Array[Node]([]),"deferred":false,"wait_til_finished":true)
-
-load_transition = SubResource("ShaderMaterial_33rxm")
-unload_transition = SubResource("ShaderMaterial_2i47j")
+seq_initial = NodePath("on_initial")
+seq_free = NodePath("on_free")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
-[node name="BGM" type="Node" parent="."]
-script = ExtResource("8_e17uc")
-stream = ExtResource("3_pgbku")
-
-[node name="camera" parent="." instance=ExtResource("4_f5725")]
-
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
-target = NodePath("../../Node2D/Sally")
-
-[node name="wiggle" type="Node" parent="camera/camera_handler/marker/camera/components_receiver" index="0"]
-script = ExtResource("7_6b0yc")
-ignore_rotation = false
-
-[node name="what" type="TextureRect" parent="camera/camera_handler/camera_overlay" index="0"]
-material = SubResource("ShaderMaterial_uw602")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -16.0
-offset_top = -35.0
-offset_right = 16.0
-offset_bottom = 36.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="overlay_1" parent="camera/camera_handler/camera_overlay" index="1"]
-material = SubResource("ShaderMaterial_dndr4")
-
-[node name="overlay_2" parent="camera/camera_handler/camera_overlay" index="2"]
-material = SubResource("ShaderMaterial_f1cav")
-
-[node name="panorama (top_layer)" type="CanvasLayer" parent="."]
-layer = -20
-
-[node name="eyes" type="TextureRect" parent="panorama (top_layer)"]
-material = SubResource("ShaderMaterial_lqbwy")
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("8_b8t17")
-
-[node name="rose_3" type="TextureRect" parent="panorama (top_layer)"]
-material = SubResource("ShaderMaterial_o2yww")
-offset_right = 40.0
-offset_bottom = 40.0
-stretch_mode = 2
-
-[node name="rose_2" type="TextureRect" parent="panorama (top_layer)"]
-material = SubResource("ShaderMaterial_uhqwn")
-offset_right = 496.0
-offset_bottom = 288.0
-stretch_mode = 2
-
-[node name="rose_1" type="TextureRect" parent="panorama (top_layer)"]
-material = SubResource("ShaderMaterial_j0v8e")
-offset_right = 496.0
-offset_bottom = 288.0
-stretch_mode = 2
-
-[node name="distortion_waves" type="ColorRect" parent="panorama (top_layer)"]
-material = SubResource("ShaderMaterial_vtsot")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("4_f5725")]
+initial_target = NodePath("../Node2D/madotsuki")
 
 [node name="Node2D" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -297,13 +199,67 @@ use_parent_material = true
 tile_map_data = PackedByteArray("AAACAP3/AAABAAAAAAACAP7/AAABAAEAAAACAP//AAABAAIAAAACAAAAAAABAAMAAAACAAEAAAACAAAAAAAAAP7/AAABAAAAAAAAAP//AAABAAEAAAAAAAAAAAABAAIAAAAAAAEAAAABAAMAAAAAAAIAAAABAAQAAAD2//3/AAABAAAAABD2//7/AAABAAEAABD2////AAABAAIAABD2/wAAAAABAAMAABD2/wEAAAACAAAAABD4//7/AAABAAAAABD4////AAABAAEAABD4/wAAAAABAAIAABD4/wEAAAABAAMAABD4/wIAAAABAAQAABAPAPz/AAACAAAAAAAPAP7/AAACAAQAAAAPAAAAAAACAAYAAAAPAAIAAAACAAgAAAASAAAAAAACAAQAAAASAAIAAAACAAgAAAAVAP7/AAACAAQAAAAVAAAAAAACAAYAAAAVAAIAAAACAAgAAAAYAP7/AAACAAQAAAAYAAAAAAACAAYAABAYAAIAAAACAAgAABAbAP7/AAACAAAAAAAbAAAAAAACAAIAAAAbAAIAAAACAAgAAAAeAP7/AAACAAIAABAeAAAAAAACAAYAABAeAAIAAAACAAgAABAhAP7/AAACAAAAAAAhAAAAAAACAAIAAAAhAAIAAAACAAgAAAAVAPz/AAACAAIAAAAVAPr/AAACAAAAAAAeAPz/AAACAAAAABAZAP//AAABAAAAAAAZAAAAAAABAAEAAAAZAAEAAAABAAIAAAAZAAIAAAABAAMAAAAZAAMAAAABAAQAAAAgAAAAAAABAAAAAAAgAAEAAAABAAEAAAAgAAIAAAABAAIAAAAgAAMAAAABAAMAAAAgAAQAAAABAAQAAAAOAAAAAAABAAAAABAOAAEAAAABAAEAABAOAAIAAAABAAIAABAOAAMAAAABAAMAABAOAAQAAAABAAQAABACAAcAAAACAAAAAAACAAkAAAACAAIAAAACAAQAAAACAAAAABACAAYAAAACAAIAABACAAgAAAACAAgAABACAAMAAAACAAIAAAACAAUAAAACAAgAAAACAAsAAAACAAgAAAACAAoAAAACAAAAABACAAwAAAACAAIAABACAA4AAAACAAgAABD2/wMAAAACAAIAABD2/wUAAAACAAgAABD2/wQAAAACAAAAAAD2/wYAAAACAAIAAAD2/wgAAAACAAgAAAD2/wcAAAACAAAAABD2/wkAAAACAAIAABD2/wsAAAACAAgAABD2/woAAAACAAAAABD2/wwAAAACAAIAABD2/w4AAAACAAgAABAEAAkAAAABAAAAAAAEAAoAAAABAAEAAAAEAAsAAAABAAIAAAAEAAwAAAABAAMAAAAEAA0AAAABAAQAAAAEAAIAAAABAAAAAAAEAAMAAAABAAEAAAAEAAQAAAABAAIAAAAEAAUAAAABAAMAAAAEAAYAAAABAAQAAAD0/wIAAAABAAAAABD0/wMAAAABAAEAABD0/wQAAAABAAIAABD0/wUAAAABAAMAABD0/wYAAAABAAQAABD0/wkAAAABAAAAAAD0/woAAAABAAEAAAD0/wsAAAABAAIAAAD0/wwAAAABAAMAAAD0/w0AAAABAAQAAAD3////AAAAAAAAAAD3/wAAAAAAAAEAAAD3/wEAAAAAAAMAAAABAP//AAAAAAAAABABAAAAAAAAAAEAABABAAEAAAAAAAMAABDE//H/AAACAAIAABDE//P/AAACAAYAABDE//X/AAACAAgAABDH//P/AAACAAIAAADH//X/AAACAAgAAADK/+//AAACAAIAAADK//H/AAACAAQAAADK//P/AAACAAYAAADK//X/AAACAAgAAADN//H/AAACAAQAAADN//P/AAACAAYAABDN//X/AAACAAgAABDO//L/AAABAAAAAADO//P/AAABAAEAAADO//T/AAABAAIAAADO//X/AAABAAMAAADO//b/AAABAAQAAADQ//P/AAACAAIAAADQ//X/AAACAAgAAADT/+//AAACAAAAABDT//H/AAACAAIAABDT//P/AAACAAYAABDT//X/AAACAAgAABDW//H/AAACAAAAAADW//P/AAACAAIAAADW//X/AAACAAgAAAC1/+//AAACAAAAAAC1//H/AAACAAQAAAC1//P/AAACAAYAAAC1//X/AAACAAgAAAC4//P/AAACAAQAAAC4//X/AAACAAgAAAC7/+3/AAACAAAAAAC7/+//AAACAAIAAAC7//H/AAACAAQAAAC7//P/AAACAAYAAAC7//X/AAACAAgAAAC+//H/AAACAAQAAAC+//P/AAACAAYAABC+//X/AAACAAgAABC///L/AAABAAAAAAC///P/AAABAAEAAAC///T/AAABAAIAAAC///X/AAABAAMAAAC///b/AAABAAQAAADB//H/AAACAAAAAADB//P/AAACAAIAAADB//X/AAACAAgAAADH//H/AAACAAAAAAAkAPz/AAACAAAAABAkAP7/AAACAAIAABAkAAAAAAACAAYAABAkAAIAAAACAAgAABAnAP7/AAACAAAAAAAnAAAAAAACAAIAAAAnAAIAAAACAAgAAAApAAAAAAABAAEAAAApAAEAAAABAAMAAAApAAIAAAABAAQAAAApAP//AAABAAAAAAA=")
 tile_set = ExtResource("16_h0shn")
 
-[node name="Sally" parent="Node2D" instance=ExtResource("3_k3e6d")]
+[node name="madotsuki" parent="Node2D" instance=ExtResource("3_k3e6d")]
 position = Vector2(-56, -16)
+values = SubResource("Resource_3ihtl")
 
-[node name="scene_load_sequence" type="Node" parent="."]
+[node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("2_2i47j")
+order = [NodePath("EVN_Panorama")]
+skip_invalid_events = true
+front = NodePath("EVN_Panorama")
+back = NodePath("EVN_Panorama")
 
-[node name="scene_unload_sequence" type="Node" parent="."]
+[node name="EVN_Panorama" type="Node" parent="on_initial" node_paths=PackedStringArray("subviewport", "pivot")]
+script = ExtResource("9_4ulpg")
+subviewport = NodePath("subviewport")
+pivot = NodePath("pivot")
+metadata/_custom_type_script = "uid://dxx2gbg56i1ts"
+
+[node name="pivot" type="Marker2D" parent="on_initial/EVN_Panorama"]
+
+[node name="subviewport" type="SubViewport" parent="on_initial/EVN_Panorama"]
+own_world_3d = true
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 2
+size = Vector2i(480, 270)
+size_2d_override = Vector2i(480, 270)
+
+[node name="eyes" type="TextureRect" parent="on_initial/EVN_Panorama/subviewport"]
+material = SubResource("ShaderMaterial_lqbwy")
+offset_right = 640.0
+offset_bottom = 360.0
+texture = ExtResource("8_b8t17")
+
+[node name="rose_3" type="TextureRect" parent="on_initial/EVN_Panorama/subviewport"]
+material = SubResource("ShaderMaterial_o2yww")
+offset_right = 40.0
+offset_bottom = 40.0
+stretch_mode = 2
+
+[node name="rose_2" type="TextureRect" parent="on_initial/EVN_Panorama/subviewport"]
+material = SubResource("ShaderMaterial_uhqwn")
+offset_right = 496.0
+offset_bottom = 288.0
+stretch_mode = 2
+
+[node name="rose_1" type="TextureRect" parent="on_initial/EVN_Panorama/subviewport"]
+material = SubResource("ShaderMaterial_j0v8e")
+offset_right = 496.0
+offset_bottom = 288.0
+stretch_mode = 2
+
+[node name="distortion_waves" type="ColorRect" parent="on_initial/EVN_Panorama/subviewport"]
+material = SubResource("ShaderMaterial_vtsot")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="on_free" type="Node" parent="."]
 script = ExtResource("2_2i47j")
+skip_invalid_events = true
 
 [editable path="camera"]

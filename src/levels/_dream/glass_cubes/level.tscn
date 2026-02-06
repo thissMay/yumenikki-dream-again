@@ -1,31 +1,28 @@
-[gd_scene load_steps=30 format=4 uid="uid://ccmtase1d8qad"]
+[gd_scene load_steps=29 format=4 uid="uid://ccmtase1d8qad"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_sg2j5"]
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="2_0vwvw"]
 [ext_resource type="Texture2D" uid="uid://b4gjcclvhphd7" path="res://src/images/panorama/earth.png" id="2_k5lwt"]
 [ext_resource type="Shader" uid="uid://hg6wywtqrlha" path="res://src/shaders/masks/additive.gdshader" id="2_kfc05"]
-[ext_resource type="AudioStream" uid="uid://dxkjhkg5y4lav" path="res://src/audio/amb/amb_space_mission_control.ogg" id="3_7bfsl"]
-[ext_resource type="AudioStream" uid="uid://bm7y6qujkfypq" path="res://src/audio/bgm/madoxy_46.ogg" id="3_c4hgi"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="5_50osm"]
 [ext_resource type="Texture2D" uid="uid://w120j1t1g6es" path="res://src/images/panorama/flare.png" id="6_2sm63"]
 [ext_resource type="Shader" uid="uid://hqppcc6e4xw2" path="res://src/shaders/panorama/lens_flare.gdshader" id="6_18jn3"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="9_uusqg"]
 [ext_resource type="Shader" uid="uid://brem0ley6fcra" path="res://src/shaders/panorama/depth_additive.gdshader" id="10_bg4cs"]
-[ext_resource type="Script" uid="uid://bptlrkdn0tpua" path="res://src/systems/components/overrides/wiggle.gd" id="16_54kc8"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="14_2sm63"]
+[ext_resource type="AudioStream" uid="uid://bm7y6qujkfypq" path="res://src/audio/bgm/madoxy_46.ogg" id="15_142wr"]
+[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="16_8n8v0"]
 [ext_resource type="TileSet" uid="uid://du0rp0mcyc03" path="res://src/levels/_dream/glass_cubes/road_tileset.tres" id="16_486hh"]
 [ext_resource type="TileSet" uid="uid://chq6llr7r6c7s" path="res://src/levels/_dream/glass_cubes/lamp_tileset.tres" id="16_cby7n"]
 [ext_resource type="Texture2D" uid="uid://dejtiqb6tw5aq" path="res://src/levels/_dream/glass_cubes/sprites/glass_tilemap.png" id="18_j3nug"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="22_3mapr"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vngjk"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2sm63"]
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_142wr"]
 shader = ExtResource("6_18jn3")
 shader_parameter/overlay_modulate = Color(0, 0, 0, 1)
 shader_parameter/transparency = 0.0
+shader_parameter/optional_gradient = false
 shader_parameter/initial_uv_offset = Vector2(0, 0)
-shader_parameter/snapped_val = 0.0016
 shader_parameter/offset_strength = 0.0
 shader_parameter/offset_strength_influence = Vector2(1, 1)
 shader_parameter/uv_rotation_speed = 1.2
@@ -37,6 +34,9 @@ shader_parameter/flicker_speed = 1.96
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rtlck"]
 shader = ExtResource("10_bg4cs")
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 0.0
+shader_parameter/offset_strength_influence = Vector2(1, 1)
 
 [sub_resource type="Curve" id="Curve_l6xdo"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0632911, 0.463917), 0.0, 0.0, 0, 0, Vector2(0.177215, 0.268041), 0.0, 0.0, 0, 0, Vector2(0.396625, 0.752577), 0.0, 0.0, 0, 0, Vector2(0.523207, 0.505155), 0.0, 0.0, 0, 0, Vector2(0.763713, 0.762887), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.70508, 0.0, 0, 0]
@@ -80,6 +80,11 @@ adjustment_brightness = 1.34
 adjustment_contrast = 1.74
 adjustment_saturation = 8.0
 
+[sub_resource type="Resource" id="Resource_r37ya"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("9_uusqg")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_flxpe"]
 shader = ExtResource("2_kfc05")
 shader_parameter/transparency = 0.0
@@ -94,26 +99,10 @@ tile_shape = 1
 tile_size = Vector2i(118, 58)
 sources/0 = SubResource("TileSetAtlasSource_e41mc")
 
-[node name="glass_cubes" type="Node"]
+[node name="glass_cubes" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
 script = ExtResource("1_sg2j5")
-scene_load_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("22_3mapr"),"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"skip_invalid_sequences":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
-
-scene_unload_sequence = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("22_3mapr"),"order":Array[Node]([]),"marked_for_skip":PackedInt32Array(),"skip_invalid_sequences":true,"halt_sequence":false,"deferred":true,"wait_til_finished":true,"skip_warning":false)
-
-load_transition = SubResource("ShaderMaterial_vngjk")
-unload_transition = SubResource("ShaderMaterial_2sm63")
-
-[node name="AMB" type="Node" parent="."]
-script = ExtResource("2_wwvai")
-music_bus = 1
-stream = ExtResource("3_7bfsl")
-vol = 8.0
-metadata/_custom_type_script = "uid://b4b3kjcm65mv6"
-
-[node name="BGM" type="Node" parent="."]
-script = ExtResource("2_wwvai")
-stream = ExtResource("3_c4hgi")
-pitch = 0.85
+seq_initial = NodePath("on_initial")
+seq_free = NodePath("on_free")
 
 [node name="screen_overlay" type="CanvasLayer" parent="."]
 layer = 10
@@ -176,23 +165,20 @@ light_energy = 0.338
 light_bake_mode = 0
 directional_shadow_mode = 0
 
-[node name="camera" parent="." instance=ExtResource("5_50osm")]
-
-[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("initial_target")]
-position = Vector2(241, 119)
-initial_target = NodePath("../../_/mado")
-
-[node name="camera_camera_handler_camera#WiggleComponent" type="Node" parent="camera/camera_handler/marker/camera/components_receiver" index="0"]
-script = ExtResource("16_54kc8")
-ignore_rotation = false
+[node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("5_50osm")]
+initial_target = NodePath("../_/mado")
 
 [node name="_" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="mado" parent="_" instance=ExtResource("2_0vwvw")]
 position = Vector2(241, 119)
+values = SubResource("Resource_r37ya")
 
-[node name="sound_player" parent="_/mado" index="11"]
+[node name="sound_player" parent="_/mado/sb_components/footstep_manager" index="0"]
+muted = true
+
+[node name="sound_player" parent="_/mado" index="10"]
 muted = true
 
 [node name="lamps_b" type="TileMapLayer" parent="_"]
@@ -220,11 +206,40 @@ material = SubResource("ShaderMaterial_flxpe")
 tile_map_data = PackedByteArray("AAACAAQAAQABAAAAABADAAYAAQABAAAAABAEAAgAAQAAAAAAABAFAAoAAQAAAAAAABAGAAwAAQAAAAAAABD+/woAAQABAAAAAAD//wgAAQABAAAAAAAAAAYAAQABAAAAAAABAAQAAQABAAAAAAAEABUAAQABAAAAAAAFABMAAQAAAAAAAAAGABEAAQAAAAAAAAAHAA8AAQABAAAAAAAAABAAAQABAAAAAAD//w4AAQAAAAAAAAD9/w0AAQAAAAAAABADABUAAQAAAAAAABACABMAAQAAAAAAABABABEAAQAAAAAAABAAABMAAQABAAAAAAA=")
 tile_set = ExtResource("16_cby7n")
 
-[node name="scene_load_sequence" type="Node" parent="."]
+[node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
 script = ExtResource("22_3mapr")
+order = [NodePath("bgm"), NodePath("panorama")]
+skip_invalid_events = true
+front = NodePath("bgm")
+back = NodePath("panorama")
 
-[node name="scene_unload_sequence" type="Node" parent="."]
+[node name="bgm" type="Node" parent="on_initial" node_paths=PackedStringArray("next")]
+process_mode = 4
+script = ExtResource("14_2sm63")
+stream = ExtResource("15_142wr")
+next = NodePath("../panorama")
+metadata/_custom_type_script = "uid://ctqw6a8qsvnv4"
+
+[node name="panorama" type="Node" parent="on_initial" node_paths=PackedStringArray("subviewport", "pivot", "prev")]
+script = ExtResource("16_8n8v0")
+subviewport = NodePath("subviewport")
+pivot = NodePath("pivot")
+prev = NodePath("../bgm")
+metadata/_custom_type_script = "uid://dxx2gbg56i1ts"
+
+[node name="pivot" type="Marker2D" parent="on_initial/panorama"]
+
+[node name="subviewport" type="SubViewport" parent="on_initial/panorama"]
+own_world_3d = true
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 2
+size = Vector2i(480, 270)
+size_2d_override = Vector2i(480, 270)
+
+[node name="on_free" type="Node" parent="."]
 script = ExtResource("22_3mapr")
+skip_invalid_events = true
 
 [editable path="camera"]
 [editable path="_/mado"]

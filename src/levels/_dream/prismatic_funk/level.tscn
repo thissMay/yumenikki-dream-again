@@ -1,0 +1,214 @@
+[gd_scene load_steps=37 format=4 uid="uid://qlin0wkx77lc"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_cu7mf"]
+[ext_resource type="Texture2D" uid="uid://wcbuvavjsbli" path="res://src/images/panorama/night_city_blurred.png" id="2_oh5hn"]
+[ext_resource type="AudioStream" uid="uid://bt2isfdsvlnss" path="res://src/audio/bgm/madoxy_55.ogg" id="3_4prcp"]
+[ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="3_5i8ep"]
+[ext_resource type="Shader" uid="uid://bjc3g4hpc28r1" path="res://src/shaders/screen_overlay/ocean_lights.gdshader" id="3_mkvtm"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="4_a6ohb"]
+[ext_resource type="TileSet" uid="uid://b0pnuibnkce5j" path="res://src/levels/_dream/prismatic_funk/tileset.tres" id="5_yp7ie"]
+[ext_resource type="Texture2D" uid="uid://cgtyc0q1oqsoc" path="res://src/levels/_dream/prismatic_funk/sprites/sub_panorama/sphinx.png" id="7_1mmq1"]
+[ext_resource type="Texture2D" uid="uid://iwcvda3s1fhs" path="res://src/levels/_dream/prismatic_funk/sprites/sub_panorama/eiffel_tower.png" id="8_s0yfc"]
+[ext_resource type="TileSet" uid="uid://cno7r0ecf2jww" path="res://src/levels/_dream/prismatic_funk/cubes_tileset.tres" id="9_i2pxc"]
+[ext_resource type="Texture2D" uid="uid://dsgxusam02uno" path="res://src/levels/_dream/prismatic_funk/sprites/cam_lens.png" id="10_4prcp"]
+[ext_resource type="Shader" uid="uid://b1lujjdk86ujt" path="res://src/shaders/masks/static.gdshader" id="10_iddb5"]
+[ext_resource type="Texture2D" uid="uid://r55rn7josxlg" path="res://src/levels/_dream/prismatic_funk/sprites/neon_babe.png" id="11_4prcp"]
+[ext_resource type="Texture2D" uid="uid://juwmdc7xtt5t" path="res://src/levels/_dream/prismatic_funk/sprites/cam_lens_lit.png" id="11_egwfs"]
+[ext_resource type="Texture2D" uid="uid://cwokdae7mbk5a" path="res://src/levels/_dream/prismatic_funk/sprites/neon_babe_2.png" id="12_egwfs"]
+[ext_resource type="Texture2D" uid="uid://bx0w1bvlfcn0i" path="res://src/levels/_dream/prismatic_funk/sprites/neon_babe_2_cat.png" id="13_0cs80"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="15_sho7u"]
+[ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="17_e4vo4"]
+[ext_resource type="Script" uid="uid://dxx2gbg56i1ts" path="res://src/systems/sequencing/event/scene/apply_panorama.gd" id="18_xrs24"]
+[ext_resource type="Script" uid="uid://ctqw6a8qsvnv4" path="res://src/systems/sequencing/event/audio/play_bgm.gd" id="19_dsggi"]
+
+[sub_resource type="Gradient" id="Gradient_e4vo4"]
+offsets = PackedFloat32Array(0, 0.9225589)
+colors = PackedColorArray(0, 0, 0, 1, 1, 0.48899934, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xrs24"]
+gradient = SubResource("Gradient_e4vo4")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rykvo"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_i0ory"]
+noise = SubResource("FastNoiseLite_rykvo")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sno5r"]
+shader = ExtResource("3_mkvtm")
+shader_parameter/initial_uv_offset = Vector2(0, 0)
+shader_parameter/offset_strength = 0.05
+shader_parameter/offset_strength_influence = Vector2(1, 1)
+shader_parameter/opacity = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_i0ory")
+shader_parameter/scroll_speed = 0.085
+shader_parameter/gradient = SubResource("GradientTexture2D_xrs24")
+shader_parameter/rot_radians = 0.0
+shader_parameter/ray_strength = 1.225
+
+[sub_resource type="Gradient" id="Gradient_e4adf"]
+colors = PackedColorArray(0.117527, 0.109558, 0.2594, 1, 0.705566, 0.285081, 0.497018, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jseg6"]
+gradient = SubResource("Gradient_e4adf")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0cs80"]
+texture = ExtResource("10_4prcp")
+texture_region_size = Vector2i(83, 67)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kaeiu"]
+texture = ExtResource("11_egwfs")
+texture_region_size = Vector2i(83, 67)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_e5vbf"]
+sources/0 = SubResource("TileSetAtlasSource_0cs80")
+sources/1 = SubResource("TileSetAtlasSource_kaeiu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4prcp"]
+shader = ExtResource("10_iddb5")
+shader_parameter/alpha = 1.0
+shader_parameter/noise_amount = 0.09
+shader_parameter/inverted = false
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e5vbf"]
+texture = ExtResource("11_4prcp")
+texture_region_size = Vector2i(60, 150)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tjcd0"]
+texture = ExtResource("12_egwfs")
+texture_region_size = Vector2i(60, 150)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ktade"]
+texture = ExtResource("13_0cs80")
+texture_region_size = Vector2i(60, 150)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_oeobh"]
+sources/0 = SubResource("TileSetAtlasSource_e5vbf")
+sources/1 = SubResource("TileSetAtlasSource_tjcd0")
+sources/2 = SubResource("TileSetAtlasSource_ktade")
+
+[sub_resource type="Resource" id="Resource_oh5hn"]
+resource_local_to_scene = true
+resource_name = "pl_variables"
+script = ExtResource("15_sho7u")
+
+[node name="prismatic_funk" type="Node" node_paths=PackedStringArray("seq_initial", "seq_free")]
+script = ExtResource("1_cu7mf")
+seq_initial = NodePath("on_initial")
+seq_free = NodePath("on_free")
+
+[node name="panorama (top_layer)" type="ParallaxBackground" parent="."]
+layer = -20
+scroll_base_scale = Vector2(1, 0)
+
+[node name="sphinx" type="ParallaxLayer" parent="panorama (top_layer)"]
+position = Vector2(208, 104)
+motion_scale = Vector2(0.375, 0.375)
+
+[node name="_" type="Sprite2D" parent="panorama (top_layer)/sphinx"]
+position = Vector2(0, -16)
+texture = ExtResource("7_1mmq1")
+centered = false
+
+[node name="eiffel" type="ParallaxLayer" parent="panorama (top_layer)"]
+position = Vector2(-96, -8)
+motion_scale = Vector2(0.175, 0.175)
+
+[node name="_" type="Sprite2D" parent="panorama (top_layer)/eiffel"]
+texture = ExtResource("8_s0yfc")
+centered = false
+
+[node name="screen_overlay" type="CanvasLayer" parent="."]
+layer = 8
+
+[node name="TextureRect" type="TextureRect" parent="screen_overlay"]
+material = SubResource("ShaderMaterial_sno5r")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_jseg6")
+
+[node name="camera_handler" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("3_5i8ep")]
+rot_strength = 0.9
+initial_target = NodePath("../y_order/madotsuki")
+
+[node name="tile_map" type="CanvasLayer" parent="."]
+layer = -1
+follow_viewport_enabled = true
+
+[node name="bricks" type="TileMapLayer" parent="tile_map"]
+use_parent_material = true
+tile_map_data = PackedByteArray("AAD9////AAAAAAAAAAD9/wAAAAAAAAAAAAD9/wEAAAAAAAAAAAD+/wEAAAAAAAAAAAD+/wIAAAAAAAAAAAD//wIAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAD//wMAAAAAAAAAAAD8////AAAAAAAAAAD8/wAAAAAAAAAAAAD7////AAAAAAAAAAD7/wAAAAAAAAAAAAD6////AAAAAAAAAAD6/wAAAAAAAAAAAAD8/wEAAAAAAAEAAAD//wQAAAAAAAAAAAD//wUAAAAAAAAAAAD//wYAAAAAAAAAAAD//wcAAAAAAAAAAAD//wgAAAAAAAAAAAD//wkAAAAAAAAAAAD//woAAAAAAAAAAAD//wsAAAAAAAAAAAD+/wYAAAAAAAEAAAD+/wcAAAAAAAEAAAD+/wgAAAAAAAEAAAD+/wkAAAAAAAEAAAD+/woAAAAAAAEAAAD+/wsAAAAAAAEAAAD+/wUAAAAAAAEAAAABAAMAAAAAAAEAAAACAAAAAAAAAAAAAAACAAIAAAAAAAEAAAADAAAAAAAAAAAAAAADAAEAAAAAAAEAAAAEAAAAAAAAAAAAAAAEAAEAAAAAAAEAAAAFAAAAAAAAAAAAAAAFAAEAAAAAAAEAAAAGAAAAAAAAAAAAAAAGAAEAAAAAAAEAAAABAAEAAAAAAAAAAAACAP7/AAAAAAAAAAADAP7/AAAAAAEAAAAEAP7/AAAAAAEAAAAFAP7/AAAAAAEAAAAGAP7/AAAAAAEAAAAHAP7/AAAAAAEAAAAGAP//AAAAAAAAAAAFAP//AAAAAAAAAAAEAP//AAAAAAAAAAADAP//AAAAAAAAAAACAP//AAAAAAAAAAABAP7/AAAAAAAAAAABAP3/AAAAAAAAAAAAAP3/AAAAAAAAAAD///3/AAAAAAAAAAD+//3/AAAAAAAAAAD+//7/AAAAAAAAAAD9//7/AAAAAAAAAAD+/wMAAAAAAAEAAAD9/wMAAAAAAAEAAAD9/wIAAAAAAAEAAAD8/wIAAAAAAAEAAAADAAIAAAAAAAEAAAACAAMAAAAAAAEAAAACAAEAAAAAAAAAAAABAAIAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAsAAAAAAAAAAAD+/wQAAAAAAAEAAAABAAQAAAAAAAEAAAABAAUAAAAAAAEAAAABAAYAAAAAAAEAAAABAAcAAAAAAAEAAAABAAgAAAAAAAEAAAABAAsAAAAAAAEAAAABAAoAAAAAAAEAAAABAAkAAAAAAAEAAAD8//7/AAAAAAEAAAD7//7/AAAAAAEAAAD6//7/AAAAAAEAAAD5//7/AAAAAAEAAAD7/wEAAAAAAAEAAAD6/wEAAAAAAAEAAAD5/wEAAAAAAAEAAAAHAAEAAAAAAAEAAAADAP3/AAAAAAEAAAACAP3/AAAAAAEAAAACAPz/AAAAAAEAAAABAPz/AAAAAAEAAAAAAPz/AAAAAAEAAAD///z/AAAAAAEAAAD+//z/AAAAAAEAAAD9//z/AAAAAAEAAAD9//3/AAAAAAEAAAD8//3/AAAAAAEAAAA=")
+tile_set = ExtResource("5_yp7ie")
+
+[node name="y_order" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="cubes" type="TileMapLayer" parent="y_order"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAADAPr/AgAAAAAAAAAEAPn/AgAAAAAAAAAGAPv/AgAAAAAAAAAHAPz/AgAAAAAAAAD5//3/AgAAAAAAAAD6//z/AgAAAAAAAAD7/wUAAgAAAAAAAAAFAPz/AQAAAAAAAAD8//r/AQAAAAAAAAADAAUAAQAAAAAAAAAEAAMAAQAAAAAAAAAMAAIAAgAAAAAAAAD6/wMAAQAAAAAAAAD8/w0AAgAAAAAAAAA=")
+tile_set = ExtResource("9_i2pxc")
+
+[node name="cam_lens" type="TileMapLayer" parent="y_order"]
+tile_map_data = PackedByteArray("AAAFAB0AAQAAAAAAAAD6/x0AAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_e5vbf")
+
+[node name="neon_babes" type="TileMapLayer" parent="y_order"]
+material = SubResource("ShaderMaterial_4prcp")
+tile_map_data = PackedByteArray("AAAFABgAAAAAAAAAABD6/xgAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_oeobh")
+
+[node name="madotsuki" parent="y_order" instance=ExtResource("4_a6ohb")]
+values = SubResource("Resource_oh5hn")
+
+[node name="top_layer" type="Node2D" parent="y_order"]
+
+[node name="on_initial" type="Node" parent="." node_paths=PackedStringArray("order", "front", "back")]
+script = ExtResource("17_e4vo4")
+order = [NodePath("EVN_Panorama"), NodePath("bgm")]
+skip_invalid_events = true
+front = NodePath("EVN_Panorama")
+back = NodePath("bgm")
+
+[node name="EVN_Panorama" type="Node" parent="on_initial" node_paths=PackedStringArray("subviewport", "pivot", "next")]
+script = ExtResource("18_xrs24")
+subviewport = NodePath("subviewport")
+pivot = NodePath("pivot")
+next = NodePath("../bgm")
+metadata/_custom_type_script = "uid://dxx2gbg56i1ts"
+
+[node name="pivot" type="Marker2D" parent="on_initial/EVN_Panorama"]
+
+[node name="subviewport" type="SubViewport" parent="on_initial/EVN_Panorama"]
+own_world_3d = true
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+canvas_item_default_texture_repeat = 2
+size = Vector2i(480, 270)
+size_2d_override = Vector2i(480, 270)
+
+[node name="NightCity2" type="Sprite2D" parent="on_initial/EVN_Panorama/subviewport"]
+position = Vector2(0, -48)
+texture = ExtResource("2_oh5hn")
+centered = false
+
+[node name="bgm" type="Node" parent="on_initial" node_paths=PackedStringArray("prev")]
+process_mode = 4
+script = ExtResource("19_dsggi")
+stream = ExtResource("3_4prcp")
+prev = NodePath("../EVN_Panorama")
+metadata/_custom_type_script = "uid://ctqw6a8qsvnv4"
+
+[node name="on_free" type="Node" parent="."]
+script = ExtResource("17_e4vo4")
+skip_invalid_events = true
+
+[editable path="camera_handler"]

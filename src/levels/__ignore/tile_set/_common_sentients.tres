@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=10 format=3 uid="uid://ecdj87dihdcc"]
+[gd_resource type="TileSet" format=3 uid="uid://ecdj87dihdcc"]
 
 [ext_resource type="PackedScene" uid="uid://3rcijpl4bfm4" path="res://src/entities/sentients/barracks/pirori.tscn" id="1_vnqxg"]
 [ext_resource type="PackedScene" uid="uid://dqmxnyvau3174" path="res://src/entities/sentients/neon/bird.tscn" id="2_08xbd"]

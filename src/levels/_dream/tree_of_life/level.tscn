@@ -1,0 +1,142 @@
+[gd_scene load_steps=29 format=4 uid="uid://bun2vdr6nk2jr"]
+
+[ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_ymd56"]
+[ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/sally/sally.tscn" id="2_ykkio"]
+[ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="3_7urni"]
+[ext_resource type="Script" uid="uid://cj72ydy2ayshy" path="res://src/systems/camera/3d/follow_revolve.gd" id="4_ijebw"]
+[ext_resource type="PackedScene" uid="uid://b5i4evdwsa3cd" path="res://src/levels/dream/sane/tree_of_life/tree/tree2.fbx" id="6_ah74t"]
+[ext_resource type="Texture2D" uid="uid://c1ka2w4a5xoxq" path="res://src/images/panorama/clouds_mmyes/1.png" id="6_hda2x"]
+[ext_resource type="Script" uid="uid://b4b3kjcm65mv6" path="res://src/systems/audio/bgm.gd" id="7_rfmj4"]
+[ext_resource type="Texture2D" uid="uid://dkqltxt40csu2" path="res://src/images/panorama/clouds_mmyes/2.png" id="7_xkofj"]
+[ext_resource type="Texture2D" uid="uid://c7xylnmhugrug" path="res://src/images/panorama/clouds_mmyes/11.png" id="8_sleao"]
+[ext_resource type="Texture2D" uid="uid://dv60ya2go7cgn" path="res://src/images/panorama/clouds_mmyes/12.png" id="9_bd2q7"]
+[ext_resource type="Texture2D" uid="uid://cgc4afdb1n1h4" path="res://src/images/panorama/clouds_mmyes/13.png" id="10_alnyv"]
+[ext_resource type="AudioStream" uid="uid://cnlj7is0iwcci" path="res://src/audio/bgm/silas_asphyxiation.ogg" id="11_tdri5"]
+[ext_resource type="Texture2D" uid="uid://dr8yah6o6veu5" path="res://src/images/panorama/clouds_mmyes/14.png" id="11_u06xq"]
+[ext_resource type="Texture2D" uid="uid://bmilm63dup5bw" path="res://src/images/panorama/clouds_mmyes/15.png" id="12_bycrf"]
+[ext_resource type="Texture2D" uid="uid://dhwq2lmg50rc6" path="res://src/images/panorama/clouds_mmyes/16.png" id="13_116e0"]
+[ext_resource type="Texture2D" uid="uid://cw6wl0wxhpv3h" path="res://src/images/panorama/clouds_mmyes/17.png" id="14_2sybv"]
+[ext_resource type="Texture2D" uid="uid://7pgxf2q5fc70" path="res://src/images/panorama/clouds_mmyes/18.png" id="15_4g1ex"]
+[ext_resource type="Texture2D" uid="uid://bedytb3jo8f0c" path="res://src/images/panorama/clouds_mmyes/19.png" id="16_iti3v"]
+[ext_resource type="Texture2D" uid="uid://b86ufa7ei0lqs" path="res://src/images/panorama/clouds_mmyes/3.png" id="17_4gwjh"]
+[ext_resource type="Texture2D" uid="uid://ctm8ktnofto3j" path="res://src/images/panorama/clouds_mmyes/4.png" id="18_vx1af"]
+[ext_resource type="Texture2D" uid="uid://dfk3li1bethmw" path="res://src/images/panorama/clouds_mmyes/5.png" id="19_iikgn"]
+[ext_resource type="Texture2D" uid="uid://ni7oumjcu2d" path="res://src/images/panorama/clouds_mmyes/6.png" id="20_wy4o7"]
+[ext_resource type="Texture2D" uid="uid://ckfnyc1pgxt0u" path="res://src/images/panorama/clouds_mmyes/7.png" id="21_pl3hn"]
+[ext_resource type="Texture2D" uid="uid://cf1lpkd0umj61" path="res://src/images/panorama/clouds_mmyes/8.png" id="22_t47uw"]
+[ext_resource type="Texture2D" uid="uid://du2pi8cqefvtv" path="res://src/images/panorama/clouds_mmyes/9.png" id="23_qymh5"]
+[ext_resource type="Texture2D" uid="uid://du06na51yn3xd" path="res://src/images/panorama/clouds_mmyes/10.png" id="24_uel7a"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_bbtk6"]
+frames = 19
+speed_scale = 10.0
+frame_0/texture = ExtResource("6_hda2x")
+frame_1/texture = ExtResource("7_xkofj")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("17_4gwjh")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("18_vx1af")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("19_iikgn")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("20_wy4o7")
+frame_5/duration = 1.0
+frame_6/texture = ExtResource("21_pl3hn")
+frame_6/duration = 1.0
+frame_7/texture = ExtResource("22_t47uw")
+frame_7/duration = 1.0
+frame_8/texture = ExtResource("23_qymh5")
+frame_8/duration = 1.0
+frame_9/texture = ExtResource("24_uel7a")
+frame_9/duration = 1.0
+frame_10/texture = ExtResource("8_sleao")
+frame_10/duration = 1.0
+frame_11/texture = ExtResource("9_bd2q7")
+frame_11/duration = 1.0
+frame_12/texture = ExtResource("10_alnyv")
+frame_12/duration = 1.0
+frame_13/texture = ExtResource("11_u06xq")
+frame_13/duration = 1.0
+frame_14/texture = ExtResource("12_bycrf")
+frame_14/duration = 1.0
+frame_15/texture = ExtResource("13_116e0")
+frame_15/duration = 1.0
+frame_16/texture = ExtResource("14_2sybv")
+frame_16/duration = 1.0
+frame_17/texture = ExtResource("15_4g1ex")
+frame_17/duration = 1.0
+frame_18/texture = ExtResource("16_iti3v")
+frame_18/duration = 1.0
+
+[sub_resource type="Environment" id="Environment_ok0ie"]
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+glow_intensity = 0.41
+glow_strength = 2.0
+glow_bloom = 1.0
+fog_enabled = true
+fog_light_energy = 4.25
+fog_sun_scatter = 0.31
+
+[node name="tree_of_life" type="Node"]
+script = ExtResource("1_ymd56")
+
+[node name="BGM" type="Node" parent="."]
+script = ExtResource("7_rfmj4")
+stream = ExtResource("11_tdri5")
+
+[node name="panorama (top_layer)" type="CanvasLayer" parent="."]
+layer = -20
+
+[node name="TextureRect" type="TextureRect" parent="panorama (top_layer)"]
+offset_right = 486.0
+offset_bottom = 273.0
+texture = SubResource("AnimatedTexture_bbtk6")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="panorama (top_layer)"]
+modulate = Color(0.757905, 0.829081, 0.927245, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="panorama (top_layer)/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(480, 270)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="panorama (top_layer)/SubViewportContainer/SubViewport" node_paths=PackedStringArray("poi")]
+transform = Transform3D(-0.999229, 0.0269947, 0.0284907, 0, 0.725908, -0.687792, -0.0392483, -0.687262, -0.725349, 0.157255, -0.475, -2.57082)
+environment = SubResource("Environment_ok0ie")
+fov = 60.4
+script = ExtResource("4_ijebw")
+distance = 740.0
+r = 3.735
+poi = NodePath("../Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="panorama (top_layer)/SubViewportContainer/SubViewport"]
+transform = Transform3D(0.453985, -0.121645, 0, 0.121645, 0.453985, 0, 0, 0, 0.47, 0, 2, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="panorama (top_layer)/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.615662, 0.788011, 0, -0.788011, 0.615662, 0, 0, 0)
+
+[node name="tree2" parent="panorama (top_layer)/SubViewportContainer/SubViewport" instance=ExtResource("6_ah74t")]
+
+[node name="camera" parent="." instance=ExtResource("3_7urni")]
+
+[node name="camera_handler" parent="camera" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../Sally")
+
+[node name="marker" parent="camera/camera_handler" index="0"]
+position = Vector2(0, -35)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAD//wYAAAABAAAAAAD//wcAAAABAAEAAAAAAAYAAAABAAAAAAAAAAcAAAABAAEAAAABAAYAAAABAAAAAAABAAcAAAABAAEAAAACAAYAAAABAAAAAAACAAcAAAABAAEAAAADAAYAAAABAAAAAAADAAcAAAABAAEAAAAEAAYAAAABAAAAAAAEAAcAAAABAAEAAAAFAAYAAAABAAAAAAAFAAcAAAABAAEAAAAGAAYAAAABAAAAAAAGAAcAAAABAAEAAAAHAAYAAAABAAAAAAAHAAcAAAABAAEAAAAIAAYAAAABAAAAAAAIAAcAAAABAAEAAAAJAAYAAAABAAAAAAAJAAcAAAABAAEAAAAKAAYAAAABAAAAAAAKAAcAAAABAAEAAAALAAYAAAABAAAAAAALAAcAAAABAAEAAAAMAAYAAAABAAAAAAAMAAcAAAABAAEAAAANAAYAAAABAAAAAAANAAcAAAABAAEAAAAOAAYAAAABAAAAAAAOAAcAAAABAAEAAAAPAAYAAAABAAAAAAAPAAcAAAABAAEAAAAQAAYAAAABAAAAAAAQAAcAAAABAAEAAAA=")
+
+[node name="Sally" parent="." instance=ExtResource("2_ykkio")]
+position = Vector2(237, 144)
+
+[editable path="camera"]

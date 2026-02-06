@@ -1,24 +1,11 @@
 class_name Player
 extends SentientBase
 
-@export var fsm: SentientFSM
-
 #region ---- data variables ----
-
-@export_storage var stamina: 		float = MAX_STAMINA:
-	set(_stam):
-		stamina = clampf(_stam, 0, MAX_STAMINA)
-		EventManager.invoke_event("PLAYER_STAMINA_CHANGE", _stam)
-
-var is_exhausted: bool = false
 
 # ---- data constants ----
 const CAN_SPRINT: bool = true
-const EXHAUST_MULTI: 		float = 0.635
 
-const MAX_STAMINA:	 		float =  5
-const STAMINA_DRAIN: 		float = .78
-const STAMINA_REGEN: 		float = .8
 
 const ERR_SOUNDS := [
 	preload("res://src/audio/se/voice_mado_no-1.WAV"), 
@@ -40,9 +27,6 @@ func _enter_tree() -> void:
 	super()
 	Instance._pl = self
 	EventManager.invoke_event("PLAYER_UPDATED", self)
-
-func force_change_state(_new: String) -> void: fsm.get_curr_state().request_transition_to(_new)
-func get_state_name() -> String: return fsm.get_curr_state_name()
 
 class Data:
 	static var content: Dictionary = {		

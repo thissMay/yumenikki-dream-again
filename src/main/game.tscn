@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://ra24ysq2f70c"]
+[gd_scene format=3 uid="uid://ra24ysq2f70c"]
 
 [ext_resource type="Script" uid="uid://b2yjestmw6ux7" path="res://src/game/game_manager.gd" id="1_y4aoe"]
 [ext_resource type="Environment" uid="uid://be4tedt15qnrp" path="res://src/main/environment_2d.tres" id="2_3apph"]
@@ -423,28 +423,26 @@ colors = PackedColorArray(0, 0, 0, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_8fuah"]
 gradient = SubResource("Gradient_tboue")
 
-[node name="game_manager" type="Node"]
+[node name="game_manager" type="Node" unique_id=1710481091]
 process_mode = 3
 script = ExtResource("1_y4aoe")
 
-[node name="global_screen_effect" type="WorldEnvironment" parent="."]
+[node name="global_screen_effect" type="WorldEnvironment" parent="." unique_id=138073628]
 environment = ExtResource("2_3apph")
 
-[node name="state_handle" type="Node" parent="." node_paths=PackedStringArray("game_state_fsm")]
+[node name="state_handle" type="Node" parent="." unique_id=233062154 node_paths=PackedStringArray("game_state_fsm")]
 script = ExtResource("3_ci86m")
 game_state_fsm = NodePath("../game_fsm")
 
-[node name="sequencer_manager" type="Node" parent="."]
-
-[node name="global_player_components" type="Node" parent="."]
+[node name="global_player_components" type="Node" parent="." unique_id=1849697540]
 script = ExtResource("38_jdkml")
 metadata/_custom_type_script = "uid://dd0qxrsakskma"
 
-[node name="mental_component" type="CanvasLayer" parent="global_player_components"]
+[node name="mental_component" type="CanvasLayer" parent="global_player_components" unique_id=409143329]
 layer = 10
 script = ExtResource("19_j0kuk")
 
-[node name="fx" type="ColorRect" parent="global_player_components/mental_component"]
+[node name="fx" type="ColorRect" parent="global_player_components/mental_component" unique_id=1622442285]
 material = SubResource("ShaderMaterial_73454")
 anchors_preset = 15
 anchor_right = 1.0
@@ -453,128 +451,117 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="sound" type="AudioStreamPlayer" parent="global_player_components/mental_component"]
+[node name="sound" type="AudioStreamPlayer" parent="global_player_components/mental_component" unique_id=1899104617]
 volume_db = -80.0
 bus = &"Effects"
 script = ExtResource("21_cy466")
 metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
 
-[node name="global_components" type="Node" parent="."]
+[node name="global_components" type="Node" parent="." unique_id=248943447]
 script = ExtResource("18_sjocp")
 
-[node name="panorama_component" type="Node" parent="global_components" node_paths=PackedStringArray("panorama_rect")]
+[node name="panorama_component" type="Node" parent="global_components" unique_id=1396847521 node_paths=PackedStringArray("panorama_rect")]
 script = ExtResource("3_y4aoe")
 panorama_rect = NodePath("../../panorama (top_layer)/display")
 default_panorama_texture = SubResource("GradientTexture2D_jdkml")
 
-[node name="effect_equip_anim" type="Node2D" parent="global_components" node_paths=PackedStringArray("animation_player")]
+[node name="effect_equip_anim" type="Node2D" parent="global_components" unique_id=1054345486 node_paths=PackedStringArray("animation_player")]
 script = ExtResource("22_qof35")
 animation_player = NodePath("player")
 
-[node name="player" type="AnimationPlayer" parent="global_components/effect_equip_anim"]
-libraries = {
-&"": SubResource("AnimationLibrary_lm638")
-}
+[node name="player" type="AnimationPlayer" parent="global_components/effect_equip_anim" unique_id=1572526687]
+libraries/ = SubResource("AnimationLibrary_lm638")
 
-[node name="pink_1" type="Sprite2D" parent="global_components/effect_equip_anim"]
+[node name="pink_1" type="Sprite2D" parent="global_components/effect_equip_anim" unique_id=426989702]
 modulate = Color(1, 1, 1, 0)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("25_hma5v")
 
-[node name="pink_2" type="Sprite2D" parent="global_components/effect_equip_anim"]
+[node name="pink_2" type="Sprite2D" parent="global_components/effect_equip_anim" unique_id=1606804729]
 modulate = Color(1, 1, 1, 0)
 rotation = -0.785398
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("25_hma5v")
 
-[node name="white_1" type="Sprite2D" parent="global_components/effect_equip_anim"]
+[node name="white_1" type="Sprite2D" parent="global_components/effect_equip_anim" unique_id=1203239505]
 modulate = Color(1, 1, 1, 0)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("26_0wivy")
 
-[node name="white_2" type="Sprite2D" parent="global_components/effect_equip_anim"]
+[node name="white_2" type="Sprite2D" parent="global_components/effect_equip_anim" unique_id=948986667]
 modulate = Color(1, 1, 1, 0)
 rotation = 0.528835
 scale = Vector2(1.1, 1.1)
 texture = ExtResource("26_0wivy")
 
-[node name="sound" type="AudioStreamPlayer" parent="global_components/effect_equip_anim"]
+[node name="sound" type="AudioStreamPlayer" parent="global_components/effect_equip_anim" unique_id=1982719553]
 bus = &"Effects"
 script = ExtResource("21_cy466")
 metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
 
-[node name="chase_manager" type="Node" parent="global_components"]
+[node name="chase_manager" type="Node" parent="global_components" unique_id=1938823127]
 script = ExtResource("28_y0xa8")
 
-[node name="inventory_manager" type="Node" parent="global_components" node_paths=PackedStringArray("inventory")]
+[node name="inventory_manager" type="Node" parent="global_components" unique_id=131784333 node_paths=PackedStringArray("inventory")]
 script = ExtResource("16_ci86m")
 inventory = NodePath("../../always/ui/hud/inventory")
 
-[node name="game_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="game_fsm" type="Node" parent="." unique_id=1303882366 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4_v3f7h")
 track_state_changes = true
 initial_state = NodePath("PREGAME")
 
-[node name="PREGAME" type="Node" parent="game_fsm" node_paths=PackedStringArray("transitions")]
+[node name="PREGAME" type="Node" parent="game_fsm" unique_id=2136337452]
 script = ExtResource("6_tboue")
-transitions = [NodePath("../ACTIVE"), NodePath("../PAUSE")]
 
-[node name="ACTIVE" type="Node" parent="game_fsm" node_paths=PackedStringArray("transitions")]
+[node name="ACTIVE" type="Node" parent="game_fsm" unique_id=819847652]
 script = ExtResource("7_8fuah")
-transitions = [NodePath("../CHANGING_SCENES"), NodePath("../PAUSE")]
 
-[node name="PLAY" type="Node" parent="game_fsm/ACTIVE" node_paths=PackedStringArray("dream_component", "transitions")]
+[node name="PLAY" type="Node" parent="game_fsm/ACTIVE" unique_id=1299142468 node_paths=PackedStringArray("dream_component")]
 script = ExtResource("9_yapge")
 dream_component = NodePath("dream_component")
-transitions = [NodePath("../CUTSCENE"), NodePath("../SPECIAL_INVERT_SCENE")]
 
-[node name="dream_component" type="Node" parent="game_fsm/ACTIVE/PLAY" node_paths=PackedStringArray("dream_mode", "neutral_mode")]
+[node name="dream_component" type="Node" parent="game_fsm/ACTIVE/PLAY" unique_id=274850532 node_paths=PackedStringArray("dream_mode", "neutral_mode")]
 script = ExtResource("10_nupip")
 dream_mode = NodePath("DREAM")
 neutral_mode = NodePath("NEUTRAL")
 
-[node name="NEUTRAL" type="Node" parent="game_fsm/ACTIVE/PLAY/dream_component" node_paths=PackedStringArray("hud", "transitions")]
+[node name="NEUTRAL" type="Node" parent="game_fsm/ACTIVE/PLAY/dream_component" unique_id=1846931524 node_paths=PackedStringArray("hud")]
 script = ExtResource("11_cjakg")
 hud = NodePath("../../../../../always/ui/hud")
-transitions = [null]
 
-[node name="DREAM" type="Node" parent="game_fsm/ACTIVE/PLAY/dream_component" node_paths=PackedStringArray("hud", "transitions")]
+[node name="DREAM" type="Node" parent="game_fsm/ACTIVE/PLAY/dream_component" unique_id=30241983 node_paths=PackedStringArray("hud")]
 script = ExtResource("12_qks74")
 hud = NodePath("../../../../../always/ui/hud")
-transitions = [NodePath("../NEUTRAL")]
 
-[node name="CUTSCENE" type="Node" parent="game_fsm/ACTIVE" node_paths=PackedStringArray("dream_fsm", "transitions")]
+[node name="CUTSCENE" type="Node" parent="game_fsm/ACTIVE" unique_id=436756324 node_paths=PackedStringArray("dream_fsm")]
 script = ExtResource("14_eb0fa")
 dream_fsm = NodePath("../PLAY/dream_component")
-transitions = [NodePath("../PLAY"), NodePath("../SPECIAL_INVERT_SCENE")]
 
-[node name="SPECIAL_INVERT_SCENE" type="Node" parent="game_fsm/ACTIVE" node_paths=PackedStringArray("inventory", "transitions")]
+[node name="SPECIAL_INVERT_SCENE" type="Node" parent="game_fsm/ACTIVE" unique_id=1943881411 node_paths=PackedStringArray("inventory")]
 script = ExtResource("15_x5cou")
 inventory = NodePath("../../../always/ui/hud/inventory")
-transitions = [NodePath("../CUTSCENE"), NodePath("../PLAY")]
 
-[node name="CHANGING_SCENES" type="Node" parent="game_fsm" node_paths=PackedStringArray("transitions")]
+[node name="CHANGING_SCENES" type="Node" parent="game_fsm" unique_id=609417323]
 script = ExtResource("25_3apph")
-transitions = [NodePath("../ACTIVE"), NodePath("../PAUSE"), null]
 
-[node name="PAUSE" type="Node" parent="game_fsm" node_paths=PackedStringArray("pause_menu", "hud", "transitions")]
+[node name="PAUSE" type="Node" parent="game_fsm" unique_id=1622450297 node_paths=PackedStringArray("pause_menu", "hud")]
 script = ExtResource("29_scyrd")
 pause_menu = NodePath("../../always/pause")
 hud = NodePath("../../always/ui/hud")
-transitions = [null, NodePath("../ACTIVE")]
 
-[node name="BGM" type="Node" parent="game_fsm/PAUSE"]
+[node name="BGM" type="Node" parent="game_fsm/PAUSE" unique_id=43480923]
 script = SubResource("GDScript_3apph")
 stream = ExtResource("30_fyoi4")
 pitch = 0.5
 
-[node name="pausable" type="Node2D" parent="."]
+[node name="pausable" type="Node2D" parent="." unique_id=19921892]
 process_mode = 1
 
-[node name="panorama (top_layer)" type="CanvasLayer" parent="."]
+[node name="panorama (top_layer)" type="CanvasLayer" parent="." unique_id=249879097]
 layer = -25
 
-[node name="display" type="TextureRect" parent="panorama (top_layer)"]
+[node name="display" type="TextureRect" parent="panorama (top_layer)" unique_id=1661940468]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -583,16 +570,16 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_jdkml")
 
-[node name="always" type="CanvasLayer" parent="."]
+[node name="always" type="CanvasLayer" parent="." unique_id=322967531]
 process_mode = 3
 layer = 30
 
-[node name="pause" parent="always" instance=ExtResource("32_r2hvo")]
+[node name="pause" parent="always" unique_id=1200054218 instance=ExtResource("32_r2hvo")]
 visible = false
 z_index = 80
 custom_minimum_size = Vector2(480, 270)
 
-[node name="ui" type="Control" parent="always"]
+[node name="ui" type="Control" parent="always" unique_id=1335355162]
 z_index = 80
 layout_mode = 3
 anchors_preset = 15
@@ -603,11 +590,11 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("30_i8erk")
 
-[node name="hud" parent="always/ui" instance=ExtResource("33_a0tkc")]
+[node name="hud" parent="always/ui" unique_id=1719748181 instance=ExtResource("33_a0tkc")]
 layout_mode = 1
 mouse_filter = 1
 
-[node name="message_display_manager" type="Control" parent="always/ui/hud" node_paths=PackedStringArray("message_display", "prompt_display", "dialogue_display")]
+[node name="message_display_manager" type="Control" parent="always/ui/hud" unique_id=1284568168 node_paths=PackedStringArray("message_display", "prompt_display", "dialogue_display")]
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("31_wfsxj")
@@ -615,19 +602,19 @@ message_display = NodePath("message_display")
 prompt_display = NodePath("prompt_display")
 dialogue_display = NodePath("dialogue_display")
 
-[node name="message_display" type="PanelContainer" parent="always/ui/hud/message_display_manager"]
+[node name="message_display" type="PanelContainer" parent="always/ui/hud/message_display_manager" unique_id=1039159293]
 layout_mode = 0
 script = ExtResource("36_8fuah")
 
-[node name="prompt_display" type="PanelContainer" parent="always/ui/hud/message_display_manager"]
+[node name="prompt_display" type="PanelContainer" parent="always/ui/hud/message_display_manager" unique_id=463968397]
 layout_mode = 0
 script = ExtResource("37_aa7m6")
 
-[node name="dialogue_display" type="PanelContainer" parent="always/ui/hud/message_display_manager"]
+[node name="dialogue_display" type="PanelContainer" parent="always/ui/hud/message_display_manager" unique_id=966364305]
 layout_mode = 0
 script = ExtResource("38_yapge")
 
-[node name="inventory" parent="always/ui/hud" instance=ExtResource("37_tboue")]
+[node name="inventory" parent="always/ui/hud" unique_id=62208050 instance=ExtResource("37_tboue")]
 visible = false
 z_index = 1
 layout_mode = 0
@@ -639,7 +626,7 @@ offset_bottom = 270.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="cinematic_bars" type="TextureRect" parent="always/ui"]
+[node name="cinematic_bars" type="TextureRect" parent="always/ui" unique_id=1182692793]
 layout_mode = 0
 offset_right = 480.0
 offset_bottom = 270.0
@@ -648,7 +635,7 @@ size_flags_vertical = 4
 mouse_filter = 2
 texture = ExtResource("34_nnm53")
 
-[node name="secondary_transition" type="TextureRect" parent="always"]
+[node name="secondary_transition" type="TextureRect" parent="always" unique_id=1335796710]
 visible = false
 custom_minimum_size = Vector2(480, 270)
 offset_right = 480.0
@@ -657,7 +644,7 @@ mouse_filter = 2
 texture = SubResource("GradientTexture1D_8fuah")
 script = ExtResource("29_3apph")
 
-[node name="primary_transition" type="TextureRect" parent="always"]
+[node name="primary_transition" type="TextureRect" parent="always" unique_id=172292062]
 visible = false
 custom_minimum_size = Vector2(480, 270)
 anchors_preset = 15
