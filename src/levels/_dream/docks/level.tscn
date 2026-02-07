@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=4 uid="uid://b7ixvvfnudrtd"]
+[gd_scene load_steps=54 format=4 uid="uid://b7ixvvfnudrtd"]
 
 [ext_resource type="Script" uid="uid://b1ofr4umso5jf" path="res://src/systems/scenes/game/game_scene.gd" id="1_kijfi"]
 [ext_resource type="PackedScene" uid="uid://c8bnpo28a373g" path="res://src/systems/camera/camera.tscn" id="2_3srwc"]
@@ -13,10 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://ryhx8o46er7i" path="res://src/player/2D/madotsuki/madotsuki.tscn" id="6_4vx6f"]
 [ext_resource type="Resource" uid="uid://c4wqh7wudu65x" path="res://src/audio/footsteps/wood.tres" id="7_diemx"]
 [ext_resource type="Script" uid="uid://bqs7mvieiy4cw" path="res://src/levels/__ignore/tilemap_collision_setup.gd" id="8_k40gg"]
-[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="8_w6cx3"]
 [ext_resource type="Script" uid="uid://4dkyll6fxqod" path="res://src/systems/region/region.gd" id="11_npwiy"]
 [ext_resource type="Script" uid="uid://f4sb25g3gpic" path="res://src/systems/sequencing/sequence/game/sequence_region.gd" id="12_3whc7"]
 [ext_resource type="Script" uid="uid://c1od80bn28h0l" path="res://src/systems/sequencing/sequence_interface.gd" id="13_c8ign"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="13_o11tt"]
 [ext_resource type="Script" uid="uid://c2n434y8egp0r" path="res://src/systems/sequencing/event/camera/offset_cam.gd" id="14_wl2ig"]
 [ext_resource type="Script" uid="uid://c0ymap76lrhgr" path="res://src/systems/sequencing/event/scene/travel_to_scene.gd" id="16_1h25o"]
 [ext_resource type="Texture2D" uid="uid://d2t1yapovrjx2" path="res://src/images/panorama/dark_sand.png" id="18_tdqbh"]
@@ -34,10 +34,6 @@
 [ext_resource type="AudioStream" uid="uid://b01e5plqcruwi" path="res://src/audio/bgm/world_mural.WAV" id="24_ru2n5"]
 [ext_resource type="AudioStream" uid="uid://bes7x57g2k64w" path="res://src/audio/amb/amb_water_lapping.wav" id="26_k40gg"]
 [ext_resource type="Script" uid="uid://cokcpecitxber" path="res://src/systems/sequencing/event/audio/set_bus_effects.gd" id="27_gk1x3"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5m4g7"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_02b03"]
 
 [sub_resource type="Gradient" id="Gradient_w6cx3"]
 offsets = PackedFloat32Array(0, 0.5, 1)
@@ -77,7 +73,8 @@ colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
 [sub_resource type="Resource" id="Resource_o11tt"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
-script = ExtResource("8_w6cx3")
+script = ExtResource("13_o11tt")
+metadata/_custom_type_script = "uid://bxe7uci7t77tx"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ru2n5"]
 size = Vector2(16, 16)
@@ -132,12 +129,10 @@ damping = 0.18
 script = ExtResource("1_kijfi")
 seq_initial = NodePath("on_initial")
 seq_free = NodePath("on_free")
-load_transition = SubResource("ShaderMaterial_5m4g7")
-unload_transition = SubResource("ShaderMaterial_02b03")
 metadata/_custom_type_script = "uid://b1ofr4umso5jf"
 
 [node name="camera" parent="." node_paths=PackedStringArray("initial_target") instance=ExtResource("2_3srwc")]
-position = Vector2(1080, -280)
+position = Vector2(528, 224)
 initial_target = NodePath("../y_order/madotsuki")
 
 [node name="overlay_3" parent="camera/marker/camera" index="2"]
@@ -307,6 +302,9 @@ process_mode = 4
 
 [node name="append_effect" parent="y_order/fat_effect/on_interact/effect_sequence" index="1"]
 effect = ExtResource("24_dsile")
+
+[node name="set_interactable_inactive" parent="y_order/fat_effect/on_interact/effect_sequence" index="4"]
+process_mode = 0
 
 [node name="rect" parent="y_order/fat_effect" index="2"]
 position = Vector2(12, 18)

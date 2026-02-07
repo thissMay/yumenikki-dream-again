@@ -1,14 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://demusraqmvy5s"]
+[gd_scene load_steps=7 format=3 uid="uid://demusraqmvy5s"]
 
 [ext_resource type="Theme" uid="uid://bv8atq67jgwrc" path="res://src/global_theme.tres" id="1_cjy1q"]
 [ext_resource type="Script" uid="uid://dgxld1rmdcf3y" path="res://src/player/inventory/effect_stats_window.gd" id="2_2csn3"]
 [ext_resource type="Texture2D" uid="uid://x8um7uotrwnv" path="res://src/player/inventory/menu/what.png" id="2_3c6xc"]
 [ext_resource type="Texture2D" uid="uid://641771i2v7id" path="res://src/player/hud/stats_mobility.png" id="3_2csn3"]
-[ext_resource type="Texture2D" uid="uid://qb3b0xt471r1" path="res://src/player/hud/stats_stamina.png" id="4_m5a7d"]
 [ext_resource type="Texture2D" uid="uid://bthea7xsvafa5" path="res://src/player/inventory/stats_neutral.png" id="5_2csn3"]
 [ext_resource type="Texture2D" uid="uid://baxoxweqyowud" path="res://src/player/hud/stats_noise.png" id="7_m5a7d"]
 
-[node name="effect_stats_window" type="Control" node_paths=PackedStringArray("walk_speed", "sprint_speed", "sneak_speed", "exhaust_speed", "can_sprint", "stamina_regen", "stamina_decay", "walk_noise", "sprint_noise", "sneak_noise")]
+[node name="effect_stats_window" type="Control" node_paths=PackedStringArray("walk_speed", "sprint_speed", "sneak_speed", "can_sprint", "walk_noise", "sprint_noise", "sneak_noise")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,10 +23,7 @@ negative_colour = Color(0.9917163, 0.7082633, 0.749527, 1)
 walk_speed = NodePath("stats_container/margin/vbox/walk_speed")
 sprint_speed = NodePath("stats_container/margin/vbox/sprint_speed")
 sneak_speed = NodePath("stats_container/margin/vbox/sneak_speed")
-exhaust_speed = NodePath("stats_container/margin/vbox/exhaust_speed")
 can_sprint = NodePath("stats_container/margin/vbox/can_sprint")
-stamina_regen = NodePath("stats_container/margin/vbox/stamina_regen")
-stamina_decay = NodePath("stats_container/margin/vbox/stamina_decay")
 walk_noise = NodePath("stats_container/margin/vbox/walk_noise")
 sprint_noise = NodePath("stats_container/margin/vbox/sprint_noise")
 sneak_noise = NodePath("stats_container/margin/vbox/sneak_noise")
@@ -109,28 +105,6 @@ tab_stops = PackedFloat32Array(18)
 layout_mode = 2
 texture = ExtResource("5_2csn3")
 
-[node name="exhaust_speed" type="HBoxContainer" parent="stats_container/margin/vbox"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="text" type="Label" parent="stats_container/margin/vbox/exhaust_speed"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-text = "Exhaust Speed: 	xx"
-tab_stops = PackedFloat32Array(18)
-
-[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/exhaust_speed"]
-layout_mode = 2
-texture = ExtResource("5_2csn3")
-
-[node name="split" type="HSplitContainer" parent="stats_container/margin/vbox"]
-layout_mode = 2
-
-[node name="stats_stamina" type="TextureRect" parent="stats_container/margin/vbox"]
-layout_mode = 2
-texture = ExtResource("4_m5a7d")
-stretch_mode = 2
-
 [node name="can_sprint" type="HBoxContainer" parent="stats_container/margin/vbox"]
 layout_mode = 2
 theme_override_constants/separation = 10
@@ -145,33 +119,8 @@ tab_stops = PackedFloat32Array(18)
 layout_mode = 2
 texture = ExtResource("5_2csn3")
 
-[node name="stamina_regen" type="HBoxContainer" parent="stats_container/margin/vbox"]
+[node name="split" type="HSplitContainer" parent="stats_container/margin/vbox"]
 layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="text" type="Label" parent="stats_container/margin/vbox/stamina_regen"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-text = "Stamina Regen: 	xx"
-tab_stops = PackedFloat32Array(18)
-
-[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/stamina_regen"]
-layout_mode = 2
-texture = ExtResource("5_2csn3")
-
-[node name="stamina_decay" type="HBoxContainer" parent="stats_container/margin/vbox"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="text" type="Label" parent="stats_container/margin/vbox/stamina_decay"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-text = "Stamina Decay: 	xx"
-tab_stops = PackedFloat32Array(18)
-
-[node name="icon" type="TextureRect" parent="stats_container/margin/vbox/stamina_decay"]
-layout_mode = 2
-texture = ExtResource("5_2csn3")
 
 [node name="stats_noise" type="TextureRect" parent="stats_container/margin/vbox"]
 layout_mode = 2

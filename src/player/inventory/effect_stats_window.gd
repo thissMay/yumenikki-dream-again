@@ -9,12 +9,9 @@ var player: Player
 @export var walk_speed: Control
 @export var sprint_speed: Control
 @export var sneak_speed: Control
-@export var exhaust_speed: Control
 
 @export_group("Mobility Flags")
 @export var can_sprint: Control
-@export var stamina_regen: Control
-@export var stamina_decay: Control
 
 @export_group("Noise Stats")
 @export var walk_noise: Control
@@ -40,11 +37,7 @@ func update_stats_display() -> void:
 	handle_stats_display_value(walk_speed, "WALK SPEED: \t%.2f m/s" % 		(player.values.walk_multi * SentientBase.BASE_SPEED / 16))
 	handle_stats_display_value(sprint_speed, "SPRINT SPEED: \t%.2f m/s" % 	(player.values.sprint_multi * SentientBase.BASE_SPEED / 16))
 	handle_stats_display_value(sneak_speed, "SNEAK SPEED: \t%.2f m/s" % 	(player.values.sneak_multi * SentientBase.BASE_SPEED / 16))
-	handle_stats_display_value(exhaust_speed, "EXHAUST SPEED: \t%.2f m/s" % (player.values.exhaust_multi * SentientBase.BASE_SPEED / 16))
-	
 	handle_stats_display_value(can_sprint, "CAN SPRINT?: \t%s" 					% player.values.can_sprint)
-	handle_stats_display_value(stamina_regen, "STAMINA REGEN: \t+%.2f stam/s" 	% player.values.stamina_regen)
-	handle_stats_display_value(stamina_decay, "STAMINA DRAIN: \t-%.2f stam/s" 	% player.values.stamina_drain)
 	
 	handle_stats_display_value(walk_noise, "WALK NOISE: \t%.2f db" 		% (player.values.walk_noise_multi / 1.8 * 55))
 	handle_stats_display_value(sprint_noise, "SPRINT NOISE: \t%.2f db" 	% (player.values.sprint_noise_multi / 1.8 * 55))
@@ -53,11 +46,8 @@ func update_stats_display() -> void:
 	handle_stats_display_improvement(walk_speed, 	player.values.walk_multi, Player.WALK_MULTI)
 	handle_stats_display_improvement(sprint_speed, 	player.values.sprint_multi, Player.SPRINT_MULTI)
 	handle_stats_display_improvement(sneak_speed, 	player.values.sneak_multi, Player.SNEAK_MULTI)
-	handle_stats_display_improvement(exhaust_speed, player.values.exhaust_multi, Player.EXHAUST_MULTI)
 			
 	handle_stats_display_improvement(can_sprint, 	player.values.can_sprint, Player.CAN_SPRINT)
-	handle_stats_display_improvement(stamina_regen, player.values.stamina_regen, Player.STAMINA_REGEN)
-	handle_stats_display_improvement(stamina_decay, -player.values.stamina_drain, -Player.STAMINA_DRAIN)
 
 	handle_stats_display_improvement(walk_noise, 	-player.values.walk_noise_multi, -Player.WALK_NOISE_MULTI)
 	handle_stats_display_improvement(sprint_noise, -player.values.sprint_noise_multi, -Player.SPRINT_NOISE_MULTI)

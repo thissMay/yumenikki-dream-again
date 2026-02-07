@@ -5,20 +5,10 @@ extends SentientBase
 
 #region ---- data variables ----
 
-@export_storage var stamina: 		float = MAX_STAMINA:
-	set(_stam):
-		stamina = clampf(_stam, 0, MAX_STAMINA)
-		EventManager.invoke_event("PLAYER_STAMINA_CHANGE", _stam)
-
-var is_exhausted: bool = false
 
 # ---- data constants ----
 const CAN_SPRINT: bool = true
-const EXHAUST_MULTI: 		float = 0.635
 
-const MAX_STAMINA:	 		float =  5
-const STAMINA_DRAIN: 		float = .78
-const STAMINA_REGEN: 		float = .8
 
 const ERR_SOUNDS := [
 	preload("res://src/audio/se/voice_mado_no-1.WAV"), 

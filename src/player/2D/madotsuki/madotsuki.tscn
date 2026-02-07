@@ -1,7 +1,7 @@
-[gd_scene load_steps=45 format=3 uid="uid://ryhx8o46er7i"]
+[gd_scene load_steps=42 format=3 uid="uid://ryhx8o46er7i"]
 
 [ext_resource type="Script" uid="uid://bswiktpbm1d50" path="res://src/player/2D/madotsuki/player_yn.gd" id="1_wub1p"]
-[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="2_f263f"]
+[ext_resource type="Script" uid="uid://jf85vmwx4pj" path="res://src/player/2D/scripts/pl_variables.gd" id="2_k7c3c"]
 [ext_resource type="Script" uid="uid://5yx7vlyaocq" path="res://src/entities/component/sb_health.gd" id="5_2gyta"]
 [ext_resource type="Script" uid="uid://cvno7u6wdvsg8" path="res://src/entities/footsteps/footstep_system.gd" id="5_xe7mj"]
 [ext_resource type="Script" uid="uid://b8o626ec7226k" path="res://src/systems/audio/sound_player_2d.gd" id="6_3hhoi"]
@@ -18,11 +18,8 @@
 [ext_resource type="AnimationLibrary" uid="uid://jmtvl5nfo2wn" path="res://src/player/2D/madotsuki/animation_libs/reset.tres" id="11_wc1wu"]
 [ext_resource type="Script" uid="uid://dyhtvuyxwohdq" path="res://src/entities/component/sb_sprite_handler.gd" id="13_p5dbe"]
 [ext_resource type="Texture2D" uid="uid://cgt6yqo0ynnak" path="res://src/player/2D/scripts/behaviour/interaction_prompt.png" id="17_cin7d"]
-[ext_resource type="Script" uid="uid://ckdi4htcyco6l" path="res://src/entities/component/sb_sprint.gd" id="18_k7c3c"]
 [ext_resource type="Script" uid="uid://sd3feymdmkd6" path="res://src/systems/tools/FSM/sentient_fsm.gd" id="18_rujao"]
 [ext_resource type="Script" uid="uid://du8llo3s6lchk" path="res://src/entities/component/sb_input.gd" id="19_57bvo"]
-[ext_resource type="Script" uid="uid://bcy41p4huaij7" path="res://src/player/2D/scripts/states/stamina/normal.gd" id="20_fr82v"]
-[ext_resource type="Script" uid="uid://bk7ea81npilfk" path="res://src/player/2D/scripts/states/stamina/exhausted.gd" id="21_5r1vc"]
 [ext_resource type="Script" uid="uid://copf228upsgds" path="res://src/player/2D/scripts/states/movement/state_pl_idle.gd" id="22_e8irh"]
 [ext_resource type="Script" uid="uid://8lqdoulxnowh" path="res://src/player/2D/scripts/states/movement/super_state_pl_move.gd" id="24_t8l7d"]
 [ext_resource type="Script" uid="uid://mw73mitc7ufu" path="res://src/player/2D/scripts/states/movement/state_pl_walk.gd" id="24_ydgy1"]
@@ -35,10 +32,11 @@
 [ext_resource type="Script" uid="uid://dlvvx5cthl4bp" path="res://src/systems/utils/spritesheet_formatter.gd" id="30_kknx7"]
 [ext_resource type="Script" uid="uid://bnajku7ggsr2q" path="res://src/systems/world_loop/loopable_component.gd" id="35_bfa5j"]
 
-[sub_resource type="Resource" id="Resource_57bvo"]
+[sub_resource type="Resource" id="Resource_t8l7d"]
 resource_local_to_scene = true
 resource_name = "pl_variables"
-script = ExtResource("2_f263f")
+script = ExtResource("2_k7c3c")
+metadata/_custom_type_script = "uid://bxe7uci7t77tx"
 
 [sub_resource type="Animation" id="Animation_m68sj"]
 length = 0.001
@@ -93,13 +91,12 @@ size = Vector2(2, 2)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ylvyo"]
 size = Vector2(16, 26)
 
-[node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("stamina_fsm", "fsm", "sprite_renderer", "shadow_renderer")]
+[node name="madotsuki" type="CharacterBody2D" node_paths=PackedStringArray("fsm", "sprite_renderer", "shadow_renderer")]
 collision_layer = 5
 motion_mode = 1
 script = ExtResource("1_wub1p")
-stamina_fsm = NodePath("stamina_fsm")
 fsm = NodePath("stance_fsm")
-values = SubResource("Resource_57bvo")
+values = SubResource("Resource_t8l7d")
 sprite_renderer = NodePath("sprite_container/sprite_renderer")
 shadow_renderer = NodePath("sprite_container/shadow_renderer")
 
@@ -183,26 +180,9 @@ script = ExtResource("13_p5dbe")
 sprite_container = NodePath("../../sprite_container")
 metadata/_custom_type_script = "uid://bgisym1hdeqgt"
 
-[node name="sprint_manager" type="Node" parent="sb_components" node_paths=PackedStringArray("stamina_fsm")]
-script = ExtResource("18_k7c3c")
-stamina_fsm = NodePath("../../stamina_fsm")
-metadata/_custom_type_script = "uid://ckdi4htcyco6l"
-
 [node name="input" type="Node" parent="sb_components"]
 script = ExtResource("19_57bvo")
 metadata/_custom_type_script = "uid://du8llo3s6lchk"
-
-[node name="stamina_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
-script = ExtResource("18_rujao")
-initial_state = NodePath("NORMAL")
-
-[node name="NORMAL" type="Node" parent="stamina_fsm" node_paths=PackedStringArray("transitions")]
-script = ExtResource("20_fr82v")
-transitions = [NodePath("../EXHAUSTED")]
-
-[node name="EXHAUSTED" type="Node" parent="stamina_fsm" node_paths=PackedStringArray("transitions")]
-script = ExtResource("21_5r1vc")
-transitions = [NodePath("../NORMAL")]
 
 [node name="stance_fsm" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("18_rujao")
@@ -221,9 +201,8 @@ metadata/_custom_type_script = "uid://528ddyxm13yn"
 script = ExtResource("24_ydgy1")
 transitions = [NodePath("../SPRINT"), NodePath("../SNEAK")]
 
-[node name="SPRINT" type="Node" parent="stance_fsm/MOVE" node_paths=PackedStringArray("sb_sprint", "transitions")]
+[node name="SPRINT" type="Node" parent="stance_fsm/MOVE" node_paths=PackedStringArray("transitions")]
 script = ExtResource("25_fc8o1")
-sb_sprint = NodePath("../../../sb_components/sprint_manager")
 transitions = [NodePath("../WALK")]
 
 [node name="SNEAK" type="Node" parent="stance_fsm/MOVE" node_paths=PackedStringArray("transitions")]
@@ -300,6 +279,6 @@ metadata/_custom_type_script = "uid://dgrha4aqsx4kh"
 y_sort_enabled = true
 script = ExtResource("35_bfa5j")
 target = NodePath("..")
-children = [NodePath("../sb_components"), NodePath("../stamina_fsm"), NodePath("../stance_fsm"), NodePath("../movement_fsm"), NodePath("../nav"), NodePath("../audio_listener"), NodePath("../sprite_container"), NodePath("../collision"), NodePath("../centre_trigger"), NodePath("../region_trigger"), NodePath("../sound_player")]
+children = [NodePath("../sb_components"), NodePath("../stance_fsm"), NodePath("../movement_fsm"), NodePath("../nav"), NodePath("../audio_listener"), NodePath("../sprite_container"), NodePath("../collision"), NodePath("../centre_trigger"), NodePath("../region_trigger"), NodePath("../sound_player")]
 do_not_dupe = true
 metadata/_custom_type_script = "uid://bnajku7ggsr2q"

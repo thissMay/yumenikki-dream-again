@@ -16,8 +16,6 @@ func _action_update(_pl: Player, _delta: float) -> void:
 		(_pl.desired_speed > 0 or Input.is_action_just_pressed("pl_emote")):
 			_pl.components.get_component_by_name(Player_YN.Components.ACTION).cancel_action(_pl)
 		
-	if 	_pl.stamina < _pl.MAX_STAMINA:
-		_pl.stamina += _delta * (_pl.values.stamina_regen * 1.2)
 
 func _perform(_pl: Player) -> void: 
 	if enter_anim.is_empty(): return
